@@ -1,0 +1,24 @@
+<odoo>
+  <data>
+    <record model="ir.actions.client" id="dashboard_base_app_action">
+      <field name="name">Dashboard</field>
+      <field name="tag">app_dashboar_base</field>
+      <field name="target">main</field>
+    </record>
+    
+
+    <menuitem id="menu_app_dashboard"
+      name="App Dashboard Backend"
+      groups="base.group_user"
+      sequence="90"/>
+
+    <menuitem id="menu_app_backend"
+      name="App Backend"
+      parent="menu_app_dashboard"
+      sequence="10"
+      groups="base.group_user"
+      action="dashboard_base_app_action"/>
+    
+    
+  </data>
+</odoo>

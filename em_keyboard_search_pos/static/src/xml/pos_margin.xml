@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2021 - Today: GRAP (http://www.grap.coop)
+@author: Sylvain LE GAL (https://twitter.com/legalsylvain)
+License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+<templates id="template" xml:space="preserve">  
+
+    <t t-name="ReceiptScreen" t-inherit="point_of_sale.ReceiptScreen" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('button')]" position="inside">
+            <span> F-4 </span>
+        </xpath>
+    </t>
+
+    <t t-name="PaymentDirect" owl="1">
+        <div class="control-button">
+            <div id="direct" class="control-button-cobrar">
+                F-2 Imprimir
+            </div>
+        </div>
+   </t>
+
+  
+
+    <t t-name="ClearCart" owl="1">
+        <div id="clear" class="control-button">
+            Borrar
+        </div>
+   </t>
+   <t t-name="ActionpadWidget" t-inherit="point_of_sale.ActionpadWidget" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('pay-circle')]" position="after">
+            F-4
+        </xpath>
+    </t>
+
+    <t t-name="PaymentScreen" t-inherit="point_of_sale.PaymentScreen" t-inherit-mode="extension" owl="1">
+        <xpath expr="//span[hasclass('next_text')]" position="after">
+            <span> F-4 </span>
+        </xpath>
+    </t>
+
+</templates>

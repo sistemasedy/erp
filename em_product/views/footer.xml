@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <template id="theme_boec_footer" inherit_id="website.layout" name="Boec Footer">
+            <xpath expr="//div[@id='footer']" position="replace">
+                <section class="footer ">
+                    <div class="wrapper ">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-6 col-sm-6">
+                                    <div class="name">
+                                        <a class="navbar-brand" href="/"><img src="/em_product/static/src/images/logo/logo_eem.png" alt=""/></a>
+                                        <p>
+                                            Fabricacion y Distribucion de Empandas y Hojuelas 100% de Yuca
+                                        </p>
+                                        
+                                        <div class="footer_icons">
+                                            <a href="#"><span class="fab fa-cc-visa"/></a>
+                                            <a href="#"> <span class="fab fa-cc-paypal"/></a>
+                                            <a href="#"><span class="fab fa-cc-mastercard"/></a>
+                                            <a href="#"> <span class="fab fa-bitcoin"/></a>
+                                            <a href="#"> <span class="fab fa-cc-amex"/></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-3 col-sm-6">
+                                    <div class="i_wrapper">
+                                        <h5 class="footer_heading">ABOUT US</h5>
+                                        <ul class="footer_items">
+                                            <li><a href="#">Fabricacion</a></li>
+                                            <li><a href="#">Distribucion</a></li>
+                                            <li><a href="https://eveempanadas.negocio.site/">Galeria</a></li>
+                                            <li><a href="#">Nuestros Productos</a></li>
+                                            <li><a href="#">Our delivery</a></li>
+                                            <li><a href="#">Affiliate program</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-3 col-sm-6">
+                                    <div class="s_wrapper">
+                                        <h5 class="footer_heading">SHOPPING</h5>
+                                        <ul class=" footer_items">
+                                            <li><a href="#">Cloathing Store</a></li>
+                                            <li><a href="#">Men Suite</a></li>
+                                            <li><a href="#">Women Saree</a></li>
+                                            <li><a href="#">Shoe Store</a></li>
+                                            <li><a href="#">Accessories</a></li>
+                                            <li><a href="#">Sale</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-12 col-sm-6">
+                                    <div class="s_wrapper">
+                                        <h5 class="footer_heading">EVE EMPANADAS</h5>
+                                        <div class="send">
+                                            <p>
+                                                Be the first to know about new arrivals, look books, sales &amp; promos!
+                                            </p>
+                                            <div class="search_box">
+                                                <div class="form-group has-search">
+                                                    <a href="#" class="material-icons form-control-feedback btn">&#xe0be;</a>
+                                                    <input type="text" class="form-control" placeholder="Your Mail"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="copyright">
+                                    <hr/>
+                                    <div class="copy">
+                                        Copyright © 2024 All rights reserved | This template is made with
+                                        <span class="far fa-heart"/> by <a href="https://www.cybrosys.com/" target="_blank">Cybrosys</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </xpath>
+        </template>
+    </data>
+</odoo>

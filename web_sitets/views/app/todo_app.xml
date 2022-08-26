@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="tods" name="App Tets">&lt;!DOCTYPE html&gt;
+<html>
+    <head>
+        <title>Todo App</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+        <meta http-equiv="content-type" content="text/html, charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+        <meta name="apple-mobile-web-app-capable" content="yes"/>
+        <meta name="mobile-web-app-capable" content="yes"/>
+
+        <!-- <style> body { background: #222; } </style> -->
+        <link rel="stylesheet" type="text/scss" href="/web/static/src/css/todo/todo_app.css"/>   
+
+        <link rel="shortcut icon" href="/web/static/src/img/favicon.ico" type="image/x-icon"/>
+
+        <script type="text/javascript" src="/web_sitets/static/src/js/todo/todo_app.js"></script>
+
+    </head>
+
+    <body>      
+
+    </body>
+
+</html>
+
+</template>
+</odoo>

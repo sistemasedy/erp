@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        
+
+        <template id="report_list_code">
+            <t t-call="web.basic_layout">
+                <div class="header">
+                    <div class="row">
+                        <div class="col-6 offset-2 text-center">
+                            <span>VARIEDADES COMERCIALES Y NOVEDADES BERROA, SRL</span>
+                        </div>
+                        <div class="col-2">
+                            <strong> Listado Codigo para Etiquetas</strong>
+                        </div>
+                    </div>
+                </div>
+                
+
+                <div class="row">
+
+                    <table >
+                        <thead>
+                            <tr >
+                                <th colspan="6">Nombre</th>
+                                
+                                <th >Codigo de Balanza</th>
+                                <th >Precio  </th>
+                               
+                                <th >
+                                    Codigo
+                                </th>
+                                                                
+                                <th >
+                                    Loc
+                                </th>
+                                <th >
+                                    Grupo
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="docs" t-as="product">
+                                <tr >
+                                    <td style="border: 1px solid black;" colspan="6">
+                                        <span t-field="product.name" />
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                        <span class="text-nowrap" t-field="product.codigo"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                        <span t-field="product.list_price"/>
+                                        
+                                    </td>
+                                    
+                                    <td style="border: 1px solid black;">
+                                        <span class="text-nowrap" t-field="product.barcode"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                        <span class="text-nowrap" t-field="product.localization"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                        
+                                        <span class="text-nowrap" t-field="product.grupo" />
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </template>
+
+    
+
+
+    </data>
+</odoo>

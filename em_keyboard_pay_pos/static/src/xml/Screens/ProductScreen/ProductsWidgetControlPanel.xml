@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="ProductsWidgetControlPanelSearch" owl="1">
+        <div class="products-widget-control">
+
+            <div >
+                <table class="teclasFunciones">
+                  <tr >
+                      <td> </td>
+                      <td>TAB=SALTAR A PRODUCTOS...</td>
+                      <td> </td>
+                      <td>Q=BAJAR... </td>
+                      <td> </td>
+                      <td>A=SUBIR... </td>
+                      <td> </td>
+                      <td>B=BUSCAR... </td>
+                      <td> </td>
+                      <td>ENTER=AGREGAR... </td>
+                      <td> </td>
+                      <td>ESC=SALIR... </td>
+                      
+                      
+                  </tr>
+                </table>
+            </div>
+
+            <div class="search-box">
+            
+                <div class="search-box-em">
+                    <span class="icon"><i class="fa fa-search"></i></span>
+                    <span t-on-click="clearSearch" class="clear-icon">
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                    </span>
+                    <input id="buscar" t-ref="search-word-input" type="text" placeholder="Search Products..." t-on-keyup="updateSearch" autofocus="true" />
+                </div>
+            </div>
+        </div>
+    </t>
+
+</templates>

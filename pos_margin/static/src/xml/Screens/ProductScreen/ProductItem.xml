@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="ProductItemSearch" owl="1">
+
+        <tr class='product-list'>
+                <td>
+                    <img t-att-src='imageUrl' height='45px'/>
+                </td>
+                <td>
+                    <t t-esc="props.product.display_name" />
+                </td>
+        </tr>
+    </t>
+
+</templates>

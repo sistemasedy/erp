@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="product_template_tree_view_em" model="ir.ui.view">
+        <field name="name">product.template.product.tree.em</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_tree_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="inside">
+                <field name="barcode"/>
+                <field name="default_code" invisible="1"/>
+                <field name="taxes_id"  widget="many2many_tags"/>
+                <field name="grupo"/>
+                <field name="localization"/>
+                <field name="codigo"/>
+                <field name="category_em"/>
+                <field name="company_id" invisible="1"/>
+                <field name="available_in_pos"/>
+                <field name="uom_id"  />
+                <field name="uom_po_id" />
+                
+            </xpath>
+            <xpath expr="//tree" position="attributes">
+              <attribute name="editable">bottom</attribute>
+            </xpath>
+        </field>
+            
+    </record>
+
+    <record id="product_template_form_view_em" model="ir.ui.view">
+        <field name="name">product.template.common.form.em</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//page[@name='sales']" position="after">
+                <page name="calculo_precio" string="Calculo de Precio">
+
+                            <group>
+                               
+                                <group name="precios_valores">
+                                    <field name="calcular_venta"/>
+                                    <field name="calcular_costo"/>
+
+                                    <field name="list_price"/>
+                                    <field name="margen"/>
+                                    
+                                    <label for="standard_price" groups="base.group_user"/>
+                                    <div name="standard_price_uom" groups="base.group_user">
+                                        <field name="standard_price" widget="monetary" options="{'currency_field': 'currency_id'}" class="oe_inline"/>
+                                    </div>
+                                </group>
+                            </group>
+                    
+                </page>
+            </xpath>
+
+           
+
+        </field>
+    </record>
+
+
+</odoo>
