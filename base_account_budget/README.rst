@@ -1,10 +1,10 @@
-Odoo 14 Budgets Management
-=============================
-* Budgets Management system for Odoo 14 Community edition
+Odoo 15 Budgets Management
+==========================
+* Budgets Management system for Odoo 15 Community edition
 
 Installation
 ============
-	- www.odoo.com/documentation/14.0/setup/install.html
+	- www.odoo.com/documentation/15.0/setup/install.html
 	- Install our custom addon
 
 License
@@ -21,6 +21,7 @@ Credits
 * Developer:
 (v13) Varsha Vivek @ Cybrosys
 (v14) Sachin @ Cybrosys
+(v15) Dino @ Cybrosys
 
 Contacts
 --------
@@ -38,5 +39,6 @@ For support and more information, please visit https://www.cybrosys.com
 
 Further information
 ===================
-HTML Description: `<static/description/index.html>`__
+HTML Description: `<static/description
+/index.html>`__
 

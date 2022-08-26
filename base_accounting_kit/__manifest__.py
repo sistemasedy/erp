@@ -3,7 +3,7 @@
 #
 #    Cybrosys Technologies Pvt. Ltd.
 #
-#    Copyright (C) 2020-TODAY Cybrosys Technologies(<https://www.cybrosys.com>)
+#    Copyright (C) 2021-TODAY Cybrosys Technologies(<https://www.cybrosys.com>)
 #    Author: Cybrosys Techno Solutions(<https://www.cybrosys.com>)
 #
 #    You can modify it under the terms of the GNU LESSER
@@ -21,29 +21,29 @@
 #############################################################################
 
 {
-    'name': 'Odoo 14 Full Accounting Kit',
-    'version': '14.0.3.13.14',
+    'name': 'Odoo 15 Full Accounting Kit',
+    'version': '15.0.2.2.2',
     'category': 'Accounting',
     'live_test_url': 'https://www.youtube.com/watch?v=peAp2Tx_XIs',
     'summary': """ Asset and Budget Management,
-                 Accounting Reports, PDC, Lock dates, 
-                 Credit Limit, Follow Ups, 
+                 Accounting Reports, PDC, Lock dates,
+                 Credit Limit, Follow Ups,
                  Day-Bank-Cash book reports.""",
     'description': """
                     AccountingKit, Fullaccounting, Odoo accounting, Odooaccounting, all in one accounting,
-                    allinoneaccounting, accounting, 
-                    Odoo 14 Accounting,Accounting Reports, Odoo 14 Accounting 
-                    PDF Reports, Asset Management, Budget Management, 
+                    allinoneaccounting, accounting,
+                    Odoo 15 Accounting,Accounting Reports, Odoo 15 Accounting
+                    PDF Reports, Asset Management, Budget Management,
                     Customer Credit Limit, Recurring Payment,
                     PDC Management, Customer Follow-up,
-                    Lock Dates into Odoo 14 Community Edition, 
-                    Odoo Accounting,Odoo 14 Accounting Reports,Odoo 14,, 
-                    Full Accounting, Complete Accounting, 
-                    Odoo Community Accounting, Accounting for odoo 14, 
-                    Full Accounting Package, 
-                    Financial Reports, Financial Report for Odoo 14,
+                    Lock Dates into Odoo 15 Community Edition,
+                    Odoo Accounting,Odoo 15 Accounting Reports,Odoo 15,,
+                    Full Accounting, Complete Accounting,
+                    Odoo Community Accounting, Accounting for odoo 15,
+                    Full Accounting Package,
+                    Financial Reports, Financial Report for Odoo 15,
                     Reconciliation Widget,
-                    Reconciliation Widget For Odoo14,
+                    Reconciliation Widget For Odoo15,
                     Payments Matching
                     """,
     'author': 'Cybrosys Techno Solutions, Odoo SA',
@@ -110,10 +110,28 @@
         'report/multiple_invoice_layouts.xml',
         'report/multiple_invoice_report.xml',
     ],
-    'qweb': [
-        'static/src/xml/template.xml',
-        'static/src/xml/payment_matching.xml'
-    ],
+    'assets': {
+        'web.assets_backend': [
+            'base_accounting_kit/static/src/scss/style.scss',
+            'base_accounting_kit/static/src/scss/account_asset.scss',
+            'base_accounting_kit/static/lib/bootstrap-toggle-master/css/bootstrap-toggle.min.css',
+            'base_accounting_kit/static/src/js/account_dashboard.js',
+            'base_accounting_kit/static/src/js/account_asset.js',
+            'base_accounting_kit/static/src/js/payment_model.js',
+            'base_accounting_kit/static/src/js/payment_render.js',
+            'base_accounting_kit/static/src/js/payment_matching.js',
+            'base_accounting_kit/static/lib/Chart.bundle.js',
+            'base_accounting_kit/static/lib/Chart.bundle.min.js',
+            'base_accounting_kit/static/lib/Chart.min.js',
+            'base_accounting_kit/static/lib/Chart.js',
+            'base_accounting_kit/static/lib/bootstrap-toggle-master/js/bootstrap-toggle.min.js',
+
+        ],
+        'web.assets_qweb': [
+            'base_accounting_kit/static/src/xml/template.xml',
+            'base_accounting_kit/static/src/xml/payment_matching.xml',
+        ],
+    },
     'license': 'LGPL-3',
     'images': ['static/description/banner.gif'],
     'installable': True,

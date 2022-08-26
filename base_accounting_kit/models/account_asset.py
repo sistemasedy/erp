@@ -431,7 +431,7 @@ class AccountAssetAsset(models.Model):
                 del (tracked_fields['method_end'])
             else:
                 del (tracked_fields['method_number'])
-            dummy, tracking_value_ids = asset._message_track(tracked_fields,
+            dummy, tracking_value_ids = asset._mail_track(tracked_fields,
                                                              dict.fromkeys(
                                                                  fields))
             asset.message_post(subject=_('Asset created'),
@@ -472,7 +472,7 @@ class AccountAssetAsset(models.Model):
                      'method_number': sequence})
                 tracked_fields = self.env['account.asset.asset'].fields_get(
                     ['method_number', 'method_end'])
-                changes, tracking_value_ids = asset._message_track(
+                changes, tracking_value_ids = asset._mail_track(
                     tracked_fields, old_values)
                 if changes:
                     asset.message_post(subject=_(

@@ -19,7 +19,7 @@
 #    If not, see <http://www.gnu.org/licenses/>.
 #
 #############################################################################
-from odoo import models, fields, _
+from odoo import models, fields, api, _
 from odoo.exceptions import UserError
 
 
@@ -33,9 +33,11 @@ class AccountRegisterPayments(models.TransientModel):
                                  default=False)
 
     def _prepare_payment_vals(self, invoices):
-        res = super(AccountRegisterPayments, self)._prepare_payment_vals(invoices)
+        res = super(AccountRegisterPayments, self)._prepare_payment_vals(
+            invoices)
         # Check payment method is Check or PDC
-        check_pdc_ids = self.env['account.payment.method'].search([('code', 'in', ['pdc', 'check_printing'])])
+        check_pdc_ids = self.env['account.payment.method'].search(
+            [('code', 'in', ['pdc', 'check_printing'])])
         if self.payment_method_id.id in check_pdc_ids.ids:
             currency_id = self.env['res.currency'].browse(res['currency_id'])
             journal_id = self.env['account.journal'].browse(res['journal_id'])
@@ -45,7 +47,8 @@ class AccountRegisterPayments(models.TransientModel):
                 'cheque_reference': self.cheque_reference,
                 'check_manual_sequencing': journal_id.check_manual_sequencing,
                 'effective_date': self.effective_date,
-                'check_amount_in_words': currency_id.amount_to_text(res['amount']),
+                'check_amount_in_words': currency_id.amount_to_text(
+                    res['amount']),
             })
         return res
 
@@ -68,7 +71,8 @@ class AccountPayment(models.Model):
                 break
         if not self.partner_id:
             raise UserError(_("Payments without a customer can't be matched"))
-        action_context = {'company_ids': [self.company_id.id], 'partner_ids': [self.partner_id.commercial_partner_id.id]}
+        action_context = {'company_ids': [self.company_id.id], 'partner_ids': [
+            self.partner_id.commercial_partner_id.id]}
         if self.partner_type == 'customer':
             action_context.update({'mode': 'customers'})
         elif self.partner_type == 'supplier':
@@ -139,4 +143,14 @@ class AccountPayment(models.Model):
             res[0]['date'] = self.effective_date
             for line in res[0]['line_ids']:
                 line[2]['date_maturity'] = self.effective_date
+        return res
+
+
+class AccountPaymentMethod(models.Model):
+    _inherit = "account.payment.method"
+
+    @api.model
+    def _get_payment_method_information(self):
+        res = super()._get_payment_method_information()
+        res['pdc'] = {'mode': 'multi', 'domain': [('type', '=', 'bank')]}
         return res

@@ -1,10 +1,10 @@
 Accounting Kit
 ==============
-* Full accounting kit for Odoo 14 community editions
+* Full accounting kit for Odoo 15 community editions
 
 Installation
 ============
-	- www.odoo.com/documentation/14.0/setup/install.html
+	- www.odoo.com/documentation/15.0/setup/install.html
 	- Install our custom addon
 
 License
@@ -24,6 +24,7 @@ Credits
 (v13) Sreejith @ Cybrosys
 (v13) Varsha Vivek @ Cybrosys
 (v14) Risha @ Cybrosys
+(V15) Mehjabin @ Cybrosys
 
 Contacts
 --------

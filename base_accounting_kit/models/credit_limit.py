@@ -28,23 +28,21 @@ from odoo.tools.translate import _
 class ResPartner(models.Model):
     _inherit = 'res.partner'
 
-
-
-    warning_stage = fields.Float(string='Cantidad de advertencia',
+    warning_stage = fields.Float(string='Warning Amount',
                                  help="A warning message will appear once the "
                                       "selected customer is crossed warning "
                                       "amount. Set its value to 0.00 to"
                                       " disable this feature")
-    blocking_stage = fields.Float(string='Cantidad de bloqueo',
+    blocking_stage = fields.Float(string='Blocking Amount',
                                   help="Cannot make sales once the selected "
                                        "customer is crossed blocking amount."
                                        "Set its value to 0.00 to disable "
                                        "this feature")
     due_amount = fields.Float(string="Total Sale",
                               compute="compute_due_amount")
-    active_limit = fields.Boolean("Activar el Limite de Credito", default=False)
+    active_limit = fields.Boolean("Active Credit Limit", default=False)
 
-    enable_credit_limit = fields.Boolean(string="Limite de Credito Activado",
+    enable_credit_limit = fields.Boolean(string="Credit Limit Enabled",
                                          compute="_compute_enable_credit_limit")
 
     def compute_due_amount(self):
@@ -85,8 +83,8 @@ class SaleOrder(models.Model):
             if self.due_amount >= self.partner_id.blocking_stage:
                 if self.partner_id.blocking_stage != 0:
                     raise UserError(_(
-                        "%s está en etapa de bloqueo y "
-                        "tiene un monto adeudado de %s %s para pagar") % (
+                        "%s is in  Blocking Stage and "
+                        "has a due amount of %s %s to pay") % (
                                         self.partner_id.name, self.due_amount,
                                         self.currency_id.symbol))
         return super(SaleOrder, self)._action_confirm()
@@ -116,9 +114,6 @@ class AccountMove(models.Model):
     is_warning = fields.Boolean()
     due_amount = fields.Float(related='partner_id.due_amount')
 
-
-  
-
     def action_post(self):
         """To check the selected customers due amount is exceed than
         blocking stage"""
@@ -127,13 +122,12 @@ class AccountMove(models.Model):
             if rec.partner_id.active_limit and rec.move_type in pay_type \
                     and rec.partner_id.enable_credit_limit:
                 if rec.due_amount >= rec.partner_id.blocking_stage:
-                    if rec.amount_total >= rec.partner_id.blocking_stage:
-                        if rec.partner_id.blocking_stage != 0:
-                            raise UserError(_(
-                                "%s está en etapa de bloqueo o el monto supera su limite y "
-                            "tiene un monto adeudado de %s %s para pagar") % (
-                                                rec.partner_id.name, rec.due_amount,
-                                                rec.currency_id.symbol))
+                    if rec.partner_id.blocking_stage != 0:
+                        raise UserError(_(
+                            "%s is in  Blocking Stage and "
+                            "has a due amount of %s %s to pay") % (
+                                            rec.partner_id.name, rec.due_amount,
+                                            rec.currency_id.symbol))
         return super(AccountMove, self).action_post()
 
     @api.onchange('partner_id')

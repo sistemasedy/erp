@@ -358,7 +358,7 @@ class AccountReconciliation(models.AbstractModel):
                 WHERE l.account_id = a.id
                 {inner_where}
                 AND l.amount_residual > 0
-                AND move.state = 'posted' 
+                AND move.state = 'posted'
             )
             AND EXISTS (
                 SELECT NULL
@@ -368,7 +368,7 @@ class AccountReconciliation(models.AbstractModel):
                 WHERE l.account_id = a.id
                 {inner_where}
                 AND l.amount_residual < 0
-                AND move.state = 'posted' 
+                AND move.state = 'posted'
             )
         """.format(inner_where=is_partner and 'AND l.partner_id = p.id' or ' ')
         query = ("""
@@ -778,11 +778,11 @@ class AccountReconciliation(models.AbstractModel):
                  account_journal journal_a, account_journal journal_b
             WHERE a.id != b.id
             AND move_a.id = a.move_id
-            AND move_a.state = 'posted' 
+            AND move_a.state = 'posted'
             AND move_a.journal_id = journal_a.id
             AND move_b.id = b.move_id
             AND move_b.journal_id = journal_b.id
-            AND move_b.state = 'posted' 
+            AND move_b.state = 'posted'
             AND a.amount_residual = -b.amount_residual
             AND a.balance != 0.0
             AND b.balance != 0.0
@@ -1120,7 +1120,6 @@ class AccountBankStatementLine(models.Model):
                 self._check_invoice_state(counterpart_move_line.move_id)
 
             # Needs to be called manually as lines were created 1 by 1
-            self.move_id.update_lines_tax_exigibility()
             if self.move_id.state == 'draft':
                 self.move_id.with_context(skip_account_move_synchronization=True).action_post()
             # record the move name on the statement line to be able to retrieve

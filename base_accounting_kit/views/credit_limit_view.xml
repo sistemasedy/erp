@@ -31,13 +31,13 @@
                 <xpath expr="//header" position="after">
                     <div class="alert alert-info" role="alert" style="height: 40px; margin-bottom:0px;"
                          attrs="{'invisible':[('has_due','=',False)]}">
-                        El monto adeudado de este cliente es <strong><field name="due_amount"/></strong>.
+                        This Customer's due amount is <strong><field name="due_amount"/></strong>.
                     </div>
                 </xpath>
                 <xpath expr="//sheet/div[@name='button_box']" position="after">
                     <div role="alert" class="alert alert-danger" style="height: 40px; width: 350px; margin-bottom:0px;"
                          attrs="{'invisible':[('is_warning','=',False)]}">
-                        Esta cliente <strong>límite de advertencia</strong> ha sido cruzado.
+                        This customer's <strong>warning limit</strong> has been crossed.
                     </div>
                 </xpath>
             </field>

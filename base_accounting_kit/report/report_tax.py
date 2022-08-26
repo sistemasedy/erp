@@ -43,7 +43,7 @@ class ReportTax(models.AbstractModel):
     def _sql_from_amls_one(self):
         sql = """SELECT "account_move_line".tax_line_id, COALESCE(SUM("account_move_line".debit-"account_move_line".credit), 0)
                     FROM %s
-                    WHERE %s AND "account_move_line".tax_exigible GROUP BY "account_move_line".tax_line_id"""
+                    WHERE %s  GROUP BY "account_move_line".tax_line_id"""
         return sql
 
     def _sql_from_amls_two(self):
@@ -51,10 +51,11 @@ class ReportTax(models.AbstractModel):
                  FROM %s
                  INNER JOIN account_move_line_account_tax_rel r ON ("account_move_line".id = r.account_move_line_id)
                  INNER JOIN account_tax t ON (r.account_tax_id = t.id)
-                 WHERE %s AND "account_move_line".tax_exigible GROUP BY r.account_tax_id"""
+                 WHERE %s GROUP BY r.account_tax_id"""
         return sql
 
     def _compute_from_amls(self, options, taxes):
+        print("hhhh")
         # compute the tax amount
         sql = self._sql_from_amls_one()
         tables, where_clause, where_params = self.env[
@@ -62,6 +63,7 @@ class ReportTax(models.AbstractModel):
         query = sql % (tables, where_clause)
         self.env.cr.execute(query, where_params)
         results = self.env.cr.fetchall()
+        print("3333",results)
         for result in results:
             if result[0] in taxes:
                 taxes[result[0]]['tax'] = abs(result[1])
