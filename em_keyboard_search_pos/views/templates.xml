@@ -5,6 +5,7 @@ Copyright (C) 2021 - Today: GRAP (http://www.grap.coop)
 License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 -->
 <odoo>
+     <!--
     <template id="assets" inherit_id="point_of_sale.assets">
         <xpath expr="." position="inside">
             <link rel="stylesheet" href="/em_keyboard_search_pos/static/src/css/pos.css" id="pos-stylesheet" />
@@ -22,7 +23,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
             <script type="text/javascript" src="/em_keyboard_search_pos/static/src/js/Screens/ProductScreen/ProductsWidgetControlPanelSearch.js"></script>
             <script type="text/javascript" src="/em_keyboard_search_pos/static/src/js/Screens/ProductScreen/ProductsWidgetSearch.js"></script>
 
-            <!--
+           
 
                 <script type="text/javascript" src="/em_keyboard_search_pos/static/src/js/Screens/ProductScreen/ProductsWidget.js"></script>
             <script type="text/javascript" src="/em_keyboard_search_pos/static/src/js/Screens/ProductScreen/ProductSearch.js"></script>
@@ -39,8 +40,10 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
             
 
 
-        -->
-
+        
         </xpath>
     </template>
+
+    -->
+
 </odoo>
