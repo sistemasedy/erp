@@ -24,9 +24,10 @@
     'depends': ['base', 'point_of_sale'],
     "data": [],
     'demo': [],
-    "qweb": [
-        "static/src/xml/pos.xml",
-        'static/src/xml/Screens/ReceiptScreen/OrderReceipt.xml',
-    ],
+    'assets': {
+        'web.assets_qweb': [
+            "custom_pos_receipt/static/src/xml/pos.xml",
+        ],
+    },
     'installable': True,
 }

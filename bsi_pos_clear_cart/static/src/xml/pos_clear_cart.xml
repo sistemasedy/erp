@@ -2,7 +2,7 @@
 <templates id="template" xml:space="preserve">    
     <t t-name="ClearCart" owl="1">
         <div class="control-button">
-            Clear Cart
+            Limpiar
         </div>
    </t>
 </templates>
