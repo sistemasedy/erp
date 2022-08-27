@@ -26,15 +26,29 @@
         # 'security/ir.model.access.csv',
         'views/templates.xml',
     ],
+    'assets': {
+        'point_of_sale.assets': [
+            '/em_keyboard_search_pos/static/src/js/Screens/ProductScreen/ProductScreens.js',
+            '/em_keyboard_search_pos/static/src/js/Screens/ProductScreen/product_create_popup.js',
+            '/em_keyboard_search_pos/static/src/js/Screens/ProductScreen/product_create_button.js',
+            '/em_keyboard_search_pos/static/src/js/Screens/ProductScreen/ListProducts.js',
+            '/em_keyboard_search_pos/static/src/js/Screens/ProductScreen/ProductItem.js',
+            '/em_keyboard_search_pos/static/src/js/Screens/ProductScreen/ProductItemSearch.js',
+            '/em_keyboard_search_pos/static/src/js/Screens/ProductScreen/ProductListSearch.js',
+            '/em_keyboard_search_pos/static/src/js/Screens/ProductScreen/ProductsWidgetControlPanelSearch.js',
+            '/em_keyboard_search_pos/static/src/js/Screens/ProductScreen/ProductsWidgetSearch.js',
+            '<link rel="stylesheet" href="/em_keyboard_search_pos/static/src/css/pos.css">',
+        ],
+        'web.assets_qweb': [
+            '/em_keyboard_search_pos/static/src/xml/Screens/ProductScreen/product_create_button.xml',
+            '/em_keyboard_search_pos/static/src/xml/Screens/ProductScreen/product_create_popup.xml',
+            '/em_keyboard_search_pos/static/src/xml/Screens/ProductScreen/ProductsWidgetControlPanel.xml',
+            '/em_keyboard_search_pos/static/src/xml/Screens/ProductScreen/ProductItem.xml',
+            '/em_keyboard_search_pos/static/src/xml/Screens/ProductScreen/ProductList.xml',
+            '/em_keyboard_search_pos/static/src/xml/Screens/ProductScreen/ProductsWidget.xml',
+
+        ],
+    },
     'demo': [],
-    "qweb": [
-        #"static/src/xml/pos_margin.xml",
-        'static/src/xml/Screens/ProductScreen/product_create_button.xml',
-        'static/src/xml/Screens/ProductScreen/product_create_popup.xml',
-        'static/src/xml/Screens/ProductScreen/ProductsWidgetControlPanel.xml',
-        'static/src/xml/Screens/ProductScreen/ProductItem.xml',
-        'static/src/xml/Screens/ProductScreen/ProductList.xml',
-        'static/src/xml/Screens/ProductScreen/ProductsWidget.xml',
-    ],
     'installable': True,
 }
