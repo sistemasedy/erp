@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+	<t t-name="ProductCreateButton" owl="1">
+		<div id="searchProducts" class="control-button o_fiscal_position_button">
+			<span>Buscar -ESC</span>
+
+		</div>
+	</t>
+</templates>

@@ -18,29 +18,3 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 #################################################################################
-{
-    'name': "EM POS Clear Cart",
-    'author': 'Botspot Infoware Pvt. Ltd.',
-    'category': 'Point of Sale',
-    'summary': """Clear the cart using a single button click in POS screen""",
-    'website': 'https://www.botspotinfoware.com',
-    'company': 'Botspot Infoware Pvt. Ltd.',
-    'maintainer': 'Botspot Infoware Pvt. Ltd.',
-    'description': """Clear the cart using a single button click in POS screen""",
-    'version': '1.0',
-    'depends': ['point_of_sale'],
-    'data': [],
-    'images':  ['static/description/Pos Clear Cart Banner.gif'],
-    'assets': {
-        'point_of_sale.assets': [
-            'bsi_pos_clear_cart/static/src/js/pos_clear_cart.js'
-        ],
-        'web.assets_qweb': [
-            'bsi_pos_clear_cart/static/src/xml/**/*',
-        ],
-    },
-    'license': 'LGPL-3',
-    'installable': True,
-    'application': True,
-    'auto_install': False,
-}

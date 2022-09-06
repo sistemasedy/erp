@@ -19,10 +19,10 @@
 #
 #################################################################################
 {
-    'name': "EM POS Clear Cart",
+    'name': "EM POS Keyboard",
     'author': 'Botspot Infoware Pvt. Ltd.',
     'category': 'Point of Sale',
-    'summary': """Clear the cart using a single button click in POS screen""",
+    'summary': """Keyboard pos""",
     'website': 'https://www.botspotinfoware.com',
     'company': 'Botspot Infoware Pvt. Ltd.',
     'maintainer': 'Botspot Infoware Pvt. Ltd.',
@@ -33,10 +33,11 @@
     'images':  ['static/description/Pos Clear Cart Banner.gif'],
     'assets': {
         'point_of_sale.assets': [
-            'bsi_pos_clear_cart/static/src/js/pos_clear_cart.js'
+            'em_keyboard_pos/static/src/js/Screens/ProductScreen/ProductScreens.js'
+            'em_keyboard_pos/static/src/js/Screens/ProductScreen/PaymentDirect.js'
         ],
         'web.assets_qweb': [
-            'bsi_pos_clear_cart/static/src/xml/**/*',
+            'em_keyboard_pos/static/src/xml/**/*',
         ],
     },
     'license': 'LGPL-3',
