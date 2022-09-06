@@ -22,11 +22,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
   
 
-    <t t-name="ClearCart" owl="1">
-        <div id="clear" class="control-button">
-            Borrar
-        </div>
-   </t>
+   
    <t t-name="ActionpadWidget" t-inherit="point_of_sale.ActionpadWidget" t-inherit-mode="extension" owl="1">
         <xpath expr="//div[hasclass('pay-circle')]" position="after">
             F-4
