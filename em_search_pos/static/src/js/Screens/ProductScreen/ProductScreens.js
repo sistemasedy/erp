@@ -1,4 +1,4 @@
-odoo.define('pos_margin.ProductScreens', function (require) {
+odoo.define('em_search_pos.ProductScreens', function (require) {
     "use strict";
 
 
