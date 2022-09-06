@@ -33,7 +33,7 @@
     'images':  ['static/description/Pos Clear Cart Banner.gif'],
     'assets': {
         'point_of_sale.assets': [
-            'em_keyboard_pos/static/src/js/Screens/ProductScreen/ProductScreens.js'
+            'em_keyboard_pos/static/src/js/Screens/ProductScreen/ProductScreens.js',
             'em_keyboard_pos/static/src/js/Screens/ProductScreen/PaymentDirect.js'
         ],
         'web.assets_qweb': [
