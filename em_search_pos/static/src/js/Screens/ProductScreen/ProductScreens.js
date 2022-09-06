@@ -16,7 +16,7 @@ odoo.define('em_search_pos.ProductScreens', function (require) {
     var _t = core._t;
     const balance = []
 
-    const ProductScreens = ProductScreen =>
+    const ProductScreenSearch = ProductScreen =>
         class extends ProductScreen {
             constructor() {
                 super(...arguments);
@@ -43,6 +43,6 @@ odoo.define('em_search_pos.ProductScreens', function (require) {
 
          
         }
-    Registries.Component.extend(ProductScreen, ProductScreens);
-    return ProductScreens;
+    Registries.Component.extend(ProductScreen, ProductScreenSearch);
+    return ProductScreenSearch;
 });
