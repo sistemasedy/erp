@@ -26,16 +26,10 @@ odoo.define('pos_margin.ProductScreens', function (require) {
                 this.hotkey_handler = function(event){
 
                     if(!$($(document).find("div.payment-screen.screen")[0]).hasClass('oe_hidden')){
-                        
-                        if (event.which === 113) {
-                            //$($(document).find("button.button.pay")).trigger("click");
-                            $($(document).find("#direct")).trigger("click");
+                        if (event.which === 27) {
+                            $($(document).find("#searchProducts")).trigger("click");  
                         }
-                        if (event.which === 115) {
-                            $($(document).find("div.button.next")[0]).trigger("click");
-                            $($(document).find("div.button.next.highlight")[0]).trigger("click");
-                            console.log("bus", NumberBuffer.getFloat()) 
-                        }
+                       
                     } 
                 };
                 document.body.addEventListener('keyup', this.hotkey_handler);

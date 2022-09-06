@@ -1,0 +1,243 @@
+
+.pos .search-box input {
+    width: 150px;
+}
+
+/*Autocomplete */
+.ui-autocomplete-input {
+   max-height: 500px !important;
+   height: auto;
+   min-height:0px;
+   width: 150px;
+   background: #ffffff;
+   overflow-y: auto;
+   overflow-x: hidden;
+   z-index: 1000 !important;
+   cursor: pointer;
+   list-style: none;
+   width: 210px;
+   padding-left: 0px;
+   border-radius: 20px;
+}
+
+.ui-autocomplete li{
+    padding: 10px 10px;
+}
+
+.ui-state-focus {
+    background: none;
+    background-color: #7f82acb3;
+}
+
+
+
+
+.modal-contenido{
+  background-color:aqua;
+  width:300px;
+  padding: 10px 20px;
+  margin: 20% auto;
+  position: relative;
+}
+.modal{
+  background-color: rgba(0,0,0,.8);
+  position:fixed;
+  top:0;
+  right:0;
+  bottom:0;
+  left:0;
+  opacity:0;
+  pointer-events:none;
+}
+#miModal:target{
+  opacity:1;
+  pointer-events:auto;
+}
+
+
+
+.flex-justify-content {
+    display: flex;
+}
+
+.note-save-quotation {
+    margin: 15px 9px;
+    padding: 9px;
+}
+
+.flex-justify-content textarea {
+    resize: none;
+}
+
+.quote-id-value {
+    margin: 14px;
+    color: #875a7b;
+}
+
+.quote-id {
+    margin: 15px 9px;
+}
+
+.quotations_suggestions ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.quotations_suggestions {
+    display: block;
+    position: absolute;
+    width: 38%;
+    max-height: 100px;
+    margin-left: 5%;
+    box-shadow: 0px 2px 2px 2px #9E9E9E;
+    overflow-y: auto;
+}
+
+#quotation_suggestion_id::-webkit-scrollbar-thumb
+{
+  border-radius: 50%;
+  background-color: #9E9E9E;
+}
+#quotation_suggestion_id::-webkit-scrollbar {
+   width: 0.5em;
+   height: 0.5em;
+}
+
+
+.quotations_suggestions li:hover {
+    background: #8BC34A;
+}
+
+
+
+
+
+#myInput {
+  background-position: 10px 12px; /* Position the search icon */
+  background-repeat: no-repeat; /* Do not repeat the icon image */
+  width: 100%; /* Full-width */
+  font-size: 16px; /* Increase font-size */
+  padding: 12px 20px 12px 40px; /* Add some padding */
+  border: 1px solid #ddd; /* Add a grey border */
+  margin-bottom: 12px; /* Add some space below the input */
+}
+
+#myTable {
+  border-collapse: collapse; /* Collapse borders */
+  width: 97%; /* Full-width */
+  border: 1px solid #ddd; /* Add a grey border */
+  font-size: 18px; /* Increase font-size */
+  background-color: white;
+  /*background-color: #f1f1f1;*/
+  width: 650px;
+}
+
+#myTable th, #myTable td {
+  text-align: left; /* Left-align text */
+  padding: 12px; /* Add padding */
+}
+
+#myTable tr {
+  /* Add a bottom border to all table rows */
+  border-bottom: 1px solid #ddd;
+}
+
+#myTable tr.header, #myTable tr:hover {
+  /* Add a grey background color to the table header and on hover */
+  background-color: #f1f1f1;
+}
+
+
+.flexy {
+  display: block;
+  border: 1px solid #eee;
+  max-height: 1200px;
+  max-width: 1300px;
+  overflow: auto;
+  height: 270px;
+  -webkit-flex-flow: row wrap;
+
+  width: 500px;
+  padding: 50px;
+  margin: 20px;
+}
+
+.rowsProduct {
+  background: #333;
+  color: #fff;
+  
+}
+
+.teclasFunciones{
+  background: #333;
+  color: #fff;
+  font-size: 17px;
+  
+}
+
+
+.rpendiente {
+  background: #333;
+  color: #fff;
+  background-color: #F0EEEE;
+  
+}
+
+.search-box-em input[type=text] {
+  float: center;
+  padding: 6px;
+  border: 4px;
+  margin-top: 8px;
+  margin-right: 16px;
+  font-size: 23px;
+  width: 300px;
+}
+
+
+
+
+.pos .modal-dialog-search .popup-search {
+    position: absolute;
+    margin: auto;
+    max-width: 700px;
+    width: 100%;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 10px 20px rgb(0 0 0 / 40%);
+    z-index: 1200;
+    font-family: 'Lato';
+    font-family: Lato;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #f0eeee;
+}
+
+
+.targeta {
+  width: 65%;
+  padding: 8px 10px;
+  margin: 3px 0;
+  box-sizing: border-box;
+}
+
+.targetaRed {
+  width: 65%;
+  padding: 8px 10px;
+  margin: 1px 0;
+  box-sizing: border-box;
+  background-color: #ff0000;
+}
+
+.targetas {
+  width: 80%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+}
+
+
