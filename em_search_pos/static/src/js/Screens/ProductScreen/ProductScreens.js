@@ -21,22 +21,7 @@ odoo.define('em_search_pos.ProductScreens', function (require) {
             constructor() {
                 super(...arguments);
 
-                document.body.removeEventListener('keyup',this.hotkey_handler);
-                
-                this.hotkey_handler = function(event){
-
-                    if(!$($(document).find("div.payment-screen.screen")[0]).hasClass('oe_hidden')){
-                        if (event.which === 27) {
-                            $($(document).find("#searchProducts")).trigger("click");  
-                        }
-                        
-                        
-                    } 
-                };
-                document.body.addEventListener('keyup', this.hotkey_handler);
                
-                
-                this.payment_methods_from_config = this.env.pos.payment_methods.filter(method => this.env.pos.config.payment_method_ids.includes(method.id));
                 
                 
             }

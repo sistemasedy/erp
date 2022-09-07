@@ -26,6 +26,9 @@ odoo.define('pos_margin.ProductScreens', function (require) {
                 this.hotkey_handler = function(event){
 
                     if(!$($(document).find("div.payment-screen.screen")[0]).hasClass('oe_hidden')){
+                        if (event.which === 27) {
+                            $($(document).find("#searchProducts")).trigger("click");  
+                        }
                         
                         
                         if (event.which === 113) {
