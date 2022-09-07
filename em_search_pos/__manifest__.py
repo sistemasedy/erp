@@ -19,7 +19,7 @@
 #
 #################################################################################
 {
-    'name': "EM Search Pos",
+    'name': "EM Pos Search",
     'author': 'Emsoft dom Ltd.',
     'category': 'Point of Sale',
     'summary': """Emsoft for point of sale""",
