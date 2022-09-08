@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "Odoo POS Add Product",
+    'name': "EM POS Add Product",
 
     'summary': """
         Add product in odoo point of sale screen""",

@@ -14,6 +14,7 @@ odoo.define('pos_inherited.Add_product_popup', function (require) {
                 inputName: '',
                 inputCategory: '',
                 unitMeasure: '',
+                inputBarcode: '',
             });
             this.inputAmountRef = owl.hooks.useRef('input-amount-ref');
         }
@@ -24,11 +25,13 @@ odoo.define('pos_inherited.Add_product_popup', function (require) {
             var price = this.state.inputAmount;
             var unit = this.state.unitMeasure;
             var product_type = this.state.inputType;
+            var barcode = this.state.inputBarcode;
             lis_vals.push(product_category);
             lis_vals.push(product);
             lis_vals.push(price);
             lis_vals.push(product_type);
             lis_vals.push(unit);
+            lis_vals.push(barcode);
             return lis_vals
         }
     }

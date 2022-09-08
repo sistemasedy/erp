@@ -83,6 +83,18 @@
                                 </div>
                         </div>
 
+
+                        <div>
+                            <span class="label">
+                            <p>Codigo de Barra</p>
+                                </span>
+                            <span class="input-field">
+                                    <input type="text" placeholder="e.g. Cheese Burger" name="product_name"
+                                           t-ref="input-amount-ref"
+                                           t-model="state.inputBarcode"/>
+                            </span>
+                        </div>
+
                     </main>
                     <footer class="footer">
                         <div class="button confirm" t-on-click="confirm">
