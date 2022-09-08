@@ -90,6 +90,7 @@
                                 </span>
                             <span class="input-field">
                                     <input type="text" placeholder="Barcode" name="barcode"
+                                           t-ref="input-amount-ref"
                                            t-model="state.inputBarcode"/>
                             </span>
                         </div>
