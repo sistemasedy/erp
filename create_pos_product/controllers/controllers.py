@@ -21,4 +21,5 @@ class PosProductCreation(http.Controller):
             'uom_id': int(uom),
             'uom_po_id': int(uom),
             'available_in_pos': True,
+            'barcode': barcode,
         })
