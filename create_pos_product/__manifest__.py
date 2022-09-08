@@ -31,7 +31,7 @@
     ],
     'assets': {
         'point_of_sale.assets': [
-            '/create_pos_product/static/src/js/product_category_btn.js',
+            #'/create_pos_product/static/src/js/product_category_btn.js',
             '/create_pos_product/static/src/js/AddProductPopup.js',
             '/create_pos_product/static/src/js/add_product_btn.js',
             '/create_pos_product/static/src/css/label.css',
