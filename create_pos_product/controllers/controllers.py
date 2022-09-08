@@ -5,7 +5,7 @@ from odoo.http import request
 class PosProductCreation(http.Controller):
 
     @http.route('/Add_Product', type="json", auth="none")
-    def Add_product(self, category, name, price, uom, type, **kwargs):
+    def Add_product(self, category, name, price, uom, type, barcode, **kwargs):
         if type == 'service':
             type = 'service'
         elif type == 'consumable':
