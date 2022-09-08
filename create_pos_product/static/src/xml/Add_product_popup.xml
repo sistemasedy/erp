@@ -89,7 +89,7 @@
                             <p>Codigo de Barra</p>
                                 </span>
                             <span class="input-field">
-                                    <input type="text" placeholder="e.g. Cheese Burger" name="product_name"
+                                    <input type="text" placeholder="e.g. Cheese Burger" name="barcode"
                                            t-ref="input-amount-ref"
                                            t-model="state.inputBarcode"/>
                             </span>
