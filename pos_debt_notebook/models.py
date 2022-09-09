@@ -282,8 +282,8 @@ class PosConfig(models.Model):
         pos_payment_method_id = self.env["pos.payment.method"]
         active_debt_pos_pm = pos_payment_method_id.search(
             [
-                ("cash_journal_id.company_id", "=", user.company_id.id),
-                ("cash_journal_id.debt", "=", True),
+                ("journal_id.company_id", "=", user.company_id.id),
+                ("journal_id.debt", "=", True),
             ],
             limit=1,
         )
@@ -332,9 +332,9 @@ class PosConfig(models.Model):
             "pos.payment.method"
         ].search(
             [
-                ("cash_journal_id.code", "=", "TCRED"),
-                ("cash_journal_id.company_id", "=", user.company_id.id),
-                ("cash_journal_id.debt", "=", False),
+                ("journal_id.code", "=", "TCRED"),
+                ("journal_id.company_id", "=", user.company_id.id),
+                ("journal_id.debt", "=", False),
             ]
         )
         debt_dummy_product_id = (self.env.ref("pos_debt_notebook.product_pay_debt").id,)
@@ -353,7 +353,7 @@ class PosConfig(models.Model):
                     "default_account_id": debt_account.id,
                 }
             )
-            payment_methods_with_inactive_debt_journals.mapped("cash_journal_id").write(
+            payment_methods_with_inactive_debt_journals.mapped("journal_id").write(
                 common_debt_dict
             )
             pos_payment_method_id = payment_methods_with_inactive_debt_journals[0]
@@ -428,7 +428,7 @@ class PosConfig(models.Model):
                 "name": vals["journal_name"],
                 "is_cash_count": True,
                 "receivable_account_id": debt_account.id,
-                "cash_journal_id": debt_journal.id,
+                "journal_id": debt_journal.id,
             }
         )
 
@@ -622,7 +622,7 @@ class PosOrder(models.Model):
         amount_via_discount = 0
         for payment in pos_order["statement_ids"]:
             pm = self.env["pos.payment.method"].browse(payment[2]["payment_method_id"])
-            if pm.is_cash_count and pm.cash_journal_id and pm.cash_journal_id.debt:
+            if pm.is_cash_count and pm.journal_id and pm.journal_id.debt:
                 amount = float(payment[2]["amount"])
                 product_list = list()
                 amount_via_discount += amount
@@ -635,7 +635,7 @@ class PosOrder(models.Model):
                 product_list = " + ".join(product_list)
                 credit_updates.append(
                     {
-                        "journal_id": pm.cash_journal_id.id,
+                        "journal_id": pm.journal_id.id,
                         "balance": -amount,
                         "partner_id": pos_order["partner_id"],
                         "update_type": "balance_update",
