@@ -45,6 +45,7 @@ class PosDebtReport(models.Model):
     )
     product_list = fields.Text("Product List", readonly=True)
 
+
     def init(self):
         tools.drop_view_if_exists(self._cr, "report_pos_debt")
         self._cr.execute(
@@ -78,7 +79,7 @@ class PosDebtReport(models.Model):
                 FROM account_bank_statement_line as st_line
                     LEFT JOIN account_bank_statement st ON (st.id=st_line.statement_id)
                     LEFT JOIN account_journal journal ON (journal.id=st.journal_id)
-                    LEFT JOIN pos_order o ON (o.id=st_line.pos_statement_id)
+                    #LEFT JOIN pos_order o ON (o.id=st_line.pos_statement_id)
 
                     LEFT JOIN pos_session session ON (session.id=o.session_id)
                     LEFT JOIN product_pricelist pricelist ON (pricelist.id=o.pricelist_id)
