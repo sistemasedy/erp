@@ -7,4 +7,24 @@
             </t>
     	</xpath>
     </t>
+
+        <t
+        t-name="ClientListScreen"
+        t-inherit="point_of_sale.ClientListScreen"
+        t-inherit-mode="extension"
+        owl="1"
+    >
+        
+        <xpath expr="//table[hasclass('client-list')]/thead/tr" position="inside">
+            <th >
+                Credito
+            </th>
+            <th >
+                Limite
+            </th>
+            
+        </xpath>
+        
+        
+    </t>
 </templates>
