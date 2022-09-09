@@ -248,9 +248,9 @@
         <field name="model">pos.session</field>
         <field name="inherit_id" ref="point_of_sale.view_pos_session_form" />
         <field name="arch" type="xml">
-            <xpath expr="//notebook" position="after">
+            <!-- <xpath expr="//notebook" position="after"> -->
                 <!-- <field name="pos_credit_update_balance"/> -->
-            </xpath>
+            <!-- </xpath> -->
         </field>
     </record>
 </odoo>
