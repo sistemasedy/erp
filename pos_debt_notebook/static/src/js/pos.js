@@ -42,9 +42,9 @@ odoo.define("pos_debt_notebook.pos", function (require) {
                 ids: function (self) {
                     return _.chain(self.payment_methods)
                         .filter(function (pm) {
-                            return pm.cash_journal_id;
+                            return pm.journal_id;
                         })
-                        .map("cash_journal_id")
+                        .map("journal_id")
                         .map("0")
                         .uniq()
                         .value();
@@ -53,12 +53,12 @@ odoo.define("pos_debt_notebook.pos", function (require) {
                     _.each(self.payment_methods, function (pm) {
                         pm.journal =
                             _.find(journals, function (j) {
-                                return j.id === pm.cash_journal_id[0];
+                                return j.id === pm.journal_id[0];
                             }) || {};
                     });
                 },
             });
-            models.load_fields("pos.payment.method", ["cash_journal_id"]);
+            models.load_fields("pos.payment.method", ["journal_id"]);
             models.load_fields("product.product", ["credit_product"]);
             _super_posmodel.initialize.apply(this, arguments);
         },
@@ -786,7 +786,7 @@ odoo.define("pos_debt_notebook.pos", function (require) {
                         var sum_pl = order.get_summary_for_cashregister(cr);
                         // No need to check that debt_limit is in limits by the reason of get_payment_limits definition
                         if (sum_pl > limits.debt_limit) {
-                            flag = cr.cash_journal_id[1];
+                            flag = cr.journal_id[1];
                         }
                     });
                     return flag;
