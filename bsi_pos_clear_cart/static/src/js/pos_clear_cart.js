@@ -19,7 +19,8 @@ odoo.define('bsi_pos_clear_cart.ClearCart', function(require) {
                 while(order.get_selected_orderline()) {
                     order.remove_orderline(order.get_selected_orderline())
                 }
-                console.log(this.env.pos)   
+                console.log(this.env.pos)
+                console.log(this.env.pos.get_order())   
             }
             
        }
