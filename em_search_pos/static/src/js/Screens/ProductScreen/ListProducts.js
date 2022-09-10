@@ -16,6 +16,7 @@ odoo.define('point_of_sale.ListProducts', function(require) {
                 this.trigger('click-product', this.props.product);
             }
         }
+        
         get imageUrl() {
             const product = this.props.product;
             return `/web/image?model=product.product&field=image_128&id=${product.id}&write_date=${product.write_date}&unique=1`;

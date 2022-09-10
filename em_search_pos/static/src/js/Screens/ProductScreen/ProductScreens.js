@@ -21,9 +21,17 @@ odoo.define('em_search_pos.ProductScreens', function (require) {
             constructor() {
                 super(...arguments);
 
+                console.log(client)
+
                
                 
                 
+            }
+
+            get client() {
+                const client = this.env.pos.get_client();
+
+                return client;
             }
 
             
