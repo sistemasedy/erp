@@ -14,18 +14,14 @@ odoo.define('bsi_pos_clear_cart.ClearCart', function(require) {
                 this.clear_button_fun();
            }
            clear_button_fun(){
-                const client = this.env.pos.get_client();
+                //const client = this.env.pos.get_client();
                 var order = this.env.pos.get_order();
                 while(order.get_selected_orderline()) {
                     order.remove_orderline(order.get_selected_orderline())
                 }
-                console.log(client)   
+                console.log(this.env.pos.get_client())   
             }
-            get client() {
-                const client = this.env.pos.get_client();
-
-                return client;
-            }
+            
        }
        ClearCart.template = 'ClearCart';
        ProductScreen.addControlButton({
