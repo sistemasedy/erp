@@ -24,6 +24,14 @@ odoo.define('bsi_pos_clear_cart.ClearCart', function(require) {
            }
 
 
+           get clien() {
+               
+            return this.env.pos.get_client();
+           }
+
+
+
+
            onClick() {
                 var self = this;
                 this.clear_button_fun();
@@ -34,6 +42,7 @@ odoo.define('bsi_pos_clear_cart.ClearCart', function(require) {
                 while(order.get_selected_orderline()) {
                     order.remove_orderline(order.get_selected_orderline())
                 }
+                console.log(this.clien)
                 console.log(this.clients)  
             }
             
