@@ -42,8 +42,9 @@ odoo.define('bsi_pos_clear_cart.ClearCart', function(require) {
                 while(order.get_selected_orderline()) {
                     order.remove_orderline(order.get_selected_orderline())
                 }
-                console.log(this.clien)
-                console.log(this.clients)  
+                console.log(this.clients.email)
+                console.log(this.clients.property_product_pricelist)
+                console.log(this.clients.property_account_position_id)  
             }
             
        }
