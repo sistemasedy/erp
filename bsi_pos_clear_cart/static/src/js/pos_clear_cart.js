@@ -8,7 +8,22 @@ odoo.define('bsi_pos_clear_cart.ClearCart', function(require) {
            constructor() {
                super(...arguments);
                useListener('click', this.onClick);
-           }  
+               this.state = {
+                 query: null,
+               };
+           }
+
+           get clients() {
+               let res;
+               if (this.state.query && this.state.query.trim() !== '') {
+                   res = this.env.pos.db.search_partner(this.state.query.trim());
+               } else {
+                   res = this.env.pos.db.get_partners_sorted(1000);
+               }
+            return res.sort(function (a, b) { return (a.name || '').localeCompare(b.name || '') });
+           }
+
+
            onClick() {
                 var self = this;
                 this.clear_button_fun();
@@ -19,8 +34,7 @@ odoo.define('bsi_pos_clear_cart.ClearCart', function(require) {
                 while(order.get_selected_orderline()) {
                     order.remove_orderline(order.get_selected_orderline())
                 }
-                console.log(this.env.pos)
-                console.log(this.env.pos.get_order())   
+                console.log(clients)  
             }
             
        }
