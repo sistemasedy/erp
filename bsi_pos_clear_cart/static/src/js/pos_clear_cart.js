@@ -14,7 +14,7 @@ odoo.define('bsi_pos_clear_cart.ClearCart', function(require) {
             models.load_models({
                 model: "res.partner",
                 fields: [
-                    "cedit",
+                    "credit",
                 ],
             });
           },
