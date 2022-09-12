@@ -4,13 +4,19 @@ odoo.define('bsi_pos_clear_cart.ClearCart', function(require) {
        const ProductScreen = require('point_of_sale.ProductScreen');
        const { useListener } = require('web.custom_hooks');
        const Registries = require('point_of_sale.Registries');
-       models.load_fields('res.partner', [
-            'credit',
-            'credit_limit',
-            'due_amount',
-        ]);
+       var models = require("point_of_sale.models");
 
 
+       models.PosModel = models.PosModel.extend({
+            initialize: function (session, attributes) {
+                models.load_models({
+                    model: "res.partner",
+                    fields: [
+                        "due_amount",
+                    ],
+            },
+        
+       });
        class ClearCart extends PosComponent {
            constructor() {
                super(...arguments);
