@@ -8,6 +8,21 @@ odoo.define('bsi_pos_clear_cart.ClearCart', function(require) {
 
 
 
+       models.PosModel = models.PosModel.extend({
+          initialize: function (session, attributes) {
+
+            models.load_models({
+                model: "res.partner",
+                fields: [
+                    "credit",
+                ],
+            });
+          },
+        
+
+
+
+       });
        
 
       
