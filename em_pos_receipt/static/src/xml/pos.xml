@@ -27,4 +27,27 @@
         
         
     </t>
+
+
+    <t
+        t-extend="ClientLine"
+        t-inherit="point_of_sale.ClientLine"
+        t-inherit-mode="extension"
+        owl="1"
+    >
+        <xpath expr="//tr" position="inside">
+            <td
+            >
+                <t
+                    t-esc='env.pos.format_currency(-props.partner.due_amount)'
+                />
+            </td>
+            <td>
+                <t t-esc='env.pos.format_currency(-props.partner.credit)'/>
+            </td>
+            
+        </xpath>
+    </t>
+
+    
 </templates>
