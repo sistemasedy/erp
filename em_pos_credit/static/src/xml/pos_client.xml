@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">    
+    <t
+        t-name="ClientListScreen"
+        t-inherit="point_of_sale.ClientListScreen"
+        t-inherit-mode="extension"
+        owl="1"
+    >
+        
+        <xpath expr="//table[hasclass('client-list')]/thead/tr" position="inside">
+            <th >
+                Deuda
+            </th>
+            <th >
+                Limite
+            </th>
+            
+        </xpath>
+        
+        
+    </t>
+
+
+    <t
+        t-extend="ClientLine"
+        t-inherit="point_of_sale.ClientLine"
+        t-inherit-mode="extension"
+        owl="1"
+    >
+        <xpath expr="//tr" position="inside">
+            <td
+            >
+                <t
+                    t-esc='env.pos.format_currency(-props.partner.due_amount)'
+                />
+            </td>
+            <td>
+                <t t-esc='env.pos.format_currency(-props.partner.credit_limit)'/>
+            </td>
+            
+        </xpath>
+    </t>
+
+</templates>

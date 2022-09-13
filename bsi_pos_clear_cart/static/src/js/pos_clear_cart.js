@@ -4,12 +4,7 @@ odoo.define('bsi_pos_clear_cart.ClearCart', function(require) {
        const ProductScreen = require('point_of_sale.ProductScreen');
        const { useListener } = require('web.custom_hooks');
        const Registries = require('point_of_sale.Registries');
-       const models = require("point_of_sale.models");
-
-       models.load_fields("res.partner", ["credit", "credit_limit", "due_amount"]);
-
-
-
+       
       
        class ClearCart extends PosComponent {
            constructor() {
@@ -20,21 +15,7 @@ odoo.define('bsi_pos_clear_cart.ClearCart', function(require) {
                };
            }
 
-           get clients() {
-               let res;
-               if (this.state.query && this.state.query.trim() !== '') {
-                   res = this.env.pos.db.search_partner(this.state.query.trim());
-               } else {
-                   res = this.env.pos.db.get_partners_sorted(1000);
-               }
-            return res.sort(function (a, b) { return (a.name || '').localeCompare(b.name || '') });
-           }
-
-
-           get clien() {
-               
-            return this.env.pos.get_client();
-           }
+         
 
 
 
@@ -49,9 +30,7 @@ odoo.define('bsi_pos_clear_cart.ClearCart', function(require) {
                 while(order.get_selected_orderline()) {
                     order.remove_orderline(order.get_selected_orderline())
                 }
-                console.log(this.clients)
-                console.log(this.clients[0].property_product_pricelist)
-                console.log(this.clients[0].property_account_position_id)  
+                
             }
             
        }
