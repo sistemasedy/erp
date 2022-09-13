@@ -16,6 +16,9 @@ odoo.define('bsi_pos_clear_cart.ClearCart', function(require) {
                 fields: [
                     "credit",
                 ],
+                loaded: function (self, programs) {
+                   self.programs = programs;
+                },
             });
           },
         
