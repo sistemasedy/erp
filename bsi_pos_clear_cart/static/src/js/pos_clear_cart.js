@@ -4,7 +4,7 @@ odoo.define('bsi_pos_clear_cart.ClearCart', function(require) {
        const ProductScreen = require('point_of_sale.ProductScreen');
        const { useListener } = require('web.custom_hooks');
        const Registries = require('point_of_sale.Registries');
-       var models = require("point_of_sale.models");
+       const models = require("point_of_sale.models");
 
 
 
