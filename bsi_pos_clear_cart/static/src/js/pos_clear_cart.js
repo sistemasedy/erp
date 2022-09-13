@@ -6,7 +6,7 @@ odoo.define('bsi_pos_clear_cart.ClearCart', function(require) {
        const Registries = require('point_of_sale.Registries');
        const models = require("point_of_sale.models");
 
-       models.load_fields("res.partner", ["credit"]);
+       models.load_fields("res.partner", ["credit", "credit_limit", "due_amount"]);
 
 
 
