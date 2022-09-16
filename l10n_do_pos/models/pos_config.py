@@ -29,6 +29,7 @@ class PosConfig(models.Model):
         default=10,
     )
     l10n_latam_country_code = fields.Char(
+        related="company_id.country_id.code",
         help="Technical field used to hide/show fields regarding the localization",
     )
 

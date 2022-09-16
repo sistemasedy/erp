@@ -29,7 +29,7 @@ class AccountMoveReversal(models.TransientModel):
 
     @api.model
     def _default_account(self):
-        move_type = self._context.get("type")
+        move_type = self._context.get("move_type")
         journal = (
             self.env["account.move"]
             .with_context(
@@ -41,8 +41,8 @@ class AccountMoveReversal(models.TransientModel):
             return journal.default_credit_account_id.id
         return journal.default_debit_account_id.id
 
-    l10n_latam_country_code = fields.Char(
-        related="move_id.company_id.l10n_do_country_code",
+    country_code = fields.Char(
+        related="company_id.country_code",
         help="Technical field used to hide/show fields regarding the localization",
     )
     refund_type = fields.Selection(
@@ -66,7 +66,26 @@ class AccountMoveReversal(models.TransientModel):
     is_ecf_invoice = fields.Boolean(
         string="Is Electronic Invoice",
     )
-    is_l10n_do_internal_sequence = fields.Boolean("Is internal sequence")
+
+    @api.depends(
+        "l10n_latam_document_type_id", "country_code", "l10n_latam_use_documents"
+    )
+    def _compute_l10n_latam_manual_document_number(self):
+        self.l10n_latam_manual_document_number = False
+        l10n_do_recs = self.filtered(
+            lambda r: r.move_ids
+            and r.l10n_latam_use_documents
+            and r.country_code == "DO"
+        )
+        for rec in l10n_do_recs:
+            move = rec.move_ids[0]
+            rec.l10n_latam_manual_document_number = (
+                move.l10n_latam_manual_document_number
+            )
+
+        super(
+            AccountMoveReversal, self - l10n_do_recs
+        )._compute_l10n_latam_manual_document_number()
 
     @api.model
     def default_get(self, fields):
@@ -78,7 +97,7 @@ class AccountMoveReversal(models.TransientModel):
         )
         move_ids_use_document = move_ids.filtered(
             lambda move: move.l10n_latam_use_documents
-            and move.company_id.l10n_do_country_code == "DO"
+            and move.company_id.country_code == "DO"
         )
 
         if len(move_ids_use_document) > 1:
@@ -92,9 +111,6 @@ class AccountMoveReversal(models.TransientModel):
             res["is_ecf_invoice"] = move_ids_use_document[
                 0
             ].company_id.l10n_do_ecf_issuer
-            res["is_l10n_do_internal_sequence"] = move_ids_use_document[
-                0
-            ].is_l10n_do_internal_sequence
 
         return res
 
@@ -120,6 +136,5 @@ class AccountMoveReversal(models.TransientModel):
                 amount=self.amount,
                 reason=self.reason,
                 l10n_do_ecf_modification_code=self.l10n_do_ecf_modification_code,
-                is_internal_purchase_refund=self.is_l10n_do_internal_sequence,
             ),
         ).reverse_moves()
