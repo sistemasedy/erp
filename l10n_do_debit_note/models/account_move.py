@@ -69,11 +69,15 @@ class AccountMove(models.Model):
     def init(self):  # DO NOT FORWARD PORT
         """
         Fill debit_origin_id field of all existing debit notes
-        """
 
         debit_notes = self.search(
             [("is_debit_note", "=", True), ("debit_origin_id", "=", False)]
         )
+
+
+        """
+
+        
 
         for dn in debit_notes:
             debit_origin_id = self.search(
