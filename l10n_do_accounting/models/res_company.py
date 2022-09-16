@@ -4,6 +4,7 @@ from odoo import fields, models
 class ResCompany(models.Model):
     _inherit = "res.company"
 
+    l10n_do_country_code = fields.Char(related="country_id.code", string="Country Code")
     l10n_do_dgii_start_date = fields.Date("Activities Start Date")
 
     l10n_do_default_client = fields.Selection(

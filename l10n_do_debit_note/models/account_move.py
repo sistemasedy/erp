@@ -1,12 +1,8 @@
-from odoo import models, fields, _
+from odoo import models, _
 
 
 class AccountMove(models.Model):
     _inherit = "account.move"
-
-    is_debit_note = fields.Boolean(
-        string="Nota de de Debito",
-    )
 
     def _get_debit_line_tax(self, debit_date):
 
@@ -73,15 +69,11 @@ class AccountMove(models.Model):
     def init(self):  # DO NOT FORWARD PORT
         """
         Fill debit_origin_id field of all existing debit notes
-
-        
         """
 
         debit_notes = self.search(
             [("is_debit_note", "=", True), ("debit_origin_id", "=", False)]
         )
-
-        
 
         for dn in debit_notes:
             debit_origin_id = self.search(

@@ -77,7 +77,7 @@ class Partner(models.Model):
             .search(
                 [
                     ("l10n_latam_use_documents", "=", True),
-                    ("country_code", "=", "DO"),
+                    ("company_id.partner_id.country_id.code", "=", "DO"),
                     ("commercial_partner_id", "=", self.id),
                     ("state", "=", "posted"),
                 ],
