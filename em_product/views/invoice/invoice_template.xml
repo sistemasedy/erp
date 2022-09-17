@@ -16,11 +16,7 @@
             <div class="page">
                     <h2>
                         
-                        <span t-if="o.type == 'out_invoice' and o.state == 'draft'">Draft Invoice</span>
-                        <span t-if="o.type == 'out_invoice' and o.state == 'cancel'">Cancelled Invoice</span>
-                        <span t-if="o.type == 'out_refund'">Credit Note</span>
-                        <span t-if="o.type == 'in_refund'">Vendor Credit Note</span>
-                        <span t-if="o.type == 'in_invoice'">Vendor Bill</span>
+                        
                         <span t-field="o.l10n_do_fiscal_number"/>
                     </h2>
 
