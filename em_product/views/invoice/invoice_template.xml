@@ -13,11 +13,10 @@
         <t t-call="em_product.external_layout">
             <t t-set="o" t-value="o.with_context(lang=lang)" />
             
-            
-
-
             <div class="page">
-                    <div id="informations" class="row mt32 mb32">
+
+
+                <div id="informations" class="row mt32 mb32">
                     <div class="col-auto col-3 mw-100 mb-2" >
                         
                         <strong>INSTITUCION:</strong>
@@ -121,7 +120,7 @@
                     </tbody>
                 </table>
 
-                    <div class="clearfix">
+                <div class="clearfix">
                         <div id="total" class="row">
                             <div t-attf-class="#{'col-6' if report_type != 'html' else 'col-sm-7 col-md-6'} ml-auto">
                                 <table class="table table-sm" style="page-break-inside: avoid;">
@@ -179,10 +178,8 @@
                             <img class="border border-dark rounded" t-att-src="qr_code_urls[o.id]"/>
                         </p>
                     </div>
-                </div>
-
-
-
+                
+            </div>
         </t>
     </template>
 
@@ -438,7 +435,7 @@
                     <div class="col-auto col-3 mw-100 mb-2" t-if="o.invoice_date_due and o.move_type == 'out_invoice' and o.state == 'posted'" name="due_date">
                         <strong>FACTURA:</strong><br/>
                         FECHA:<span class="m-0" t-field="o.invoice_date_due"/><br/>
-                        <span t-if="o.name != '/'" t-field="o.entry_number"/><br/>
+                        <span t-if="o.name != '/'" t-field="o.l10n_do_fiscal_number"/><br/>
                         <span>VENCE EL 31 DE DICIEMBRE 2023</span>
                     </div>
                 </div>
