@@ -14,7 +14,7 @@
                                 <field name="currency_id" invisible="1"/>
                                 <field name="payment_amount_due_amt" widget='monetary' options="{'currency_field': 'currency_id'}"/>
                             </span>
-                            <span class="o_stat_text">Deuda Pendiente</span>
+                            <span class="o_stat_text">Cta por Cobrar</span>
                         </div>
                     </button>
                     <button type="object" class="oe_stat_button" icon="fa-pencil-square-o" name="action_view_amount_to_pay"
@@ -24,7 +24,7 @@
                                 <field name="currency_id" invisible="1"/>
                                 <field name="payment_amount_due_amt_supplier" widget='monetary' options="{'currency_field': 'currency_id'}"/>
                             </span>
-                            <span class="o_stat_text">Pagado</span>
+                            <span class="o_stat_text">Cta por Pagar</span>
                         </div>
                     </button>
                 </xpath>
@@ -53,10 +53,10 @@
                             <span class="oe_kanban_partner_links"/>
                         </div>
                         <div>
-                            <span class="o_text_overflow">Deuda Pendiente:<field name="payment_amount_due_amt"/></span>
+                            <span class="o_text_overflow">Cta por Cobrar:<field name="payment_amount_due_amt"/></span>
                         </div>
                         <div>
-                            <span  class="o_text_overflow">Pagado:<field name="payment_amount_due_amt_supplier"/></span>
+                            <span  class="o_text_overflow">Cta por Pagar:<field name="payment_amount_due_amt_supplier"/></span>
                         </div>
                     </div>
                 </xpath>
