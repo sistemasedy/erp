@@ -44,7 +44,7 @@ odoo.define('em_pos_credit.PosClient', function(require) {
 		            });
 		            return;
 
-	            }else(){
+	            }else{
 	            	if(this.env.pos.config.cash_rounding) {
 		                if(!this.env.pos.get_order().check_paymentlines_rounding()) {
 		                    this.showPopup('ErrorPopup', {
