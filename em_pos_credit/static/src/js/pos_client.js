@@ -49,7 +49,7 @@ odoo.define('em_pos_credit.PosClient', function(require) {
 	            if (currentClient.due_amount + method > currentClient.credit_limit) {
 	            	this.showPopup('ErrorPopup', {
 		                title: this.env._t('Control de Cuenta de Clientes'),
-		                body: this.env._t("El Monto Excede el limite de Credito."),
+		                body: this.env._t("El Monto Excede el limite de Credito.", "Limite", currentClient.credit_limit ),
 		            });
 		            return;
 
