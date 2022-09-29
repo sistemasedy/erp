@@ -17,7 +17,7 @@ odoo.define('em_pos_credit.PosClient', function(require) {
 
 
 
-       models.load_fields("res.partner", ["credit", "credit_limit", "due_amount"]);
+       models.load_fields("res.partner", ["credit", "credit_limit", "due_amount", "blocking_stage"]);
        //models.load_fields("res.partner", ["credit", "credit_limit", "due_amount", "l10n_do_dgii_tax_payer_type"]);
 
 
@@ -46,10 +46,10 @@ odoo.define('em_pos_credit.PosClient', function(require) {
 
 
 	        	console.log("te", method)
-	            if (currentClient.due_amount + method > currentClient.credit_limit) {
+	            if (currentClient.due_amount + method > currentClient.blocking_stage) {
 	            	this.showPopup('ErrorPopup', {
 		                title: this.env._t('Control de Cuenta de Clientes'),
-		                body: this.env._t("El Monto Excede el limite de Credito.", "Limite", currentClient.credit_limit ),
+		                body: this.env._t("El Monto Excede el limite de Credito.", "Limite", currentClient.blocking_stage ),
 		            });
 		            return;
 
