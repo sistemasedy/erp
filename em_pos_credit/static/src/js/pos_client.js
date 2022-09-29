@@ -37,11 +37,11 @@ odoo.define('em_pos_credit.PosClient', function(require) {
 	        async validateOrder(isForceValidate) {
 	        	const order = this.currentOrder;
 	        	const currentClient = this.currentOrder.get_client();
-	        	console.log("test", order)
+	        	console.log("test", order.name)
 	            if (currentClient.due_amount > currentClient.credit_limit) {
 	            	this.showPopup('ErrorPopup', {
-		                title: this.env._t('Rounding error in payment lines'),
-		                body: this.env._t("The amount of your payment lines must be rounded to validate the transaction."),
+		                title: this.env._t('Customer Account Control'),
+		                body: this.env._t("The amount exceeds your credit limit."),
 		            });
 		            return;
 
@@ -49,8 +49,8 @@ odoo.define('em_pos_credit.PosClient', function(require) {
 	            	if(this.env.pos.config.cash_rounding) {
 		                if(!this.env.pos.get_order().check_paymentlines_rounding()) {
 		                    this.showPopup('ErrorPopup', {
-		                        title: this.env._t('Customer Account Control'),
-		                        body: this.env._t("The amount exceeds your credit limit."),
+		                    	title: this.env._t('Rounding error in payment lines'),
+		                        body: this.env._t("The amount of your payment lines must be rounded to validate the transaction."),
 		                    });
 		                    return;
 		                }
