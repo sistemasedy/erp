@@ -35,9 +35,18 @@ odoo.define('em_pos_credit.PosClient', function(require) {
 
 
 	        async validateOrder(isForceValidate) {
+	        	var method = 0
 	        	const order = this.currentOrder;
 	        	const currentClient = this.currentOrder.get_client();
-	        	console.log("test", order.paymentlines.name)
+	        	for (var i = 0; i < order.paymentlines.length; i++) {
+	        		if (order.paymentlines.models[i].name == "Cuenta de cliente") {
+	        			method = order.paymentlines.models[i].amount
+	        		}
+	        	}
+
+	        	console.log(method)
+
+	        	console.log("test", order.paymentlines.models)
 	            if (currentClient.due_amount > currentClient.credit_limit) {
 	            	this.showPopup('ErrorPopup', {
 		                title: this.env._t('Customer Account Control'),
