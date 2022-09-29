@@ -26,6 +26,9 @@ odoo.define('em_search_pos.ProductScreens', function (require) {
                 
             }
 
+
+            
+
            
 
             

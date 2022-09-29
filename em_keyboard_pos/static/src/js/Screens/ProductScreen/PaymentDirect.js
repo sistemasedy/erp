@@ -53,6 +53,9 @@ odoo.define('pos_margin.PaymentDirect', function(require) {
               }catch(error){
                 console.log("control de errror pendiente de resorver / al 03 de julio 2022")
               }
+
+
+              
            }
 
 
