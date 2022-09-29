@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates id="template" xml:space="preserve">    
     <t t-name="ClearCart" owl="1">
-        <div class="control-button" t-on-click="provar">
+        <div class="control-button">
             Limpiar
         </div>
    </t>
