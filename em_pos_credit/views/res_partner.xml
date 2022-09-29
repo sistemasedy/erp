@@ -8,7 +8,7 @@
         <field name="arch" type="xml">
             <xpath expr="//group[@name='accounting_entries']" position="after">
                 <group string="Credit Limits"
-                       name="credit_limit">
+                       name="credit_limit" groups="account.group_account_invoice,account.group_account_readonly">
                 </group>
             </xpath>
         </field>
