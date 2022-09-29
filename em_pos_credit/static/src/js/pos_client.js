@@ -21,12 +21,23 @@ odoo.define('em_pos_credit.PosClient', function(require) {
 
            
 
-           selectPaymentLine(event) {
-	            const { cid } = event.detail;
-	            const line = this.paymentLines.find((line) => line.cid === cid);
-	            this.currentOrder.select_paymentline(line);
-	            NumberBuffer.reset();
-	            this.render();
+
+
+	        addNewPaymentLine({ detail: paymentMethod }) {
+	            // original function: click_paymentmethods
+	            let result = this.currentOrder.add_paymentline(paymentMethod);
+	            if (result){
+	                NumberBuffer.reset();
+	                return true;
+	            }
+	            else{
+	                this.showPopup('ErrorPopup', {
+	                    title: this.env._t('Error'),
+	                    body: this.env._t('There is already an electronic payment in progress.'),
+	                });
+	                return false;
+	            }
+
 	            console.log("test", currentClient)
 	        }
 
