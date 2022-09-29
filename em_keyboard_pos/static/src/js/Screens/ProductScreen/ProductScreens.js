@@ -50,6 +50,12 @@ odoo.define('pos_margin.ProductScreens', function (require) {
                 
             }
 
+
+
+            provar(){
+              console.log("null")
+            }
+
             
 
          
