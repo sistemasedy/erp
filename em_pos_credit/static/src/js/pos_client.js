@@ -36,7 +36,6 @@ odoo.define('em_pos_credit.PosClient', function(require) {
 
 	        async validateOrder(isForceValidate) {
 	        	var method = 0
-	        	var method2 = 0
 	        	const order = this.currentOrder;
 	        	const currentClient = this.currentOrder.get_client();
 	        	for (var i = 0; i < order.paymentlines.length; i++) {
@@ -45,19 +44,12 @@ odoo.define('em_pos_credit.PosClient', function(require) {
 	        		}
 	        	}
 
-	        	console.log(order.paymentlines.models[0].name)
-	        	console.log(order.paymentlines.models[0])
-	        	console.log(order.paymentlines.models)
-	        	console.log(order.paymentlines)
 
 	        	console.log("te", method)
-	        	console.log("test", method2)
-
-	        	console.log("test", order.paymentlines.models)
-	            if (currentClient.due_amount > currentClient.credit_limit) {
+	            if (currentClient.due_amount + method > currentClient.credit_limit) {
 	            	this.showPopup('ErrorPopup', {
-		                title: this.env._t('Customer Account Control'),
-		                body: this.env._t("The amount exceeds your credit limit."),
+		                title: this.env._t('Control de Cuenta de Clientes'),
+		                body: this.env._t("El Monto Excede el limite de Credito."),
 		            });
 		            return;
 
