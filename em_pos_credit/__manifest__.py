@@ -29,7 +29,9 @@
     'description': """Clear the cart using a single button click in POS screen""",
     'version': '1.0',
     'depends': ['point_of_sale'],
-    'data': [],
+    'data': [
+        'views/res_partner.xml',
+    ],
     'images':  ['static/description/Pos Clear Cart Banner.gif'],
     'assets': {
         'point_of_sale.assets': [
