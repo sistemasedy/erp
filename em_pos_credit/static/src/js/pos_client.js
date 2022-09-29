@@ -34,44 +34,25 @@ odoo.define('em_pos_credit.PosClient', function(require) {
 
 
 
-	        addNewPaymentLine({ detail: paymentMethod }) {
-	            // original function: click_paymentmethods
-	            let result = this.currentOrder.add_paymentline(paymentMethod);
-	            if (result){
-	                NumberBuffer.reset();
-	                return true;
+	        async validateOrder(isForceValidate) {
+	        	const currentClient = this.currentOrder.get_client();
+	        	console.log("test", currentClient)
+	            if(this.env.pos.config.cash_rounding) {
+	                if(!this.env.pos.get_order().check_paymentlines_rounding()) {
+	                    this.showPopup('ErrorPopup', {
+	                        title: this.env._t('Rounding error in payment lines'),
+	                        body: this.env._t("The amount of your payment lines must be rounded to validate the transaction."),
+	                    });
+	                    return;
+	                }
 	            }
-	            else{
-	                this.showPopup('ErrorPopup', {
-	                    title: this.env._t('Error'),
-	                    body: this.env._t('There is already an electronic payment in progress.'),
-	                });
-	                return false;
+	            if (await this._isOrderValid(isForceValidate)) {
+	                // remove pending payments before finalizing the validation
+	                for (let line of this.paymentLines) {
+	                    if (!line.is_done()) this.currentOrder.remove_paymentline(line);
+	                }
+	                await this._finalizeValidation();
 	            }
-
-	            console.log("test", currentClient)
-	        }
-
-
-	        _updateSelectedPaymentline() {
-	            if (this.paymentLines.every((line) => line.paid)) {
-	                this.currentOrder.add_paymentline(this.payment_methods_from_config[0]);
-	            }
-	            if (!this.selectedPaymentLine) return; // do nothing if no selected payment line
-	            // disable changing amount on paymentlines with running or done payments on a payment terminal
-	            const payment_terminal = this.selectedPaymentLine.payment_method.payment_terminal;
-	            if (
-	                payment_terminal &&
-	                !['pending', 'retry'].includes(this.selectedPaymentLine.get_payment_status())
-	            ) {
-	                return;
-	            }
-	            if (NumberBuffer.get() === null) {
-	                this.deletePaymentLine({ detail: { cid: this.selectedPaymentLine.cid } });
-	            } else {
-	                this.selectedPaymentLine.set_amount(NumberBuffer.getFloat());
-	            }
-	            console.log("test")
 	        }
 
 
