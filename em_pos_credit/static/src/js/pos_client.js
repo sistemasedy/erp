@@ -71,8 +71,29 @@ odoo.define('em_pos_credit.PosClient', function(require) {
 	            } else {
 	                this.selectedPaymentLine.set_amount(NumberBuffer.getFloat());
 	            }
-	            console.log("test", currentClient)
+	            console.log("test")
 	        }
+
+
+
+	        async selectClient() {
+	            // IMPROVEMENT: This code snippet is repeated multiple times.
+	            // Maybe it's better to create a function for it.
+	            const currentClient = this.currentOrder.get_client();
+	            const { confirmed, payload: newClient } = await this.showTempScreen(
+	                'ClientListScreen',
+	                { client: currentClient }
+	            );
+	            if (confirmed) {
+	                this.currentOrder.set_client(newClient);
+	                this.currentOrder.updatePricelist(newClient);
+	            }
+
+	            console.log("test")
+	        }
+
+
+
 
 
 
