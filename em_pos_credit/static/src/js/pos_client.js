@@ -6,6 +6,17 @@ odoo.define('em_pos_credit.PosClient', function(require) {
        const Registries = require('point_of_sale.Registries');
        const models = require("point_of_sale.models");
 
+       const { parse } = require('web.field_utils');
+	   
+	   const { useErrorHandlers, useAsyncLockedMethod } = require('point_of_sale.custom_hooks');
+	   const NumberBuffer = require('point_of_sale.NumberBuffer');
+	    
+	    
+	   const { onChangeOrder } = require('point_of_sale.custom_hooks');
+	   const { isConnectionError } = require('point_of_sale.utils');
+
+
+
        models.load_fields("res.partner", ["credit", "credit_limit", "due_amount"]);
        //models.load_fields("res.partner", ["credit", "credit_limit", "due_amount", "l10n_do_dgii_tax_payer_type"]);
 
