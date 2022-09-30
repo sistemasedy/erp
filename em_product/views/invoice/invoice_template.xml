@@ -38,7 +38,7 @@
                         <strong>FACTURA:</strong>
                         <span t-field="o.sequence_number"/><br/>
                         FECHA:<span class="m-0" t-field="o.invoice_date_due"/><br/>
-                        <span t-if="o.name != '/'" t-field="o.entry_number"/><br/>
+                        <span t-if="o.name != '/'" t-field="o.l10n_do_fiscal_number"/><br/>
 
                         <span>VENCE EL 31 DE DICIEMBRE 2023</span>
                     </div>
