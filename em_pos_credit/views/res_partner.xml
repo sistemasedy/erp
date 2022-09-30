@@ -9,7 +9,7 @@
             <field name="inherit_id" ref="base.view_partner_tree"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='email']" position="after">
-                    <field name="blocking_stage"/>
+                    <field name="credit_limit"/>
                     
                 </xpath>
                 <xpath expr="//tree" position="attributes">
