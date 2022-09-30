@@ -12,6 +12,9 @@
                     <field name="blocking_stage"/>
                     
                 </xpath>
+                <xpath expr="//tree" position="attributes">
+                  <attribute name="editable">bottom</attribute>
+                </xpath>
             </field>
     </record>
 
