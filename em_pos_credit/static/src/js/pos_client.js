@@ -41,12 +41,17 @@ odoo.define('em_pos_credit.PosClient', function(require) {
 
 
 	        	console.log("te", method)
-	            if (currentClient.due_amount + method > currentClient.blocking_stage) {
-	            	this.showPopup('ErrorPopup', {
-		                title: this.env._t('Control de Cuenta de Clientes'),
-		                body: this.env._t("El Monto Excede el limite de Credito.", "Limite", currentClient.blocking_stage ),
-		            });
-		            return;
+	            if (method > 0) {
+	            	if (currentClient.due_amount + method > currentClient.blocking_stage) {
+
+	            		this.showPopup('ErrorPopup', {
+			                title: this.env._t('Control de Cuenta de Clientes'),
+			                body: this.env._t("El Monto Excede el limite de Credito.", "Limite", currentClient.blocking_stage ),
+			            });
+			            return;
+
+	            	}
+	            	
 
 	            }else{
 	            	if(this.env.pos.config.cash_rounding) {
