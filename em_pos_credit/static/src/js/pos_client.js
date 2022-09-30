@@ -29,11 +29,6 @@ odoo.define('em_pos_credit.PosClient', function(require) {
                 
             }
 
-
-           
-
-
-
 	        async validateOrder(isForceValidate) {
 	        	var method = 0
 	        	const order = this.currentOrder;
