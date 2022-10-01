@@ -26,7 +26,7 @@
                         <strong>INSTITUCION:</strong>
                         <span t-field="o.partner_id"
                                 t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}'/><br/>
-                        RNC:<span t-field="o.vat"/><br/>
+                        RNC:<span t-if="o.company_id.vat" t-field="o.company_id.vat"/>
                         
                         
                     </div>
