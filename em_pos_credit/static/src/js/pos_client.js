@@ -40,7 +40,7 @@ odoo.define('em_pos_credit.PosClient', function(require) {
 	        	}
 
 
-	        	console.log("te", method, blocking_stage)
+	        	console.log("te", method, currentClient.blocking_stage)
 
 
 	            if (method > 0) {
