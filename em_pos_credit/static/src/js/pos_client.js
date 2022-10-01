@@ -38,11 +38,6 @@ odoo.define('em_pos_credit.PosClient', function(require) {
 	        			method = order.paymentlines.models[i].amount
 	        		}
 	        	}
-
-
-	        	console.log("te", method, currentClient.blocking_stage)
-
-
 	            if (method > 0) {
 
 	            	if (currentClient.due_amount + method > currentClient.blocking_stage) {
