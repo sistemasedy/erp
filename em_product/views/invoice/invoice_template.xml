@@ -15,7 +15,7 @@
 
         <t t-call="web.external_layout">
                 <t t-set="o" t-value="o.with_context(lang=lang)" />
-                <t t-set="forced_vat" t-value="o.fiscal_position_id.foreign_vat"/> <!-- So that it appears in the footer of the report instead of the company VAT if it's set -->
+                <t t-set="forced_vat" t-value="o.fiscal_position_id.foreign_vat"/> 
                 
                 <div class="page">
 
@@ -33,7 +33,8 @@
                         <strong>FACTURA:</strong>
                         <span t-field="o.sequence_number"/><br/>
                         FECHA:<span class="m-0" t-field="o.invoice_date_due"/><br/>
-                        <span t-if="o.name != '/'" t-field="o.l10n_do_fiscal_number"/><br/>
+                        FACTURA VALIDA PARA CREDITO FISCAL<br/>
+                        NCF:<span t-if="o.name != '/'" t-field="o.l10n_do_fiscal_number"/><br/>
 
                         <span>VENCE EL 31 DE DICIEMBRE 2023</span>
                     </div>
@@ -162,9 +163,7 @@
                             </div>
                         </div>
                     </div>
-                    <p t-if="o.move_type in ('out_invoice', 'in_refund') and o.payment_reference" name="payment_communication">
-                        Please use the following communication for your payment : <b><span t-field="o.payment_reference"/></b>
-                    </p>
+                    
                     <p t-if="o.invoice_payment_term_id" name="payment_term">
                         <span t-field="o.invoice_payment_term_id.note"/>
                     </p>
@@ -423,13 +422,14 @@
 
 
     <template id="report_invoice_document_claro">
-        <t t-call="em_product.external_layout">
-            <t t-set="o" t-value="o.with_context(lang=lang)" />
-            
-            <div class="page">
+        <t t-call="web.external_layout">
+                <t t-set="o" t-value="o.with_context(lang=lang)" />
+                <t t-set="forced_vat" t-value="o.fiscal_position_id.foreign_vat"/> 
+                
+                <div class="page">
 
 
-                <div id="informations" class="row mt32 mb32">
+                    <div id="informations" class="row mt32 mb32">
                     <div class="col-auto col-3 mw-100 mb-2" >
                         
                         <strong>INSTITUCION:</strong>
@@ -439,16 +439,20 @@
                         
                     </div>
                     <div class="col-auto col-3 mw-100 mb-2" t-if="o.invoice_date_due and o.move_type == 'out_invoice' and o.state == 'posted'" name="due_date">
-                        <strong>FACTURA:</strong><br/>
+                        <strong>FACTURA:</strong>
+                        <span t-field="o.sequence_number"/><br/>
                         FECHA:<span class="m-0" t-field="o.invoice_date_due"/><br/>
-                        <span t-if="o.name != '/'" t-field="o.l10n_do_fiscal_number"/><br/>
+                        FACTURA VALIDA PARA CREDITO FISCAL<br/>
+                        NCF:<span t-if="o.name != '/'" t-field="o.l10n_do_fiscal_number"/><br/>
+
                         <span>VENCE EL 31 DE DICIEMBRE 2023</span>
                     </div>
                 </div>
+                    
 
-                <t t-set="display_discount" t-value="any(l.discount for l in o.invoice_line_ids)"/>
+                    <t t-set="display_discount" t-value="any(l.discount for l in o.invoice_line_ids)"/>
 
-                <table class="table table-sm o_main_table" name="invoice_line_table">
+                    <table class="table table-sm o_main_table" name="invoice_line_table">
                     <thead>
                         <tr>
                             <th name="th_description" class="text-left"><span>Descripcion</span></th>
@@ -504,73 +508,64 @@
                     </tbody>
                 </table>
 
-                <div class="clearfix">
-                    <div id="total" class="row">
-                        <div t-attf-class="#{'col-6' if report_type != 'html' else 'col-sm-7 col-md-6'} ml-auto">
-                            <table class="table table-sm" style="page-break-inside: avoid;">
-                                <tr class="border-black o_subtotal" style="">
-                                    <td><strong>Subtotal</strong></td>
-                                    <td class="text-right">
-                                        <span t-field="o.amount_untaxed"/>
-                                    </td>
-                                </tr>
-                                <t t-foreach="o.amount_by_group" t-as="amount_by_group">
-                                    <tr style="">
-                                        <t t-if="len(o.line_ids.filtered(lambda line: line.tax_line_id)) in [0, 1] and float_compare(o.amount_untaxed, amount_by_group[2], precision_rounding=o.currency_id.rounding) == 0">
-                                            <td><span class="text-nowrap" t-esc="amount_by_group[0]"/></td>
-                                            <td class="text-right o_price_total">
-                                                <span class="text-nowrap" t-esc="amount_by_group[3]" />
-                                            </td>
-                                        </t>
-                                        <t t-else="">
-                                            <td>
-                                                <span t-esc="amount_by_group[0]"/>
-                                                <span class="text-nowrap"> on
-                                                    <t t-esc="amount_by_group[4]"/>
-                                                </span>
-                                            </td>
-                                            <td class="text-right o_price_total">
-                                                <span class="text-nowrap" t-esc="amount_by_group[3]"/>
-                                            </td>
-                                        </t>
-                                    </tr>
-                                </t>
-                                <tr class="border-black o_total">
-                                    <td><strong>Total</strong></td>
-                                    <td class="text-right">
-                                        <span class="text-nowrap" t-field="o.amount_total"/>
-                                    </td>
-                                </tr>
-                                <t t-if="print_with_payments">
-                                    <t t-if="o.payment_state != 'invoicing_legacy'">
-                                        <t t-set="payments_vals" t-value="o.sudo()._get_reconciled_info_JSON_values()"/>
-                                        <t t-foreach="payments_vals" t-as="payment_vals">
-                                            <tr>
-                                                <td>
-                                                    <i class="oe_form_field text-right oe_payment_label">Paid on <t t-esc="payment_vals['date']" t-options='{"widget": "date"}'/></i>
-                                                </td>
-                                                <td class="text-right">
-                                                    <span t-esc="payment_vals['amount']" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
-                                                </td>
-                                            </tr>
-                                        </t>
-                                        <t t-if="len(payments_vals) > 0">
-                                            <tr class="border-black">
-                                                <td><strong>Amount Due</strong></td>
-                                                <td class="text-right">
-                                                    <span t-field="o.amount_residual"/>
-                                                </td>
-                                            </tr>
+                    <div class="clearfix">
+                        <div id="total" class="row">
+                            <div t-attf-class="#{'col-6' if report_type != 'html' else 'col-sm-7 col-md-6'} ml-auto">
+                                <table class="table table-sm" style="page-break-inside: avoid;">
+
+                                    <!--Tax totals-->
+                                    <t t-set="tax_totals" t-value="json.loads(o.tax_totals_json)"/>
+                                    <t t-call="account.document_tax_totals"/>
+
+                                    <!--Payments-->
+                                    <t t-if="print_with_payments">
+                                        <t t-if="o.payment_state != 'invoicing_legacy'">
+                                            <t t-set="payments_vals" t-value="o.sudo()._get_reconciled_info_JSON_values()"/>
+                                            <t t-foreach="payments_vals" t-as="payment_vals">
+                                                <tr>
+                                                    <td>
+                                                        <i class="oe_form_field text-right oe_payment_label">Paid on <t t-esc="payment_vals['date']" t-options='{"widget": "date"}'/></i>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <span t-esc="payment_vals['amount']" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                            <t t-if="len(payments_vals) > 0">
+                                                <tr class="border-black">
+                                                    <td><strong>Amount Due</strong></td>
+                                                    <td class="text-right">
+                                                        <span t-field="o.amount_residual"/>
+                                                    </td>
+                                                </tr>
+                                            </t>
                                         </t>
                                     </t>
-                                </t>
-                            </table>
+                                </table>
+                            </div>
                         </div>
                     </div>
+                    
+                    <p t-if="o.invoice_payment_term_id" name="payment_term">
+                        <span t-field="o.invoice_payment_term_id.note"/>
+                    </p>
+                    <div t-if="not is_html_empty(o.narration)" name="comment">
+                        <span t-field="o.narration"/>
+                    </div>
+                    <p t-if="not is_html_empty(o.fiscal_position_id.note)" name="note">
+                        <span t-field="o.fiscal_position_id.note"/>
+                    </p>
+                    <p t-if="o.invoice_incoterm_id" name="incoterm">
+                        <strong>Incoterm: </strong><span t-field="o.invoice_incoterm_id.code"/> - <span t-field="o.invoice_incoterm_id.name"/>
+                    </p>
+                    <div id="qrcode" t-if="o.display_qr_code and o.amount_residual > 0">
+                        <p t-if="qr_code_urls.get(o.id)">
+                            <strong class="text-center">Scan me with your banking app.</strong><br/><br/>
+                            <img class="border border-dark rounded" t-att-src="qr_code_urls[o.id]"/>
+                        </p>
+                    </div>
                 </div>
-                
-            </div>
-        </t>
+            </t>
     </template>
 
 
