@@ -17,7 +17,7 @@ odoo.define('em_pos_credit.PosClient', function(require) {
 
 
 
-       models.load_fields("res.partner", ["credit", "credit_limit", "due_amount", "blocking_stage"]);
+       models.load_fields("res.partner", ["credit", "credit_limit", "due_amount", "blocking_stage", "active_limit"]);
        //models.load_fields("res.partner", ["credit", "credit_limit", "due_amount", "l10n_do_dgii_tax_payer_type"]);
 
 
@@ -38,7 +38,7 @@ odoo.define('em_pos_credit.PosClient', function(require) {
 	        			method = order.paymentlines.models[i].amount
 	        		}
 	        	}
-	            if (method > 0) {
+	            if (method > 0 || currentClient.active_limit) {
 
 	            	if (currentClient.due_amount + method > currentClient.blocking_stage) {
 		            	this.showPopup('ErrorPopup', {
