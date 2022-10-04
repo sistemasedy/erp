@@ -40,7 +40,9 @@
                         <strong>FACTURA:</strong>
                         <span t-field="o.sequence_number"/><br/>
                         FECHA:<span class="m-0" t-field="o.invoice_date_due"/><br/>
-                        FACTURA VALIDA PARA CREDITO FISCAL<br/>
+                        <strong>
+                            <span t-field="o.l10n_latam_document_type_id.report_name"/>
+                        </strong><br/>
                         NCF:<span t-if="o.name != '/'" t-field="o.l10n_do_fiscal_number"/><br/>
 
                         <span>VENCE EL 31 DE DICIEMBRE 2023</span>
