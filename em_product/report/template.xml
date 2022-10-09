@@ -944,16 +944,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
         <template id="report_simple_labelmediano">
             <div style="width: 100%; display: inline-table; height: 10rem;">
                 <table style=" vertical-align: middle">
@@ -1187,16 +1177,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
         <template id="report_simple_label_unicomedianos-2">
             <div style="width: 50%; display: inline-table; height:60px;">
                 <table style="height:60px">
@@ -1240,19 +1220,15 @@
 
 
 
-
-
-
-
-
-
-
-
         <template id="report_simple_label_unicomedianos">
 
             <div style="width: 49%; display: inline-table; height:151px;">
                 <table style="height:151px">                      
                     <tr style="height:151px">
+                        <td t-att-style="make_invisible and 'visibility:hidden;'" >
+                           
+                        </td>
+
                         <td t-att-style="make_invisible and 'visibility:hidden;'" >
                             <div class="text-center" t-att-style="table_style">
                                 <div class="o_label_name">
