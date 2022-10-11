@@ -1276,12 +1276,14 @@
         <template id="report_producttemplatelabel_unicomedianos">
             <t t-call="web.basic_layout">
                 <div class="page">
-                    
-                    <t t-foreach="docs" t-as="product">
-                        <t t-call="em_product.report_simple_label_unicomedianos">
-                            <t t-set="product" t-value="product"/>
+                    <div style="width: 90%; margin-right: 150px; display: inline-table; height:42px;">
+                        <t t-foreach="docs" t-as="product">
+                            <t t-call="em_product.report_simple_label_unicomedianos">
+                                <t t-set="product" t-value="product"/>
+                            </t>
                         </t>
-                    </t>
+                    </div>
+                    
                 </div>
             </t>
         </template>
