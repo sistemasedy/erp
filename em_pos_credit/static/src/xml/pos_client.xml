@@ -20,6 +20,24 @@
         
     </t>
 
+    <t t-name="ClientDetailsEdit" t-inherit="point_of_sale.ClientDetailsEdit" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('client-details-box.clearfix')]" position="inside">
+            <div class="client-detail">
+                <span class="label">Tipo</span>
+                <select class="detail needsclick" name="property_product_pricelist"
+                        t-on-change="captureChange">
+                    <t t-foreach="env.pos.pricelists" t-as="pricelist"
+                       t-key="pricelist.id">
+                        <option t-att-value="pricelist.id"
+                                t-att-selected="props.partner.property_product_pricelist ? (pricelist.id === props.partner.property_product_pricelist[0] ? true : false) : false">
+                            <t t-esc="pricelist.display_name" />
+                        </option>
+                    </t>
+                </select>
+            </div>
+        </xpath>
+    </t>
+
     
 
 
