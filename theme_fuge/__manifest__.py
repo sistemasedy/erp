@@ -57,7 +57,7 @@
     ],
     'installable': True,
     'application': True,
-    'auto_install': False,
+    #'auto_install': False,
     'assets': {
             'web.assets_frontend': [
                 'theme_fuge/static/src/css/style.css',
