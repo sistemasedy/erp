@@ -13,7 +13,7 @@ class sale_order(models.Model):
     _description = 'Sale Order'
 
     customer_order_delivery_date = fields.Date(string='Pick-Up Date')
-    customer_order_time = fields.Datetime(string='Pick-Up Time')
+    customer_order_time = fields.Text(string='Pick-Up Time')
     customer_order_delivery_comment = fields.Text(string='Delivery Comment', translate=True)
 
     @api.model

@@ -38,7 +38,7 @@ class WebsiteSaleDeliveryDate(WebsiteSale):
                         'customer_order_delivery_date': p_date
                     })
 
-                p_datetime = datetime.strptime(post.get('up_time'), format_data)
+                p_datetime = post.get('up_time')
 
                 if order and order.id:
                     values.update({
