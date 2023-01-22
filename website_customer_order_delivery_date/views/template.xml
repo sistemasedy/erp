@@ -2,9 +2,8 @@
 <odoo>
 
     <template id="website_sale_customer_comment" inherit_id="website_sale.our-services">     
-        <xpath expr="//div[@id='wrap']" position="inside">
-
-            
+        <xpath expr="//section[hasclass('s_three_columns ')]"
+                   position="replace">
                 <section class="pt32 pb32" data-name="Title">
                     <div class="container">
                         <div class="row s_nb_column_fixed">
