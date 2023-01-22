@@ -14,59 +14,7 @@
                             </h2>
                             <section class="mb-4">
                                 <div class="row ">
-                                    <div class="col-md-9 mb-md-0 mb-5">
-                                        <form
-                                              t-ignore="true"
-                                              class="s_website_form container-fluid mt32"
-                                              enctype="multipart/form-data">
-                                            <div class="row mb-5">
-                                                <div class="col-md-6">
-                                                    <div class="md-form mb-0">
-                                                        <input type="text"
-                                                               id='delivery_date' 
-                                                               readonly="True"
-                                                               placeholder="Pick-Up Date"
-                                                               class="form-control s_website_form_required"
-                                                               required="required"/>
-                                                        <span class="input-group-addon" id='delivery_date_icon'>
-                                                            <span class="fa fa-calendar"></span>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6 s_website_form_required">
-                                                    <div class="md-form mb-0">
-                                                        <input type="time"
-                                                               id="up_time"
-                                                               placeholder="Pick-Up Time"
-                                                               required="required"
-                                                               class="form-control"/>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row mb-5">
-                                                <div class="col-md-12">
-                                                    <div class="md-form">
-                                                        <textarea type="text"
-                                                                  id="delivery_comment"
-                                                                  rows="5"
-                                                                  placeholder="Message"
-                                                                  class="form-control2 md-textarea"/>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <button name="o_transfer_submit_button" class="text-center text-md-left" type="submit">
-                                                <a class="btn btn-contact o_website_form_send">
-                                                    Send
-                                                </a>
-                                            </button>
-                                            <div name="" >
-                                                <a class="btn btn-contact o_website_form_send">
-                                                    Send
-                                                </a>
-                                            </div>
-                                        </form>
-                                        <div class="status"/>
-                                    </div>
+                                    
 
                                     <div class="col-md-3 text-center">
                                         <ul class="list-unstyled mb-0">
