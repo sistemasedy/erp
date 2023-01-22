@@ -2,9 +2,9 @@
 <odoo>
 
     <template id="website_sale_customer_comment" inherit_id="website_sale.our-services">     
-        <xpath expr="//div[@id='wrap']" position="replace">
+        <xpath expr="//div[@id='wrap']" position="inside">
 
-            <div id="wrap" class="oe_structure oe_empty">
+            
                 <section class="pt32 pb32" data-name="Title">
                     <div class="container">
                         <div class="row s_nb_column_fixed">
@@ -35,7 +35,7 @@
                     <label class="control-label" for="customer_comment">Customer Order Comment</label>
                     <textarea rows="3" id="customer_comment" class="form-control" placeholder="Write a comment..."></textarea>                      
                 </div> 
-            </div>
+        
               
         </xpath>        
     </template>
