@@ -19,25 +19,7 @@
                 </section>
             </xpath>
 
-            <xpath expr="//section[hasclass('s_text_block')]"
-                   position="replace">
-                <!-- Contact section starts here -->
-                <section class="contact">
-                    <div class="contact_details">
-                        <div class="container">
-                            <div class="row">
-                                
-                            </div>
-                        </div>
-                    </div>
-
-                </section>
-
-                <!-- Contact section ends here -->
-                <!-- Contact forrm section starts here -->
-                
-                <!-- Contact form section starts here -->
-            </xpath>
+            
         </template>
     </data>
 </odoo>
