@@ -1,12 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-<data>
+    <template id="website_sale_customer_comment" inherit_id="website_sale.our-services">     
+        <xpath expr="//div[@id='wrap']" position="replace">
 
-      
+            <div id="wrap" class="oe_structure oe_empty">
+                <section class="pt32 pb32" data-name="Title">
+                    <div class="container">
+                        <div class="row s_nb_column_fixed">
+                            <div
+                                class="col-lg-12 s_title pt16 pb16"
+                                style="text-align: center;"
+                            >
+                                <div
+                                    class="s_alert alert-delta clearfix w-100 s_alert_md"
+                                    data-name="Alert"
+                                >
+                                    <i class="fa fa-2x fa-info-circle s_alert_icon" />
+                                    <div class="s_alert_content">
+                                        <p>THIS IS A SAMPLE PAGE! <br
+                                            />Please, edit this page to be valid with your use case.</p>
+                                    </div>
+                                </div>
+                                <h1 class="s_title_default">
+                                    <font
+                                        style="font-size: 42px;"
+                                    >Table of Content</font>
+                                </h1>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <div t-attf-class="form-group col-lg-6">
+                    <label class="control-label" for="customer_comment">Customer Order Comment</label>
+                    <textarea rows="3" id="customer_comment" class="form-control" placeholder="Write a comment..."></textarea>                      
+                </div> 
+            </div>
+              
+        </xpath>        
+    </template>
 
-
-
-
-</data>
 </odoo>
+
+
+
+
+
+
+
