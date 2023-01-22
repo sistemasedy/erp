@@ -21,11 +21,16 @@
                          <div class="row">
                             <div class='col-sm-4'>
                                 <div class="form-group">
-                                    <label class="control-label" for="delivery_date"> Pick-Up Time</label>
-                                    <div class='input-group date'>
-                                        <input type='time' class="form-control" id='up_time' readonly="True"/>
-                                        
-                                    </div>
+
+
+
+                                    <div t-attf-class="mb-3 #{error.get('street2') and 'o_has_error' or ''} col-lg-3 div_street2">
+                                            <label class="col-form-label label-optional" for="street2">Pick-Up Time</label>
+                                            <input type="time" name="company_name" id='up_time' t-attf-class="form-control #{error.get('street2') and 'is-invalid' or ''}" />
+                                        </div>
+
+
+
                                 </div>
                             </div>
                          </div>
