@@ -25,6 +25,13 @@
         </t>
     </template>
 
+    <!-- Publish the template on the website -->
+    <record id="legal_page_page" model="website.page">
+        <field name="website_published">True</field>
+        <field name="url">/legal</field>
+        <field name="view_id" ref="legal_page" />
+    </record>
+
 </odoo>
 
 
