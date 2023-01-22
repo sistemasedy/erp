@@ -18,9 +18,11 @@ odoo.define('website_customer_order_delivery_date.payment', function(require) {
 
             var customer_order_delivery_date = $('#delivery_date').val();
             var customer_order_delivery_comment = $('#delivery_comment').val();
+            var customer_order_time = $('#up-time').val();
             ajax.jsonRpc('/shop/customer_order_delivery', 'call', {
                 'delivery_date': customer_order_delivery_date,
-                'delivery_comment': customer_order_delivery_comment
+                'delivery_comment': customer_order_delivery_comment,
+                'up-time': customer_order_time
             });
         });
     });

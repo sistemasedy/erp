@@ -18,6 +18,17 @@
                                 </div>
                             </div>
                          </div>
+                         <div class="row">
+                            <div class='col-sm-4'>
+                                <div class="form-group">
+                                    <label class="control-label" for="delivery_date"> Pick-Up Time</label>
+                                    <div class='input-group date'>
+                                        <input type='text' class="form-control" id='up-time' readonly="True"/>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                         </div>
                          <t t-if="website and not website.is_customer_order_delivery_comment_feature">
                             <div class="row">
                                 <div class='col-sm-6'>

@@ -32,9 +32,17 @@ class WebsiteSaleDeliveryDate(WebsiteSale):
                         {'customer_order_delivery_comment': 'No Comment'})
 
                 p_date = datetime.strptime(post.get('delivery_date'), '%m/%d/%Y')
+                format_data = "%d/%m/%y %H:%M:%S.%f"
                 if order and order.id:
                     values.update({
                         'customer_order_delivery_date': p_date
+                    })
+
+                p_datetime = datetime.strptime(post.get('up-time'), format_data)
+
+                if order and order.id:
+                    values.update({
+                        'customer_order_time': p_datetime
                     })
 
                 order.write(values)

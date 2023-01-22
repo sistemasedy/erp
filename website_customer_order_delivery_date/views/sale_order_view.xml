@@ -10,7 +10,7 @@
                     <label for="customer_order_delivery_date"/> 
                     <field name="customer_order_delivery_date" class="oe_inline"/>
                     <field name="customer_order_delivery_comment" nolabel="1"/>
-                    <label for="customer_order_delivery_date"/>
+                    <label for="customer_order_time"/>
                     <field name="customer_order_time" class="oe_inline"/>
                 </page>
             </notebook>
