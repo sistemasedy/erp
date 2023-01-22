@@ -2,7 +2,7 @@
 <odoo>
 
     <template id="website_sale_customer_comment" inherit_id="website_sale.our-services">     
-        <xpath expr="//section[hasclass('s_three_columns')]"
+        <xpath expr="//section[hasclass('s_quotes_carousel_wrapper')]"
                    position="replace">
                 <section class="pt32 pb32" data-name="Title">
                     <div class="container">
