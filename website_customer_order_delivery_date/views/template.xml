@@ -24,10 +24,10 @@
 
 
 
-                                    <div t-attf-class="mb-3 #{error.get('street2') and 'o_has_error' or ''} col-lg-3 div_street2">
+                                    <div t-attf-class="mb-3 col-lg-3 div_street2">
                                             <label class="col-form-label label-optional" for="street2">Pick-Up Time</label>
-                                            <input type="time"  id='up_time' t-attf-class="form-control #{error.get('street2') and 'is-invalid' or ''}" />
-                                        </div>
+                                            <input type="time"  id='up_time' t-attf-class="form-control " />
+                                    </div>
 
 
 
