@@ -14,15 +14,7 @@ odoo.define('website_customer_order_delivery_date.payment', function(require) {
             $('#delivery_date').datepicker('show');
         });
 
-        try {
-            $("#up_time").datepicker({
-                minDate: new Date()
-            });
-        } catch (e) {}
-
-        $("#delivery_time_icon").click(function(){
-            $('#up_time').datepicker('show');
-        });
+       
 
         
 
