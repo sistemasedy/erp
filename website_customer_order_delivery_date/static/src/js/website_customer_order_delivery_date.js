@@ -14,16 +14,30 @@ odoo.define('website_customer_order_delivery_date.payment', function(require) {
             $('#delivery_date').datepicker('show');
         });
 
+        try {
+            $("#up_time").datepicker({
+                minDate: new Date()
+            });
+        } catch (e) {}
+
+        $("#delivery_time_icon").click(function(){
+            $('#up_time').datepicker('show');
+        });
+
+        
+
         $('button[name="o_payment_submit_button"]').bind("click", function(ev) {
 
             var customer_order_delivery_date = $('#delivery_date').val();
             var customer_order_delivery_comment = $('#delivery_comment').val();
-            var customer_order_time = $('#up-time').val();
+            var customer_order_time = $('#up_time').val();
             ajax.jsonRpc('/shop/customer_order_delivery', 'call', {
                 'delivery_date': customer_order_delivery_date,
                 'delivery_comment': customer_order_delivery_comment,
-                'up-time': customer_order_time
+                'up_time': customer_order_time
             });
+
+            consele.log(customer_order_delivery_date, customer_order_delivery_comment);
         });
     });
 
