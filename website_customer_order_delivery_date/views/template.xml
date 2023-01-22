@@ -60,7 +60,7 @@
 
     <template id="fuge_contact" inherit_id="website.contactus"
                   name="Contactus">
-            <xpath expr="//section[hasclass('contact_form')]"
+            <xpath expr="//section[hasclass('s_text_block')]"
                    position="before">
                 <section class="contact_form">
                     <div class="container">
