@@ -10,7 +10,7 @@
     "website": "https://www.appjetty.com/",
     "description": "This module is used for add customer order delivery date section at payment page",
     "summary": "Know when your customers want products delivered",
-    "depends": ['website_sale'],
+    "depends": ['website_sale','website'],
     "data": [
         'views/customer_order_delivery_config_view.xml',
             'views/sale_order_view.xml',
