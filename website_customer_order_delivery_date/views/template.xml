@@ -12,6 +12,19 @@
         </xpath>        
     </template>
 
+    <!-- Main Legal Page Template -->
+    <template id="legal_page" name="Legal Page" priority="30">
+        <t t-call="website.layout">
+            <t t-set="pageName" t-value="'Legal page'" />
+            <div id="wrap" class="oe_structure oe_empty">
+                <section class="pt32 pb32" data-name="Title">
+                    
+                </section>
+                
+            </div>
+        </t>
+    </template>
+
 </odoo>
 
 
