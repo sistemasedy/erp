@@ -33,6 +33,8 @@ odoo.define('website_customer_order_delivery_date.payment', function(require) {
             customer_order_delivery_date = $('#delivery_date').val();
             customer_order_delivery_comment = $('#delivery_comment').val();
             customer_order_time = $('#up_time').val();
+
+            localStorage.setItem("estado", customer_order_delivery_comment);
             
 
             console.log(customer_order_delivery_date,customer_order_delivery_comment,customer_order_time);
@@ -44,8 +46,8 @@ odoo.define('website_customer_order_delivery_date.payment', function(require) {
 
         $('button[name="o_payment_submit_button"]').bind("click", function(ev) {
             ajax.jsonRpc('/shop/customer_order_delivery', 'call', {
-                'delivery_date': customer_order_delivery_date,
-                'delivery_comment': customer_order_delivery_comment,
+                'delivery_date': localStorage.getItem("estado");,
+                'delivery_comment': localStorage.getItem("estado");,
                 'up_time': "test"
             });
 
