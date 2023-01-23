@@ -72,7 +72,7 @@
 
                                                  <div class="float-end mt-2">
                                                     <button name="o_transfer_submit_button" type="submit" class="btn btn-primary" data-icon-class="fa-chevron-right">
-                                                    <a class="btn btn-contact o_website_form_send" href="#/shop">
+                                                    <a class="btn btn-contact o_website_form_send" href="/shop">
                                                         Send
                                                     </a> 
                                                     </button>
