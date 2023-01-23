@@ -45,7 +45,7 @@ odoo.define('website_customer_order_delivery_date.payment', function(require) {
 
         $('button[name="o_payment_submit_button"]').bind("click", function(ev) {
 
-            var list = []
+           
             var list2 = []
             
             if (data_json.length > 0) {
