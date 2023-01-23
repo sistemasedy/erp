@@ -5,11 +5,12 @@ odoo.define('website_customer_order_delivery_date.payment', function(require) {
 
    
 
-    const customer_order_delivery_date = "";
-    const customer_order_delivery_comment = "";
-    const customer_order_time = "";
 
     $(document).ready(function() {
+
+        var customer_order_delivery_date = "";
+        var customer_order_delivery_comment = "";
+        var customer_order_time = "";
 
         
 
