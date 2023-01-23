@@ -35,11 +35,7 @@ odoo.define('website_customer_order_delivery_date.payment', function(require) {
                 comment : $('#delivery_comment').val(),
                 time : $('#up_time').val()
             });
-            
-
-            
-            
-
+            localStorage.setItem('data', JSON.stringify(data_json));
             console.log(data_json);
         });
 
@@ -50,12 +46,15 @@ odoo.define('website_customer_order_delivery_date.payment', function(require) {
         $('button[name="o_payment_submit_button"]').bind("click", function(ev) {
 
             var list = []
+            var list2 = []
             
             if (data_json.length > 0) {
                 for (var i = 0; i < data_json.length; i++) {
-                  list.push(data_json[i])
+                  list2.push(data_json[i])
                 }
             }
+
+            const list = JSON.parse(localStorage.getItem('data'));
 
 
 
