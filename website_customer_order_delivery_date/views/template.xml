@@ -34,6 +34,38 @@
                 </section>
 
                 <!-- Contact section starts here -->
+
+                <Section class="about_detail">
+                    <div class="container">
+                        <div class="row pb-5">
+                            <div class="col-12 col-md-6  pt-5">
+                                <div class="card ">
+                                    <div class="card-body">
+                                        <h2 class="card-title">About Our <span>FugeStore</span>
+                                        </h2>
+                                        <p>Excepteur sint occaecat non proident, sunt in culpa quis. Phasellus lacinia id erat eu
+                                            ullamcorper.
+                                            Nunc id ipsum fringilla, gravida felis vitae. Phasellus lacinia id, sunt in culpa quis.
+                                            Phasellus lacinia
+                                            <br/>
+                                            Excepteur sint occaecat non proident, sunt in culpa quis.
+                                            Phasellus lacinia id erat eu ullamcorper. Nunc id ipsum fringilla.
+                                        </p>
+                                        <a href="#" class="btn btn-men">Shop now</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12  col-md-6  pt-5">
+                                <div class="men_img">
+                                    <img class="img-fluid" src="theme_fuge/static/src/images/men-woemn-offer/2.jpg"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </Section>
+
+
+    
                 <section class="contact">
                     <div class="contact_details">
                         <div class="container">
