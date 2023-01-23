@@ -53,7 +53,7 @@
                                                             <label class="control-label" for="delivery_date">Pick-Up Time</label>
                                                             <div class='input-group date'>
                                                                 
-                                                                <input type="time" name="up_time" t-attf-class="form-control"/>
+                                                                <input type="time" id="up_time" t-attf-class="form-control"/>
                                                             </div>
                                                         </div>
                                                     </div>
