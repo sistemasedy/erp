@@ -44,7 +44,7 @@
 
                                         <div class="form-group col-lg-12">
                                             <div class="row">
-                                                <div class='col-sm-4'>
+                                                <div class='col-sm-12'>
                                                     <div t-attf-class="mb-3  col-lg-6" id="t1">
                                                         <label t-attf-class="col-form-label " for="email">Email</label>
                                                         <input type="email" name="email" t-attf-class="form-control " />
