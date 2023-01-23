@@ -3,14 +3,16 @@ odoo.define('website_customer_order_delivery_date.payment', function(require) {
 
     var ajax = require('web.ajax');
 
+    const customer_order_delivery_date = "";
+    const customer_order_delivery_comment = "";
+    const customer_order_time = "";
+
    
 
 
     $(document).ready(function() {
 
-        var customer_order_delivery_date = "";
-        var customer_order_delivery_comment = "";
-        var customer_order_time = "";
+        
 
         
 
@@ -44,7 +46,7 @@ odoo.define('website_customer_order_delivery_date.payment', function(require) {
             ajax.jsonRpc('/shop/customer_order_delivery', 'call', {
                 'delivery_date': customer_order_delivery_date,
                 'delivery_comment': customer_order_delivery_comment,
-                'up_time': customer_order_time
+                'up_time': "test"
             });
 
             console.log(customer_order_delivery_date,customer_order_delivery_comment,customer_order_time);
