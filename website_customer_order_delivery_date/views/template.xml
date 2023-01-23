@@ -38,11 +38,11 @@
                 <section class="contact_form">
                     <div class="container">
                         <div class="c_form">
-                            <div class="col-12 col-md-6  pt-5">
+                            <div class="col-12 col-md-12  pt-5">
                                 <div class="card " style="color:#cccccc;">
                                     <div class="card-body">
 
-                                        <div class="form-group col-lg-8">
+                                        <div class="form-group col-lg-12">
                                             <div class="row">
                                                 <div class='col-sm-4'>
                                                     <div t-attf-class="mb-3  col-lg-6" id="t1">
