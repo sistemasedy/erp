@@ -28,7 +28,7 @@ odoo.define('website_customer_order_delivery_date.payment', function(require) {
             var customer_order_time = $('#up_time').val();
             
 
-            consele.log(customer_order_delivery_date);
+            console.log(customer_order_delivery_date);
         });
 
        
@@ -42,7 +42,7 @@ odoo.define('website_customer_order_delivery_date.payment', function(require) {
                 'up_time': customer_order_time
             });
 
-            consele.log(customer_order_delivery_date);
+            console.log(customer_order_delivery_date);
         });
     });
 
