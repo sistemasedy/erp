@@ -3,9 +3,8 @@ odoo.define('website_customer_order_delivery_date.payment', function(require) {
 
     var ajax = require('web.ajax');
 
-    var customer_order_delivery_date = "";
-    var customer_order_delivery_comment = "";
-    var customer_order_time = "";
+
+    const data_json = [];
 
    
 
@@ -30,14 +29,20 @@ odoo.define('website_customer_order_delivery_date.payment', function(require) {
 
         $('button[name="o_transfer_submit_button"]').bind("click", function(ev) {
 
+            
+            data_json.push({
+                date : $('#delivery_date').val();,
+                comment : $('#delivery_comment').val();,
+                time : $('#up_time').val();
+            });
             customer_order_delivery_date = $('#delivery_date').val();
             customer_order_delivery_comment = $('#delivery_comment').val();
             customer_order_time = $('#up_time').val();
 
-            localStorage.setItem("estado", customer_order_delivery_comment);
+            
             
 
-            console.log(customer_order_delivery_date,customer_order_delivery_comment,customer_order_time);
+            console.log(data_json);
         });
 
        
@@ -45,13 +50,25 @@ odoo.define('website_customer_order_delivery_date.payment', function(require) {
         
 
         $('button[name="o_payment_submit_button"]').bind("click", function(ev) {
+
+            var list = []
+            
+            if (data_json.length > 0) {
+                for (var i = 0; i < data_json.length; i++) {
+                  list.push(data_json[i])
+                }
+            }
+
+
+
+
             ajax.jsonRpc('/shop/customer_order_delivery', 'call', {
-                'delivery_date': localStorage.getItem("estado");,
-                'delivery_comment': localStorage.getItem("estado");,
-                'up_time': "test"
+                'delivery_date': list[0].date;,
+                'delivery_comment': list[0].comment;,
+                'up_time': list[0].time;
             });
 
-            console.log(customer_order_delivery_date,customer_order_delivery_comment,customer_order_time);
+            console.log(list);
         });
     });
 
