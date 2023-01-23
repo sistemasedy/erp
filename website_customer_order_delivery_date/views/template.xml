@@ -70,7 +70,7 @@
                                                     <div t-attf-class="mb-3  col-lg-6" id="t1">
                                                         <label class="col-form-label" for="city">Drop Off Location</label>
                                                         
-                                                        <select name="vat" t-attf-class="form-control "data-init="1">
+                                                        <select name="vat" t-attf-class="form-control " data-init="1">
                                                             <option t-att-value="Locacion">Location</option>
                                                                 <option t-att-value="AlsolLuxuryHotel">
                                                                     Alsol Luxury Hotel
