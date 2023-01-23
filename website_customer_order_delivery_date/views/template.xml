@@ -33,6 +33,112 @@
                     </div>
                 </section>
 
+                <!-- Contact forrm section starts here -->
+                <section class="contact_form">
+                    <div class="container">
+                        <div class="c_form">
+                            <h2 class="h1-responsive  text-center my-4">FILL OUT
+                                OF THE FORM
+                            </h2>
+                            <section class="mb-4">
+                                <div class="row ">
+                                    <div class="col-md-9 mb-md-0 mb-5">
+                                        <form id="contactus_form"
+                                              t-ignore="true"
+                                              action="/website_form/"
+                                              method="post"
+                                              data-model_name="mail.mail"
+                                              class="s_website_form container-fluid mt32"
+                                              enctype="multipart/form-data"
+                                              data-success_page="/contactus-thank-you">
+                                            <div class="row mb-5">
+                                                <div class="col-md-6">
+                                                    <div class="md-form mb-0">
+                                                        <input type="text"
+                                                               id="name"
+                                                               name="name"
+                                                               placeholder="Your name"
+                                                               class="form-control s_website_form_required"
+                                                               required="required"/>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 s_website_form_required">
+                                                    <div class="md-form mb-0">
+                                                        <input type="text"
+                                                               id="email"
+                                                               name="email"
+                                                               placeholder="Your email"
+                                                               required="required"
+                                                               class="form-control"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-5">
+                                                <div class="col-md-12">
+                                                    <div class="md-form mb-0">
+                                                        <input type="text"
+                                                               id="subject"
+                                                               name="subject"
+                                                               placeholder="Subject"
+                                                               class="form-control"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-5">
+                                                <div class="col-md-12">
+                                                    <div class="md-form">
+                                                        <textarea type="text"
+                                                                  id="message"
+                                                                  name="message"
+                                                                  rows="5"
+                                                                  placeholder="Message"
+                                                                  class="form-control2 md-textarea"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="text-center text-md-left">
+                                                <a class="btn btn-contact o_website_form_send">
+                                                    Send
+                                                </a>
+                                            </div>
+                                        </form>
+                                        <div class="status"/>
+                                    </div>
+
+                                    <div class="col-md-3 text-center">
+                                        <ul class="list-unstyled mb-0">
+                                            <li>
+                                                <i class="fas fa-map-marker-alt fa-2x"/>
+                                                <p>San Francisco, CA 94126,
+                                                    USA
+                                                </p>
+                                            </li>
+
+                                            <li>
+                                                <i class="fa fa-phone mt-4 fa-2x"/>
+                                                <p>+ 01 234 567 89</p>
+                                            </li>
+
+                                            <li>
+                                                <i class="fa fa-envelope mt-4 fa-2x"/>
+                                                <p>mail@demo.com</p>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+
+                                </div>
+
+                            </section>
+
+                        </div>
+
+                    </div>
+                    <!--Section: Contact v.2-->
+                    <!--Section: Contact v.2-->
+                </section>
+                <!-- Contact form section starts here -->
+
                 <!-- Contact section starts here -->
 
                 <Section class="about_detail">
