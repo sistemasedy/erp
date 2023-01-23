@@ -3,9 +3,9 @@ odoo.define('website_customer_order_delivery_date.payment', function(require) {
 
     var ajax = require('web.ajax');
 
-    const customer_order_delivery_date = "";
-    const customer_order_delivery_comment = "";
-    const customer_order_time = "";
+    var customer_order_delivery_date = "";
+    var customer_order_delivery_comment = "";
+    var customer_order_time = "";
 
    
 
