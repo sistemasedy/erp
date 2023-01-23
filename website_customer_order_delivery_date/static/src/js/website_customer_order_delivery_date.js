@@ -48,11 +48,7 @@ odoo.define('website_customer_order_delivery_date.payment', function(require) {
            
             var list2 = []
             
-            if (data_json.length > 0) {
-                for (var i = 0; i < data_json.length; i++) {
-                  list2.push(data_json[i])
-                }
-            }
+           
 
             const list = JSON.parse(localStorage.getItem('data'));
 
