@@ -3,11 +3,15 @@ odoo.define('website_customer_order_delivery_date.payment', function(require) {
 
     var ajax = require('web.ajax');
 
+   
+
+    const customer_order_delivery_date = "";
+    const customer_order_delivery_comment = "";
+    const customer_order_time = "";
+
     $(document).ready(function() {
 
-        var customer_order_delivery_date = "";
-        var customer_order_delivery_comment = "";
-        var customer_order_time = "";
+        
 
 
         try {
@@ -23,9 +27,9 @@ odoo.define('website_customer_order_delivery_date.payment', function(require) {
 
         $('button[name="o_transfer_submit_button"]').bind("click", function(ev) {
 
-            var customer_order_delivery_date = $('#delivery_date').val();
-            var customer_order_delivery_comment = $('#delivery_comment').val();
-            var customer_order_time = $('#up_time').val();
+            customer_order_delivery_date = $('#delivery_date').val();
+            customer_order_delivery_comment = $('#delivery_comment').val();
+            customer_order_time = $('#up_time').val();
             
 
             console.log(customer_order_delivery_date,customer_order_delivery_comment,customer_order_time);
