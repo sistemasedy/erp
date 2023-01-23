@@ -20,7 +20,7 @@
                 <!-- Contact section starts here -->
 
 
-                <section class="s_title o_colored_level pb0 pt0" style="background-image: none;">
+                <section class="s_title o_colored_level pb0 pt0" style="background-image: url('theme_fuge/static/src/images/what-we-offer/left2.jpg');">
                     <div class="container s_allow_columns">
                       <h1 style="text-align: center;">
                         <font style="font-size: 62px;"></font>
@@ -36,10 +36,10 @@
                 <!-- Contact section starts here -->
 
                 <Section class="about_detail">
-                    <div class="container">
-                        <div class="row pb-5" style="text-align: center;">
+                    <div class="container" style="background-position: center;">
+                        <div class="row pb-5" >
                             <div class="col-12 col-md-6  pt-5">
-                                <div class="card " style="color:#e6e6e6;">
+                                <div class="card " style="color:#cccccc;">
                                     <div class="card-body">
                                         <h2 class="card-title">About Our <span>FugeStore</span>
                                         </h2>
