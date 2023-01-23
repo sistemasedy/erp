@@ -18,7 +18,10 @@
     ],
     'assets': {
         'web.assets_frontend': [
-            'website_customer_order_delivery_date/static/src/js/website_customer_order_delivery_date.js'
+            'website_customer_order_delivery_date/static/src/js/website_customer_order_delivery_date.js',
+            'website_customer_order_delivery_date/static/src/css/style.css',
+            'website_customer_order_delivery_date/static/src/css/owl.carousel.min.css',
+            'website_customer_order_delivery_date/static/src/css/owl.theme.default.min.css',
         ],
     },
     'images': ['static/description/order-delivery-date-comments-profile.png'],
