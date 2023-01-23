@@ -20,7 +20,7 @@
                 <!-- Contact section starts here -->
 
 
-                <section class="s_title o_colored_level pb0 pt0" data-vcss="001" data-snippet="s_title" data-name="Title" style="background-image: none;">
+                <section class="s_title o_colored_level pb0 pt0" style="background-image: none;">
                     <div class="container s_allow_columns">
                       <h1 style="text-align: center;">
                         <font style="font-size: 62px;"></font>
@@ -28,7 +28,7 @@
                           <span style="font-size: 48px;">Punta Cana Airport Transfer</span>
                         </font>
                         <font style="font-size: 62px;"></font>
-                        <br>
+                        <br/>
                       </h1>
                     </div>
                 </section>
