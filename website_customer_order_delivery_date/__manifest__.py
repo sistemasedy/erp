@@ -15,6 +15,7 @@
         'views/customer_order_delivery_config_view.xml',
             'views/sale_order_view.xml',
             'views/template.xml',
+            'views/footer.xml',
     ],
     'assets': {
         'web.assets_frontend': [
