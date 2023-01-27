@@ -36,9 +36,6 @@ odoo.define('website_customer_order_delivery_date.payment', function(require) {
 
        
         $('button[name="o_payment_submit_button"]').bind("click", function(ev) {
-
-           
-            var list2 = []
             const list = JSON.parse(localStorage.getItem('data'));
 
             /*

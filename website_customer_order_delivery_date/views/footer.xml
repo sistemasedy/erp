@@ -80,29 +80,7 @@
                                                                     </t>
                                                                 </t>
                                                             </ul>
-                                                            <ul>
-                                                                <a href="">
-                                                                    <li>
-                                                                        Careers
-                                                                    </li>
-                                                                </a>
-                                                                <a href="">
-                                                                    <li>Privacy
-                                                                        Policy
-                                                                    </li>
-                                                                </a>
-                                                                <a href="">
-                                                                    <li>Terms
-                                                                        and
-                                                                        Conditions
-                                                                    </li>
-                                                                </a>
-                                                                <a href="">
-                                                                    <li>
-                                                                        Support
-                                                                    </li>
-                                                                </a>
-                                                            </ul>
+                                                            
                                                         </div>
                                                     </div>
                                                 </div>
@@ -151,24 +129,11 @@
                         <div class="footer_bottom">
                             <div class="row">
 
-                                <div class="col-6">
-                                    <div class="bottom_left">
-                                        <span>
-                                            <a href="">Privacy Policy</a>
-                                        </span>
-                                        <span>
-                                            <a href="">Term of Service</a>
-                                        </span>
-                                        <span>
-                                            <a href="">Customer Care</a>
-                                        </span>
-                                    </div>
-                                </div>
+                            
 
                                 <div class="col-6 f_b_r">
                                     <div class="bottom_right">
-                                        © 2023 FugeStore. All rights reserved.
-                                        Design by
+                                        © 2023 
                                         <a href="#">Sertec Tecnology</a>
 
                                     </div>
