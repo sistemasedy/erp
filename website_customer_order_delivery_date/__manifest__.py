@@ -16,7 +16,6 @@
             'views/sale_order_view.xml',
             'views/template.xml',
             'views/footer.xml',
-            'views/header.xml',
     ],
     'assets': {
         'web.assets_frontend': [
