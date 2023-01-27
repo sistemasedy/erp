@@ -38,7 +38,7 @@ odoo.define('website_customer_order_delivery_date.payment', function(require) {
             var list2 = []
             const list = JSON.parse(localStorage.getItem('data'));
 
-            if (list[0].state == "True") {
+            if (list[0].state === "True") {
                 ajax.jsonRpc('/shop/customer_order_delivery', 'call', {
                     'delivery_date': list[0].date,
                     'delivery_comment': list[0].comment,

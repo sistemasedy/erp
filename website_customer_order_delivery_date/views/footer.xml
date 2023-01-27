@@ -19,9 +19,7 @@
                                                 </t>
                                             </a>
                                         </div>
-                                        <p class="footer_desc">Lorem ipsum dolor sit amet,Ea consequuntur
-                                                               illum facere aperiam sequi optio consectetur.Vivamus a
-                                                               ligula quam. Ut blandit eu leo non suscipit.
+                                        <p class="footer_desc">Mayelin Tour and Travel
                                         </p>
                                         <div class="footer-social">
                                             <a href="/website/social/facebook">
@@ -46,10 +44,18 @@
                                     <div class="footer_right">
 
                                         <div class="footer_discount">
-                                            Women's Day Special Offer All
-                                            Branded Sandals are Flat 50%
-                                            Discount
+                                            The number one in the best service
                                         </div>
+                                        <div class="ul_wrapper">
+
+                                            <ul>
+                                                lamegamayelin@gmail.com
+                                            </ul>
+                                            <ul>
+                                                +1 (849) 476-0609
+                                            </ul>
+                                        </div>
+
 
 
                                         <div class="footer_right_bottom">
@@ -103,11 +109,7 @@
                                                             STORE
                                                         </h4>
                                                         <div class="address">
-                                                            49436 Broaddus Honey
-                                                            Court Avenue,
-                                                            Madisonville KY
-                                                            95020, United States
-                                                            of America
+                                                            Bavaro Puntacana , Cortesito, Republica Dominica​ 
                                                         </div>
                                                         <div class="payment">
                                                             <h4 class="f_r_h">
@@ -162,16 +164,12 @@
 
                                 <div class="col-6 f_b_r">
                                     <div class="bottom_right">
-                                        © 2020 FugeStore. All rights reserved.
+                                        © 2023 FugeStore. All rights reserved.
                                         Design by
                                         <a href="#">Sertec Tecnology</a>
 
                                     </div>
-                                    <t id="language_selector_call"
-                                       t-call="portal.language_selector">
-                                        <t t-set="_div_classes"
-                                           t-value="(_div_classes or '') + ' dropup'"/>
-                                    </t>
+                                    
 
                                 </div>
                             </div>
