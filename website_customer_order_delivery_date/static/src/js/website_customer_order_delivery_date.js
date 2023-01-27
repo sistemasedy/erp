@@ -7,6 +7,7 @@ odoo.define('website_customer_order_delivery_date.payment', function(require) {
 
     $(document).ready(function() {
 
+        /*
         try {
             $("#delivery_date").datepicker({
                 minDate: new Date()
@@ -16,6 +17,8 @@ odoo.define('website_customer_order_delivery_date.payment', function(require) {
         $("#delivery_date_icon").click(function(){
             $('#delivery_date').datepicker('show');
         });
+
+        */
 
 
         $('button[name="o_transfer_submit_button"]').bind("click", function(ev) {
@@ -38,6 +41,8 @@ odoo.define('website_customer_order_delivery_date.payment', function(require) {
             var list2 = []
             const list = JSON.parse(localStorage.getItem('data'));
 
+            /*
+
             if (list[0].state === "True") {
                 ajax.jsonRpc('/shop/customer_order_delivery', 'call', {
                     'delivery_date': list[0].date,
@@ -45,6 +50,15 @@ odoo.define('website_customer_order_delivery_date.payment', function(require) {
                     'up_time': list[0].time
                 });
             }
+
+            */
+
+
+            ajax.jsonRpc('/shop/customer_order_delivery', 'call', {
+                'delivery_date': list[0].date,
+                'delivery_comment': list[0].comment,
+                'up_time': list[0].time
+            });
 
             console.log(list);
             var none = "none"
