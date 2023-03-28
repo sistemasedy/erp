@@ -78,7 +78,7 @@ class cotizacion(models.Model):
     @api.depends('price_unit', 'product_uom_qty')
     def _compute_itbis(self):
         for r in self:
-            r.itbis = ((r.price_subtotal*.18))
+            r.itbis = ((r.price_subtotal*((r.tax_id.amount)/100)))
 
 
 
