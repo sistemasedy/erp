@@ -98,10 +98,10 @@
                                         <span t-field="line.monto" />
                                     </td>
                                     <td name="td_subtotal" class="text-right o_price_total">
-                                        <span t-field="line.amount" />
+                                        <span t-field="line.tax_id.amount" />
                                     </td>
                                     <td name="td_subtotal" class="text-right o_price_total">
-                                        <span t-field="line.amount_type" />
+                                        <span t-field="line.tax_id.amount_type" />
                                     </td>
                                 </t>
                                 <t t-if="line.display_type == 'line_section'">
