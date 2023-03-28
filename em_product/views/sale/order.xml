@@ -61,6 +61,8 @@
                                 <span groups="account.group_show_line_subtotals_tax_included">Subtotal</span>
                             </th>
                             <th name="th_taxes" class="text-right">Importe</th>
+                            <th name="th_taxes" class="text-right">test</th>
+                            <th name="th_taxes" class="text-right">test</th>
                         </tr>
                     </thead>
                     <tbody class="sale_tbody">
@@ -94,6 +96,12 @@
                                     </td>
                                     <td name="td_subtotal" class="text-right o_price_total">
                                         <span t-field="line.monto" />
+                                    </td>
+                                    <td name="td_subtotal" class="text-right o_price_total">
+                                        <span t-field="line.amount" />
+                                    </td>
+                                    <td name="td_subtotal" class="text-right o_price_total">
+                                        <span t-field="line.amount_type" />
                                     </td>
                                 </t>
                                 <t t-if="line.display_type == 'line_section'">
