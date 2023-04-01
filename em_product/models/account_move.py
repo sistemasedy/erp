@@ -43,7 +43,7 @@ class AccountMoveLine(models.Model):
     def _compute_itbis(self):
         for r in self:
             #r.itbis = ((r.price_subtotal- r.monto))
-            r.itbis = ((r.price_subtotal*((r.tax_id.amount)/100)))
+            r.itbis = ((r.price_subtotal*((r.tax_ids.amount)/100)))
 
     #@api.depends('price_unit', 'quantity')
     #def _compute_total(self):
