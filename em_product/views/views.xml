@@ -67,10 +67,16 @@
                         </div>
                     </group>
                 </group>
+
+                <xpath expr="//field[@name='ref']" position="after">
+
+                    <field name="fiscal_ref" />
+                
+                </xpath>
+
+
             </field>
         </record>
-
-        <!-- account.move (Journal Entry) 
 
         <record id="view_move_tree_em" model="ir.ui.view">
             <field name="name">account.move.tree</field>
@@ -78,15 +84,13 @@
             <field name="inherit_id" ref="account.view_move_tree"/>
             <field name="arch" type="xml">
                  <xpath expr="//tree" position="inside">
-                        <field name="entry_number" />
+                        <field name="fiscal_ref" />
+                        <field name="payment_reference" />
+                        <field name="ref" />
                         
                  </xpath>
             </field>
         </record>
-
-        -->
-
-
 
 
     </data>

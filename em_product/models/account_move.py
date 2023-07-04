@@ -10,6 +10,7 @@ class AccountMove(models.Model):
     _inherit = "account.move"
 
     #Journal
+    fiscal_ref = fields.Char(string='Comprobante')
     validates_journal = fields.Boolean(help="Activa para comfirmar")
 
     validate_journal = fields.Selection(selection=[
