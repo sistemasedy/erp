@@ -33,6 +33,7 @@
         'views/sale/order.xml',
         'views/sale/order_views.xml',
         'views/invoice/invoice_template.xml',
+        'views/invoice/punto_venta.xml',
         'report/inventory/list_code.xml',
         #'views/layouts.xml',
         #'views/assets.xml',
