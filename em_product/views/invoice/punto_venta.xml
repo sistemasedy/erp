@@ -2,14 +2,9 @@
 <odoo>
     <data>
 
-    <template id="html_container">
-        <t t-set="body_classname" t-value="'container'"/>
-        <t t-call="web.report_layout">
-            <t t-raw="0"/>
-        </t>
-    </template>
+  
 
-    <template id="report_invoice_document">
+    <template id="report_invoice_fiscal">
         
 
 
@@ -213,214 +208,15 @@
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="o">
                 
-                <t t-call="em_product.report_invoice_document"/>
+                <t t-call="em_product.report_invoice_fiscal"/>
             </t>
         </t>
     </template>
     <!-- External layouts styles -->
 
-    <template id="address_layout">
-        <t t-set="colclass" t-value="('col-md-5' if report_type == 'html' else 'col-5') + ' ml-auto'"/>
-        <t t-if="address">
-            <div class="address row">
-                <t t-if="information_block">
-                    <t t-set="colclass" t-value="'col-8 offset-1'"/>
-                    <div name="information_block" class="col-10">
-                        <t t-raw="information_block"/>
-                    </div>
-                </t>
-                <div name="address" t-att-class="colclass">
-                    <t t-raw="address"/>
-                </div>
-            </div>
-        </t>
-    </template>
+    
 
-    <template id="external_layout_background">
-        <div t-attf-class="o_company_#{company.id}_layout header" t-att-style="report_header_style">
-            <div class="o_background_header">
-            <div class="float-right">
-                <h3 class="mt0 text-right" t-field="company.report_header"/>
-            </div>
-            <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" class="float-left" alt="Logo"/>
-            <div class="float-left company_address">
-                <div>
-                    <strong t-field="company.partner_id.name"/>
-                </div>
-                <span t-field="company.partner_id"
-                    t-options='{"widget": "contact", "fields": ["address"], "no_marker": true}'/>
-            </div>
-            <div class="clearfix mb8"/>
-            </div>
-        </div>
-
-        <div t-attf-class="o_company_#{company.id}_layout article o_report_layout_background" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
-            <t t-call="web.address_layout"/>
-            <t t-raw="0"/>
-        </div>
-
-        <div t-attf-class="o_company_#{company.id}_layout footer o_background_footer">
-            <div class="text-center">
-                <ul class="list-inline">
-                    <li t-if="company.phone" class="list-inline-item"><i class="fa fa-phone" role="img" aria-label="Phone" title="Phone"/> <span class="o_force_ltr" t-field="company.phone"/></li>
-                    <li t-if="company.email" class="list-inline-item"><i class="fa fa-at" role="img" aria-label="Email" title="Email"/> <span t-field="company.email"/></li>
-                    <li t-if="company.website" class="list-inline-item"><i class="fa fa-globe" role="img" aria-label="Website" title="Website"/> <span t-field="company.website"/></li>
-                    <li t-if="company.vat" class="list-inline-item"><i class="fa fa-building-o" role="img" aria-label="Fiscal number"/><t t-esc="company.country_id.vat_label or 'Tax ID'"/>: <span t-field="company.vat"/></li>
-                </ul>
-                <div t-field="company.report_footer"/>
-                <div t-if="report_type == 'pdf'" class="text-muted">
-                    Page:
-                    <span class="page"/>
-                    of
-                    <span class="topage"/>
-                </div>
-            </div>
-        </div>
-    </template>
-
-    <template id="external_layout_boxed">
-        <div t-attf-class="header o_company_#{company.id}_layout" t-att-style="report_header_style">
-            <div class="o_boxed_header">
-            <div class="row mb8">
-                <div class="col-6">
-                    <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" alt="Logo"/>
-                </div>
-                <div class="col-6 text-right mb4">
-                    <h4 class="mt0" t-field="company.report_header"/>
-                    <div name="company_address" class="float-right mb4">
-                        <span class="company_address" t-field="company.partner_id"
-                            t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}'/>
-                    </div>
-                </div>
-            </div>
-            </div>
-        </div>
-
-        <div t-attf-class="article o_report_layout_boxed o_company_#{company.id}_layout" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
-            <div class="pt-5">
-                <!-- This div ensures that the address is not cropped by the header. -->
-                <t t-call="web.address_layout"/>
-            </div>
-            <t t-raw="0"/>
-        </div>
-
-        <div t-attf-class="footer o_boxed_footer o_company_#{company.id}_layout">
-            <div class="text-center">
-                <ul class="list-inline">
-                    <li t-if="company.phone" class="list-inline-item"><span class="o_force_ltr" t-field="company.phone"/></li>
-                    <li t-if="company.email" class="list-inline-item"><span t-field="company.email"/></li>
-                    <li t-if="company.website" class="list-inline-item"><span t-field="company.website"/></li>
-                    <li t-if="company.vat" class="list-inline-item"><t t-esc="company.country_id.vat_label or 'Tax ID'"/>: <span t-field="company.vat"/></li>
-                </ul>
-                <div t-field="company.report_footer"/>
-                <div t-if="report_type == 'pdf'">
-                    Page: <span class="page"/> / <span class="topage"/>
-                </div>
-            </div>
-        </div>
-    </template>
-
-    <template id="external_layout_clean">
-        <div t-attf-class="header o_company_#{company.id}_layout" t-att-style="report_header_style">
-            <div class="o_clean_header">
-            <div class="row">
-                <div class="col-6">
-                    <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" alt="Logo"/>
-                </div>
-                <div class="col-5 offset-1" name="company_address">
-                    <ul class="list-unstyled">
-                        <strong><li t-if="company.name"><span t-field="company.name"/></li></strong>
-                        <li t-if="company.vat"><t t-esc="company.country_id.vat_label or 'Tax ID'"/>: <span t-field="company.vat"/></li>
-                        <li t-if="company.phone">Tel: <span class="o_force_ltr" t-field="company.phone"/></li>
-                        <li t-if="company.email"><span t-field="company.email"/></li>
-                        <li t-if="company.website"><span t-field="company.website"/></li>
-                    </ul>
-                </div>
-            </div>
-            </div>
-        </div>
-
-        <div t-attf-class="article o_report_layout_clean o_company_#{company.id}_layout"  t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
-            <t t-call="web.address_layout"/>
-            <t t-raw="0"/>
-        </div>
-
-        <div t-attf-class="footer o_clean_footer o_company_#{company.id}_layout">
-            <div class="row mt8">
-                <div class="col-3">
-                    <span t-field="company.report_footer"/>
-                </div>
-                <div class="col-4 text-right">
-                    <span class="company_address" t-field="company.partner_id"
-                        t-options='{"widget": "contact", "fields": ["address"], "no_marker": true}'/>
-                </div>
-                <div class="col-4">
-                    <h4 class="mt0 mb0 text-uppercase" t-field="company.report_header"/>
-                </div>
-                <div class="col-1">
-                    <ul t-if="report_type == 'pdf'" class="list-inline pagenumber float-right text-center">
-                        <li class="list-inline-item"><strong><span class="page"/></strong></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </template>
-
-    <template id="external_layout_standard">
-
-        <div >
-            <t t-raw="0"/>
-        </div>
-
-        <div t-attf-class="footer o_standard_footer o_company_#{company.id}_layout">
-            <div class="text-center" style="border-top: 1px solid black;">
-                <ul class="list-inline mb4">
-                    <!-- using the list-inline-item class from bootstrap causes weird behaviours in pdf report
-                         adding d-inline class fixes the problem-->
-                    <li t-if="company.phone" class="list-inline-item d-inline"><span class="o_force_ltr" t-field="company.phone"/></li>
-                    <li t-if="company.email" class="list-inline-item d-inline"><span t-field="company.email"/></li>
-                    <li t-if="company.website" class="list-inline-item d-inline"><span t-field="company.website"/></li>
-                    <li t-if="company.vat" class="list-inline-item d-inline"><t t-esc="company.country_id.vat_label or 'Tax ID'"/>: <span t-field="company.vat"/></li>
-                </ul>
-
-                <div name="financial_infos">
-                    <span t-field="company.report_footer"/>
-                </div>
-
-                <div t-if="report_type == 'pdf'" class="text-muted">
-                    Page: <span class="page"/> / <span class="topage"/>
-                </div>
-            </div>
-        </div>
-    </template>
-
-    <!-- Public api: layout to t-call from reports -->
-
-    <template id="external_layout">
-        <t t-if="not o" t-set="o" t-value="doc"/>
-
-        <t t-if="not company">
-            <!-- Multicompany -->
-            <t t-if="company_id">
-                <t t-set="company" t-value="company_id"/>
-            </t>
-            <t t-elif="o and 'company_id' in o and o.company_id.sudo()">
-                <t t-set="company" t-value="o.company_id.sudo()"/>
-            </t>
-            <t t-else="else">
-                <t t-set="company" t-value="company_id"/>
-            </t>
-        </t>
-
-        <t t-if="company.external_report_layout_id" t-call="{{company.external_report_layout_id.sudo().key}}"><t t-raw="0"/></t>
-        <t t-else="else" t-call="em_product.external_layout_standard"><t t-raw="0"/></t>
-
-    </template>
-
-
-
-
-
+ 
 
 
 
