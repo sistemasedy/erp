@@ -49,6 +49,7 @@ class PosOrder(models.Model):
             [('invoice_origin', '=', pos_id.name)])
         return {
             'invoice_id': invoice_id.id,
+            'invoice_fiscal': invoice_id.l10n_do_fiscal_number,
             'invoice_name': invoice_id.name,
             'base_url': base_url,
             'is_qr_code': invoice_id.account_barcode}

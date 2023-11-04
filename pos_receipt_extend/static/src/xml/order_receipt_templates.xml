@@ -11,32 +11,32 @@
             <t t-if="env.pos._previousAttributes.selectedClient">
                 <t t-if="env.pos.pos_config[0].is_customer_details">
                     <t t-if="env.pos.pos_config[0].is_customer_name">
-                        <div style="font-weight:bold;">Customer Name:
+                        <div style="font-weight:bold;">CLIENTE:
                             <t t-esc="env.pos._previousAttributes.selectedClient.name or 'null'"/>
                         </div>
                     </t>
                     <t t-if="env.pos.pos_config[0].is_customer_address">
-                        <div style="font-weight:bold;">Customer Address:
+                        <div style="font-weight:bold;">DIRECCION:
                         <t t-esc="env.pos._previousAttributes.selectedClient.address or 'null'"/>
                         </div>
                     </t>
                     <t t-if="env.pos.pos_config[0].is_customer_mobile">
-                        <div style="font-weight:bold;">Customer Mobile:
+                        <div style="font-weight:bold;">CELULAR:
                             <t t-esc="env.pos._previousAttributes.selectedClient.mobile or 'null'"/>
                         </div>
                     </t>
                     <t t-if="env.pos.pos_config[0].is_customer_phone">
-                        <div style="font-weight:bold;">Customer Phone:
+                        <div style="font-weight:bold;">TELEFONO:
                             <t t-esc="env.pos._previousAttributes.selectedClient.phone or null"/>
                         </div>
                     </t>
                     <t t-if="env.pos.pos_config[0].is_customer_email">
-                        <div style="font-weight:bold;">Customer Email:
+                        <div style="font-weight:bold;">CORREO ELEC:
                             <t t-esc="env.pos._previousAttributes.selectedClient.email or 'null'"/>
                         </div>
                     </t>
                     <t t-if="env.pos.pos_config[0].is_customer_vat">
-                        <div style="font-weight:bold;">Customer Vat:
+                        <div style="font-weight:bold;">RNC:
                             <t t-esc="env.pos._previousAttributes.selectedClient.vat or 'null'"/>
                         </div>
                     </t>
@@ -44,8 +44,11 @@
             </t>
             <t t-if="env.pos.pos_config[0].is_invoice_number">
                 <t t-if="env.pos.inv">
-                     <div style="font-weight:bold;">Invoice Number:
+                     <div style="font-weight:bold;">FACTURA:
                          <t t-esc="env.pos.inv"/>
+                      </div>
+                      <div style="font-weight:bold;">NCF:
+                         <t t-esc="env.pos.fiscal"/>
                       </div>
                 </t>
                 </t>
