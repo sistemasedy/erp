@@ -20,21 +20,13 @@
                         <t t-esc="env.pos._previousAttributes.selectedClient.address or 'null'"/>
                         </div>
                     </t>
-                    <t t-if="env.pos.pos_config[0].is_customer_mobile">
-                        <div style="font-weight:bold;">CELULAR:
-                            <t t-esc="env.pos._previousAttributes.selectedClient.mobile or 'null'"/>
-                        </div>
-                    </t>
+                    
                     <t t-if="env.pos.pos_config[0].is_customer_phone">
                         <div style="font-weight:bold;">TELEFONO:
                             <t t-esc="env.pos._previousAttributes.selectedClient.phone or null"/>
                         </div>
                     </t>
-                    <t t-if="env.pos.pos_config[0].is_customer_email">
-                        <div style="font-weight:bold;">CORREO ELEC:
-                            <t t-esc="env.pos._previousAttributes.selectedClient.email or 'null'"/>
-                        </div>
-                    </t>
+                    
                     <t t-if="env.pos.pos_config[0].is_customer_vat">
                         <div style="font-weight:bold;">RNC:
                             <t t-esc="env.pos._previousAttributes.selectedClient.vat or 'null'"/>
