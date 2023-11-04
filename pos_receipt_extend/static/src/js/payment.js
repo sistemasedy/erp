@@ -40,6 +40,7 @@ odoo.define('pos_receipt_extend.PaymentScreen', function (require) {
             }).then(function (result) {
                 self.env.pos.inv = result['invoice_name']
                 self.env.pos.fiscal = result['invoice_fiscal']
+                self.env.pos.type = result['invoice_type']
                 const address = `${result.base_url}/my/invoices/${result.invoice_id}?`
                 let qr_code_svg = new XMLSerializer().serializeToString(codeWriter.write(address, 150, 150));
                 self.env.pos.qr_image = "data:image/svg+xml;base64," + window.btoa(qr_code_svg);

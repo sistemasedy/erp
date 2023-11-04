@@ -47,6 +47,9 @@
                      <div style="font-weight:bold;">FACTURA:
                          <t t-esc="env.pos.inv"/>
                       </div>
+                      <div style="font-weight:bold;">
+                         <t t-esc="env.pos.type"/>
+                      </div>
                       <div style="font-weight:bold;">NCF:
                          <t t-esc="env.pos.fiscal"/>
                       </div>
