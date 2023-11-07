@@ -27,7 +27,7 @@ odoo.define('pos_receipt_extend.PaymentScreen', function (require) {
             super.setup();
         }
         async validateOrder(isForceValidate) {
-            NumberBuffer.reset();
+            
             console.log("inicial")
             // Retrieve receipt number from the selected order
             var receipt_number = this.env.pos._previousAttributes.selectedOrder.name
@@ -49,6 +49,7 @@ odoo.define('pos_receipt_extend.PaymentScreen', function (require) {
             });
             console.log("test fiscal")
             console.log(receipt_order)
+            NumberBuffer.reset();
             return receipt_order
         }
     }
