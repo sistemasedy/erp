@@ -1,6 +1,7 @@
 odoo.define('pos_receipt_extend.PaymentScreen', function (require) {
     'use strict';
     var rpc = require('web.rpc')
+    const NumberBuffer = require('point_of_sale.NumberBuffer');
     const PaymentScreen = require('point_of_sale.PaymentScreen');
     const Registries = require('point_of_sale.Registries');
     var models = require('point_of_sale.models');
@@ -27,6 +28,7 @@ odoo.define('pos_receipt_extend.PaymentScreen', function (require) {
             super.setup();
         }
         async validateOrder(isForceValidate) {
+            this.NumberBuffer.reset();
             
             console.log("inicial")
             // Retrieve receipt number from the selected order
@@ -49,7 +51,7 @@ odoo.define('pos_receipt_extend.PaymentScreen', function (require) {
             });
             console.log("test fiscal")
             console.log(receipt_order)
-            NumberBuffer.reset();
+            
             return receipt_order
         }
     }
