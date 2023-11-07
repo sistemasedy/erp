@@ -28,7 +28,7 @@ odoo.define('pos_receipt_extend.PaymentScreen', function (require) {
             super.setup();
         }
         async validateOrder(isForceValidate) {
-            this.NumberBuffer.reset();
+            
             
             console.log("inicial")
             // Retrieve receipt number from the selected order
@@ -49,8 +49,7 @@ odoo.define('pos_receipt_extend.PaymentScreen', function (require) {
                 let qr_code_svg = new XMLSerializer().serializeToString(codeWriter.write(address, 150, 150));
                 self.env.pos.qr_image = "data:image/svg+xml;base64," + window.btoa(qr_code_svg);
             });
-            console.log("test fiscal")
-            console.log(receipt_order)
+            
             
             return receipt_order
         }

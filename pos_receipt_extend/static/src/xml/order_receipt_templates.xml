@@ -35,16 +35,18 @@
                 </t>
             </t>
             <t t-if="env.pos.pos_config[0].is_invoice_number">
-                <t t-if="env.pos.inv">
-                     <div style="font-weight:bold;">FACTURA:
-                         <t t-esc="env.pos.inv"/>
-                      </div>
-                      <div style="font-weight:bold;">
-                         <t t-esc="env.pos.type"/>
-                      </div>
-                      <div style="font-weight:bold;">NCF:
-                         <t t-esc="env.pos.fiscal"/>
-                      </div>
+                <t t-if='receipt.client'>
+                     <t t-if="env.pos.inv">
+                        <div style="font-weight:bold;">FACTURA:
+                          <t t-esc="env.pos.inv"/>
+                        </div>
+                        <div style="font-weight:bold;">
+                          <t t-esc="env.pos.type"/>
+                        </div>
+                        <div style="font-weight:bold;">NCF:
+                          <t t-esc="env.pos.fiscal"/>
+                        </div>
+                    </t>
                 </t>
                 </t>
             <t t-if="env.pos.pos_config[0].is_qr_code">
