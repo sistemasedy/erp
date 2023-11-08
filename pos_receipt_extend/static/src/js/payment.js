@@ -47,6 +47,7 @@ odoo.define('pos_receipt_extend.PaymentScreen', function (require) {
                 self.env.pos.qr_image = "data:image/svg+xml;base64," + window.btoa(qr_code_svg);
             });
             console.log("ver",this.env.pos._previousAttributes.selectedOrder)
+            console.log("select",this.env.pos._previousAttributes.selectedClient)
             
             
             return receipt_order
