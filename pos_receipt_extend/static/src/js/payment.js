@@ -26,16 +26,22 @@ odoo.define('pos_receipt_extend.PaymentScreen', function (require) {
     const PosPaymentReceiptExtend = PaymentScreen => class extends PaymentScreen {
         setup() {
             super.setup();
-            this._receiptEnv = this.props.order.getOrderReceiptEnv();
+            
 
         }
+
+        /*
+        // testeando en paymentscreng
         get receipt() {
             return this.receiptEnv.receipt;
+            // this._receiptEnv = this.props.order.getOrderReceiptEnv();
         }
 
         get receiptEnv () {
           return this._receiptEnv;
         }
+
+        */
 
         async validateOrder(isForceValidate) {
             // Retrieve receipt number from the selected order
@@ -57,7 +63,7 @@ odoo.define('pos_receipt_extend.PaymentScreen', function (require) {
                 self.env.pos.qr_image = "data:image/svg+xml;base64," + window.btoa(qr_code_svg);
             });
             console.log("ver",this.env.pos)
-            console.log("select",this.receipt)
+            //console.log("select",this.receipt)
             
             
             return receipt_order
