@@ -28,9 +28,6 @@ odoo.define('pos_receipt_extend.PaymentScreen', function (require) {
             super.setup();
         }
         async validateOrder(isForceValidate) {
-            
-            
-            console.log("inicial")
             // Retrieve receipt number from the selected order
             var receipt_number = this.env.pos._previousAttributes.selectedOrder.name
             const receipt_order = await super.validateOrder(...arguments);
@@ -49,6 +46,7 @@ odoo.define('pos_receipt_extend.PaymentScreen', function (require) {
                 let qr_code_svg = new XMLSerializer().serializeToString(codeWriter.write(address, 150, 150));
                 self.env.pos.qr_image = "data:image/svg+xml;base64," + window.btoa(qr_code_svg);
             });
+            console.log("ver",this.env.pos._previousAttributes.selectedOrder)
             
             
             return receipt_order
