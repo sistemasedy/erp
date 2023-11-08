@@ -11,24 +11,24 @@
             <t t-if="env.pos._previousAttributes.selectedClient">
                 <t t-if="env.pos.pos_config[0].is_customer_details">
                     <t t-if="env.pos.pos_config[0].is_customer_name">
-                        <div style="font-weight:bold;">CLIENTE:
+                        <div style="font-weight:bold;">
                             <t t-esc="env.pos._previousAttributes.selectedClient.name or 'null'"/>
                         </div>
                     </t>
                     <t t-if="env.pos.pos_config[0].is_customer_address">
-                        <div style="font-weight:bold;">DIRECCION:
+                        <div style="font-weight:bold;">
                         <t t-esc="env.pos._previousAttributes.selectedClient.address or 'null'"/>
                         </div>
                     </t>
                     
                     <t t-if="env.pos.pos_config[0].is_customer_phone">
-                        <div style="font-weight:bold;">TELEFONO:
+                        <div style="font-weight:bold;">
                             <t t-esc="env.pos._previousAttributes.selectedClient.phone or null"/>
                         </div>
                     </t>
                     
                     <t t-if="env.pos.pos_config[0].is_customer_vat">
-                        <div style="font-weight:bold;">RNC:
+                        <div style="font-weight:bold;">
                             <t t-esc="env.pos._previousAttributes.selectedClient.vat or 'null'"/>
                         </div>
                     </t>
