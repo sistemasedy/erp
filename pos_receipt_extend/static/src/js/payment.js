@@ -50,6 +50,7 @@ odoo.define('pos_receipt_extend.PaymentScreen', function (require) {
              // Generate QR code and store it
             const codeWriter = new window.ZXing.BrowserQRCodeSvgWriter();
             var self = this;
+            var datos[]
             rpc.query({
                 model: 'pos.order',
                 method: 'get_invoice',
@@ -62,8 +63,9 @@ odoo.define('pos_receipt_extend.PaymentScreen', function (require) {
                 const address = `${result.base_url}/my/invoices/${result.invoice_id}?`
                 let qr_code_svg = new XMLSerializer().serializeToString(codeWriter.write(address, 150, 150));
                 self.env.pos.qr_image = "data:image/svg+xml;base64," + window.btoa(qr_code_svg);
+                datos = result
             });
-            console.log("ver",this.env.pos)
+            console.log("ver", datos)
             //console.log("select",this.receipt)
             
             
