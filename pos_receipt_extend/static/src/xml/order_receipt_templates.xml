@@ -38,13 +38,13 @@
                 <t t-if='receipt.client'>
                      <t t-if="env.pos.inv">
                         <div style="font-weight:bold;">FACTURA:
-                          <t t-esc="env.pos.inv"/>
+                          <t t-esc="env.pos._previousAttributes.selectedOrder.pos.inv"/>
                         </div>
                         <div style="font-weight:bold;">
-                          <t t-esc="env.pos.type"/>
+                          <t t-esc="env.pos._previousAttributes.selectedOrder.pos.type"/>
                         </div>
                         <div style="font-weight:bold;">NCF:
-                          <t t-esc="env.pos.fiscal"/>
+                          <t t-esc="env.pos._previousAttributes.selectedOrder.pos.fiscal"/>
                         </div>
                     </t>
                 </t>
