@@ -55,6 +55,7 @@ odoo.define('pos_receipt_extend.PaymentScreen', function (require) {
                 method: 'get_invoice',
                 args: [receipt_number]
             }).then(function (result) {
+                console.log("test", result)
                 self.env.pos.inv = result['invoice_name']
                 self.env.pos.fiscal = result['invoice_fiscal']
                 self.env.pos.type = result['invoice_type']
