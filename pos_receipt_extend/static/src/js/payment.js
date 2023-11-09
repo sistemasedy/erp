@@ -63,10 +63,10 @@ odoo.define('pos_receipt_extend.PaymentScreen', function (require) {
                 const address = `${result.base_url}/my/invoices/${result.invoice_id}?`
                 let qr_code_svg = new XMLSerializer().serializeToString(codeWriter.write(address, 150, 150));
                 self.env.pos.qr_image = "data:image/svg+xml;base64," + window.btoa(qr_code_svg);
-                datos = result
+                
             });
             
-            //console.log("select",this.receipt)
+            console.log("select",this.env.pos)
             
             
             return receipt_order
