@@ -18,7 +18,7 @@
 ############################################################################## # 
 # 
 {
-    'name': " EM POS - Cliente Tipo de Responsabilidad AFIP - Odoo Argentina",
+    'name': "POS - Cliente Tipo de Responsabilidad AFIP - Odoo Argentina",
 
     'summary': """
         Adds Identification type field and AFIP Responsability type field to pos customer view.
