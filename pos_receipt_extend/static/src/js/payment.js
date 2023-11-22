@@ -47,7 +47,7 @@ odoo.define('pos_receipt_extend.PaymentScreen', function (require) {
             // Retrieve receipt number from the selected order
 
             var receipt_number = this.env.pos._previousAttributes.selectedOrder.name
-            cosole.log("sis", receipt_number)
+            console.log("sis", receipt_number)
             const receipt_order = await super.validateOrder(...arguments);
              // Generate QR code and store it
             const codeWriter = new window.ZXing.BrowserQRCodeSvgWriter();
