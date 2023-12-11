@@ -17,7 +17,7 @@ odoo.define('pos_receipt_extend.PaymentScreen', function (require) {
        // Load 'account.move' model fields
     models.load_models([{
         model: 'account.move',
-        fields: ['name'],
+        fields: ['name','invoice_fiscal'],
         loaded: function (self, account_move) {
             self.account_move = account_move;
         }
@@ -29,19 +29,7 @@ odoo.define('pos_receipt_extend.PaymentScreen', function (require) {
             
 
         }
-
-        /*
-        // testeando en paymentscreng
-        get receipt() {
-            return this.receiptEnv.receipt;
-            // this._receiptEnv = this.props.order.getOrderReceiptEnv();
-        }
-
-        get receiptEnv () {
-          return this._receiptEnv;
-        }
-
-        */
+    
 
         async validateOrder(isForceValidate) {
             this.render();
