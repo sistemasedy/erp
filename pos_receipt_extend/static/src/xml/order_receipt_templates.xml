@@ -20,11 +20,7 @@
                         <t t-esc="env.pos._previousAttributes.selectedClient.address or 'null'"/>
                         </div>
                     </t>
-                    <t t-if="env.pos.pos_config[0].is_customer_mobile">
-                        <div style="font-weight:bold;">Customer Mobile:
-                            <t t-esc="env.pos._previousAttributes.selectedClient.mobile or 'null'"/>
-                        </div>
-                    </t>
+                    
                     <t t-if="env.pos.pos_config[0].is_customer_phone">
                         <div style="font-weight:bold;">Customer Phone:
                             <t t-esc="env.pos._previousAttributes.selectedClient.phone or null"/>
@@ -35,28 +31,82 @@
                             <t t-esc="env.pos._previousAttributes.selectedClient.email or 'null'"/>
                         </div>
                     </t>
-                    <t t-if="env.pos.pos_config[0].is_customer_vat">
-                        <div style="font-weight:bold;">Customer Vat:
-                            <t t-esc="env.pos._previousAttributes.selectedClient.vat or 'null'"/>
+                    
+                </t>
+            </t>
+            
+            <t t-if="env.pos.pos_config[0].is_invoice_number">
+                <t t-if='receipt.client'>
+                     <t t-if="env.pos.inv">
+                        <div style="font-weight:bold;">FACTURA:
+                          <t t-esc="env.pos._previousAttributes.selectedOrder.pos.inv"/>
+                        </div>
+                        <div style="font-weight:bold;">
+                          <t t-esc="env.pos._previousAttributes.selectedOrder.pos.type"/>
+                        </div>
+                        <div style="font-weight:bold;">NCF:
+                          <t t-esc="env.pos._previousAttributes.selectedOrder.pos.fiscal"/>
                         </div>
                     </t>
                 </t>
             </t>
-            <t t-if="env.pos.pos_config[0].is_invoice_number">
-                <t t-if="env.pos.inv">
-                     <div style="font-weight:bold;">Invoice Number:
-                         <t t-esc="env.pos.inv"/>
-                      </div>
-                </t>
-                </t>
-            <t t-if="env.pos.pos_config[0].is_qr_code">
-                <t t-if="env.pos.qr_image">
-                    <div style="font-weight:bold;">
-                        <img t-attf-src="{{env.pos.qr_image}}"
-                             style="width:50%;"/>
-                    </div>
-                </t>
-            </t>
+            
         </xpath>
     </t>
+
+
+
+    <t t-name="OrderReceipt" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension" owl="1">
+       <xpath expr="//div[hasclass('orderlines')]" position="replace"> 
+            <div class="orderlines">      
+                <table class='receipt-orderlines'>
+                    <colgroup>
+                        <col width='30%' />
+                        <col width='15%' />
+                        <col width='20%' />
+                        <col width='30%' />
+                    </colgroup>
+                    <tr style="border-bottom: 1px dashed black;">
+                        <th style='text-align:left'>Descripcion</th>
+                        <th style='text-align:left'>Cant.</th>
+                        <th style='text-align:right'>Precio</th>
+                        <th style='text-align:right'>Valor</th>
+                    </tr>
+                    <tr t-foreach="orderlines" t-as="orderline" t-key="orderline.id">
+                        <td>
+                            <t t-esc="orderline.get_product().display_name"/>
+                             <t t-if="orderline.get_discount() > 0">
+                                <div class="pos-disc-font">
+                                    With a <t t-esc="orderline.get_discount()"/>% discount
+                                </div>
+                            </t>
+                        </td>
+                        <td>
+                            <t t-esc="orderline.get_quantity_str_with_unit()"/>
+                        </td>
+                        <td>
+                            <!-- <t t-set="a" t-value="orderline.quantityStr"></t> -->
+                            <t t-esc="env.pos.format_currency(orderline.get_unit_display_price())"></t>
+                            <!-- <t t-set="c" t-value="b/a"></t>
+                            <t t-esc="c"/> -->
+                        </td>
+                        <td style='text-align:right'>
+                            <t t-esc="env.pos.format_currency(orderline.get_price_with_tax())"/>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+       </xpath>
+       <!--
+       <xpath expr="//t[@t-foreach='receipt.paymentlines']" position="replace">
+           <div class="pos-receipt-amount receipt-change">
+                <t t-esc="receipt.paymentlines[0].name" />
+                <span t-esc="env.pos.format_currency_no_symbol(receipt.paymentlines[0].amount)" class="pos-receipt-right-align"/>
+            </div>
+       </xpath>   
+       -->
+    </t>
+
+
+    
 </templates>
