@@ -107,16 +107,7 @@
        -->
     </t>
 
-    <t t-name="ClientListScreen2" t-inherit="point_of_sale.ClientListScreen" t-inherit-mode="extension" owl="1">
-        <xpath expr="//span[hasclass('button')]" position="after">
-            <div class="button" t-if="state.detailIsShown" t-on-click="trigger('click-fiscal')">
-                <i class="fa fa-floppy-o"/>
-                <t t-if="!env.isMobile">
-                   <span> Buscar Cliente Fiscal</span>
-                </t>
-            </div>
-        </xpath>
-    </t>
+   
 
 
     
