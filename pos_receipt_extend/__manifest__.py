@@ -45,7 +45,6 @@
         ],
         'web.assets_qweb': [
             'pos_receipt_extend/static/src/xml/order_receipt_templates.xml',
-            'pos_receipt_extend/static/src/xml/OrderReceipt.xml',
         ]
     },
     'images': ['static/description/banner.jpg',],

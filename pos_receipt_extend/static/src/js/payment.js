@@ -1,7 +1,6 @@
 odoo.define('pos_receipt_extend.PaymentScreen', function (require) {
     'use strict';
     var rpc = require('web.rpc')
-    const NumberBuffer = require('point_of_sale.NumberBuffer');
     const PaymentScreen = require('point_of_sale.PaymentScreen');
     const Registries = require('point_of_sale.Registries');
     var models = require('point_of_sale.models');
@@ -17,7 +16,7 @@ odoo.define('pos_receipt_extend.PaymentScreen', function (require) {
        // Load 'account.move' model fields
     models.load_models([{
         model: 'account.move',
-        fields: ['name','invoice_fiscal'],
+        fields: ['name'],
         loaded: function (self, account_move) {
             self.account_move = account_move;
         }
@@ -26,40 +25,24 @@ odoo.define('pos_receipt_extend.PaymentScreen', function (require) {
     const PosPaymentReceiptExtend = PaymentScreen => class extends PaymentScreen {
         setup() {
             super.setup();
-            
-
         }
-    
-
         async validateOrder(isForceValidate) {
-            this.render();
             // Retrieve receipt number from the selected order
-
             var receipt_number = this.env.pos._previousAttributes.selectedOrder.name
-            console.log("sis", receipt_number)
             const receipt_order = await super.validateOrder(...arguments);
              // Generate QR code and store it
             const codeWriter = new window.ZXing.BrowserQRCodeSvgWriter();
             var self = this;
-            
             rpc.query({
                 model: 'pos.order',
                 method: 'get_invoice',
                 args: [receipt_number]
             }).then(function (result) {
-                console.log("test", result)
                 self.env.pos.inv = result['invoice_name']
-                self.env.pos.fiscal = result['invoice_fiscal']
-                self.env.pos.type = result['invoice_type']
                 const address = `${result.base_url}/my/invoices/${result.invoice_id}?`
                 let qr_code_svg = new XMLSerializer().serializeToString(codeWriter.write(address, 150, 150));
                 self.env.pos.qr_image = "data:image/svg+xml;base64," + window.btoa(qr_code_svg);
-                
             });
-            
-            console.log("select",this.env.pos)
-            
-            
             return receipt_order
         }
     }
