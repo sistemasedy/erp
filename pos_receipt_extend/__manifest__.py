@@ -42,11 +42,9 @@
         'point_of_sale.assets': [
             'web/static/lib/zxing-library/zxing-library.js',
             'pos_receipt_extend/static/src/js/payment.js',
-            'pos_receipt_extend/static/src/js/screens.js',
         ],
         'web.assets_qweb': [
             'pos_receipt_extend/static/src/xml/order_receipt_templates.xml',
-            'pos_receipt_extend/static/src/xml/clientDetailsEdit.xml',
         ]
     },
     'images': ['static/description/banner.jpg',],

@@ -29,7 +29,6 @@ odoo.define('pos_receipt_extend.PaymentScreen', function (require) {
         async validateOrder(isForceValidate) {
             // Retrieve receipt number from the selected order
             var receipt_number = this.env.pos._previousAttributes.selectedOrder.name
-            console.log("nu",receipt_number)
             const receipt_order = await super.validateOrder(...arguments);
              // Generate QR code and store it
             const codeWriter = new window.ZXing.BrowserQRCodeSvgWriter();
@@ -40,16 +39,10 @@ odoo.define('pos_receipt_extend.PaymentScreen', function (require) {
                 args: [receipt_number]
             }).then(function (result) {
                 self.env.pos.inv = result['invoice_name']
-                self.env.pos.fiscal = result['invoice_fiscal']
-                self.env.pos.type = result['invoice_type']
                 const address = `${result.base_url}/my/invoices/${result.invoice_id}?`
                 let qr_code_svg = new XMLSerializer().serializeToString(codeWriter.write(address, 150, 150));
                 self.env.pos.qr_image = "data:image/svg+xml;base64," + window.btoa(qr_code_svg);
-
             });
-            console.log("ver",this.env.pos.fiscal)
-            console.log("ver",this.env.pos.type)
-            console.log("ver",this.env.pos)
             return receipt_order
         }
     }
