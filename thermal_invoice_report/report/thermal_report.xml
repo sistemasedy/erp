@@ -26,7 +26,6 @@
 
 
                         <div class="pos-receipt">
-                            <t t-if="receipt.company.logo">
                                 <img class="pos-receipt-logo" src='/web/binary/company_logo' alt="Logo"/>
 
                                 <br/>
@@ -44,18 +43,18 @@
                                 <br/>
                             <div class="pos-receipt-contact">
                                 <strong>FACTURA FISCAL:</strong>
-                                    <span t-field="o.sequence_number"/><br/>
-                                    FECHA:<span class="m-0" t-field="o.invoice_date_due"/><br/>
-                                    <strong>
-                                        <span t-field="o.l10n_latam_document_type_id.report_name"/>
-                                    </strong><br/>
-                                    NCF:<span t-if="o.name != '/'" t-field="o.l10n_do_fiscal_number"/><br/>
+                                <span t-field="o.sequence_number"/><br/>
+                                FECHA:<span class="m-0" t-field="o.invoice_date_due"/><br/>
+                                <strong>
+                                    <span t-field="o.l10n_latam_document_type_id.report_name"/>
+                                </strong><br/>
+                                NCF:<span t-if="o.name != '/'" t-field="o.l10n_do_fiscal_number"/><br/>
 
-                                    <span>VENCE EL 31 DE DICIEMBRE 2024</span>
-                                    <div class="cashier">
-                                        <div>--------------------------------</div>
-                                        <div>Served by Vendor</div>
-                                    </div>
+                                <span>VENCE EL 31 DE DICIEMBRE 2024</span>
+                                <div class="cashier">
+                                    <div>--------------------------------</div>
+                                    <div>Served by Vendor</div>
+                                </div>
                             </div>
                             <br /><br />
 
