@@ -24,12 +24,12 @@
                         <div class="pos-receipt">
                                 <img class="pos-receipt-logo" src='/web/binary/company_logo' alt="Logo"/>
 
-                                <p>
-                                <span t-field="o.company_id.company_details"/>
-                                </p>
+                                <div class="pos-receipt-contact">
+                                    <span t-field="o.company_id.company_details"/>
+                                </div>
 
                                 <br/>
-                                <h7 class="pos-receipt-center-align">
+                                <div class="pos-receipt-contact">
                                     <strong>INSTITUCION:</strong><br/>
                                     <strong>
                                         <t t-if="vat_len == 9">RNC:</t>
@@ -39,7 +39,7 @@
                                     <span class="m-0" t-esc="o.commercial_partner_id.vat or ''"/><br/>
                                     <span t-field="o.partner_id"
                                             t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}'/>
-                                </h7>
+                                </div>
                                 <br/>
                                 <div class="pos-receipt-contact">
                                     <strong>FACTURA FISCAL:</strong>
