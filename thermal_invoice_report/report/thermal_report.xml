@@ -21,7 +21,7 @@
                     <link rel="stylesheet"
                           href="/thermal_invoice_report/static/src/css/thermal_style.css"/>
 
-                    <center class="thermal-report-page">
+                    <center class="thermal-report-pages">
                         <div class="my_container">
                             <div style="width: 45%;">
                                 <img src='/web/binary/company_logo'
@@ -206,7 +206,7 @@
                             </div>
                             <br/>
                             <center>
-                                Thank You For Shopping With Us
+                                Gracias por tu Compra
                                 <p class="cntr">-- *** --</p>
                             </center>
 
