@@ -30,17 +30,7 @@
         </record>
 
 
-        <!-- report action  -->
-        <record id="action_fiscal_invoice_report" model="ir.actions.report">
-            <field name="name"> Factura Fiscal Punto de Venta </field>
-            <field name="model">account.move</field>
-            <field name="report_type">qweb-pdf</field>
-            <field name="report_name">em_product.account_fiscal_report</field>
-            <field name="report_file">em_product.account_fiscal_report</field>
-            <field name="print_report_name">'fiscal - %s' % (object.name).replace('/', '')</field>
-            <field name="binding_model_id" ref="account.model_account_move"/>
-            <field name="binding_type">report</field>
-        </record>
+      
 
         
     </data>
