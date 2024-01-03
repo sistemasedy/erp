@@ -31,6 +31,11 @@
                             <t t-esc="env.pos._previousAttributes.selectedClient.email or 'null'"/>
                         </div>
                     </t>
+                    <t t-if="env.pos.pos_config[0].is_customer_name">
+                        <div style="font-weight:bold;">RNC:
+                            <t t-esc="env.pos._previousAttributes.selectedClient.vat or 'null'"/>
+                        </div>
+                    </t>
                     
                 </t>
             </t>
