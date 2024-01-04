@@ -21,14 +21,22 @@ odoo.define('pos_l10n_ar_identification.screens', function(require) {
 
              constructor() {
                 super(...arguments);
-                useListener('click-edit', () => this.clickFiscal());
+                useListener('click-fiscal', () => this.clickFiscal());
             }
 
 
             clickFiscal() {
                 var self = this;
-                this.fiscalChanges();
+                this.hola();
            }
+
+
+
+           async hola() {
+
+              var list = []
+                console.log('hola fiscal')  
+            }
 
          
 

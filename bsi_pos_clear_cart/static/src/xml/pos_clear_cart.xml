@@ -6,3 +6,213 @@
         </div>
    </t>
 </templates>
+
+<templates id="template" xml:space="preserve">
+
+
+
+    <t t-name="ClientDetailsEditIdent" t-inherit="point_of_sale.ClientDetailsEdit" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('client-details-box')]" position="replace">
+            <div class="client-details-box clearfix">
+                <div class="client-details-left">
+                    <div class="client-detail">
+                        <span class="label">Street</span>
+                        <input class="detail client-address-street" name="street"
+                               t-on-change="captureChange" t-att-value="props.partner.street || ''"
+                               placeholder="Street" />
+                    </div>
+                    <div class="client-detail">
+                        <span class="label">City</span>
+                        <input class="detail client-address-city" name="city"
+                               t-on-change="captureChange" t-att-value="props.partner.city || ''"
+                               placeholder="City" />
+                    </div>
+                    <div class="client-detail">
+                        <span class="label">Postcode</span>
+                        <input class="detail client-address-zip" name="zip"
+                               t-on-change="captureChange" t-att-value="props.partner.zip || ''"
+                               placeholder="ZIP" />
+                    </div>
+                    <div class="client-detail">
+                        <span class="label">State</span>
+                        <select class="detail client-address-states needsclick" name="state_id"
+                                t-on-change="captureChange">
+                            <option value="">None</option>
+                            <t t-foreach="env.pos.states" t-as="state" t-key="state.id">
+                                <option t-if="props.partner.country_id[0] == state.country_id[0]"
+                                        t-att-value="state.id"
+                                        t-att-selected="props.partner.state_id ? ((state.id === props.partner.state_id[0]) ? true : undefined) : undefined">
+                                    <t t-esc="state.name" />
+                                </option>
+                            </t>
+                        </select>
+                    </div>
+                    <div class="client-detail">
+                        <span class="label">Country</span>
+                        <select class="detail client-address-country needsclick" name="country_id"
+                                t-on-change="captureChange">
+                            <option value="">None</option>
+                            <t t-foreach="env.pos.countries" t-as="country" t-key="country.id">
+                                <option t-att-value="country.id"
+                                        t-att-selected="props.partner.country_id ? ((country.id === props.partner.country_id[0]) ? true : undefined) : undefined">
+                                    <t t-esc="country.name" />
+                                </option>
+                            </t>
+                        </select>
+                    </div>
+                </div>
+                <div class="client-details-right">
+                    <div class="client-detail">
+                        <span class="label">Language</span>
+                        <select class="detail client-lang needsclick" name="lang"
+                                t-on-change="captureChange">
+                            <t t-foreach="env.pos.langs" t-as="lang" t-key="lang.id">
+                                <option t-att-value="lang.code"
+                                        t-att-selected="props.partner.lang ? ((lang.code === props.partner.lang) ? true : undefined) : lang.code === env.pos.user.lang? true : undefined">
+                                    <t t-esc="lang.name" />
+                                </option>
+                            </t>
+                        </select>
+                    </div>
+                    <div class="client-detail">
+                        <span class="label">Email</span>
+                        <input class="detail client-email" name="email" type="email"
+                               t-on-change="captureChange"
+                               t-att-value="props.partner.email || ''" />
+                    </div>
+                    <div class="client-detail">
+                        <span class="label">Phone</span>
+                        <input class="detail client-phone" name="phone" type="tel"
+                               t-on-change="captureChange"
+                               t-att-value="props.partner.phone || ''" />
+                    </div>
+                    <div class="client-detail">
+                        <span class="label">Barcode</span>
+                        <input class="detail barcode" name="barcode" t-on-change="captureChange"
+                               t-att-value="props.partner.barcode || ''" />
+                    </div>
+                    <div class="client-detail">
+                        <span class="label">Tax ID</span>
+                        <input class="detail vat" name="vat" t-on-change="captureChange"
+                               t-att-value="props.partner.vat || ''" />
+                    </div>
+                    <div t-if="env.pos.pricelists.length gt 1" class="client-detail">
+                        <span class="label">Pricelist</span>
+                        <select class="detail needsclick" name="property_product_pricelist"
+                                t-on-change="captureChange">
+                            <t t-foreach="env.pos.pricelists" t-as="pricelist"
+                               t-key="pricelist.id">
+                                <option t-att-value="pricelist.id"
+                                        t-att-selected="props.partner.property_product_pricelist ? (pricelist.id === props.partner.property_product_pricelist[0] ? true : undefined) : pricelist.id === env.pos.default_pricelist.id ? true : undefined">
+                                    <t t-esc="pricelist.display_name" />
+                                </option>
+                            </t>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+    </t>
+</templates>
+
+
+<templates id="template" xml:space="preserve">
+
+
+
+    <t t-name="ClientListScreenFiscal" t-inherit="point_of_sale.ClientListScreen" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('clientlist-screen')]" position="replace">
+            <div class="clientlist-screen screen" t-on-activate-edit-mode="activateEditMode">
+            <div class="screen-content">
+                <div class="top-content">
+                    <div class="button" t-if="state.detailIsShown" t-on-click="trigger('click-fiscal')">
+                        <i class="fa fa-floppy-o"/>
+                        <t t-if="!env.isMobile">
+                            <span> hola fiscal</span>
+                        </t>
+                    </div>
+                    <div class="button back" t-on-click="back">
+                        <i class="fa fa-angle-double-left"/>
+                        <t t-if="!env.isMobile"> Discard</t>
+                    </div>
+                    <div t-if="!state.detailIsShown &amp;&amp; !state.selectedClient" class="button new-customer" role="img" aria-label="Add a customer"
+                            t-on-click="trigger('activate-edit-mode', { isNewClient: true })"
+                            title="Add a customer">
+                        <i class="fa fa-plus"/>
+                        <t t-if="!env.isMobile"> Create</t>
+                    </div>
+                    <div t-if="isNextButtonVisible" t-on-click="clickNext"
+                          class="button next highlight">
+                        <t t-if="!env.isMobile">
+                            <t t-esc="nextButton.text" />
+                        </t>
+                        <t t-else="">
+                            <i t-if="nextButton.command === 'deselect'" class="fa fa-trash"/>
+                            <i t-elif="nextButton.command === 'set'" class="fa fa-check"/>
+                        </t>
+                    </div>
+                    <div class="button" t-if="state.detailIsShown" t-on-click="trigger('click-save')">
+                        <i class="fa fa-floppy-o"/>
+                        <t t-if="!env.isMobile">
+                            <span> Save</span>
+                        </t>
+                    </div>
+                    <div t-if="!state.detailIsShown" class="searchbox-client top-content-center">
+                        <input placeholder="Search Customers" size="1" t-on-keyup="updateClientList" />
+                        <span class="search-clear-client"></span>
+                    </div>
+                    <div class="button back" t-on-click="searchClient()" t-if="!state.detailIsShown">
+                        <span class="database-icon">
+                            <i class="fa fa-database"/>
+                        </span>
+                        <t t-if="!env.isMobile">
+                            <span class="load-customer-search">
+                                Load Customers
+                            </span>
+                        </t>
+                    </div>
+                </div>
+                <section class="full-content">
+                    <div class="client-window">
+                        <section class="subwindow collapsed">
+                            <div class="subwindow-container collapsed">
+                                <div t-if="state.detailIsShown" class="client-details-contents subwindow-container-fix">
+                                    <ClientDetailsEdit t-props="state.editModeProps"
+                                                       t-on-cancel-edit="cancelEdit"/>
+                                </div>
+                            </div>
+                        </section>
+                        <section class="subwindow list">
+                            <div class="subwindow-container">
+                                <div t-if="!state.detailIsShown" class="subwindow-container-fix scrollable-y">
+                                    <table class="client-list">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th t-if="!env.isMobile">Address</th>
+                                                <th t-if="!env.isMobile">Phone</th>
+                                                <th t-if="env.isMobile">ZIP</th>
+                                                <th class="client-line-email">Email</th>
+                                                <th class="client-line-last-column-placeholder oe_invisible"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="client-list-contents">
+                                            <t t-foreach="clients" t-as="partner"
+                                               t-key="partner.id">
+                                                <ClientLine partner="partner"
+                                                            selectedClient="state.selectedClient"
+                                                            detailIsShown="state.detailIsShown"
+                                                            t-on-click-client="clickClient" />
+                                            </t>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+            </div>
+        </div>
+        </xpath>
+    </t>
+</templates>

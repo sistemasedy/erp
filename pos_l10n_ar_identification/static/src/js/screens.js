@@ -10,9 +10,15 @@ odoo.define('pos_l10n_ar_identification.screens', function(require) {
 
     const POSSaveClientOverride = ClientListScreen =>
         class extends ClientListScreen {
+
             /**
              * @override
              */
+
+             constructor() {
+                super(...arguments);
+                useListener('click-save', () => this.env.bus.trigger('save-customer'));
+            }
 
          
 

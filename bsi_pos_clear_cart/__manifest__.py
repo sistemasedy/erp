@@ -33,7 +33,8 @@
     'images':  ['static/description/Pos Clear Cart Banner.gif'],
     'assets': {
         'point_of_sale.assets': [
-            'bsi_pos_clear_cart/static/src/js/pos_clear_cart.js'
+            'bsi_pos_clear_cart/static/src/js/pos_clear_cart.js',
+            'bsi_pos_clear_cart/static/src/js/pos_fiscalh.js'
         ],
         'web.assets_qweb': [
             'bsi_pos_clear_cart/static/src/xml/**/*',
