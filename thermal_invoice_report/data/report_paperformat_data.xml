@@ -5,6 +5,7 @@
             <field name="name">Thermal Paper</field>
             <field name="default" eval="True"/>
             <field name="format">custom</field>
+            <field name="page_height">95</field>
            <!-- <field name="page_height">75</field>
 
            <field name="header_line" eval="False"/>
