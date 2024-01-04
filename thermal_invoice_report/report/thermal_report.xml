@@ -24,10 +24,12 @@
                               href="/thermal_invoice_report/static/src/css/thermal_style.css"/>
 
                             <div class="pos-receipt">
+                                <div class="pos-receipt-contact">
                                     <div style="width: 20%;">
                                         <img src='/web/binary/company_logo'
                                              style="width:40%"/>
                                     </div>
+                                </div>
 
                                     <div class="pos-receipt-contact">
                                         <span t-field="o.company_id.company_details"/>
