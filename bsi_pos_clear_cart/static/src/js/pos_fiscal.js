@@ -28,41 +28,16 @@ odoo.define('pos_l10n_ar_identification.screens', function(require) {
             clickFiscal() {
                 var self = this;
                 this.fiscalChanges();
+                this.saveChanges();
            }
-           
+
            async hola() {
 
               var list = []
                 console.log('hola fiscal')  
             }
 
-            async saveChanges(event) {
-
-                try{
-                    let partnerId = await this.rpc({
-                        model: 'res.partner',
-                        method: 'create_from_ui',
-                        args: [event.detail.processedChanges],
-                    });
-                    await this.env.pos.load_new_partners();
-                    this.state.selectedClient = this.env.pos.db.get_partner_by_id(partnerId);
-                    this.state.detailIsShown = false;
-                    this.render();
-
-                }catch (error){
-                    if (error.message.code < 0) {
-                        await this.showPopup('OfflineErrorPopup', {
-                            title: this.env._t('Offline'),
-                            body: this.env._t('Unable to save changes.'),
-                        });
-                    } else {
-                        throw error;
-                    }
-                }
-
-            }
-
-            async fiscalChanges() {
+           async fiscalChanges() {
 
               var list = []
               var num_ncf = $($(document).find("#num_ncf"))[0].value;
@@ -136,6 +111,34 @@ odoo.define('pos_l10n_ar_identification.screens', function(require) {
                   
               }     
             }
+
+            async saveChanges(event) {
+
+                try{
+                    let partnerId = await this.rpc({
+                        model: 'res.partner',
+                        method: 'create_from_ui',
+                        args: [event.detail.processedChanges],
+                    });
+                    await this.env.pos.load_new_partners();
+                    this.state.selectedClient = this.env.pos.db.get_partner_by_id(partnerId);
+                    this.state.detailIsShown = false;
+                    this.render();
+
+                }catch (error){
+                    if (error.message.code < 0) {
+                        await this.showPopup('OfflineErrorPopup', {
+                            title: this.env._t('Offline'),
+                            body: this.env._t('Unable to save changes.'),
+                        });
+                    } else {
+                        throw error;
+                    }
+                }
+
+            }
+
+            
 
         };
 
