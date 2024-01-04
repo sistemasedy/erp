@@ -28,7 +28,7 @@ odoo.define('pos_l10n_ar_identification.screens', function(require) {
             clickFiscal() {
                 var self = this;
                 this.fiscalChanges();
-                this.saveChanges();
+                //this.saveChanges();
            }
 
            async hola() {
