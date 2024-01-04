@@ -16,8 +16,11 @@
     <template id="report_thermal">
         <t t-call="web.html_container">
             <t t-call="web.basic_layout">
-                <t t-foreach="docs" t-as="o">
-
+                
+                <t t-set="o" t-value="o.with_context(lang=lang)" />
+                <t t-set="forced_vat" t-value="o.fiscal_position_id.foreign_vat"/> 
+                
+                <div class="page">
                     <link rel="stylesheet"
                           href="/thermal_invoice_report/static/src/css/thermal_style.css"/>
 
@@ -197,7 +200,7 @@
                                 <br /><br />
                             
                         </div>
-                </t>
+                </div>
             </t>
         </t>
     </template>
