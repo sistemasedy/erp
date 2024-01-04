@@ -142,14 +142,18 @@
                             <span> Save</span>
                         </t>
                     </div>
-                    <div t-if="state.detailIsShown" class="searchbox-client top-content-center">
+                    
+
+                    <div t-if="!state.detailIsShown" class="searchbox-client top-content-center">
                         <input placeholder="Search Customers" size="1" t-on-keyup="updateClientList" />
                         <span class="search-clear-client"></span>
                     </div>
-                    <div t-if="!state.detailIsShown" class="searchbox-client top-content-center">
-                        <input placeholder="Buscar comprobante" size="1" t-on-keyup="trigger('click-fiscal')" />
+
+                    <div t-if="state.detailIsShown" class="searchbox-client top-content-center">
+                        <input id="num_ncf" placeholder="Buscar comprobante" size="1" />
                         <span class="search-clear-client"></span>
                     </div>
+                    
                     <div class="button" t-if="state.detailIsShown" t-on-click="trigger('click-fiscal')">
                         <span class="database-icon">
                             <i class="fa fa-database"/>
