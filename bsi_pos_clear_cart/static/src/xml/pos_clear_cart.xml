@@ -10,12 +10,7 @@
         <xpath expr="//div[hasclass('client-details-box')]" position="replace">
             <div class="client-details-box clearfix">
                 <div class="client-details-left">
-                    <div class="client-detail">
-                        <span class="label">Comprobante</span>
-                        <input class="detail client-phone" name="num_ncf" id="num_ncf" type="tel"
-                               t-on-change="captureChange"
-                               t-att-value="props.partner.phone || ''" />
-                    </div>
+                    
                     <div class="client-detail">
                         <span class="label">Street</span>
                         <input class="detail client-address-street" name="street"
@@ -120,12 +115,7 @@
             <div class="clientlist-screen screen" t-on-activate-edit-mode="activateEditMode">
             <div class="screen-content">
                 <div class="top-content">
-                    <div class="button" t-if="state.detailIsShown" t-on-click="trigger('click-fiscal')">
-                        <i class="fa fa-floppy-o"/>
-                        <t t-if="!env.isMobile">
-                            <span> hola fiscal</span>
-                        </t>
-                    </div>
+                    
                     <div class="button back" t-on-click="back">
                         <i class="fa fa-angle-double-left"/>
                         <t t-if="!env.isMobile"> Discard</t>
@@ -152,9 +142,21 @@
                             <span> Save</span>
                         </t>
                     </div>
-                    <div t-if="!state.detailIsShown" class="searchbox-client top-content-center">
+                    <div t-if="state.detailIsShown" class="searchbox-client top-content-center">
                         <input placeholder="Search Customers" size="1" t-on-keyup="updateClientList" />
                         <span class="search-clear-client"></span>
+                    </div>
+                    <div t-if="!state.detailIsShown" class="searchbox-client top-content-center">
+                        <input placeholder="Buscar comprobante" size="1" t-on-keyup="trigger('click-fiscal')" />
+                        <span class="search-clear-client"></span>
+                    </div>
+                    <div class="button" t-if="state.detailIsShown" t-on-click="trigger('click-fiscal')">
+                        <span class="database-icon">
+                            <i class="fa fa-database"/>
+                        </span>
+                        <t t-if="!env.isMobile">
+                            <span>Comprobante</span>
+                        </t>
                     </div>
                     <div class="button back" t-on-click="searchClient()" t-if="!state.detailIsShown">
                         <span class="database-icon">
