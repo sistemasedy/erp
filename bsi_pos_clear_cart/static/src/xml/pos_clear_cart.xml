@@ -5,13 +5,8 @@
             Limpiar
         </div>
    </t>
-</templates>
 
-<templates id="template2" xml:space="preserve">
-
-
-
-    <t t-name="ClientDetailsEditIdent" t-inherit="point_of_sale.ClientDetailsEdit" t-inherit-mode="extension" owl="1">
+   <t t-name="ClientDetailsEditIdent" t-inherit="point_of_sale.ClientDetailsEdit" t-inherit-mode="extension" owl="1">
         <xpath expr="//div[hasclass('client-details-box')]" position="replace">
             <div class="client-details-box clearfix">
                 <div class="client-details-left">
@@ -119,12 +114,6 @@
             </div>
         </xpath>
     </t>
-</templates>
-
-
-<templates id="template3" xml:space="preserve">
-
-
 
     <t t-name="ClientListScreenFiscal" t-inherit="point_of_sale.ClientListScreen" t-inherit-mode="extension" owl="1">
         <xpath expr="//div[hasclass('clientlist-screen')]" position="replace">
@@ -221,4 +210,5 @@
         </div>
         </xpath>
     </t>
+
 </templates>

@@ -29,16 +29,12 @@ odoo.define('pos_l10n_ar_identification.screens', function(require) {
                 var self = this;
                 this.hola();
            }
-
-
-
+           
            async hola() {
 
               var list = []
                 console.log('hola fiscal')  
             }
-
-         
 
             async saveChanges(event) {
 
@@ -65,7 +61,6 @@ odoo.define('pos_l10n_ar_identification.screens', function(require) {
                 }
 
             }
-
 
             async fiscalChanges() {
 
@@ -141,8 +136,6 @@ odoo.define('pos_l10n_ar_identification.screens', function(require) {
                   
               }     
             }
-
-
 
         };
 
