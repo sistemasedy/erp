@@ -15,7 +15,7 @@
 
     <template id="report_thermal">
         <t t-call="web.html_container">
-            <t t-call="web.basic_layout">
+            <t t-call="web.report_layout">
                 
                 <t t-foreach="docs" t-as="o">
                 
@@ -24,7 +24,10 @@
                               href="/thermal_invoice_report/static/src/css/thermal_style.css"/>
 
                             <div class="pos-receipt">
-                                    <img class="pos-receipt-logo" src='/web/binary/company_logo' alt="Logo"/>
+                                    <div style="width: 20%;">
+                                        <img src='/web/binary/company_logo'
+                                             style="width:40%"/>
+                                    </div>
 
                                     <div class="pos-receipt-contact">
                                         <span t-field="o.company_id.company_details"/>
@@ -62,7 +65,7 @@
 
                                     <!-- Orderlines -->
 
-                                    <div class="orderlines">
+                                    <div class="pos-receipt-contact">
                                         <br/>
                                         <table class="table table-sm o_main_table" name="invoice_line_table">
                                             <thead>
