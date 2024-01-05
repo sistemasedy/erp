@@ -123,6 +123,10 @@ odoo.define('pos_l10n_ar_identification.screens', function(require) {
                 console.log("el dato es", num_ncf)
               }else{
                 console.log("no hay")
+                console.log(this.props.partner.name)
+                console.log(this.props.partner.phone)
+                console.log(this.props.partner.email)
+                console.log(this.props.partner.vat)
               }
 
                 try{
