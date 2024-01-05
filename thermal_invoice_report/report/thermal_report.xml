@@ -48,7 +48,7 @@
                                             <span class="m-0" t-esc="o.commercial_partner_id.vat or ''"/><br/>
                                             <span t-field="o.partner_id"
                                                     t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}'/>
-                                        <h2/>
+                                        </h3>
                                     </div>
                                     <br/>
                                     <div class="pos-receipt-contact">
@@ -62,7 +62,7 @@
                                             NCF:<span t-if="o.name != '/'" t-field="o.l10n_do_fiscal_number"/><br/>
 
                                             <span>VENCE EL 31 DE DICIEMBRE 2024</span>
-                                        <h2/>
+                                        </h3>
                                     </div>
                                     <br />
 
