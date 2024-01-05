@@ -63,7 +63,7 @@ odoo.define('pos_l10n_ar_identification.screens', function(require) {
                 
               }else{
                 var XMLReq = new XMLHttpRequest();
-                XMLReq.open( "GET", "https://raw.githubusercontent.com/sistemasedy/api_ncf/main/DGII_RNC/TMP/DGII_RNC.TXT", false )
+                XMLReq.open( "GET", "https://raw.githubusercontent.com/sistemasedy/api_ncf/main/DGII_RNC/TMP/DGII_RNC2.TXT", false )
 
                 XMLReq.onreadystatechange = function() {
                   if(XMLReq.readyState == 4 && XMLReq.status == 200) {
@@ -79,7 +79,7 @@ odoo.define('pos_l10n_ar_identification.screens', function(require) {
                         state : tmp[9]
                       });
                     }
-                    console.log("data",tmp)
+
                     for (var i = 0; i < data_json.length; i++) {
                       if (data_json[i].state == 'ACTIVO') {
                         if (data_json[i].ncf == num_ncf) {
