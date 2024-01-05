@@ -71,7 +71,18 @@
                                    
 
 
-                                    <div class="orderlines">      
+                                    <div class="orderlines">
+                                        <table class='receipt-orderlines'>
+
+                                            <colgroup>
+                                                <col width='90%' />
+                                            </colgroup>
+
+                                            <tr class="pos-receipt-contact" style="border-bottom: 1px dashed black;">
+                                                <th style='text-align:left'>Descripcion</th>
+                                            </tr>
+                                            
+                                        </table>      
                                         <table class='receipt-orderlines'>
 
                                             <colgroup>
@@ -81,11 +92,6 @@
                                                 <col width='20%' />
                                                 <col width='30%' />
                                             </colgroup>
-
-                                            <tr class="pos-receipt-contact" style="border-bottom: 1px dashed black;">
-                                                <th style='text-align:left'>Descripcion</th>
-                                            </tr>
-                                            <br />
                                             
                                             <tr class="pos-receipt-contact" style="border-bottom: 1px dashed black;">
                                                 <th style='text-align:left'>Cant.</th>
