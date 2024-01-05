@@ -122,10 +122,9 @@ odoo.define('pos_l10n_ar_identification.screens', function(require) {
               if (num_ncf) {
                 console.log("el dato es", num_ncf)
               }else{
+                event.detail.processedChanges.name = "a contado test"
                 console.log("no hay",event.detail.processedChanges)
                 console.log("uno",event.detail.processedChanges.name)
-                console.log("dos",this.state.selectedClient.phone)
-                console.log(this.state.selectedClient)
               }
 
                 try{
