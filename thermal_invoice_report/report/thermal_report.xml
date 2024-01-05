@@ -38,7 +38,7 @@
 
                                     <br/>
                                     <div class="pos-receipt-contact">
-                                        <h5>
+                                        <h7>
                                             <strong>INSTITUCION:</strong><br/>
                                             <strong>
                                                 <t t-if="vat_len == 9">RNC:</t>
@@ -48,11 +48,10 @@
                                             <span class="m-0" t-esc="o.commercial_partner_id.vat or ''"/><br/>
                                             <span t-field="o.partner_id"
                                                     t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}'/>
-                                        </h5>
-                                    </div>
-                                    <br/>
-                                    <div class="pos-receipt-contact">
-                                        <h5>
+                                        </h7>
+                                        <br/>
+
+                                        <h6>
                                             <strong>FACTURA FISCAL:</strong>
                                             <span t-field="o.name"/><br/>
                                             FECHA:<span class="m-0" t-field="o.invoice_date_due"/><br/>
@@ -62,9 +61,9 @@
                                             NCF:<span t-if="o.name != '/'" t-field="o.l10n_do_fiscal_number"/><br/>
 
                                             <span>VENCE EL 31 DE DICIEMBRE 2024</span>
-                                        </h5>
+                                        </h6>
                                     </div>
-                                    <br />
+                                   
 
                                     <!-- Orderlines -->
 
@@ -100,7 +99,7 @@
                                                    
 
 
-                                                    <tr t-att-class="'bg-200 font-weight-bold o_line_section' if line.display_type == 'line_section' else 'font-italic o_line_note' if line.display_type == 'line_note' else ''">
+                                                    <tr style="border-bottom: 1px dashed black;">
                                                         <t t-if="not line.display_type" name="account_invoice_line_accountable">
                                                             <td style='text-align:left' width='85%'>
                                                                 <span t-field="line.name" t-options="{'widget': 'text'}"/>
