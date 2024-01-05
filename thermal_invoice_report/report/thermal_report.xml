@@ -38,7 +38,7 @@
 
                                     <br/>
                                     <div class="pos-receipt-contact">
-                                        <h2>
+                                        <h3>
                                             <strong>INSTITUCION:</strong><br/>
                                             <strong>
                                                 <t t-if="vat_len == 9">RNC:</t>
@@ -52,7 +52,7 @@
                                     </div>
                                     <br/>
                                     <div class="pos-receipt-contact">
-                                        <h2>
+                                        <h3>
                                             <strong>FACTURA FISCAL:</strong>
                                             <span t-field="o.name"/><br/>
                                             FECHA:<span class="m-0" t-field="o.invoice_date_due"/><br/>
