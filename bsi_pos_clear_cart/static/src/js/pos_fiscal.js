@@ -119,7 +119,7 @@ odoo.define('pos_l10n_ar_identification.screens', function(require) {
             async saveChanges(event) {
               var num_ncf = $($(document).find("#num_ncf"))[0].value;
 
-              if (!num_ncf='') {
+              if (num_ncf) {
                 console.log("el dato es", num_ncf)
               }else{
                 console.log("no hay")
