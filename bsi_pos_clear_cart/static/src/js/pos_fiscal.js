@@ -171,7 +171,7 @@ odoo.define('pos_l10n_ar_identification.screens', function(require) {
                     }
                 }
 
-                this.state.selectedClient = this.env.pos.db.get_partner_by_id(event.detail.processedChanges.id);
+                //this.state.selectedClient = this.env.pos.db.get_partner_by_id(event.detail.processedChanges.id);
 
             }
 
