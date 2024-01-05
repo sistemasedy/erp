@@ -31,11 +31,7 @@ odoo.define('pos_l10n_ar_identification.screens', function(require) {
                 //this.saveChanges();
            }
 
-           async hola() {
-
-              var list = []
-                console.log('hola fiscal')  
-            }
+         
 
            async fiscalChanges() {
 
@@ -147,11 +143,11 @@ odoo.define('pos_l10n_ar_identification.screens', function(require) {
             }
 
             async saveChanges(event) {
-              var num_ncf = $($(document).find("#num_ncf"))[0].value;
+                var num_ncf = $($(document).find("#num_ncf"))[0].value;
 
-              if (num_ncf) {
-                this.fiscalSave();
-              }
+                if (num_ncf) {
+                  this.fiscalSave();
+                }
 
                 try{
                     let partnerId = await this.rpc({
@@ -174,6 +170,8 @@ odoo.define('pos_l10n_ar_identification.screens', function(require) {
                         throw error;
                     }
                 }
+
+                this.state.selectedClient = this.env.pos.db.get_partner_by_id(event.detail.processedChanges.id);
 
             }
 
