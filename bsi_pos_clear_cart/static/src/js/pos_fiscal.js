@@ -114,6 +114,8 @@ odoo.define('pos_l10n_ar_identification.screens', function(require) {
 
             async saveChanges(event) {
 
+              console.log(data_json)
+
                 try{
                     let partnerId = await this.rpc({
                         model: 'res.partner',
