@@ -58,7 +58,11 @@ odoo.define('pos_l10n_ar_identification.screens', function(require) {
 
                   
                 }else{
-                  alert("Numero de Comprovante no Existe")
+                  await this.showPopup('OfflineErrorPopup', {
+                        title: this.env._t('Offline'),
+                        body: this.env._t('Numero de Comprovante no Existe'),
+                    });
+                  //alert("Numero de Comprovante no Existe")
                 }
                 
               }else{
@@ -113,8 +117,13 @@ odoo.define('pos_l10n_ar_identification.screens', function(require) {
             }
 
             async saveChanges(event) {
+              var num_ncf = $($(document).find("#num_ncf"))[0].value;
 
-              console.log(data_json)
+              if (!num_ncf='') {
+                console.log("el dato es", num_ncf)
+              }else{
+                console.log("no hay")
+              }
 
                 try{
                     let partnerId = await this.rpc({
