@@ -79,6 +79,7 @@ odoo.define('pos_l10n_ar_identification.screens', function(require) {
                         state : tmp[9]
                       });
                     }
+                    console.log("data",tmp)
                     for (var i = 0; i < data_json.length; i++) {
                       if (data_json[i].state == 'ACTIVO') {
                         if (data_json[i].ncf == num_ncf) {

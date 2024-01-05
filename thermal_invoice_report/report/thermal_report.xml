@@ -38,31 +38,31 @@
 
                                     <br/>
                                     <div class="pos-receipt-contact">
-                                        <strong>INSTITUCION:</strong><br/>
-                                        <strong>
-                                            <t t-if="vat_len == 9">RNC:</t>
-                                            <t t-elif="vat_len == 11">Cédula:</t>
-                                            <t t-else="">RNC:</t>
-                                        </strong>
-                                        <span class="m-0" t-esc="o.commercial_partner_id.vat or ''"/><br/>
-                                        <span t-field="o.partner_id"
-                                                t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}'/>
+                                        <h3>
+                                            <strong>INSTITUCION:</strong><br/>
+                                            <strong>
+                                                <t t-if="vat_len == 9">RNC:</t>
+                                                <t t-elif="vat_len == 11">Cédula:</t>
+                                                <t t-else="">RNC:</t>
+                                            </strong>
+                                            <span class="m-0" t-esc="o.commercial_partner_id.vat or ''"/><br/>
+                                            <span t-field="o.partner_id"
+                                                    t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}'/>
+                                        <h3/>
                                     </div>
                                     <br/>
                                     <div class="pos-receipt-contact">
-                                        <strong>FACTURA FISCAL:</strong>
-                                        <span t-field="o.name"/><br/>
-                                        FECHA:<span class="m-0" t-field="o.invoice_date_due"/><br/>
-                                        <strong>
-                                            <span t-field="o.l10n_latam_document_type_id.report_name"/>
-                                        </strong><br/>
-                                        NCF:<span t-if="o.name != '/'" t-field="o.l10n_do_fiscal_number"/><br/>
+                                        <h3>
+                                            <strong>FACTURA FISCAL:</strong>
+                                            <span t-field="o.name"/><br/>
+                                            FECHA:<span class="m-0" t-field="o.invoice_date_due"/><br/>
+                                            <strong>
+                                                <span t-field="o.l10n_latam_document_type_id.report_name"/>
+                                            </strong><br/>
+                                            NCF:<span t-if="o.name != '/'" t-field="o.l10n_do_fiscal_number"/><br/>
 
-                                        <span>VENCE EL 31 DE DICIEMBRE 2024</span>
-                                        <div class="cashier">
-                                            <div>--------------------------------</div>
-                                            <div>Served by Vendor</div>
-                                        </div>
+                                            <span>VENCE EL 31 DE DICIEMBRE 2024</span>
+                                        <h3/>
                                     </div>
                                     <br /><br />
 
@@ -80,7 +80,7 @@
                                                 <th style='text-align:right'>Precio</th>
                                                 <th style='text-align:right'>Itbis</th>
                                                 <th style='text-align:right'>SubT</th>
-                                                <th style='text-align:right'>Importe</th>
+                                                <th style='text-align:right'>Import</th>
                                             </tr>
                                             <tr >
 
