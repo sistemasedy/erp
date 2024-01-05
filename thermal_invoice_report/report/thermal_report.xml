@@ -79,10 +79,11 @@
                                             </colgroup>
 
                                             <tr class="pos-receipt-contact" style="border-bottom: 1px dashed black;">
-                                                <th style='text-align:left'>Descripcion</th>
+                                                <th style='text-align:left'>Descrip</th>
                                             </tr>
                                             
-                                        </table>      
+                                        </table>
+                                        <br />      
                                         <table class='receipt-orderlines'>
 
                                             <colgroup>
@@ -112,7 +113,7 @@
                                                         
                                                         <tr class="pos-receipt-contact" t-att-class="'bg-200 font-weight-bold o_line_section' if line.display_type == 'line_section' else 'font-italic o_line_note' if line.display_type == 'line_note' else ''">
                                                             <t t-if="not line.display_type" name="account_invoice_line_accountable">
-                                                                <td name="account_invoice_line_name"><span t-field="line.name" t-options="{'widget': 'text'}"/></td>
+                                                                <span t-field="line.name" t-options="{'widget': 'text'}"/>
                                                                
                                                                 
                                                         </tr>
