@@ -102,8 +102,9 @@
                                                     <tr style="border-bottom: 1px dashed black;">
                                                         <t t-if="not line.display_type" name="account_invoice_line_accountable">
                                                             <td >
-                                                                <span t-field="line.name"/>
+                                                                
                                                             </td>
+                                                            <span t-field="line.name"/>
                                                             
                                                         </t>
                                                         
