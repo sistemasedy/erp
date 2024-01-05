@@ -99,17 +99,13 @@
                                                    
 
 
-                                                    <tr style="border-bottom: 1px dashed black;">
+                                                    <tr style="display: flex;">
+                                                        <td style="display: flex;">
 
-                                                        <div class="pos-receipt-contact">
-                                                            <span t-field="line.name"/>
-                                                        </div>
-
-                                                        <br/>
-                                                        <td class="pos-descrip">
-
-                                                            <span t-field="line.name"/>
-                                                            
+                                                            <div class="pos-receipt-contact">
+                                                                <span t-field="line.name"/>
+                                                            </div>
+                                                                
                                                             
                                                         </td>
                                                         
