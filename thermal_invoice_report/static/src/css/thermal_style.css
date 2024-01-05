@@ -80,7 +80,9 @@
 }
 
 .pos-descrip {
-    width: 1500px;
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
 }
 
 

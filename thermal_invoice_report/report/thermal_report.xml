@@ -100,8 +100,16 @@
 
 
                                                     <tr style="border-bottom: 1px dashed black;">
-                                                        <td class="pos-descrip">
+
+                                                        <div class="pos-receipt-contact">
                                                             <span t-field="line.name"/>
+                                                        </div>
+
+                                                        <br/>
+                                                        <td class="pos-descrip">
+
+                                                            <span t-field="line.name"/>
+                                                            
                                                             
                                                         </td>
                                                         
