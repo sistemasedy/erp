@@ -116,15 +116,41 @@ odoo.define('pos_l10n_ar_identification.screens', function(require) {
               }     
             }
 
+
+
+            async fiscalSave() {
+
+              var list = []
+              var num_ncf = $($(document).find("#num_ncf"))[0].value;
+              if (data_json.length > 0) {
+                for (var i = 0; i < data_json.length; i++) {
+                  if (data_json[i].state == 'ACTIVO') {
+                    if (data_json[i].ncf == num_ncf) {
+                      list.push(data_json[i])
+
+                    }
+                  }
+                }
+                
+                if (list.length > 0) {
+                  var inputName = list[0].name;
+                  var inputVat = list[0].ncf;
+
+                  event.detail.processedChanges.name = inputName
+                  event.detail.processedChanges.vat = inputVat
+
+                  
+                }
+                
+              }
+                  
+            }
+
             async saveChanges(event) {
               var num_ncf = $($(document).find("#num_ncf"))[0].value;
 
               if (num_ncf) {
-                console.log("el dato es", num_ncf)
-              }else{
-                event.detail.processedChanges.name = "a contado test"
-                console.log("no hay",event.detail.processedChanges)
-                console.log("uno",event.detail.processedChanges.name)
+                this.fiscalSave();
               }
 
                 try{
