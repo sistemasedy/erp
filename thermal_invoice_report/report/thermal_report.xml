@@ -76,8 +76,8 @@
 
                                             
 
-                                            <tr style="border-bottom: 1px dashed black;">
-                                                <th style='text-align:left'>Descrip</th>
+                                            <tr >
+                                                <th >Descrip</th>
                                             </tr>
                                             
                                             <tr style="border-bottom: 1px dashed black;">
@@ -95,9 +95,10 @@
                                                 <t t-foreach="lines" t-as="line">
                                                     <t t-set="current_subtotal" t-value="current_subtotal + line.price_subtotal" groups="account.group_show_line_subtotals_tax_excluded"/>
                                                     <t t-set="current_subtotal" t-value="current_subtotal + line.price_total" groups="account.group_show_line_subtotals_tax_included"/>
-                                                        <tr >
+                                                        <tr  >
+                                                            <td style="width:200px">
                                                                 <t  t-esc="line.name"/>
-
+                                                            </td>
 
                                                             
                                                         </tr>
