@@ -101,7 +101,7 @@
 
                                                     <tr style="display: flex;">
                                                         <td>
-                                                            <t t-field="line.name"/>
+                                                            <t  t-esc="line.name"/>
                                                              
                                                         </td>
 
