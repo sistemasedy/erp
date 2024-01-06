@@ -36,7 +36,7 @@
                                 t-on-change="captureChange">
                             <option value="">None</option>
                             <t t-foreach="env.pos.l10n_do_dgii_tax_payer_type" t-as="tipo" t-key="tipo.name">
-                                <option t-att-value="tipo.id">
+                                <option t-att-value="tipo.name">
                                     <t t-esc="tipo.name" />
                                 </option>
                             </t>
