@@ -27,6 +27,8 @@ odoo.define('pos_l10n_ar_identification.screens', function(require) {
 
             clickFiscal() {
                 var self = this;
+                console.log("test", this.env.pos.l10n_do_dgii_tax_payer_type)
+                console.log("test2", this.env.pos)
                 this.fiscalChanges();
                 //this.saveChanges();
             }

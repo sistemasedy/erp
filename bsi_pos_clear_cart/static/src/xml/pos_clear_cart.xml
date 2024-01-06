@@ -35,11 +35,6 @@
                         <select class="detail client-address-states needsclick" name="l10n_do_dgii_tax_payer_type"
                                 t-on-change="captureChange">
                             <option value="">None</option>
-                            <t t-foreach="env.pos.l10n_do_dgii_tax_payer_type" t-as="tipo" t-key="tipo">
-                                <option t-att-value="tipo">
-                                    <t t-esc="tipo" />
-                                </option>
-                            </t>
                             
                         </select>
                     </div>
