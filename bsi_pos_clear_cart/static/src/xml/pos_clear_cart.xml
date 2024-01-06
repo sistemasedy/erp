@@ -36,10 +36,8 @@
                                 t-on-change="captureChange">
                             <option value="">None</option>
                             <t t-foreach="env.pos.partners.l10n_do_dgii_tax_payer_type" t-as="tipo">
-                                <option t-if="props.partner.l10n_do_dgii_tax_payer_type[0] == tipo.l10n_do_dgii_tax_payer_type[0]"
-                                        t-att-value="l10n_do_dgii_tax_payer_type"
-                                        t-att-selected="props.partner.l10n_do_dgii_tax_payer_type ? ((tipo.l10n_do_dgii_tax_payer_type === props.partner.l10n_do_dgii_tax_payer_type[0]) ? true : undefined) : undefined">
-                                    <t t-esc="tipo" />
+                                <option t-att-selected="props.partner[0].l10n_do_dgii_tax_payer_type ? ((tipo.l10n_do_dgii_tax_payer_type === props.partner[0].l10n_do_dgii_tax_payer_type) ? true : undefined) : undefined">
+                                    
                                 </option>
                             </t>
                             
