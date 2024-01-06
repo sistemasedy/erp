@@ -32,12 +32,15 @@
 
                     <div class="client-detail">
                         <span class="label">Tipo </span>
-                        <select class="detail client-address-states needsclick" name="l10n_do_expense_type"
+                        <select class="detail client-address-states needsclick" name="l10n_do_dgii_tax_payer_type"
                                 t-on-change="captureChange">
                             <option value="">None</option>
-                                <option  t-att-value="props.partner.l10n_do_expense_type">
-                                    <t t-esc="props.partner.l10n_do_expense_type" />
+                            <t t-foreach="env.pos.l10n_do_dgii_tax_payer_type" t-as="tipo" t-key="tipo">
+                                <option t-att-value="tipo"
+                                        t-att-selected="props.partner.l10n_do_dgii_tax_payer_type ? ((l10n_do_dgii_tax_payer_type === props.partner.l10n_do_dgii_tax_payer_type[0]) ? true : undefined) : undefined">
+                                    <t t-esc="tipo" />
                                 </option>
+                            </t>
                             
                         </select>
                     </div>
