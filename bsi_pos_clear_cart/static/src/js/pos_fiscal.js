@@ -19,7 +19,7 @@ odoo.define('pos_l10n_ar_identification.screens', function(require) {
              * @override
              */
 
-             constructor() {
+            constructor() {
                 super(...arguments);
                 useListener('click-fiscal', () => this.clickFiscal());
             }
@@ -29,7 +29,7 @@ odoo.define('pos_l10n_ar_identification.screens', function(require) {
                 var self = this;
                 this.fiscalChanges();
                 //this.saveChanges();
-           }
+            }
 
          
 
