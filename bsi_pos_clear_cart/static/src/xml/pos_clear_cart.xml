@@ -34,14 +34,7 @@
                         <span class="label">Tipo ciente</span>
                         <select class="detail client-address-states needsclick" name="l10n_do_expense_type"
                                 t-on-change="captureChange">
-                            <option value="">None</option>
-                            <t t-foreach="env.pos.l10n_do_expense_type" t-as="tipo" t-key="l10n_do_expense_type">
-                                <option t-if="props.partner.l10n_do_expense_type[0] == tipo[0]"
-                                        t-att-value="l10n_do_expense_type"
-                                        t-att-selected="props.partner.l10n_do_expense_type ? ((l10n_do_expense_type === props.partner.l10n_do_expense_type[0]) ? true : undefined) : undefined">
-                                    <t t-esc="tipo" />
-                                </option>
-                            </t>
+                            
                         </select>
                     </div>
 
