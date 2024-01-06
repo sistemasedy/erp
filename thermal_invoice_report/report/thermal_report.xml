@@ -96,7 +96,7 @@
                                                     <t t-set="current_subtotal" t-value="current_subtotal + line.price_subtotal" groups="account.group_show_line_subtotals_tax_excluded"/>
                                                     <t t-set="current_subtotal" t-value="current_subtotal + line.price_total" groups="account.group_show_line_subtotals_tax_included"/>
                                                         <tr  >
-                                                            <td style="width:200px">
+                                                            <td colspan="5">
                                                                 <t  t-esc="line.name"/>
                                                             </td>
 
