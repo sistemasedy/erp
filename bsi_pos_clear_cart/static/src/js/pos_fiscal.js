@@ -23,22 +23,10 @@ odoo.define('pos_l10n_ar_identification.screens', function(require) {
             constructor() {
                 super(...arguments);
                 useListener('click-fiscal', () => this.clickFiscal());
-                console.log("inicio", this.listTipos())
                 
             }
 
 
-            async listTipos() {
-                let lista = await this.rpc({
-                    model: 'res.partner',
-                    method: '_get_l10n_do_dgii_payer_types_selection'
-                });
-
-                return lista
-            }
-
-
-            
 
 
             clickFiscal() {
