@@ -2,6 +2,7 @@ odoo.define('pos_l10n_ar_identification.screens', function(require) {
     'use strict';
 
     const ClientListScreen = require('point_of_sale.ClientListScreen');
+    var rpc = require('web.rpc')
     const Registries = require('point_of_sale.Registries');
     var { Gui } = require('point_of_sale.Gui');
     var models = require('point_of_sale.models');
@@ -23,7 +24,7 @@ odoo.define('pos_l10n_ar_identification.screens', function(require) {
                 super(...arguments);
                 useListener('click-fiscal', () => this.clickFiscal());
                 console.log("inicios", this.tiposClientes())
-                console.log("inicios2", self.env.pos.listado)
+                //console.log("inicios2", self.env.pos.listado)
             }
 
 
