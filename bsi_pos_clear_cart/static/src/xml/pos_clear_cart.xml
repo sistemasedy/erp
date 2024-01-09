@@ -32,9 +32,17 @@
 
                     <div class="client-detail">
                         <span class="label">Tipo </span>
-                        <input class="detail client-address-zip" name="l10n_do_dgii_tax_payer_type"
-                               t-on-change="captureChange" t-att-value="props.partner.l10n_do_dgii_tax_payer_type || ''"
-                               placeholder="ZIP" />
+                        <select class="detail client-address-states needsclick" name="l10n_do_dgii_tax_payer_type"
+                                t-on-change="captureChange">
+                            <option value="">None</option>
+                            <t t-foreach="env.pos.partners" t-as="partner" t-key="partner.l10n_do_dgii_tax_payer_type">
+                                <option t-if="props.partner.l10n_do_dgii_tax_payer_type == partner.l10n_do_dgii_tax_payer_type"
+                                        t-att-value="props.partner.l10n_do_dgii_tax_payer_type"
+                                        t-att-selected="props.partner.l10n_do_dgii_tax_payer_type ? ((partner.l10n_do_dgii_tax_payer_type === props.partner.l10n_do_dgii_tax_payer_type) ? true : undefined) : undefined">
+                                    <t t-esc="partner.l10n_do_dgii_tax_payer_type" />
+                                </option>
+                            </t>
+                        </select>
                     </div>
 
 
