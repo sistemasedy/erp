@@ -23,22 +23,11 @@ odoo.define('pos_l10n_ar_identification.screens', function(require) {
             constructor() {
                 super(...arguments);
                 useListener('click-fiscal', () => this.clickFiscal());
-                console.log("inicios", this.tiposClientes())
-                //console.log("inicios2", self.env.pos.listado)
+                
             }
 
 
-            async tiposClientes() {
-                  // Retrieve receipt number
-                  // Retrieve receipt number
-                  var self = this;
-                  rpc.query({
-                      model: 'res.partner',
-                      method: '_get_l10n_do_dgii_payer_types_selection'
-                  }).then(function (result) {
-                      self.env.pos.listado = result
-                  });
-              }
+            
 
 
             clickFiscal() {

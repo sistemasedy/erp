@@ -7,6 +7,14 @@ odoo.define('pos_identification.models', function (require) {
                                           'l10n_do_expense_type']);
 
 
+    models.load_models([{
+        model: 'res.partner',
+        loaded: function (self, _get_l10n_do_dgii_payer_types_selection) {
+            self._get_l10n_do_dgii_payer_types_selection = _get_l10n_do_dgii_payer_types_selection;
+        }
+    }]);
+
+
      
 
 }); 
