@@ -17,6 +17,8 @@ class Partner(models.Model):
             ("foreigner", _("Foreigner")),
         ]
 
+
+
     def _get_l10n_do_expense_type(self):
         """Return the list of expenses needed in invoices to clasify accordingly to
         DGII requirements."""
