@@ -22,7 +22,7 @@ odoo.define('pos_l10n_ar_identification.screens', function(require) {
             constructor() {
                 super(...arguments);
                 useListener('click-fiscal', () => this.clickFiscal());
-                consle.log("inicios")
+                console.log("inicios")
             }
 
 
