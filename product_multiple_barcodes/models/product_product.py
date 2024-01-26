@@ -12,7 +12,7 @@ class ProductProduct(models.Model):
     barcode_ids = fields.One2many(
         'product.barcode.multi',
         'product_id',
-        string='Additional Barcodes',
+        string='Agregar Codigo',
     )
 
     # THIS IS OVERRIDE SQL CONSTRAINTS.
