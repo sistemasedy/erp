@@ -26,6 +26,8 @@ odoo.define('em_search_pos.ProductScreens', function (require) {
                 
             }
 
+            /*
+
 
             async _getProductByBarcode(code) {
                 console.log("barra")
@@ -62,6 +64,9 @@ odoo.define('em_search_pos.ProductScreens', function (require) {
                 }
                 return product
             }
+
+
+            */
 
 
             
