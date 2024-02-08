@@ -155,7 +155,7 @@
     </template>
 
     <record id="action_print_balance_sheet" model="ir.actions.report">
-            <field name="name">Reporte Financiero</field>
+            <field name="name">Financial Report</field>
             <field name="model">dynamic.balance.sheet.report</field>
             <field name="report_type">qweb-pdf</field>
             <field name="report_name">dynamic_accounts_report.balance_sheet</field>
