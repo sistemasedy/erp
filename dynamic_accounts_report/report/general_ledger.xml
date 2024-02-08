@@ -163,7 +163,7 @@
     </template>
 
     <record id="action_print_General_ledger" model="ir.actions.report">
-        <field name="name">Report</field>
+        <field name="name">Reportes</field>
         <field name="model">account.general.ledger</field>
         <field name="report_type">qweb-pdf</field>
         <field name="report_name">dynamic_accounts_report.general_ledger</field>

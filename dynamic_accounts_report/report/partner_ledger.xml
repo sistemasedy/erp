@@ -148,7 +148,7 @@
     </template>
 
     <record id="action_print_partner_ledger" model="ir.actions.report">
-            <field name="name">Partner ledger</field>
+            <field name="name">Libro Mayor de Empresa</field>
             <field name="model">account.partner.ledger</field>
             <field name="report_type">qweb-pdf</field>
             <field name="report_name">dynamic_accounts_report.partner_ledger</field>
