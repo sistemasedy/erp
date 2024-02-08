@@ -61,7 +61,6 @@ class Amountdue(models.Model):
 	balance_invoice_ids = fields.One2many('account.move', 'partner_id', 'Customer move lines', domain=[('move_type', 'in', ['out_invoice','out_refund','entry']),('state', 'in', ['posted'])]) 
 	payment_amount_due_amt = fields.Float(string ='Amount Due',compute ='_compute_amount_due')
 	payment_amount_due_amt_supplier = fields.Float(compute='_compute_amount_due', string="Amount To Pay")
-	extra_dia = fields.Char(string="Otros Dias")
 
 
 	def action_view_amount_due(self):
