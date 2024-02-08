@@ -70,7 +70,6 @@
                 <xpath expr="//field[@name='email']" position="after">
                     <field name="entrega"/>
                     <field name="masdias"/>
-                    <field name="property_supplier_payment_term_id"/>
                     <field name="payment_amount_due_amt"/>
                     <field name="payment_amount_due_amt_supplier"/>
                     
