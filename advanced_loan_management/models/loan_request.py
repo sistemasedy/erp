@@ -31,7 +31,7 @@ class LoanRequest(models.Model):
     _inherit = ['mail.thread']
     _description = 'Loan Request'
 
-    name = fields.Char(string='Loan Reference', readonly=True,
+    name = fields.Char(string='Referencia', readonly=True,
                        copy=False, help="Sequence number for loan requests",
                        default=lambda self: 'New')
     company_id = fields.Many2one('res.company', string='Company',
@@ -43,21 +43,21 @@ class LoanRequest(models.Model):
                                   required=True, help="Currency",
                                   default=lambda self: self.env.user.company_id.
                                   currency_id)
-    loan_type_id = fields.Many2one('loan.type', string='Loan Type',
+    loan_type_id = fields.Many2one('loan.type', string='Tipo de Prestamo',
                                    required=True, help="Can choose different "
                                                        "loan types suitable")
-    loan_amount = fields.Float(string="Loan Amount", store=True,
+    loan_amount = fields.Float(string="Monto", store=True,
                                help="Total loan amount", )
     disbursal_amount = fields.Float(string="Disbursal_amount",
                                     help="Total loan amount "
                                          "available to disburse")
     tenure = fields.Integer(string="Tenure",
                             help="Installment period")
-    interest_rate = fields.Float(string="Interest rate", help="Interest "
+    interest_rate = fields.Float(string="Intereses", help="Interest "
                                                               "percentage")
-    date = fields.Date(string="Date", default=fields.Date.today(),
+    date = fields.Date(string="Fecha", default=fields.Date.today(),
                        readonly=True, help="Date")
-    partner_id = fields.Many2one('res.partner', string="Partner",
+    partner_id = fields.Many2one('res.partner', string="Cliente",
                                  required=True,
                                  help="Partner")
     repayment_lines_ids = fields.One2many('repayment.line',

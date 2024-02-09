@@ -2,7 +2,7 @@
 <odoo>
 <!--        Loan Type Action-->
         <record id="loan_type_action" model="ir.actions.act_window">
-            <field name="name">Loan Type</field>
+            <field name="name">Tipo de Prestamo</field>
             <field name="res_model">loan.type</field>
             <field name="view_mode">kanban,tree,form</field>
         </record>
