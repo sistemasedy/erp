@@ -111,7 +111,7 @@
     </template>
 
     <record id="action_print_day_book" model="ir.actions.report">
-            <field name="name">Libro del día</field>
+            <field name="name">Day Book</field>
             <field name="model">account.day.book</field>
             <field name="report_type">qweb-pdf</field>
             <field name="report_name">dynamic_accounts_report.day_book</field>

@@ -8,14 +8,14 @@
             <field name="tag">g_l</field>
         </record>
         <menuitem id="menu_general_ledger"  action="action_general_ledger"
-              name="General Ledger" parent="dynamic_report_accounting"/>
+              name="Libro Mayor" parent="dynamic_report_accounting"/>
 
         <record id="action_trial_balance" model="ir.actions.client">
             <field name="name">Saldo de las Cuentas</field>
             <field name="tag">t_b</field>
         </record>
         <menuitem id="menu_trial_balance"  action="action_trial_balance"
-          name="Trial Balance" parent="dynamic_report_accounting"/>
+          name="Saldo de las Cuentas" parent="dynamic_report_accounting"/>
 
 
         <record id="action_partner_ledger" model="ir.actions.client">
@@ -23,35 +23,35 @@
             <field name="tag">p_l</field>
         </record>
         <menuitem id="menu_partner_ledger"  action="action_partner_ledger"
-              name="Partner Ledger" parent="dynamic_report_accounting"/>
+              name="Libro Mayor de Clientes / Proveedores" parent="dynamic_report_accounting"/>
 
         <record id="action_ageing_partner" model="ir.actions.client">
             <field name="name">Saldos Vencidos</field>
             <field name="tag">p_a</field>
         </record>
         <menuitem id="menu_report_ageing"  action="action_ageing_partner"
-              name="Partner Ageing" parent="dynamic_report_accounting"/>
+              name="Saldos Vencidos" parent="dynamic_report_accounting"/>
 
         <record id="action_day_book" model="ir.actions.client">
             <field name="name">Libro del Dia</field>
             <field name="tag">d_b</field>
         </record>
         <menuitem id="menu_report_daybook"  action="action_day_book"
-              name="Day Book" sequence="4" parent="dynamic_report_accounting"/>
+              name="Libro del Dia" sequence="4" parent="dynamic_report_accounting"/>
 
         <record id="action_bank_book" model="ir.actions.client">
             <field name="name">Banco de Libro</field>
             <field name="tag">g_l</field>
         </record>
         <menuitem id="menu_bank_book"  action="action_bank_book"
-              name="Bank Book" sequence="3" parent="dynamic_report_accounting"/>
+              name="Banco de Libro" sequence="3" parent="dynamic_report_accounting"/>
 
         <record id="action_cash_book" model="ir.actions.client">
             <field name="name">Libro de Pago</field>
             <field name="tag">g_l</field>
         </record>
         <menuitem id="menu_cash_book"  action="action_cash_book"
-              name="Cash Book" sequence="2" parent="dynamic_report_accounting"/>
+              name="Libro de Pago" sequence="2" parent="dynamic_report_accounting"/>
 
         <record id="action_dynamic_balance_sheet" model="ir.actions.client">
             <field name="name">Hoja de Balance</field>
@@ -64,17 +64,17 @@
         </record>
 
         <menuitem id="menu_balance_sheet_report" action="action_dynamic_balance_sheet"
-                  name="Balance Sheet" sequence="1" parent="dynamic_report_accounting"/>
+                  name="Hoja de Balance" sequence="1" parent="dynamic_report_accounting"/>
 
         <menuitem id="menu_profit_and_loss_report" action="action_dynamic_profit_and_loss"
-                name="Profit and Loss" sequence="0" parent="dynamic_report_accounting"/>
+                name="Ganancia y Perdida" sequence="0" parent="dynamic_report_accounting"/>
 
         <record id="action_cash_flow" model="ir.actions.client">
             <field name="name">Estados de Flujos de Efectivo</field>
             <field name="tag">c_f</field>
         </record>
         <menuitem id="menu_cash_flow"  action="action_cash_flow"
-              name="Cash Flow Statements" parent="dynamic_report_accounting"/>
+              name="Estados de Flujos de Efectivo" parent="dynamic_report_accounting"/>
 
     </data>
 </odoo>

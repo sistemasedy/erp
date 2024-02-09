@@ -125,7 +125,7 @@
     </template>
 
     <record id="action_print_trial_balance" model="ir.actions.report">
-            <field name="name">Saldo de las Cuentas</field>
+            <field name="name">Trial Balance</field>
             <field name="model">account.trial.balance</field>
             <field name="report_type">qweb-pdf</field>
             <field name="report_name">dynamic_accounts_report.trial_balance</field>
