@@ -30,22 +30,22 @@ class LoanTypes(models.Model):
     _description = 'Loan Type'
 
     name = fields.Char(string='Name', help="LoanType Name")
-    loan_amount = fields.Integer(string='Loan Amount', help="Loan Amount")
-    tenure = fields.Integer(string='Tenure', default='1',
+    loan_amount = fields.Integer(string='Monto', help="Monto")
+    tenure = fields.Integer(string='Cuanto Meses', default='1',
                             help="Amortization period")
-    tenure_plan = fields.Char(string="Tenure Plan", default='monthly',
+    tenure_plan = fields.Char(string="Periodo", default='Mensual',
                               readonly='True', help="EMI payment plan")
-    interest_rate = fields.Float(string='Interest Rate',
+    interest_rate = fields.Float(string='Interes',
                                  help="Loan Interest Rate")
-    disbursal_amount = fields.Float(string='Disbursal Amount',
+    disbursal_amount = fields.Float(string='Monto de Desembolso',
                                     compute='_compute_disbursal_amount',
                                     help="Total Amount To Be Disbursed")
     documents_ids = fields.Many2many('loan.documents',
                                      string="Documents",
                                      help="Personal Proofs")
-    processing_fee = fields.Integer(string="Processing Fee",
+    processing_fee = fields.Integer(string="Cuota de Procesamiento",
                                     help="Amount For Initializing The Loan")
-    note = fields.Text(string="Criteria", help="Criteria for approving "
+    note = fields.Text(string="Notas", help="Criteria for approving "
                                                "loan requests")
     company_id = fields.Many2one('res.company', string='Company',
                                  readonly=True,
