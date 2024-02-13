@@ -36,14 +36,14 @@ class AccountAssetCategory(models.Model):
     active = fields.Boolean(default=True)
     name = fields.Char(required=True, index=True, string="Tipo de Activo")
     account_analytic_id = fields.Many2one('account.analytic.account',
-                                          string='Analytic Account')
+                                          string='Cuenta Analítica')
     account_asset_id = fields.Many2one('account.account',
                                        string='Cuenta de Activos', required=True,
                                        domain=[('internal_type', '=', 'other'),
                                                ('deprecated', '=', False)],
                                        help="Account used to record the purchase of the asset at its original price.")
     account_depreciation_id = fields.Many2one('account.account',
-                                              string='Asientos de Depreciación: Auenta de Activo',
+                                              string='Asientos de Depreciación: Cuenta de Activo',
                                               required=True, domain=[
             ('internal_type', '=', 'other'), ('deprecated', '=', False)],
                                               help="Account used in the depreciation entries, to decrease the asset value.")
@@ -187,7 +187,7 @@ class AccountAssetAsset(models.Model):
                                  readonly=True,
                                  states={'draft': [('readonly', False)]},
                                  help="It is the amount you plan to have that you cannot depreciate.")
-    invoice_id = fields.Many2one('account.move', string='Invoice',
+    invoice_id = fields.Many2one('account.move', string='Factura',
                                  states={'draft': [('readonly', False)]},
                                  copy=False)
     type = fields.Selection(related="category_id.type", string='Tipo',

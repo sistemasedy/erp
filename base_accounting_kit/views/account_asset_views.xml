@@ -45,10 +45,10 @@
                         <group string="Periodicidad">
                             <field name="method_time" string="Método de tiempo basado en" widget="radio" attrs="{'invisible': [('type','!=','purchase')]}"/>
                             <field name="method_number" string="Número de entradas" attrs="{'invisible':[('method_time','!=','number'),'&amp;',('type','=', False)], 'required':[('method_time','=','number')]}"/>
-                            <label for="method_period" string="One Entry Every"/>
+                            <label for="method_period" string="Una entrada cada"/>
                             <div>
                                 <field name="method_period" nolabel="1" attrs="{'invisible': [('type','=', False)]}" class="oe_inline"/>
-                                months
+                                meses
                             </div>
                             <field name="method_end" attrs="{'required': [('method_time','=','end')], 'invisible':[('method_time','!=','end')]}"/>
                         </group>
@@ -56,7 +56,7 @@
                             <field name="open_asset"/>
                             <field name="group_entries"/>
                         </group>
-                        <group attrs="{'invisible': [('type','=','sale')]}" string="Depreciation Method">
+                        <group attrs="{'invisible': [('type','=','sale')]}" string="Método de Depreciación">
                             <field name="method" widget="radio"/>
                             <field name="method_progress_factor" attrs="{'invisible':[('method','=','linear')], 'required':[('method','=','degressive')]}"/>
                             <field name="prorata" attrs="{'invisible': [('method_time','=','end')]}"/>
