@@ -145,7 +145,7 @@
                     <div class="oe_title">
                         <label for="name" class="oe_edit_only"/>
                         <h1>
-                            <field name="name" placeholder="e.g. Laptop iBook"/>
+                            <field name="name" placeholder="Escritorio de Oficina"/>
                         </h1>
                     </div>
                     <group>
@@ -261,7 +261,7 @@
         <field name="name">account.asset.asset.purchase.tree</field>
         <field name="model">account.asset.asset</field>
         <field name="arch" type="xml">
-            <tree string="Assets" decoration-info="(state == 'draft')" decoration-muted="(state == 'close')">
+            <tree string="Activos" decoration-info="(state == 'draft')" decoration-muted="(state == 'close')">
                 <field name="name"/>
                 <field name="category_id"/>
                 <field name="date"/>
@@ -279,7 +279,7 @@
         <field name="name">account.asset.asset.search</field>
         <field name="model">account.asset.asset</field>
         <field name="arch" type="xml">
-            <search string="Asset Account">
+            <search string="Cuenta de Activos">
                 <field name="name" string="Asset"/>
                 <field name="date"/>
                 <filter name="state" string="Current" domain="[('state','in', ('draft','open'))]" help="Assets in draft and open states"/>
@@ -287,8 +287,8 @@
                 <field name="category_id"/>
                 <field name="partner_id" filter_domain="[('partner_id','child_of',self)]"/>
                 <group expand="0" string="Group By...">
-                        <filter name="date" string="Month" domain="[]" context="{'group_by':'date'}"/>
-                        <filter name="category_id" string="Category" domain="[]" context="{'group_by':'category_id'}"/>
+                        <filter name="date" string="Mes" domain="[]" context="{'group_by':'date'}"/>
+                        <filter name="category_id" string="Categoria" domain="[]" context="{'group_by':'category_id'}"/>
                 </group>
             </search>
         </field>
@@ -309,7 +309,7 @@
 
     <!-- Configuration -->
 
-    <menuitem id="menu_finance_config_assets" name="Assets and Revenues" parent="account.menu_finance_configuration" sequence="25"/>
+    <menuitem id="menu_finance_config_assets" name="Activos e ingresos" parent="account.menu_finance_configuration" sequence="25"/>
 
     <record model="ir.actions.act_window" id="action_account_asset_asset_list_normal_purchase">
         <field name="name">Tipo de Activos</field>
