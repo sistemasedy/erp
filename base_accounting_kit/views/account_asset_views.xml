@@ -13,8 +13,8 @@
                 <sheet>
                     <group>
                         <div class="oe_title">
-                            <label for="name" string="Asset Type" class="oe_edit_only" attrs="{'invisible': [('type','!=','purchase')]}"/>
-                            <label for="name" string="Deferred Revenue Type" class="oe_edit_only" attrs="{'invisible': [('type','==','purchase')]}"/>
+                            <label for="name" string="Tipo de Activo" class="oe_edit_only" attrs="{'invisible': [('type','!=','purchase')]}"/>
+                            <label for="name" string="Tipo de Ingreso Diferido" class="oe_edit_only" attrs="{'invisible': [('type','==','purchase')]}"/>
                             <h1>
                                 <field name="name" placeholder="e.g. Computers"/>
                             </h1>
@@ -23,11 +23,11 @@
                             <field name="type" invisible="1"/>
                             <field name="company_id" options="{'no_create': True}" groups="base.group_multi_company"/>
                         </group>
-                        <group string="Journal Entries">
+                        <group string="Entradas de Diario">
                             <field name="journal_id"/>
                             <div>
                                 <label for="account_asset_id" attrs="{'invisible': [('type','!=','purchase')]}"/>
-                                <label for="account_asset_id" string="Deferred Revenue Account" attrs="{'invisible': [('type','!=','sale')]}"/>
+                                <label for="account_asset_id" string="Cuenta de Ingresos Diferidos" attrs="{'invisible': [('type','!=','sale')]}"/>
                             </div>
                             <field name="account_asset_id" nolabel="1" attrs="{'invisible': [('type','=', False)]}" domain="[('company_id', '=', company_id)]"/>
                             <div>
@@ -42,9 +42,9 @@
                             <field name="account_depreciation_expense_id" nolabel="1" domain="[('company_id', '=', company_id)]"/>
                             <field name="account_analytic_id" domain="[('company_id', '=', company_id)]" groups="analytic.group_analytic_accounting"/>
                         </group>
-                        <group string="Periodicity">
-                            <field name="method_time" string="Time Method Based On" widget="radio" attrs="{'invisible': [('type','!=','purchase')]}"/>
-                            <field name="method_number" string="Number of Entries" attrs="{'invisible':[('method_time','!=','number'),'&amp;',('type','=', False)], 'required':[('method_time','=','number')]}"/>
+                        <group string="Periodicidad">
+                            <field name="method_time" string="Método de tiempo basado en" widget="radio" attrs="{'invisible': [('type','!=','purchase')]}"/>
+                            <field name="method_number" string="Número de entradas" attrs="{'invisible':[('method_time','!=','number'),'&amp;',('type','=', False)], 'required':[('method_time','=','number')]}"/>
                             <label for="method_period" string="One Entry Every"/>
                             <div>
                                 <field name="method_period" nolabel="1" attrs="{'invisible': [('type','=', False)]}" class="oe_inline"/>
@@ -52,7 +52,7 @@
                             </div>
                             <field name="method_end" attrs="{'required': [('method_time','=','end')], 'invisible':[('method_time','!=','end')]}"/>
                         </group>
-                        <group string="Additional Options">
+                        <group string="Opciones adicionales">
                             <field name="open_asset"/>
                             <field name="group_entries"/>
                         </group>
@@ -111,10 +111,10 @@
         <field name="name">account.asset.category.search</field>
         <field name="model">account.asset.category</field>
         <field name="arch" type="xml">
-            <search string="Search Asset Category">
-                <filter name="type" string="Sales" domain="[('type','=', 'sale')]" help="Deferred Revenues"/>
-                <filter name="type" string="Purchase" domain="[('type','=', 'purchase')]" help="Assets"/>
-                <field name="name" string="Category"/>
+            <search string="Buscar categoría de activos">
+                <filter name="type" string="Ventas" domain="[('type','=', 'sale')]" help="Deferred Revenues"/>
+                <filter name="type" string="Compras" domain="[('type','=', 'purchase')]" help="Assets"/>
+                <field name="name" string="Categoria"/>
                 <field name="journal_id"/>
                 <group expand="0" string="Group By...">
                     <filter name="type" string="Type" domain="[]" context="{'group_by':'type'}"/>
@@ -297,7 +297,7 @@
 
 
     <record model="ir.actions.act_window" id="action_account_asset_asset_form">
-        <field name="name">Assets</field>
+        <field name="name">Gestion de Activos</field>
         <field name="res_model">account.asset.asset</field>
         <field name="view_mode">tree,kanban,form</field>
         <field name="view_id" ref="view_account_asset_asset_purchase_tree"/>
@@ -312,7 +312,7 @@
     <menuitem id="menu_finance_config_assets" name="Assets and Revenues" parent="account.menu_finance_configuration" sequence="25"/>
 
     <record model="ir.actions.act_window" id="action_account_asset_asset_list_normal_purchase">
-        <field name="name">Asset Types</field>
+        <field name="name">Tipo de Activos</field>
         <field name="res_model">account.asset.category</field>
         <field name="domain">[('type', '=', 'purchase')]</field>
         <field name="view_mode">tree,kanban,form</field>

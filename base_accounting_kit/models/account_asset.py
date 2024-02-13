@@ -34,52 +34,52 @@ class AccountAssetCategory(models.Model):
     _description = 'Asset category'
 
     active = fields.Boolean(default=True)
-    name = fields.Char(required=True, index=True, string="Asset Type")
+    name = fields.Char(required=True, index=True, string="Tipo de Activo")
     account_analytic_id = fields.Many2one('account.analytic.account',
                                           string='Analytic Account')
     account_asset_id = fields.Many2one('account.account',
-                                       string='Asset Account', required=True,
+                                       string='Cuenta de Activos', required=True,
                                        domain=[('internal_type', '=', 'other'),
                                                ('deprecated', '=', False)],
                                        help="Account used to record the purchase of the asset at its original price.")
     account_depreciation_id = fields.Many2one('account.account',
-                                              string='Depreciation Entries: Asset Account',
+                                              string='Asientos de Depreciación: Auenta de Activo',
                                               required=True, domain=[
             ('internal_type', '=', 'other'), ('deprecated', '=', False)],
                                               help="Account used in the depreciation entries, to decrease the asset value.")
     account_depreciation_expense_id = fields.Many2one('account.account',
-                                                      string='Depreciation Entries: Expense Account',
+                                                      string='Asientos de Depreciación: Cuenta de Gastos',
                                                       required=True, domain=[
             ('internal_type', '=', 'other'), ('deprecated', '=', False)],
                                                       help="Account used in the periodical entries, to record a part of the asset as expense.")
-    journal_id = fields.Many2one('account.journal', string='Journal',
+    journal_id = fields.Many2one('account.journal', string='Diario',
                                  required=True)
     company_id = fields.Many2one('res.company', string='Company',
                                  required=True, default=lambda self: self.env.company)
     method = fields.Selection(
         [('linear', 'Linear'), ('degressive', 'Degressive')],
-        string='Computation Method', required=True, default='linear',
+        string='Método de Cálculo', required=True, default='linear',
         help="Choose the method to use to compute the amount of depreciation lines.\n"
              "  * Linear: Calculated on basis of: Gross Value / Number of Depreciations\n"
              "  * Degressive: Calculated on basis of: Residual Value * Degressive Factor")
-    method_number = fields.Integer(string='Number of Depreciations', default=5,
+    method_number = fields.Integer(string='Número de Depreciaciones', default=5,
                                    help="The number of depreciations needed to depreciate your asset")
-    method_period = fields.Integer(string='Period Length', default=1,
+    method_period = fields.Integer(string='Duración del Período', default=1,
                                    help="State here the time between 2 depreciations, in months",
                                    required=True)
-    method_progress_factor = fields.Float('Degressive Factor', default=0.3)
+    method_progress_factor = fields.Float('Factor Degresivo', default=0.3)
     method_time = fields.Selection(
         [('number', 'Number of Entries'), ('end', 'Ending Date')],
-        string='Time Method', required=True, default='number',
+        string='Método de Tiempo', required=True, default='number',
         help="Choose the method to use to compute the dates and number of entries.\n"
              "  * Number of Entries: Fix the number of entries and the time between 2 depreciations.\n"
              "  * Ending Date: Choose the time between 2 depreciations and the date the depreciations won't go beyond.")
     method_end = fields.Date('Ending date')
     prorata = fields.Boolean(string='Prorata Temporis',
                              help='Indicates that the first depreciation entry for this asset have to be done from the purchase date instead of the first of January')
-    open_asset = fields.Boolean(string='Auto-confirm Assets',
+    open_asset = fields.Boolean(string='Auto-confirm Activo',
                                 help="Check this if you want to automatically confirm the assets of this category when created by invoices.")
-    group_entries = fields.Boolean(string='Group Journal Entries',
+    group_entries = fields.Boolean(string='Entradas de diario del grupo',
                                    help="Check this if you want to group the generated entries by categories.")
     type = fields.Selection([('sale', 'Sale: Revenue Recognition'),
                              ('purchase', 'Purchase: Asset')], required=True,
@@ -112,14 +112,14 @@ class AccountAssetAsset(models.Model):
     _inherit = ['mail.thread']
 
     entry_count = fields.Integer(compute='_entry_count',
-                                 string='# Asset Entries')
-    name = fields.Char(string='Asset Name', required=True, readonly=True,
+                                 string='# Entradas de Activos')
+    name = fields.Char(string='Nombre del Activo', required=True, readonly=True,
                        states={'draft': [('readonly', False)]})
     code = fields.Char(string='Reference', size=32, readonly=True,
                        states={'draft': [('readonly', False)]})
-    value = fields.Float(string='Gross Value', required=True, readonly=True,
+    value = fields.Float(string='Valor Bruto', required=True, readonly=True,
                          digits=0, states={'draft': [('readonly', False)]})
-    currency_id = fields.Many2one('res.currency', string='Currency',
+    currency_id = fields.Many2one('res.currency', string='Divisa',
                                   required=True, readonly=True,
                                   states={'draft': [('readonly', False)]},
                                   default=lambda
@@ -129,11 +129,11 @@ class AccountAssetAsset(models.Model):
                                  states={'draft': [('readonly', False)]},
                                  default=lambda self: self.env.company)
     note = fields.Text()
-    category_id = fields.Many2one('account.asset.category', string='Category',
+    category_id = fields.Many2one('account.asset.category', string='Categoria',
                                   required=True, change_default=True,
                                   readonly=True,
                                   states={'draft': [('readonly', False)]})
-    date = fields.Date(string='Date', required=True, readonly=True,
+    date = fields.Date(string='Fecha', required=True, readonly=True,
                        states={'draft': [('readonly', False)]},
                        default=fields.Date.context_today)
     state = fields.Selection(
@@ -148,29 +148,29 @@ class AccountAssetAsset(models.Model):
                                  states={'draft': [('readonly', False)]}, )
     method = fields.Selection(
         [('linear', 'Linear'), ('degressive', 'Degressive')],
-        string='Computation Method', required=True, readonly=True,
+        string='Metodo de Calculo', required=True, readonly=True,
         states={'draft': [('readonly', False)]}, default='linear',
         help="Choose the method to use to compute the amount of depreciation lines.\n  * Linear: Calculated on basis of: Gross Value / Number of Depreciations\n"
              "  * Degressive: Calculated on basis of: Residual Value * Degressive Factor")
-    method_number = fields.Integer(string='Number of Depreciations',
+    method_number = fields.Integer(string='Número de Depreciaciones',
                                    readonly=True,
                                    states={'draft': [('readonly', False)]},
                                    default=5,
                                    help="The number of depreciations needed to depreciate your asset")
-    method_period = fields.Integer(string='Number of Months in a Period',
+    method_period = fields.Integer(string='Número de Meses en un Períodod',
                                    required=True, readonly=True, default=12,
                                    states={'draft': [('readonly', False)]},
                                    help="The amount of time between two depreciations, in months")
-    method_end = fields.Date(string='Ending Date', readonly=True,
+    method_end = fields.Date(string='Fecha de Finalización', readonly=True,
                              states={'draft': [('readonly', False)]})
-    method_progress_factor = fields.Float(string='Degressive Factor',
+    method_progress_factor = fields.Float(string='Factor Degresivo',
                                           readonly=True, default=0.3, states={
             'draft': [('readonly', False)]})
     value_residual = fields.Float(compute='_amount_residual',
-                                  digits=0, string='Residual Value')
+                                  digits=0, string='Valor Residual')
     method_time = fields.Selection(
         [('number', 'Number of Entries'), ('end', 'Ending Date')],
-        string='Time Method', required=True, readonly=True, default='number',
+        string='Método de tiempo', required=True, readonly=True, default='number',
         states={'draft': [('readonly', False)]},
         help="Choose the method to use to compute the dates and number of entries.\n"
              "  * Number of Entries: Fix the number of entries and the time between 2 depreciations.\n"
@@ -180,17 +180,17 @@ class AccountAssetAsset(models.Model):
                              help='Indicates that the first depreciation entry for this asset have to be done from the purchase date instead of the first January / Start date of fiscal year')
     depreciation_line_ids = fields.One2many('account.asset.depreciation.line',
                                             'asset_id',
-                                            string='Depreciation Lines',
+                                            string='Líneas de depreciación',
                                             readonly=True, states={
             'draft': [('readonly', False)], 'open': [('readonly', False)]})
-    salvage_value = fields.Float(string='Salvage Value', digits=0,
+    salvage_value = fields.Float(string='Valor del rescate', digits=0,
                                  readonly=True,
                                  states={'draft': [('readonly', False)]},
                                  help="It is the amount you plan to have that you cannot depreciate.")
     invoice_id = fields.Many2one('account.move', string='Invoice',
                                  states={'draft': [('readonly', False)]},
                                  copy=False)
-    type = fields.Selection(related="category_id.type", string='Type',
+    type = fields.Selection(related="category_id.type", string='Tipo',
                             required=True)
 
     def unlink(self):
