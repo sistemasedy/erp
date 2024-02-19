@@ -19,7 +19,7 @@
         <field name="name">prt.product.code.form</field>
         <field name="model">prt.product.code</field>
         <field name="arch" type="xml">
-            <form string="Internal Reference">
+            <form string="Referencia Interna">
                 <header>
                     <button
                         name="set_default"

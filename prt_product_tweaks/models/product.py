@@ -22,7 +22,7 @@ class PRTProductCode(models.Model):
         ondelete="cascade",
         required=True,
     )
-    is_default = fields.Boolean(string="Used as Default", compute="_compute_is_default")
+    is_default = fields.Boolean(string="Usar como Default", compute="_compute_is_default")
 
     # -- If current code is default
 
@@ -126,7 +126,7 @@ class ProductTemplate(models.Model):
 
     # Put here to be inherited by product.product!
     default_codes = fields.Char(
-        string="Other References", related="product_variant_ids.default_code_ids.name"
+        string="Otras Referencias", related="product_variant_ids.default_code_ids.name"
     )
     default_code_tags = fields.Many2many(
         string="Other References",
