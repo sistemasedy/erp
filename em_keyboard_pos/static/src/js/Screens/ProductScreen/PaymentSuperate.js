@@ -16,7 +16,7 @@ odoo.define('pos_margin.PaymentSuperate', function(require) {
     class PaymentSuperate extends PosComponent {
            constructor() {
                 super(...arguments);
-                useListener('payment-superate', this.onClickSuperate);
+                useListener('click', this.onClickSuperate);
 
                 NumberBuffer.use({
                     triggerAtInput: 'update-selected-paymentline',

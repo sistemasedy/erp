@@ -38,7 +38,7 @@ odoo.define('pos_margin.ProductScreens', function (require) {
 
                         if (event.which === 119) {
                             //$($(document).find("button.button.pay")).trigger("click");
-                            $($(document).find("#superate")).trigger("payment-superate");
+                            $($(document).find("#superate")).trigger("click");
                         }
                         if (event.which === 115) {
                             $($(document).find("button.button.pay")[0]).trigger("click");
