@@ -1,4 +1,4 @@
-odoo.define('pos_margin.PaymentDirect', function(require) {
+odoo.define('pos_margin.PaymentSuperate', function(require) {
     'use strict';
 
     const PosComponent = require('point_of_sale.PosComponent');
