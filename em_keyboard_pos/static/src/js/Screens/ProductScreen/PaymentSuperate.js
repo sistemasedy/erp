@@ -34,7 +34,8 @@ odoo.define('pos_margin.PaymentSuperate', function(require) {
            onClickSuperate() {
               try{
                 console.log("superate")
-                this.set_client(this.pos.db.get_partner_by_id(this.pos.config.default_partner_id[0]));
+                this.state.selectedClient = this.env.pos.db.get_partner_by_id(this.pos.config.default_partner_id[0]);
+                this.set_client(this.state.selectedClient);
                 this.currentOrder.add_paymentline(this.payment_methods_from_config[2]);
                 this.validateOrder(false)
               }catch(error){
