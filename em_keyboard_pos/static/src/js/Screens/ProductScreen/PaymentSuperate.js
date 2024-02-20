@@ -13,20 +13,10 @@ odoo.define('pos_margin.PaymentDirect', function(require) {
     const { onChangeOrder } = require('point_of_sale.custom_hooks');
 
 
-    class PaymentDirect extends PosComponent {
+    class PaymentSuperate extends PosComponent {
            constructor() {
                 super(...arguments);
-                useListener('click', this.onClickDir);
                 useListener('payment-superate', this.onClickSuperate);
-
-                useListener('delete-payment-line', this.deletePaymentLine);
-                useListener('select-payment-line', this.selectPaymentLine);
-                useListener('new-payment-line', this.addNewPaymentLine);
-                useListener('update-selected-paymentline', this._updateSelectedPaymentline);
-                useListener('send-payment-request', this._sendPaymentRequest);
-                useListener('send-payment-cancel', this._sendPaymentCancel);
-                useListener('send-payment-reverse', this._sendPaymentReverse);
-                useListener('send-force-done', this._sendForceDone);
 
                 NumberBuffer.use({
                     triggerAtInput: 'update-selected-paymentline',
@@ -40,24 +30,7 @@ odoo.define('pos_margin.PaymentDirect', function(require) {
                 this.payment_interface = null;
                 this.error = false;
            }
-           /*
-           mounted() {
-               this.env.bus.on('targeta-superate', this, this.targetaSuperate);
-           }
-           */
-
-
-           onClickDir() {
-              try{
-
-                this.currentOrder.add_paymentline(this.payment_methods_from_config[0]);
-                this.validateOrder(false)
-              }catch(error){
-                console.log("control de errror pendiente de resorver / al 03 de julio 2022")
-              }
-              
-           }
-
+           
            onClickSuperate() {
               try{
                 console.log("superate")
@@ -72,33 +45,7 @@ odoo.define('pos_margin.PaymentDirect', function(require) {
 
 
 
-            delete_payment(){
-              var data = this.env.pos.get_order() //.paymentlines()
-              var test = data.get_paymentlines()
-              this.deletePaymentLine({ detail: { cid: this.selectedPaymentLine.cid } });
-              
-              test[0].selected = true
-            }
-
-
-            testing() {
-                
-                var resul = Math.abs(this.currentOrder.get_total_with_tax() - this.currentOrder.get_total_paid()  + this.currentOrder.get_rounding_applied())
-                console.log("pendiente", this.currentOrder.get_rounding_applied())
-                console.log("total", this.currentOrder.get_total_paid())
-                console.log("tax", this.currentOrder.get_total_with_tax())
-                console.log("reul", resul)
-                var cash = false;
-                for (var i = 0; i < this.env.pos.payment_methods.length; i++) {
-                    cash = cash || this.env.pos.payment_methods[i].is_cash_count;
-                    console.log("monto por", this.env.pos.payment_methods[i].is_cash_count)
-                    console.log("cash", cash)
-                }
-                if (!cash) {
-                    
-                }
-
-            }
+           
 
 
            async _onClickPay() {
@@ -468,17 +415,16 @@ odoo.define('pos_margin.PaymentDirect', function(require) {
 
 
 
-   PaymentDirect.template = 'PaymentDirect';
+   PaymentSuperate.template = 'PaymentSuperate';
    ProductScreen.addControlButton({
-       component: PaymentDirect,
+       component: PaymentSuperate,
        condition: function() {
            return this.env.pos;
        },
    });
     
 
-    Registries.Component.add(PaymentDirect);
+    Registries.Component.add(PaymentSuperate);
 
-    return PaymentDirect;
+    return PaymentSuperate;
 });
-

@@ -34,7 +34,8 @@
     'assets': {
         'point_of_sale.assets': [
             'em_keyboard_pos/static/src/js/Screens/ProductScreen/ProductScreens.js',
-            'em_keyboard_pos/static/src/js/Screens/ProductScreen/PaymentDirect.js'
+            'em_keyboard_pos/static/src/js/Screens/ProductScreen/PaymentDirect.js',
+            'em_keyboard_pos/static/src/js/Screens/ProductScreen/PaymentSuperate.js'
         ],
         'web.assets_qweb': [
             'em_keyboard_pos/static/src/xml/**/*',

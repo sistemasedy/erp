@@ -20,6 +20,14 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
         </div>
    </t>
 
+   <t t-name="PaymentSuperate" owl="1">
+        <div class="control-button">
+            <div id="superate" class="control-button-cobrar">
+                F-8 Superate
+            </div>
+        </div>
+   </t>
+
   
 
    
