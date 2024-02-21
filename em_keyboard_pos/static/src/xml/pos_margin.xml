@@ -28,7 +28,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
         </div>
    </t>
 
-   <t t-name="PaymenSuperateEfectivo" owl="1">
+   <t t-name="PaymenEfecSuperate" owl="1">
         <div class="control-button">
             <div id="sefectivo" class="control-button-cobrar">
                 F-9 Superate con Efectivo
