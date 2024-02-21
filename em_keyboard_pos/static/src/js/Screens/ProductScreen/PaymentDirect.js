@@ -17,7 +17,6 @@ odoo.define('pos_margin.PaymentDirect', function(require) {
            constructor() {
                 super(...arguments);
                 useListener('click', this.onClickDir);
-                useListener('payment-superate', this.onClickSuperate);
 
                 useListener('delete-payment-line', this.deletePaymentLine);
                 useListener('select-payment-line', this.selectPaymentLine);
@@ -58,17 +57,7 @@ odoo.define('pos_margin.PaymentDirect', function(require) {
               
            }
 
-           onClickSuperate() {
-              try{
-                console.log("superate")
-                this.set_client(this.pos.db.get_partner_by_id(this.pos.config.default_partner_id[0]));
-                this.currentOrder.add_paymentline(this.payment_methods_from_config[2]);
-                this.validateOrder(false)
-              }catch(error){
-                console.log("control de errror pendiente de resorver / al 03 de julio 2022")
-              }
-              
-           }
+           
 
 
 
