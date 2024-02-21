@@ -3,6 +3,14 @@
     width: 150px;
 }
 
+
+.hiddenSuperate {
+  display: none;
+  
+}
+
+
+
 /*Autocomplete */
 .ui-autocomplete-input {
    max-height: 500px !important;
