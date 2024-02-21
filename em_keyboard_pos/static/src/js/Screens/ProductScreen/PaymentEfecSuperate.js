@@ -35,7 +35,8 @@ odoo.define('pos_margin.PaymenEfecSuperate', function(require) {
            onClickEfectivo() {
               try{
                 console.log($($(document).find("sefectivo")), "superate", $($(document).find("valor")))
-                $($(document).find("valor")).removeClass('hiddenSuperate')
+                //$($(document).find("valor")).removeClass('hiddenSuperate')
+                $($(document).find("valor")).removeAttr('type')
                 //$($(document).find("#rowProduct.rowsProduct")).prev().removeClass('rowsProduct')
                 //$($(document).find("valor")).type
                 //$($(document).find("sefectivo")).data("1650")
