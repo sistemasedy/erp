@@ -36,7 +36,7 @@
             'em_keyboard_pos/static/src/js/Screens/ProductScreen/ProductScreens.js',
             'em_keyboard_pos/static/src/js/Screens/ProductScreen/PaymentDirect.js',
             'em_keyboard_pos/static/src/js/Screens/ProductScreen/PaymentEfecSuperate.js',
-            'em_keyboard_pos/static/src/js/Screens/ProductScreen/PaymentSuperate.js'
+            'em_keyboard_pos/static/src/js/Screens/ProductScreen/PaymentSuperate.js',
             'em_keyboard_pos/static/src/css/pos.css'
         ],
         'web.assets_qweb': [
