@@ -6,3 +6,23 @@
 .pos .order .orderline .order-line-margin.margin-negative {
     color: #f00;
 }
+
+
+.rowsProduct {
+  background: #333;
+  color: #fff;
+  
+}
+
+.showSuperate {
+  background: #333;
+  color: #fff;
+  
+}
+
+.hiddenSuperate {
+  display: none;
+  
+}
+
+
