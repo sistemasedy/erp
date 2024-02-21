@@ -23,7 +23,7 @@ odoo.define('pos_margin.PaymentSuperate', function(require) {
                 });
                 
                 this.payment_methods_from_config = this.env.pos.payment_methods.filter(method => this.env.pos.config.payment_method_ids.includes(method.id));
-                this.selectClients = this.env.pos.db.get_partner_by_id(this.pos.config.default_partner_id[0]);
+                this.selectClients = this.env.pos.db.get_partner_by_id(this.env.pos.config.default_partner_id[0]);
                 
 
                 onChangeOrder(this._onPrevOrder, this._onNewOrder);
