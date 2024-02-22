@@ -43,10 +43,11 @@ odoo.define('pos_margin.ProductScreens', function (require) {
 
                         if (event.which === 120) {
                             //$($(document).find("button.button.pay")).trigger("click");
-                            //$($(document).find("#sefectivo")).trigger("click");
+                            
                             $($(document).find("button.button.pay")[0]).trigger("click");
                             $($(document).find("div.button.next")[0]).trigger("click");
                             $($(document).find("div.button.next.highlight")[0]).trigger("click");
+                            $($(document).find("#sefectivo")).trigger("click");
                             console.log("bus", NumberBuffer.getFloat()) 
 
                         }

@@ -34,11 +34,15 @@ odoo.define('pos_margin.PaymenEfecSuperate', function(require) {
            
            onClickEfectivo() {
               try{
+                this.tetisng()
                 this.currentOrder.set_client(this.selectClients);
-                this.currentOrder.add_paymentline(this.payment_methods_from_config[2]);
+                this.currentOrder.add_paymentline(this.payment_methods_from_config[3]);
                 //console.log($($(document).find("sefectivo")), "superate", $($(document).find("valor")))
                 //$($(document).find("valor")).removeClass('hiddenSuperate')
-                //$($(document).find("valor")).removeAttr("type")
+                console.log("metodo", this.payment_methods_from_config[3].is_cash_count)
+                $($(document).find("valor")).hide()
+                //$("#date_section").show();
+                //$("#date_section").hide();
                 //$($(document).find("#rowProduct.rowsProduct")).prev().removeClass('rowsProduct')
                 //$($(document).find("valor")).type
                 //$($(document).find("sefectivo")).data("1650")
@@ -55,7 +59,25 @@ odoo.define('pos_margin.PaymenEfecSuperate', function(require) {
 
 
 
-           
+           testing() {
+                
+                var resul = Math.abs(this.currentOrder.get_total_with_tax() - this.currentOrder.get_total_paid()  + this.currentOrder.get_rounding_applied())
+                console.log("pendiente", this.currentOrder.get_rounding_applied())
+                console.log("total", this.currentOrder.get_total_paid())
+                console.log("tax", this.currentOrder.get_total_with_tax())
+                console.log("reul", resul)
+                var cash = false;
+                for (var i = 0; i < this.env.pos.payment_methods.length; i++) {
+                    cash = cash || this.env.pos.payment_methods[i].is_cash_count;
+                    console.log("monto por", this.env.pos.payment_methods[i].is_cash_count)
+                    console.log("cash", cash)
+                }
+                if (!cash) {
+                    
+                }
+
+            }
+
 
 
 
@@ -64,11 +86,7 @@ odoo.define('pos_margin.PaymenEfecSuperate', function(require) {
                 return this.env.pos.get_order();
             }
             
-            
-
-
-
-
+    
 
 
     }
@@ -79,7 +97,7 @@ odoo.define('pos_margin.PaymenEfecSuperate', function(require) {
    ProductScreen.addControlButton({
        component: PaymenEfecSuperate,
        condition: function() {
-           return this.env.pos;
+           return this.env.pos //&& this.env.pos.config.module_pos_discount;
        },
    });
     
