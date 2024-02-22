@@ -34,7 +34,7 @@ odoo.define('pos_margin.PaymenEfecSuperate', function(require) {
            
            onClickEfectivo() {
               try{
-                this.tetisng()
+                this.testing()
                 this.currentOrder.set_client(this.selectClients);
                 this.currentOrder.add_paymentline(this.payment_methods_from_config[3]);
                 //console.log($($(document).find("sefectivo")), "superate", $($(document).find("valor")))
