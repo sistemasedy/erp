@@ -40,7 +40,7 @@ odoo.define('pos_margin.PaymenEfecSuperate', function(require) {
                 //console.log($($(document).find("sefectivo")), "superate", $($(document).find("valor")))
                 //$($(document).find("valor")).removeClass('hiddenSuperate')
                 console.log("metodo", this.payment_methods_from_config[3].is_cash_count)
-                $($(document).find("valor")).hide()
+                //$($(document).find("valor")).hide()
                 //$("#date_section").show();
                 //$("#date_section").hide();
                 //$($(document).find("#rowProduct.rowsProduct")).prev().removeClass('rowsProduct')
