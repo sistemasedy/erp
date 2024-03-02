@@ -63,7 +63,9 @@ odoo.define('pos_margin.PaymenEfecSuperate', function(require) {
                 
                 var resul = Math.abs(this.currentOrder.get_total_with_tax() - this.currentOrder.get_total_paid()  + this.currentOrder.get_rounding_applied())
                 
-                console.log("reul", $($(document).find("valor")))
+                
+                var valor = $($(document).find("#valor"))[0].value;
+                console.log("reul", valor)
                 //console.log("pendiente", this.currentOrder.get_rounding_applied())
                 //console.log("total", this.currentOrder.get_total_paid())
                 //console.log("tax", this.currentOrder.get_total_with_tax())
