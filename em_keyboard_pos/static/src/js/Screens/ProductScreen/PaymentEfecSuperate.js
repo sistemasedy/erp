@@ -62,15 +62,18 @@ odoo.define('pos_margin.PaymenEfecSuperate', function(require) {
            testing() {
                 
                 var resul = Math.abs(this.currentOrder.get_total_with_tax() - this.currentOrder.get_total_paid()  + this.currentOrder.get_rounding_applied())
-                console.log("pendiente", this.currentOrder.get_rounding_applied())
-                console.log("total", this.currentOrder.get_total_paid())
-                console.log("tax", this.currentOrder.get_total_with_tax())
-                console.log("reul", resul)
+                
+                console.log("reul", $($(document).find("valor")))
+                //console.log("pendiente", this.currentOrder.get_rounding_applied())
+                //console.log("total", this.currentOrder.get_total_paid())
+                //console.log("tax", this.currentOrder.get_total_with_tax())
+                console.log("reul", this.env.pos.payment_methods)
+                console.log("reul", this.env.pos.payment_methods[3])
                 var cash = false;
                 for (var i = 0; i < this.env.pos.payment_methods.length; i++) {
                     cash = cash || this.env.pos.payment_methods[i].is_cash_count;
-                    console.log("monto por", this.env.pos.payment_methods[i].is_cash_count)
-                    console.log("cash", cash)
+                    //console.log("monto por", this.env.pos.payment_methods[i].is_cash_count)
+                    //console.log("cash", cash)
                 }
                 if (!cash) {
                     

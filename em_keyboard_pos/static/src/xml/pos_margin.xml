@@ -32,7 +32,18 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
         <div class="control-button">
             <div id="sefectivo" class="control-button-cobrar">
                 F-9 Tarjeta y Efectivo
-                <input id="valor" />
+                <!--
+                    <input id="valor" />
+                -->
+                
+            </div>
+        </div>
+   </t>
+
+   <t t-name="PaymentInput" owl="1">
+        <div class="control-button">
+            <div class="control-button-cobrar">
+                    <input id="valor" />
             </div>
         </div>
    </t>
