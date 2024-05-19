@@ -48,14 +48,14 @@ class LoanRequest(models.Model):
                                   default=lambda self: self.env.user.company_id.
                                   currency_id)
     
-    loan_amount = fields.Float(string="Monto", store=True,
+    loan_amount = fields.Float(string="Entrada", store=True,
                                help="Total loan amount", )
     disbursal_amount = fields.Float(string="Disbursal_amount",
                                     help="Total loan amount "
                                          "available to disburse")
     tenure = fields.Integer(string="Tenure",
                             help="Installment period")
-    interest_rate = fields.Float(string="Intereses", help="Interest "
+    interest_rate = fields.Float(string="Salida", help="Interest "
                                                               "percentage")
     date = fields.Date(string="Fecha", default=fields.Date.today(),
                        readonly=True, help="Date")

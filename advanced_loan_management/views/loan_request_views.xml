@@ -86,21 +86,22 @@
                         </div>
                         <group>
                             <group>
+                                <field name="date"/>
+                                <field name="entrada"/>
+                                <field name="salida"/>
                                 <field name="partner_id"/>
                                 
                             </group>
                             <group>
-                                <field name="tenure"
-                                       attrs="{'readonly': [('state', '!=', 'draft')]}"/>
-                                <field name="disbursal_amount"/>
-                                <field name="currency_id"/>
-                                <field name="date"/>
+                                <field name="disbursal_amount" invisible="1"/>
+                                <field name="currency_id" invisible="1"/>
+                                
                                 <field name="request" invisible="1"/>
                             </group>
                             <group>
-                                <field name="loan_amount"/>
-                                <field name="interest_rate"/>
-                                <field name="company_id"/>
+                                <field name="loan_amount" attrs="{'invisible': [('entrada', '=', 'False')]}"/>
+                                <field name="interest_rate" attrs="{'invisible': [('salida', '=', 'False')]}"/>
+                                <field name="company_id" invisible="1"/>
                             </group>
                         </group>
                         <notebook>
