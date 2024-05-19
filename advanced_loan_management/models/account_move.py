@@ -33,7 +33,8 @@ class AccountMove(models.Model):
         loan_line_ids = self.env['loan.request'].search(
             [('partner_id', '=', self.partner_id.id), ('state', '=', 'approved')])
         if loan_line_ids:
-            self.ver_campos = True
+            pass
+            #self.ver_campos = True
             # loan_line_ids.update({'state': 'closed'})
         return res
 

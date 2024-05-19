@@ -11,9 +11,9 @@ class account_move(models.Model):
 
 	_inherit = 'account.move'
 	_order = 'invoice_date_due'
-	credito = fields.Float(string="Credito")
-    usar_credito = fields.Boolean(string='Usar credito a Favor', default=False)
-    ver_campos = fields.Boolean(string='Usar credito a Favor', default=False)
+	#credito = fields.Float(string="Credito")
+    #usar_credito = fields.Boolean(string='Usar credito a Favor', default=False)
+    #ver_campos = fields.Boolean(string='Usar credito a Favor', default=False)
 	
 	def _get_result(self):
 		for aml in self:
