@@ -26,10 +26,6 @@ class AccountMove(models.Model):
     """Alter loan repayment line state on draft and cancel button click"""
     _inherit = 'account.move'
 
-    credito = fields.Float(string="Credito")
-    usar_credito = fields.Boolean(string='Usar credito a Favor', default=False)
-    ver_campos = fields.Boolean(string='Usar credito a Favor', default=False)
-
     def action_post(self):
         """Change repayment record state to 'invoiced'
         while reset to draft the invoice"""

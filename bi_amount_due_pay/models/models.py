@@ -2,15 +2,18 @@
 # Part of BrowseInfo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, fields, models, _
-from datetime import datetime,date, timedelta
+from datetime import datetime, date, timedelta
 from dateutil.relativedelta import relativedelta
 import base64
 
 
 class account_move(models.Model):
-	
+
 	_inherit = 'account.move'
 	_order = 'invoice_date_due'
+	credito = fields.Float(string="Credito")
+    usar_credito = fields.Boolean(string='Usar credito a Favor', default=False)
+    ver_campos = fields.Boolean(string='Usar credito a Favor', default=False)
 	
 	def _get_result(self):
 		for aml in self:
