@@ -34,6 +34,10 @@ class LoanRequest(models.Model):
     name = fields.Char(string='Referencia', readonly=True,
                        copy=False, help="Sequence number for loan requests",
                        default=lambda self: 'New')
+    entrada = fields.Boolean(string="Entrada", default=False,
+                             help="For monitoring the record")
+    salida = fields.Boolean(string="Salida", default=False,
+                             help="For monitoring the record")
     company_id = fields.Many2one('res.company', string='Company',
                                  readonly=True,
                                  help="Company Name",
@@ -43,9 +47,7 @@ class LoanRequest(models.Model):
                                   required=True, help="Currency",
                                   default=lambda self: self.env.user.company_id.
                                   currency_id)
-    loan_type_id = fields.Many2one('loan.type', string='Tipo de Prestamo',
-                                   required=True, help="Can choose different "
-                                                       "loan types suitable")
+    
     loan_amount = fields.Float(string="Monto", store=True,
                                help="Total loan amount", )
     disbursal_amount = fields.Float(string="Disbursal_amount",
@@ -72,20 +74,8 @@ class LoanRequest(models.Model):
                                           column1="documents_ids",
                                           string="Images",
                                           help="Image proofs")
-    journal_id = fields.Many2one('account.journal',
-                                 string="Journal",
-                                 help="Journal types",
-                                 domain="[('type', '=', 'purchase'),"
-                                        "('company_id', '=', company_id)]",
-                                 )
-    debit_account_id = fields.Many2one('account.account',
-                                       string="Debit account",
-                                       help="Choose account for "
-                                            "disbursement debit")
-    credit_account_id = fields.Many2one('account.account',
-                                        string="Credit account",
-                                        help="Choose account for "
-                                             "disbursement credit")
+    
+    
     reject_reason = fields.Text(string="Reason", help="Displays "
                                                       "rejected reason")
     request = fields.Boolean(string="Request", default=False,
@@ -117,15 +107,7 @@ class LoanRequest(models.Model):
             res = super().create(vals)
             return res
 
-    @api.onchange('loan_type_id')
-    def _onchange_loan_type_id(self):
-        """Changing field values based on the chosen loan type"""
-        type_id = self.loan_type_id
-        self.loan_amount = type_id.loan_amount
-        self.disbursal_amount = type_id.disbursal_amount
-        self.tenure = type_id.tenure
-        self.interest_rate = type_id.interest_rate
-        self.documents_ids = type_id.documents_ids
+    
 
     def action_loan_request(self):
         """Changes the state to confirmed and send confirmation mail"""

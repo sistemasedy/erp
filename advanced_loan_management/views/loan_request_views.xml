@@ -87,8 +87,7 @@
                         <group>
                             <group>
                                 <field name="partner_id"/>
-                                <field name="loan_type_id"
-                                       attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                                
                             </group>
                             <group>
                                 <field name="tenure"
@@ -145,16 +144,8 @@
                             <page string="Accounting"
                                   attrs="{'invisible': [('state', '=', 'draft')]}">
                                 <group>
-                                    <group>
-                                        <field name="journal_id"
-                                               attrs="{'required': [('state', '=', 'approved')], 'readonly': [('state', '=', 'disbursed')]}"/>
-                                    </group>
-                                    <group>
-                                        <field name="debit_account_id"
-                                               attrs="{'required': [('state', '=', 'approved')], 'readonly': [('state', '=', 'disbursed')]}"/>
-                                        <field name="credit_account_id"
-                                               attrs="{'required': [('state', '=', 'approved')], 'readonly': [('state', '=', 'disbursed')]}"/>
-                                    </group>
+                                    
+                                    
                                 </group>
                             </page>
                         </notebook>
