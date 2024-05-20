@@ -25,7 +25,7 @@ from odoo import fields, models
 class ResPartner(models.Model):
     """Add new tab to display partner's loan count"""
     _inherit = "res.partner"
-    loans_amount = fields.Float(string="Balance", digits=(32, 2))
+    # loans_amount = fields.Float(string="Balance", digits=(32, 2))
 
     def _compute_partner_loans(self):
         """This compute the loan amount and total loans count of a partner."""
