@@ -117,7 +117,7 @@ class LoanRequest(models.Model):
         """Changes the state to confirmed and send confirmation mail"""
 
         self.action_loan_request()
-        self.action_compute_repayment()
+        # self.action_compute_repayment()
         self.action_request_for_loan()
         self.action_loan_approved()
         self.action_disburse_loan()
@@ -224,32 +224,15 @@ class LoanRequest(models.Model):
             salida = loan.interest_rate
             balance = loan.disbursal_amount
             partner = self.partner_id
-            loan_line_ids = self.env['repayment.line'].search(
-                [('loan_id', '=', self.id)])
-            if loan_line_ids:
-                for rand_num in range(1, loan_line_ids + 1):
 
-                repayment_line_vals = {
-                    'loan_id': self.id,
-                    'name': f"{loan.name}/{self.repayment_lines_ids.id}",
-                    'partner_id': partner.id,
-                    'date': self.date,
-                    'amount': entrada,
-                    'interest_amount': salida,
-                    'total_amount': balance,
-                }
-                self.env['repayment.line'].create(repayment_line_vals)
-            else:
-                repayment_line_vals = {
-                    'loan_id': self.id,
-                    'name': f"{loan.name}/{self.repayment_lines_ids.id}",
-                    'partner_id': partner.id,
-                    'date': self.date,
-                    'amount': entrada,
-                    'interest_amount': salida,
-                    'total_amount': balance,
-                }
-                self.env['repayment.line'].create(repayment_line_vals)
+            self.env['repayment.line'].create({
+                'name': f"{loan.name}/{self.repayment_lines_ids.id}",
+                'partner_id': partner.id,
+                'date': self.date,
+                'amount': entrada,
+                'interest_amount': salida,
+                'total_amount': balance,
+                'loan_id': loan.id})
 
         return True
 
@@ -267,31 +250,14 @@ class LoanRequest(models.Model):
             salida = loan.interest_rate
             balance = loan.disbursal_amount
             partner = self.partner_id
-            loan_line_ids = self.env['repayment.line'].search(
-                [('loan_id', '=', self.id)])
-            if loan_line_ids:
-                for rand_num in range(1, loan_line_ids + 1):
 
-                repayment_line_vals = {
-                    'loan_id': self.id,
-                    'name': f"{loan.name}/{self.repayment_lines_ids.id}",
-                    'partner_id': partner.id,
-                    'date': self.date,
-                    'amount': entrada,
-                    'interest_amount': salida,
-                    'total_amount': balance,
-                }
-                self.env['repayment.line'].create(repayment_line_vals)
-            else:
-                repayment_line_vals = {
-                    'loan_id': self.id,
-                    'name': f"{loan.name}/{self.repayment_lines_ids.id}",
-                    'partner_id': partner.id,
-                    'date': self.date,
-                    'amount': entrada,
-                    'interest_amount': salida,
-                    'total_amount': balance,
-                }
-                self.env['repayment.line'].create(repayment_line_vals)
+            self.env['repayment.line'].create({
+                'name': f"{loan.name}/{self.repayment_lines_ids.id}",
+                'partner_id': partner.id,
+                'date': self.date,
+                'amount': entrada,
+                'interest_amount': salida,
+                'total_amount': balance,
+                'loan_id': loan.id})
 
         return True
