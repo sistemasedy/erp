@@ -261,33 +261,3 @@ class LoanRequest(models.Model):
                 'loan_id': loan.id})
 
         return True
-
-    @api.multi
-    def action_compute_salida(self):
-        self.ensure_one()
-        repayment_line_vals = {
-            'loan_id': self.id,
-            'name': f"{loan.name}/{self.repayment_lines_ids.id}",
-            'partner_id': partner.id,
-            'date': self.date,
-            'amount': entrada,
-            'interest_amount': salida,
-            'total_amount': balance,
-        }
-        self.env['repayment.line'].create(repayment_line_vals)
-        return True
-
-    @api.multi
-    def action_compute_entrada(self):
-        self.ensure_one()
-        repayment_line_vals = {
-            'loan_id': self.id,
-            'name': f"{loan.name}/{self.repayment_lines_ids.id}",
-            'partner_id': partner.id,
-            'date': self.date,
-            'amount': entrada,
-            'interest_amount': salida,
-            'total_amount': balance,
-        }
-        self.env['repayment.line'].create(repayment_line_vals)
-        return True
