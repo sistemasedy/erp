@@ -228,7 +228,7 @@ class LoanRequest(models.Model):
             self.env['repayment.line'].create({
                 'name': f"{loan.name}/{self.repayment_lines_ids.id}",
                 'partner_id': partner.id,
-                'date': date,
+                'date': self.date,
                 'amount': entrada,
                 'interest_amount': salida,
                 'total_amount': balance,
@@ -254,7 +254,7 @@ class LoanRequest(models.Model):
             self.env['repayment.line'].create({
                 'name': f"{loan.name}/{self.repayment_lines_ids.id}",
                 'partner_id': partner.id,
-                'date': date,
+                'date': self.date,
                 'amount': entrada,
                 'interest_amount': salida,
                 'total_amount': balance,
