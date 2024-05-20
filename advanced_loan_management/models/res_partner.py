@@ -32,6 +32,7 @@ class ResPartner(models.Model):
             [('partner_id', '=', self.id),
              ('state', 'in', ('disbursed', 'closed'))])
 
+    loans_amount = fields.Float(string="Balance", digits=(32, 2))
     loan_count = fields.Integer(string="Loan Count",
                                 compute='_compute_partner_loans',
                                 help="Displays numbers of loans "
