@@ -210,7 +210,7 @@ class LoanRequest(models.Model):
 
         return True
 
-    def action_compute_salida(self):
+    def action_compute_salidaaa(self):
         """This automatically create the installment the employee need to pay to
         company based on payment start date and the no of installments.
             """
@@ -236,7 +236,7 @@ class LoanRequest(models.Model):
 
         return True
 
-    def action_compute_entrada(self):
+    def action_compute_entradaaa(self):
         """This automatically create the installment the employee need to pay to
         company based on payment start date and the no of installments.
             """
@@ -260,4 +260,34 @@ class LoanRequest(models.Model):
                 'total_amount': balance,
                 'loan_id': loan.id})
 
+        return True
+
+    @api.multi
+    def action_compute_salida(self):
+        self.ensure_one()
+        repayment_line_vals = {
+            'loan_id': self.id,
+            'name': f"{loan.name}/{self.repayment_lines_ids.id}",
+            'partner_id': partner.id,
+            'date': self.date,
+            'amount': entrada,
+            'interest_amount': salida,
+            'total_amount': balance,
+        }
+        self.env['repayment.line'].create(repayment_line_vals)
+        return True
+
+    @api.multi
+    def action_compute_entrada(self):
+        self.ensure_one()
+        repayment_line_vals = {
+            'loan_id': self.id,
+            'name': f"{loan.name}/{self.repayment_lines_ids.id}",
+            'partner_id': partner.id,
+            'date': self.date,
+            'amount': entrada,
+            'interest_amount': salida,
+            'total_amount': balance,
+        }
+        self.env['repayment.line'].create(repayment_line_vals)
         return True
