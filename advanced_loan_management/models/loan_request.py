@@ -1,18 +1,3 @@
-# -*- coding: utf-8 -*-
-################################################################################
-#
-#    Cybrosys Technologies Pvt. Ltd.
-#
-#    Copyright (C) 2023-TODAY Cybrosys Technologies(<https://www.cybrosys.com>).
-#    Author: Sabeel (odoo@cybrosys.com)
-#
-#    You can modify it under the terms of the GNU AFFERO
-#    GENERAL PUBLIC LICENSE (AGPL v3), Version 3.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU AFFERO GENERAL PUBLIC LICENSE (AGPL v3) for more details.
 #
 #    You should have received a copy of the GNU AFFERO GENERAL PUBLIC LICENSE
 #    (AGPL v3) along with this program.
@@ -37,7 +22,7 @@ class LoanRequest(models.Model):
     entrada = fields.Boolean(string="Entrada", default=False,
                              help="For monitoring the record")
     salida = fields.Boolean(string="Salida", default=False,
-                             help="For monitoring the record")
+                            help="For monitoring the record")
     company_id = fields.Many2one('res.company', string='Company',
                                  readonly=True,
                                  help="Company Name",
@@ -47,16 +32,16 @@ class LoanRequest(models.Model):
                                   required=True, help="Currency",
                                   default=lambda self: self.env.user.company_id.
                                   currency_id)
-    
+
     loan_amount = fields.Float(string="Entrada", store=True,
                                help="Total loan amount", )
-    disbursal_amount = fields.Float(string="Disbursal_amount",
+    disbursal_amount = fields.Float(string="Balance Pendiente",
                                     help="Total loan amount "
                                          "available to disburse")
     tenure = fields.Integer(string="Tenure",
                             help="Installment period")
     interest_rate = fields.Float(string="Salida", help="Interest "
-                                                              "percentage")
+                                 "percentage")
     date = fields.Date(string="Fecha", default=fields.Date.today(),
                        readonly=True, help="Date")
     partner_id = fields.Many2one('res.partner', string="Cliente",
@@ -74,8 +59,7 @@ class LoanRequest(models.Model):
                                           column1="documents_ids",
                                           string="Images",
                                           help="Image proofs")
-    
-    
+
     reject_reason = fields.Text(string="Reason", help="Displays "
                                                       "rejected reason")
     request = fields.Boolean(string="Request", default=False,
@@ -107,7 +91,36 @@ class LoanRequest(models.Model):
             res = super().create(vals)
             return res
 
-    
+    def action_loan_request(self):
+        """Changes the state to confirmed and send confirmation mail"""
+        self.write({'state': "confirmed"})
+        partner = self.partner_id
+        loan_no = self.name
+        subject = 'Loan Confirmation'
+
+        message = (f"Dear {partner.name},<br/> This is a confirmation mail "
+                   f"for your loan{loan_no}. We have submitted your loan "
+                   f"for approval.")
+
+        outgoing_mail = self.company_id.email
+        mail_values = {
+            'subject': subject,
+            'email_from': outgoing_mail,
+            'author_id': self.env.user.partner_id.id,
+            'email_to': partner.email,
+            'body_html': message,
+        }
+        mail = self.env['mail.mail'].sudo().create(mail_values)
+        mail.send()
+
+    def action_loan_complete(self):
+        """Changes the state to confirmed and send confirmation mail"""
+
+        self.action_loan_request()
+        self.action_compute_repayment()
+        self.action_request_for_loan()
+        self.action_loan_approved()
+        self.action_disburse_loan()
 
     def action_loan_request(self):
         """Changes the state to confirmed and send confirmation mail"""
@@ -155,42 +168,6 @@ class LoanRequest(models.Model):
         """Disbursing the loan to customer and creating journal
          entry for the disbursement"""
         self.write({'state': "disbursed"})
-
-        for loan in self:
-            amount = loan.disbursal_amount
-            loan_name = loan.partner_id.name
-            reference = loan.name
-            journal_id = loan.journal_id.id
-            debit_account_id = loan.debit_account_id.id
-            credit_account_id = loan.credit_account_id.id
-            date_now = loan.date
-            debit_vals = {
-                'name': loan_name,
-                'account_id': debit_account_id,
-                'journal_id': journal_id,
-                'date': date_now,
-                'debit': amount > 0.0 and amount or 0.0,
-                'credit': amount < 0.0 and -amount or 0.0,
-
-            }
-            credit_vals = {
-                'name': loan_name,
-                'account_id': credit_account_id,
-                'journal_id': journal_id,
-                'date': date_now,
-                'debit': amount < 0.0 and -amount or 0.0,
-                'credit': amount > 0.0 and amount or 0.0,
-            }
-            vals = {
-                'name': f'DIS / {reference}',
-                'narration': reference,
-                'ref': reference,
-                'journal_id': journal_id,
-                'date': date_now,
-                'line_ids': [(0, 0, debit_vals), (0, 0, credit_vals)]
-            }
-            move = self.env['account.move'].create(vals)
-            move.action_post()
         return True
 
     def action_close_loan(self):
@@ -226,31 +203,61 @@ class LoanRequest(models.Model):
         """This automatically create the installment the employee need to pay to
         company based on payment start date and the no of installments.
             """
+        if self.salida:
+            self.action_compute_salida()
+        if self.entrada:
+            self.action_compute_entrada()
+
+        return True
+
+    def action_compute_salida(self):
+        """This automatically create the installment the employee need to pay to
+        company based on payment start date and the no of installments.
+            """
         self.request = True
         for loan in self:
             loan.repayment_lines_ids.unlink()
             date_start = (datetime.strptime(str(loan.date),
                                             '%Y-%m-%d') +
                           relativedelta(months=1))
-            amount = loan.loan_amount / loan.tenure
-            interest = loan.loan_amount * loan.interest_rate
-            interest_amount = interest / loan.tenure
-            total_amount = amount + interest_amount
+            entrada = loan.loan_amount
+            salida = loan.interest_rate
+            balance = loan.disbursal_amount
             partner = self.partner_id
-            for rand_num in range(1, loan.tenure + 1):
-                self.env['repayment.line'].create({
-                    'name': f"{loan.name}/{rand_num}",
-                    'partner_id': partner.id,
-                    'date': date_start,
-                    'amount': amount,
-                    'interest_amount': interest_amount,
-                    'total_amount': total_amount,
-                    'interest_account_id': self.env.ref('advanced_loan_management.'
-                                                        'loan_management_'
-                                                        'inrst_accounts').id,
-                    'repayment_account_id': self.env.ref('advanced_loan_management.'
-                                                         'demo_'
-                                                         'loan_accounts').id,
-                    'loan_id': loan.id})
-                date_start += relativedelta(months=1)
+
+            self.env['repayment.line'].create({
+                'name': f"{loan.name}/{rand_num}",
+                'partner_id': partner.id,
+                'date': date,
+                'amount': entrada,
+                'interest_amount': salida,
+                'total_amount': balance,
+                'loan_id': loan.id})
+
+        return True
+
+    def action_compute_entrada(self):
+        """This automatically create the installment the employee need to pay to
+        company based on payment start date and the no of installments.
+            """
+        self.request = True
+        for loan in self:
+            loan.repayment_lines_ids.unlink()
+            date_start = (datetime.strptime(str(loan.date),
+                                            '%Y-%m-%d') +
+                          relativedelta(months=1))
+            entrada = loan.loan_amount
+            salida = loan.interest_rate
+            balance = loan.disbursal_amount
+            partner = self.partner_id
+
+            self.env['repayment.line'].create({
+                'name': f"{loan.name}/{rand_num}",
+                'partner_id': partner.id,
+                'date': date,
+                'amount': entrada,
+                'interest_amount': salida,
+                'total_amount': balance,
+                'loan_id': loan.id})
+
         return True

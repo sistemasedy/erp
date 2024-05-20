@@ -51,18 +51,21 @@
 
                         <field name="state" widget="statusbar"
                                statusbar_visible="draft,confirmed,approved"/>
+                        <button name="action_loan_complete" class="oe_highlight"
+                                 string="Confirmacion Completa"
+                                type="object"/>
                         <button name="action_loan_request" class="oe_highlight"
                                 states="draft" string="Confirm"
                                 type="object"/>
                         <button name="action_compute_repayment" class="oe_highlight"
                                 states="confirmed"
-                                string="Compute Repayments"
+                                string="Computal los Pagos"
                                 type="object"/>
                         <button name="action_request_for_loan" class="oe_highlight"
-                                states="confirmed" string="Request"
+                                states="confirmed" string="Solicitar"
                                 type="object"/>
                         <button name="action_loan_approved" class="oe_highlight"
-                                states="waiting for approval" string="Approve"
+                                states="waiting for approval" string="Aprovar"
                                 type="object"
                                 groups="advanced_loan_management.loan_management_group_manager"/>
                         <button name="action_loan_rejected" class="oe_highlight"
@@ -70,10 +73,10 @@
                                 type="object"
                                 groups="advanced_loan_management.loan_management_group_manager"/>
                         <button name="action_disburse_loan" class="oe_highlight"
-                                string="Disburse"
+                                string="Desembolsar"
                                 type="object" states="approved"/>
                         <button name="action_close_loan" class="oe_highlight"
-                                string="Close"
+                                string="Cerrar"
                                 type="object"
                                 states="disbursed"/>
                     </header>
@@ -93,7 +96,7 @@
                                 
                             </group>
                             <group>
-                                <field name="disbursal_amount" invisible="1"/>
+                                <field name="disbursal_amount"/>
                                 <field name="currency_id" invisible="1"/>
                                 
                                 <field name="request" invisible="1"/>

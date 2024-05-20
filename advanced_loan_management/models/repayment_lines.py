@@ -40,11 +40,11 @@ class RepaymentLine(models.Model):
                        default=fields.Date.today(),
                        readonly=True,
                        help="Date of the payment")
-    amount = fields.Float(string="Amount", required=True, help="Amount",
+    amount = fields.Float(string="Entrada", required=True, help="Amount",
                           digits=(16, 2))
-    interest_amount = fields.Float(string="Interest_Amount", required=True,
+    interest_amount = fields.Float(string="Salida", required=True,
                                    help="Interest Amount", digits=(16, 2))
-    total_amount = fields.Float(string="Total_Amount", required=True,
+    total_amount = fields.Float(string="Balance",
                                 help="Total Amount", digits=(16, 2))
     loan_id = fields.Many2one('loan.request', string="Loan Ref.",
                               help="Loan",
@@ -57,20 +57,7 @@ class RepaymentLine(models.Model):
                              tracking=True, default='unpaid',
                              help="Includes paid and unpaid states for each "
                                   "repayments", )
-    journal_loan_id = fields.Many2one('account.journal',
-                                      string="Journal",
-                                      store=True, default=lambda self: self.
-                                      env['account.journal'].
-                                      search([('code', 'like', 'CSH1')]),
-                                      help="Journal Record")
-    interest_account_id = fields.Many2one('account.account',
-                                          string="Interest",
-                                          store=True,
-                                          help="Account For Interest")
-    repayment_account_id = fields.Many2one('account.account',
-                                           string="Repayment",
-                                           store=True,
-                                           help="Account For Repayment")
+    
     invoice = fields.Boolean(string="invoice", default=False,
                              help="For monitoring the record")
 
