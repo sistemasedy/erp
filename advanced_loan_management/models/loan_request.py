@@ -225,14 +225,16 @@ class LoanRequest(models.Model):
             balance = loan.disbursal_amount
             partner = self.partner_id
 
-            self.env['repayment.line'].create({
+            repayment_line_vals = {
+                'loan_id': self.id,
                 'name': f"{loan.name}/{self.repayment_lines_ids.id}",
                 'partner_id': partner.id,
                 'date': self.date,
                 'amount': entrada,
                 'interest_amount': salida,
                 'total_amount': balance,
-                'loan_id': loan.id})
+            }
+        self.env['repayment.line'].create(repayment_line_vals)
 
         return True
 
@@ -251,13 +253,15 @@ class LoanRequest(models.Model):
             balance = loan.disbursal_amount
             partner = self.partner_id
 
-            self.env['repayment.line'].create({
+            repayment_line_vals = {
+                'loan_id': self.id,
                 'name': f"{loan.name}/{self.repayment_lines_ids.id}",
                 'partner_id': partner.id,
                 'date': self.date,
                 'amount': entrada,
                 'interest_amount': salida,
                 'total_amount': balance,
-                'loan_id': loan.id})
+            }
+        self.env['repayment.line'].create(repayment_line_vals)
 
         return True
