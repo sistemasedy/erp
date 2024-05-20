@@ -210,7 +210,7 @@ class LoanRequest(models.Model):
 
         return True
 
-    def action_compute_salidaaa(self):
+    def action_compute_salida(self):
         """This automatically create the installment the employee need to pay to
         company based on payment start date and the no of installments.
             """
@@ -238,7 +238,7 @@ class LoanRequest(models.Model):
 
         return True
 
-    def action_compute_entradaaa(self):
+    def action_compute_entrada(self):
         """This automatically create the installment the employee need to pay to
         company based on payment start date and the no of installments.
             """
