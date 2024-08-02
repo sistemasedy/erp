@@ -35,6 +35,8 @@ class PosOrder(models.Model):
        invoice for pos order"""
     _inherit = 'pos.order'
 
+    #order_ncf = fields.Char(string='NCF')
+
     @api.model
     def get_invoice(self, id):
         """Retrieve the corresponding invoice details based on the provided ID.
@@ -42,8 +44,15 @@ class PosOrder(models.Model):
         id (int): The ID of the invoice.
         Returns:
         dict: A dictionary containing the invoice details.
+
+        ids = pos.id + 1
+
+        pos_id = ids
+
+        
         """
         pos_id = self.search([('pos_reference', '=', id)])
+        
         base_url = self.env['ir.config_parameter'].get_param('web.base.url')
         invoice_id = self.env['account.move'].search(
             [('invoice_origin', '=', pos_id.name)])

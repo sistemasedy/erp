@@ -1,62 +1,42 @@
 odoo.define('pos_l10n_ar_identification.screens', function(require) {
     'use strict';
 
-    const ClientListScreen = require('point_of_sale.ClientListScreen');
+    var rpc = require('web.rpc')
+    const PaymentScreen = require('point_of_sale.PaymentScreen');
     const Registries = require('point_of_sale.Registries');
-    var { Gui } = require('point_of_sale.Gui');
     var models = require('point_of_sale.models');
-    const { useListener } = require('web.custom_hooks');
+        // Load models to retrieve configuration and account move data
+        // Load 'pos.config' model fields
+    models.load_models([{
+        model: 'pos.config',
+        fields: ['is_customer_details', 'is_customer_name', 'is_customer_address', 'is_customer_mobile', 'is_customer_phone', 'is_customer_email', 'is_customer_vat', 'is_qr_code', 'is_invoice_number'],
+        loaded: function (self, pos_config) {
+            self.pos_config = pos_config;
+        }
+    }]);
+       // Load 'account.move' model fields
+    models.load_models([{
+        model: 'account.move',
+        fields: ['name'],
+        loaded: function (self, account_move) {
+            self.account_move = account_move;
+        }
+    }]);
+
     
-    const Ajax = require('web.ajax');
 
-    const data_json = [];
-
-    
-
-    const POSSaveClientOverrides = ClientListScreen =>
-        class extends ClientListScreen {
-            /**
-             * @override
-             */
-
-            
-
-         
-
-            async saveChanges(event) {
-
-                try{
-                    let partnerId = await this.rpc({
-                        model: 'res.partner',
-                        method: 'create_from_ui',
-                        args: [event.detail.processedChanges],
-                    });
-                    await this.env.pos.load_new_partners();
-                    this.state.selectedClient = this.env.pos.db.get_partner_by_id(partnerId);
-                    this.state.detailIsShown = false;
-                    this.render();
-
-                }catch (error){
-                    if (error.message.code < 0) {
-                        await this.showPopup('OfflineErrorPopup', {
-                            title: this.env._t('Offline'),
-                            body: this.env._t('Unable to save changes.'),
-                        });
-                    } else {
-                        throw error;
-                    }
-                }
-
+    const FiscalReceip = OrderReceipt =>
+        class extends OrderReceipt {
+            setup() {
+                super.setup();
             }
-
-
             
 
 
 
         };
 
-    Registries.Component.extend(ClientListScreen, POSSaveClientOverrides);
+    Registries.Component.extend(OrderReceipt, FiscalReceip);
 
-    return ClientListScreen;
+    return OrderReceipt;
 });

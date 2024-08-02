@@ -1,50 +1,55 @@
 # -*- coding: utf-8 -*-
-################################################################################
-#
-#    Cybrosys Technologies Pvt. Ltd.
-#
-#    Copyright (C) 2023-TODAY Cybrosys Technologies(<https://www.cybrosys.com>).
-#    Author: Sabeel (odoo@cybrosys.com)
-#
-#    You can modify it under the terms of the GNU AFFERO
-#    GENERAL PUBLIC LICENSE (AGPL v3), Version 3.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU AFFERO GENERAL PUBLIC LICENSE (AGPL v3) for more details.
-#
-#    You should have received a copy of the GNU AFFERO GENERAL PUBLIC LICENSE
-#    (AGPL v3) along with this program.
-#    If not, see <http://www.gnu.org/licenses/>.
-#
-################################################################################
-from odoo import fields, models
 
+from odoo import api, fields, models, _
+import datetime
 
 class ResPartner(models.Model):
-    """Add new tab to display partner's loan count"""
-    _inherit = "res.partner"
-    # loans_amount = fields.Float(string="Balance", digits=(32, 2))
+    _inherit = 'res.partner'
+    
 
-    def _compute_partner_loans(self):
-        """This compute the loan amount and total loans count of a partner."""
-        self.loan_count = self.env['loan.request'].search_count(
-            [('partner_id', '=', self.id),
-             ('state', 'in', ('disbursed', 'closed'))])
+    allow_multiple_loan = fields.Boolean(string="Allow Multiple Loans")
+    loan_defaulter = fields.Boolean(string="Loan Defaulter",default=True)
+    loan_ids = fields.One2many('loan.request','partner_id')
+    policy_ids = fields.Many2many('loan.policies','rel_res_partner_policies_id',string="Partner")
+    #balance_on_loan = fields.Float(string="Balance del Prestamo",compute="_compute_balance_on_loan", store=True)    
+                
 
-    loan_count = fields.Integer(string="Loan Count",
-                                compute='_compute_partner_loans',
-                                help="Displays numbers of loans "
-                                     "ongoing and closed by the employee")
+    def get_installment_loan(self,id,date_from,date_to) :
+        installment_rec = self.env['loan.installment'].search([('partner_id','=',id),('date_from','=',date_from),
+                                                                    ('date_to','=',date_to)],order="id desc", limit=1)
+        if installment_rec.pay_from_payroll == True :
+            return 0.0
+        else :
+            return installment_rec.principal_amount
 
-    def action_view_loans(self):
-        """Returns loan records of current employee"""
+    def get_interest_loan(self,id,date_from,date_to) :
+        installment_rec = self.env['loan.installment'].search([('partner_id','=',id),('date_from','=',date_from),
+                                                                    ('date_to','=',date_to)],order="id desc", limit=1)
+        if installment_rec.pay_from_payroll == True :
+            return 0.0
+        else :
+            return installment_rec.interest_amount
+
+    def button_installment_entries(self):
         return {
-            'type': 'ir.actions.act_window',
-            'name': 'Loans',
-            'view_mode': 'tree',
+            'name': _('Installment Entries'),
+            'view_type': 'form',
+            'view_mode': 'tree,form',
             'res_model': 'loan.request',
-            'domain': [('partner_id', '=', self.id)],
-            'context': "{'create': True}"
+            'view_id': False,
+            'type': 'ir.actions.act_window',
+            'domain': [('id', 'in', self.loan_ids.ids)],
         }
+
+    def _compute_balance_on_loan(self) :
+        loan_amount = self.env['loan.request'].search([('partner_id','=',id),('state','=','approve')])
+        amount = 0
+
+
+        for line in loan_amount:
+            amount = amount + line.balance_on_loan
+            self.balance_on_loan = amount
+
+
+
+

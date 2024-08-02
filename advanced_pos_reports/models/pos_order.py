@@ -24,7 +24,7 @@ class PosOrder(models.Model):
         orders = self.env['pos.order'].search([('id', 'in', order_ids)])
         if orders:
             self.env.cr.execute("""
-                SELECT product.id, template.name, product.default_code as code, sum(qty) as qty
+                SELECT product.id, template.name, product.default_code as code,SUM(line.qty * line.price_unit) AS valor, sum(qty) as qty
                 FROM product_product AS product,
                      pos_order_line AS line, product_template AS template
                 WHERE product.id = line.product_id AND template.id = product.product_tmpl_id
@@ -111,6 +111,14 @@ class PosSession(models.Model):
             }
         return session_summary
 
+
+    def force_close_session(self):
+        for session in self:
+            if session.state not in ['opened', 'closing_control']:
+                raise UserError('Solo se pueden cerrar sesiones en estado "opened" o "closing_control".')
+            # Aquí podrías agregar lógica adicional si es necesario
+            #session.action_pos_session_closing_control()
+            session.write({'state': 'closed'})
 
 class PosConfig(models.Model):
     _inherit = 'pos.config'

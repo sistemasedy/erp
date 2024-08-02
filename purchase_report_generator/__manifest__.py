@@ -29,19 +29,18 @@
     'maintainer': 'Cybrosys Techno Solutions',
     'company': 'Cybrosys Techno Solutions',
     'website': 'https://www.cybrosys.com',
-    'depends': ['purchase'],
+    'depends': ['purchase', 'product'],
     'data': [
-        'security/ir.model.access.csv',
-        'views/purchase_report.xml',
-        'report/purchase_order_report.xml'
+        # 'security/ir.model.access.csv',
+        'views/purchase_order_automation.xml'
     ],
     'assets': {
         'web.assets_backend': [
-            'purchase_report_generator/static/src/js/purchase_report.js',
-            'purchase_report_generator/static/src/css/purchase_report.css'
+            # 'purchase_report_generator/static/src/js/purchase_report.js',
+            # 'purchase_report_generator/static/src/css/purchase_report.css'
         ],
         'web.assets_qweb': [
-            'purchase_report_generator/static/src/xml/purchase_report_view.xml',
+            # 'purchase_report_generator/static/src/xml/purchase_report_view.xml',
         ],
     },
     'images': ['static/description/banner.png'],

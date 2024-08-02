@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!--    Form view of the merge RFQ wizard-->
+    <record id="merge_rfq_view_form" model="ir.ui.view">
+        <field name="name">merge.rfq.view.form</field>
+        <field name="model">merge.rfq</field>
+        <field name="arch" type="xml">
+            <form string="Purchase Order Merge">
+                <group>
+                    <field name="select_all_suppliers"/>
+                    <field name="partner_id" attrs="{'invisible': [('select_all_suppliers', '=', True)]}"/>
+                </group>
+                <group>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    
+                </group>
+                <footer>
+                    <button string="Ejecutar Automatización" type="object" name="create_or_update_purchase_orders" class="btn-primary"/>
+                    <button string="Cancel" class="btn-default"
+                            special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <!--    Action for merge RFQ wizard-->
+    <record id="merge_rfq_action" model="ir.actions.act_window">
+        <field name="name">Ordenes Automatizadas</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">merge.rfq</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="merge_rfq_view_form"/>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="purchase.model_purchase_order"/>
+        <field name="binding_view_types">list</field>
+    </record>
+
+
+    <menuitem id="menu_auto_purchase" name="Auto Compra" sequence="3" />
+    <menuitem id="sub_menu_auto" parent="purchase.menu_purchase_root" name="Auto Compra" sequence="1"/>
+    <menuitem action="merge_rfq_action" id="menu_loan_req" parent="sub_menu_auto" name="Solicitudes de Auto Compra" sequence="2"/>
+
+
+    <record id="view_product_form_inherited" model="ir.ui.view">
+        <field name="name">product.form.inherited</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_tree_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='barcode']" position="after">
+                <field name="seller_ids" widget="many2many_tags"/>
+                
+            </xpath>
+        </field>
+    </record>
+    <record id="view_product_form_inherited" model="ir.ui.view">
+        <field name="name">product.form.inherited</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='sales']" position="after">
+                <page name="automation" string="Automatizacion">
+                    <group>
+                        <group name="precios_valores">
+                            <field name="main_supplier_id"/>
+                        </group>
+                        <group name="precios_valores">
+                            <field name="auto_reorder"/>
+                        </group>
+                        <group name="precios_valores">
+                            <field name="ignore_product"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="view_purchase_order_automation_dashboard" model="ir.ui.view">
+        <field name="name">purchase.order.automation.dashboard</field>
+        <field name="model">purchase.order.automation</field>
+        <field name="arch" type="xml">
+            <form string="Dashboard de Automatización de Órdenes de Compra">
+                <group>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <button string="Ejecutar Automatización" type="object" name="create_or_update_purchase_orders" class="btn-primary"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+
+    <!--    Form view of the merge RFQ wizard-->
+    <record id="merge_rfq_view_form222222" model="ir.ui.view">
+        <field name="name">merge.rfq.view.form</field>
+        <field name="model">merge.rfq</field>
+        <field name="arch" type="xml">
+            <form string="Purchase Order Merge">
+                <group>
+                    <field name="merge_type" required="1"/>
+                    <field name="partner_id"
+                           attrs="{'invisible': [('merge_type','in',['cancel_and_merge','delete_and_merge'])], 'required': [('merge_type','not in',['cancel_and_merge','delete_and_merge'])]}"/>
+                    <field name="purchase_order_id"
+                           attrs="{'invisible': [('merge_type','in',['cancel_and_new','delete_and_new'])], 'required': [('merge_type','not in',['cancel_and_new','delete_and_new'])]}"/>
+                </group>
+                <footer>
+                    <button name="action_merge_orders" string="Merge Orders"
+                            type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-default"
+                            special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+
+    <record id="view_res_partner_supplier_update_form" model="ir.ui.view">
+        <field name="name">res.partner.supplier.update.form</field>
+        <field name="model">supplier.update</field>
+        <field name="arch" type="xml">
+            <form string="Actualizar Proveedor Principal y Reordenar Automáticamente">
+                <group>
+                    <field name="partner_id"/>
+                </group>
+                <footer>
+                    <button string="Actualizar Productos" type="object" name="update_supplier_products" class="btn-primary"/>
+                    <button string="Cancelar" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+    <menuitem id="menu_res_partner_supplier_update" name="Actualizar Proveedor Principal" parent="purchase.menu_purchase_root"/>
+
+
+    <record id="action_res_partner_supplier_update_form" model="ir.actions.act_window">
+        <field name="name">Actualizar Proveedor Principal</field>
+        <field name="res_model">supplier.update</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_res_partner_supplier_update_form"/>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="purchase.model_purchase_order"/>
+        <field name="binding_view_types">list</field>
+    </record>
+
+
+
+
+
+    <!--    Form view of the merge RFQ wizard-->
+    <record id="merge_rfq_view_form2" model="ir.ui.view">
+        <field name="name">merge.rfq.view.form</field>
+        <field name="model">merge.rfq</field>
+        <field name="arch" type="xml">
+            <form string="Actualizar Proveedor Principal y Reordenar Automáticamente">
+                <group>
+                    <field name="partner_id" domain="[('supplier_rank', '>', 0)]"/>
+                </group>
+                <footer>
+                    <button string="Actualizar Productos" type="object" name="update_supplier_products" class="btn-primary"/>
+                    <button string="Cancelar" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <!--    Action for merge RFQ wizard-->
+    <record id="merge_rfq_action2" model="ir.actions.act_window">
+        <field name="name">Actualizar Productos</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">merge.rfq</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="merge_rfq_view_form2"/>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="purchase.model_purchase_order"/>
+        <field name="binding_view_types">list</field>
+    </record>
+
+    <menuitem action="merge_rfq_action2" id="menu_loan_req2" parent="sub_menu_auto" name="Actualizar Productos" sequence="3"/>
+
+
+
+
+    <record model="ir.ui.view" id="res_partner_list_view_custom">
+        <field name="name">res.partner.list.view</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='email']" position="after">
+                <field name="property_supplier_payment_term_id"/>
+                <field name="category_id" widget="many2many_tags"/>
+                
+            </xpath>
+        </field>
+    </record>
+
+
+
+
+
+    <record id="merge_rfq_view_form3" model="ir.ui.view">
+        <field name="name">merge.rfq.view.form</field>
+        <field name="model">merge.rfq</field>
+        <field name="arch" type="xml">
+            <form string="Actualizar Proveedor Principal y Reordenar Automáticamente">
+                <group>
+                    <field name="partner_id" domain="[('supplier_rank', '>', 0)]"/>
+                </group>
+                <footer>
+                    <button string="Actualizar Cantidad" type="object" name="update_quant_products" class="btn-primary"/>
+                    <button string="Cancelar" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <!--    Action for merge RFQ wizard-->
+    <record id="merge_rfq_action3" model="ir.actions.act_window">
+        <field name="name">Actualizar Cantidades</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">merge.rfq</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="merge_rfq_view_form3"/>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="purchase.model_purchase_order"/>
+        <field name="binding_view_types">list</field>
+    </record>
+
+    <menuitem action="merge_rfq_action3" id="menu_loan_req3" parent="sub_menu_auto" name="Actualizar Productos a Cero" sequence="4"/>
+
+
+
+
+</odoo>

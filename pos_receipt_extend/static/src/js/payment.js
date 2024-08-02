@@ -25,12 +25,19 @@ odoo.define('pos_receipt_extend.PaymentScreen', function (require) {
     const PosPaymentReceiptExtend = PaymentScreen => class extends PaymentScreen {
         setup() {
             super.setup();
+            
         }
         async validateOrder(isForceValidate) {
-            // Retrieve receipt number from the selected order
-            var receipt_number = this.env.pos._previousAttributes.selectedOrder.name
+
+
+            
+            var receipt_number = this.env.pos._previousAttributes.selectedOrder.name;
+            console.log("numero", receipt_number)
+            console.log("array", this.env.pos.get_order())
+            //this.env.pos._previousAttributes.selectedOrder.name
             const receipt_order = await super.validateOrder(...arguments);
              // Generate QR code and store it
+             console.log("edy", receipt_order)
             const codeWriter = new window.ZXing.BrowserQRCodeSvgWriter();
             var self = this;
             rpc.query({
@@ -44,11 +51,24 @@ odoo.define('pos_receipt_extend.PaymentScreen', function (require) {
                 const address = `${result.base_url}/my/invoices/${result.invoice_id}?`
                 let qr_code_svg = new XMLSerializer().serializeToString(codeWriter.write(address, 150, 150));
                 self.env.pos.qr_image = "data:image/svg+xml;base64," + window.btoa(qr_code_svg);
+                
+
+
             });
             return receipt_order
         }
+
+        
+
+
+
     }
         // Extend the PaymentScreen component with the custom functionality
     Registries.Component.extend(PaymentScreen, PosPaymentReceiptExtend);
     return PaymentScreen;
 });
+
+
+
+
+

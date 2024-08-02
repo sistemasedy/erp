@@ -1,0 +1,16 @@
+<odoo>
+    <record id="account_move_eg_discount_form_view" model="ir.ui.view">
+        <field name="name">account.move.eg.discount.form.view</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/group/group[1]" position="inside">
+                <field name="allow_abono" invisible="1"/>
+                <field name="afavor_abono" invisible="1"/>
+                <field name="abono_amount" attrs="{'invisible': [('afavor_abono', '=', False)]}"/>
+                <field name="abono"  attrs="{'invisible': [('allow_abono', '=', False)]}"/>
+            </xpath>
+        </field>
+    </record>
+   
+</odoo>

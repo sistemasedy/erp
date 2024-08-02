@@ -19,4 +19,7 @@
 #
 #############################################################################
 
-from . import purchase_report
+# from . import purchase_report
+# from . import product_product
+# from . import purchase_order
+from . import purchase_order_automation

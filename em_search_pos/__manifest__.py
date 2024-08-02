@@ -38,7 +38,7 @@
             'em_search_pos/static/src/js/Screens/ProductScreen/product_create_button.js',
             'em_search_pos/static/src/js/Screens/ProductScreen/ListProducts.js',
             'em_search_pos/static/src/js/Screens/ProductScreen/ProductItem.js',
-            'em_search_pos/static/src/js/Screens/ProductScreen/ProductItemSearch.js',
+            #'em_search_pos/static/src/js/Screens/ProductScreen/ProductItemSearch.js',
             'em_search_pos/static/src/js/Screens/ProductScreen/ProductListSearch.js',
             'em_search_pos/static/src/js/Screens/ProductScreen/ProductsWidgetControlPanelSearch.js',
             'em_search_pos/static/src/js/Screens/ProductScreen/ProductsWidgetSearch.js',

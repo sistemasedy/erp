@@ -1,17 +1,30 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-     <!-- res partner inherit Loans -->
-    <record id="res_partner_view_form_inherit" model="ir.ui.view">
-        <field name="name">res.partner.view.form.inherit.loan.management</field>
+    <data>
+
+    <record id="res_partner_form_view_inherit_id" model="ir.ui.view">
+        <field name="name">res.partner.form.inherite</field>
         <field name="model">res.partner</field>
+        <field name="priority" eval="8" />
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//div[@name='button_box']" position="inside">
-                <button name="action_view_loans" type="object"  class="oe_stat_button"
-                    icon="fa-calendar">
-                    <field name="loan_count" widget="statinfo" string="Abonos"/>
-                </button>
+            <xpath expr="//page[@name='contact_addresses']" position="before">
+                <page name="loan" string="Prestamos">
+                    <field name="loan_ids"/>
+                </page>
+                
+                <page name="policy" string="Policies">
+                    <field name="policy_ids"/>
+                </page>
             </xpath>
+            
+            <xpath expr="//field[@name='phone']" position="after">
+                <field name="allow_multiple_loan"/>
+                <field name="loan_defaulter"/>
+            </xpath>
+            
         </field>
     </record>
+
+    </data>
 </odoo>

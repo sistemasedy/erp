@@ -46,6 +46,7 @@
         'views/report_pos_top_selling_products.xml',
         'views/report_pos_top_selling_categories.xml',
         'views/report_pos_top_selling_customers.xml',
+        'views/close.xml',
     ],
     'assets': {
         'point_of_sale.assets': [

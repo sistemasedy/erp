@@ -40,6 +40,9 @@ class AccountMove(models.Model):
         res = super(AccountMove, self).create(vals)
         ean = self.generate_ean(str(res.id))
         self.account_barcode = ean
+        
+
+
         return res
 
     def ean_checksum(self, ean_code):

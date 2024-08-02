@@ -13,7 +13,7 @@
     'assets': {
         'point_of_sale.assets': [
             'wt_create_so_from_pos/static/src/js/Screens/ProductScreen/ControlButtons/SaleOrderButton.js',
-            'wt_create_so_from_pos/static/src/js/Screens/ProductScreen/ControlButtons/ViewSalesOrderButton.js',
+            #'wt_create_so_from_pos/static/src/js/Screens/ProductScreen/ControlButtons/ViewSalesOrderButton.js',
             'wt_create_so_from_pos/static/src/js/Screens/SaleOrderScreen/SaleOrderScreen.js',
             'wt_create_so_from_pos/static/src/js/Screens/SaleOrderScreen/ViewSaleOrderList.js',
             'wt_create_so_from_pos/static/src/js/Screens/SaleOrderScreen/ViewSaleOrderRow.js',

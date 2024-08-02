@@ -55,37 +55,48 @@
                 </tr>
             </table>
 
-            <table style="margin-top:10px; font-size:14px !important; margin-left: auto; margin-right: auto;" class="receipt-orderlines">
-                <colgroup>
-                   <col style="width: 75%;"/>
-                   <col style="width: 25%;"/>
-                </colgroup>
-                <thead style="border-bottom: 1px solid black;">
-					<tr>
-						<th>Product</th>
-						<th style="text-align: right;">Quantity</th>
-					</tr>
-				</thead>
-				<tbody>
+            
+
+            <table style="width: 100%; margin-top:10px; font-size:14px !important;">
+                <thead style="border-bottom: 2px solid black;">
+                    <tr>
+                        <th>Producto</th>
+                        <th style="text-align: center;">Cantidad</th>
+                        <th style="text-align: center; width:100px;">Valor</th>
+                        <th style="text-align: right;">Margen</th>
+                    </tr>
+                </thead>
+                <tbody style="margin-top:5px;">
                     <t t-set="total_qty" t-value="0"/>
-					<tr t-foreach="products" t-as="product">
-						<td>
+                    
+
+                    <tr t-foreach="products" t-as="product">
+                        <td>
                             <t t-if="product.code">[<t t-esc="product.code"/>] </t><t t-esc="product.name"/>
-						</td>
-						<td style="text-align: right;">
-							<t t-esc="product.qty"/>
-						</td>
+                        </td>
+                        <td style="text-align: center;">
+                            <t t-esc="product.qty"/>
+                        </td>
+                        <td style="text-align: center;">
+                            <t t-esc="product.valor"/>
+                        </td>
+                        <td style="text-align: right;">
+                            <t t-esc="product.valor"/>
+                        </td>
                         <t t-set="total_qty" t-value="total_qty + product.qty"/>
-					</tr>
-					<br />
-					<tr style="border-top: 2px solid black;">
-						<td>Total:</td>
-						<td style="text-align: right;">
-							<t t-esc="total_qty"/>
-						</td>
-					</tr>
-				</tbody>
-			</table>
+                    </tr>
+
+
+
+                    <br />
+                    <tr style="border-top: 2px solid black;">
+                        <td>Total:</td>
+                        <td style="text-align: right;">
+                            <t t-esc="total_qty"/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
 
         </div>
 

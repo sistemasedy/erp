@@ -9,24 +9,26 @@ class SaleOrder(models.Model):
 
 
     @api.model
-    def craete_saleorder_from_pos(self, oderdetails):
+    def craete_saleorder_from_pos(self, orderdetails):
         vals = {}
         saleorder_id = self.env['sale.order'].create({
-            'partner_id': oderdetails.get('partner_id'),
+            'partner_id': orderdetails.get('partner_id'),
             'date_order': datetime.date.today(),
             'is_pos_created': True,
             'state': 'draft',
-            'amount_tax': oderdetails.get('tax_amount'),
-            })
+            'amount_tax': orderdetails.get('tax_amount'),
+        })
         vals['name'] = saleorder_id.name
         vals['id'] = saleorder_id.id
-        for data in oderdetails:
-            if not data == 'partner_id':
-                current_dict = oderdetails.get(data)
-                saleorder_id.order_line = [(0, 0, {
-                    'product_id': current_dict.get('product'),
-                    'product_uom_qty':  current_dict.get('quantity'),
-                    'price_unit': current_dict.get('price'),
-                    'discount': current_dict.get('discount'),
-                })]
+
+        for key, data in orderdetails.items():
+            if key not in ['partner_id', 'tax_amount']:
+                current_dict = data
+                if isinstance(current_dict, dict):  # Verificar que es un diccionario
+                    saleorder_id.order_line = [(0, 0, {
+                        'product_id': current_dict.get('product'),
+                        'product_uom_qty': current_dict.get('quantity'),
+                        'price_unit': current_dict.get('price'),
+                        'discount': current_dict.get('discount'),
+                    })]
         return vals
