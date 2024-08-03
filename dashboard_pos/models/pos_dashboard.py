@@ -42,6 +42,7 @@ class ReportSale(models.Model):
     salida = fields.Float(string="Salida",required=True,digits=(32, 2))
     balance_on_loans = fields.Float(string="Balance On Loan", store=True)
     notes = fields.Text(string="Notes")
+    currency_id = fields.Many2one('res.currency', 'Currency', required=True, default=lambda self: self.env.company.currency_id.id)
     order_line = fields.One2many('report.sale.line', 'order_id', string='Order Lines', states={'cancel': [('readonly', True)], 'done': [('readonly', True)]}, copy=True)
     state = fields.Selection([('draft','Draft'),('applied','Applied'),('approve','Approved'),('closed','Cerrado'),('cancel','Cancel'),('disbursed','Disbursed')],default='draft')
 
@@ -90,6 +91,7 @@ class ReportSale(models.Model):
         return      
 
 
+
 class ReportSaleLine(models.Model):
     """Loan repayments """
     _name = "report.sale.line"
@@ -104,8 +106,9 @@ class ReportSaleLine(models.Model):
     product_type = fields.Selection(related='product_id.detailed_type', readonly=True)
     price_unit = fields.Float(string='Unit Price', required=True, digits='Product Price')
 
-    price_subtotal = fields.Monetary(compute='_compute_amount', string='Subtotal', store=True)
-    price_total = fields.Monetary(compute='_compute_amount', string='Total', store=True)
+    currency_id = fields.Many2one('res.currency', related='order_id.currency_id', store=True, readonly=True, string='Currency')
+    price_subtotal = fields.Monetary(compute='_compute_amount', string='Subtotal', store=True, currency_field='currency_id')
+    price_total = fields.Monetary(compute='_compute_amount', string='Total', store=True, currency_field='currency_id')
 
     company_id = fields.Many2one('res.company', related='order_id.company_id', string='Company', store=True, readonly=True)
     state = fields.Selection(related='order_id.state', store=True)
@@ -115,7 +118,10 @@ class ReportSaleLine(models.Model):
 
     @api.depends('product_qty', 'price_unit')
     def _compute_amount(self):
-        pass
+        for line in self:
+            line.price_subtotal = line.product_qty * line.price_unit
+            line.price_total = line.price_subtotal
+
 
 class PosDashboard(models.Model):
     _inherit = 'pos.order'
