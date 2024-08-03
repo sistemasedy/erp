@@ -7,19 +7,20 @@
 	    <field name="model">loan.installment</field>
 	    <field name="priority">2</field>
 	    <field name="arch" type="xml">
-	    	<tree string="Loan Installment">
-	    	    <field name="installment_number" string="Number"/>
-	    	    <field name="date"/>
-	    	    <field name="partner_id"/>
-	    	    <field  name="opening_balance_amount" />
-	    	    <field  name="principal_amount" sum="Total"/>
-	    	    <field  name="interest_amount" sum="Total"/>
-	    	    <field name="overdue_amount"/>
-	    	    <field  name="emi_installment" sum="Total"/>
-	    	    <field  name="ending_balance_amount" />
-	    	    <field  name="state"/>
-	    	    <field name="currency_id"/>
-	    	</tree>
+	    	<tree decoration-muted="state == 'cancel'"
+                string="Reportes de ventas"
+                class="o_purchase_order"
+                sample="1">
+                <field name="name" string="Reference" readonly="1" decoration-bf="1" decoration-info="state in ('draft','sent')"/>
+                <field name="applied_date" widget="date" invisible="context.get('quotation_only', False)" optional="show"/>
+                <field name="partner_id"/>
+                <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}" optional="show"/>
+                <field name="user_id" widget="many2one_avatar_user" optional="show"/>
+                
+                <field name="principal_amount" sum="Total amount" widget="monetary" optional="show" decoration-bf="1"/>
+                <field name="state" invisible="1"/>
+                
+            </tree>
 	    </field>
 	</record>
 
