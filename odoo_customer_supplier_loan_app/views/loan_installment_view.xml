@@ -107,7 +107,7 @@
 
 
 	
-    <menuitem action="loan_installment_action" id="menu_loan_installment" parent="sub_req_menu_loan" name="Pagos de Prestamo" sequence="2" groups="group_loan_manager"/>
+    <menuitem action="loan_installment_action" id="menu_loan_installment" parent="sub_req_menu_loan" name="Reportes Margenes" sequence="2" groups="group_loan_manager"/>
 
 	</data>
 </odoo>
