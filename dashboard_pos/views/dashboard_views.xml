@@ -127,7 +127,10 @@
             </field>
         </record>
 
-        <menuitem name="Reporte de ventas" id="menu_report_sale_form_action" parent="point_of_sale.menu_point_rep"
+        <menuitem id="hotel_management_root" name="Hotel Management" sequence="10"/>
+        <menuitem id="Reservation_root" name="Reservation" parent="hotel_management_root" sequence="1"/>
+
+        <menuitem name="Reporte de ventas" id="menu_report_sale_form_action" parent="Reservation_root"
                   sequence="1"
                   groups="point_of_sale.group_pos_manager"
                   action="report_sale_form_action"/>
