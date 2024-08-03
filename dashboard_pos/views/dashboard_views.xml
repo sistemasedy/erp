@@ -94,7 +94,6 @@
             <field name="model">report.sale.margin</field>
             <field name="arch" type="xml">
                 <tree decoration-muted="state == 'cancel'"
-                    decoration-info="invoice_status == 'to invoice'"
                     string="Reportes de ventas"
                     class="o_purchase_order"
                     sample="1">
