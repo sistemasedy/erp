@@ -233,7 +233,7 @@ class ReportSaleLine(models.Model):
     _name = "report.sale.line"
     _description = "Report Sale Line"
 
-    order_id = fields.Many2one('loan.installment', string='Order Reference', index=True, required=True, ondelete='cascade')
+    order_id = fields.Many2one('report.margin.sale', string='Order Reference', index=True, required=True, ondelete='cascade')
     product_qty = fields.Float(string='Quantity', digits='Product Unit of Measure', required=True)
     product_uom_qty = fields.Float(string='Total Quantity', compute='_compute_product_uom_qty', store=True)
     product_uom = fields.Many2one('uom.uom', string='Unit of Measure', domain="[('category_id', '=', product_uom_category_id)]")

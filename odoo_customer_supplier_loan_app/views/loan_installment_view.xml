@@ -4,7 +4,7 @@
 	
 	<record id="view_loan_installment_tree" model="ir.ui.view">
 	    <field name="name">loan.installment.tree</field>
-	    <field name="model">loan.installment</field>
+	    <field name="model">report.margin.sale</field>
 	    <field name="priority">2</field>
 	    <field name="arch" type="xml">
 	    	<tree decoration-muted="state == 'cancel'"
@@ -26,7 +26,7 @@
 
 	<record id="view_loan_installment_form" model="ir.ui.view">
 	    <field name="name">loan.installment.form</field>
-	    <field name="model">loan.installment</field>
+	    <field name="model">report.margin.sale</field>
 	    <field name="priority">2</field>
 	    <field name="arch" type="xml">
 	        <form string="Report Sale" class="o_purchase_order">
@@ -68,8 +68,6 @@
                                 <tree string="Purchase Order Lines" editable="bottom">
                                     <control>
                                         <create name="add_product_control" string="Add a product"/>
-                                        <create name="add_section_control" string="Add a section" context="{'default_display_type': 'line_section'}"/>
-                                        <create name="add_note_control" string="Add a note" context="{'default_display_type': 'line_note'}"/>
                                     </control>
                                     <field name="state" invisible="1"/>
                                     <field name="company_id" invisible="1"/>
@@ -110,9 +108,9 @@
 
 
     <record id="loan_installment_action" model="ir.actions.act_window">
-        <field name="name">Pagos de Prestamo</field>
+        <field name="name">Reporte de Ventas</field>
         <field name="type">ir.actions.act_window</field>
-        <field name="res_model">loan.installment</field>
+        <field name="res_model">report.margin.sale</field>
         <field name="view_mode">tree,form,kanban</field>
         <field name="help" type="html">
             <p class="oe_view_nocontent_create"> </p>
