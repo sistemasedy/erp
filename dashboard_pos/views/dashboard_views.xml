@@ -68,7 +68,7 @@
                                             'readonly': [('state', 'in', ('purchase', 'done', 'cancel'))]}"
                                         force_save="1" optional="show"/>
                                     
-                                    <field name="price_unit" attrs="{'readonly': [('qty_invoiced', '!=', 0)]}"/>
+                                    <field name="price_unit"/>
                                     
                                     <field name="price_subtotal" widget="monetary"/>
                                     <field name="price_total" invisible="1"/>
