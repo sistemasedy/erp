@@ -126,10 +126,12 @@
               </p>
             </field>
         </record>
-        <menuitem action="report_sale_form_action" id="menu_report_sale_form_action" parent="point_of_sale.menu_point_rep" sequence="6"/>
 
-
-
+        <menuitem name="Reporte de ventas" id="menu_report_sale_form_action" parent="point_of_sale.menu_point_rep"
+                  sequence="1"
+                  groups="point_of_sale.group_pos_manager"
+                  action="report_sale_form_action"/>
+        
 
         <menuitem name="Dashboard" id="pos_dashboard" parent="point_of_sale.menu_point_rep"
                   sequence="1"
