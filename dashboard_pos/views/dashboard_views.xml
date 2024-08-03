@@ -35,8 +35,7 @@
                         </group>
                         <group>
                             <field name="applied_date" attrs="{'invisible': [('state','in',('purchase','done'))]}"/>
-                            
-                            </div>
+                           
                         </group>
                     </group>
                     <notebook>
