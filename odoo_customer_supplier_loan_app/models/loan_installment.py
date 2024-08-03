@@ -27,22 +27,12 @@ class LoanInstallment(models.Model):
 
 
 
-
-   
-    
-
     def approve_payment(self):
         self.write({'state':'approve'})
 
 
-
-  
-
-   
-
-
     def action_payment(self):
-        #if self.invoice_image:
+        self.write({'state':'approve'})
 
 
 
