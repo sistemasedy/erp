@@ -90,16 +90,12 @@ class ReportSale(models.Model):
         return      
 
 
-
 class ReportSaleLine(models.Model):
     """Loan repayments """
     _name = "report.sale.line"
     _description = "Report Sale Line"
 
-    
-    
     order_id = fields.Many2one('report.sale.margin', string='Order Reference', index=True, required=True, ondelete='cascade')
-
     product_qty = fields.Float(string='Quantity', digits='Product Unit of Measure', required=True)
     product_uom_qty = fields.Float(string='Total Quantity', compute='_compute_product_uom_qty', store=True)
     product_uom = fields.Many2one('uom.uom', string='Unit of Measure', domain="[('category_id', '=', product_uom_category_id)]")
@@ -114,13 +110,10 @@ class ReportSaleLine(models.Model):
     company_id = fields.Many2one('res.company', related='order_id.company_id', string='Company', store=True, readonly=True)
     state = fields.Selection(related='order_id.state', store=True)
 
-    
-
     partner_id = fields.Many2one('res.partner', related='order_id.partner_id', string='Partner', readonly=True, store=True)
     date_order = fields.Datetime(related='order_id.date_order', string='Order Date', readonly=True)
-    
 
-   @api.depends('product_qty', 'price_unit')
+    @api.depends('product_qty', 'price_unit')
     def _compute_amount(self):
         pass
 
