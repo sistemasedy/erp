@@ -122,8 +122,7 @@ class ReportSaleLine(models.Model):
 
    @api.depends('product_qty', 'price_unit')
     def _compute_amount(self):
-        for line in self:
-            taxes = 0
+        pass
 
 class PosDashboard(models.Model):
     _inherit = 'pos.order'
