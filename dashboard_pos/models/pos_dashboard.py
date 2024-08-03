@@ -114,7 +114,6 @@ class ReportSaleLine(models.Model):
     state = fields.Selection(related='order_id.state', store=True)
 
     partner_id = fields.Many2one('res.partner', related='order_id.partner_id', string='Partner', readonly=True, store=True)
-    date_order = fields.Datetime(related='order_id.date_order', string='Order Date', readonly=True)
 
     @api.depends('product_qty', 'price_unit')
     def _compute_amount(self):
