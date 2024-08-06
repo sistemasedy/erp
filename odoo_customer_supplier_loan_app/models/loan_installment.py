@@ -6,6 +6,12 @@ from odoo import api, models, fields, _
 from datetime import datetime
 
 class LoanInstallment(models.Model):
+    _name = 'loan.installment'
+    _description = "Loan Installment"
+
+    name = fields.Char(string="Numero",readonly="True",compute="_compute_name")
+
+class LoanInstallment(models.Model):
     _name = 'report.margin.sale'
     _description = "Loan Installment"
 
