@@ -44,7 +44,7 @@ Loan client
             'views/loan_type_view.xml',
             'views/loan_policies_view.xml',
             'views/loan_request_view.xml',
-            #'views/loan_installment_view.xml',
+            'views/loan_installment_view.xml',
             'views/partner_views.xml',
             'views/account_payment_view.xml',
     ],
