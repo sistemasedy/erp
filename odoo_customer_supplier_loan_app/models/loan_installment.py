@@ -5,14 +5,10 @@ from dateutil.relativedelta import relativedelta
 from odoo import api, models, fields, _
 from datetime import datetime
 
+
+
 class LoanInstallment(models.Model):
     _name = 'loan.installment'
-    _description = "Loan Installment"
-
-    name = fields.Char(string="Numero",readonly="True",compute="_compute_name")
-
-class LoanInstallment(models.Model):
-    _name = 'report.margin.sale'
     _description = "Loan Installment"
 
     name = fields.Char(string="Numero",readonly="True",compute="_compute_name")
@@ -37,7 +33,7 @@ class LoanInstallment(models.Model):
 
     @api.model
     def create(self, vals):
-        seq = self.env['ir.sequence'].next_by_code('report.margin.sale') or '/'
+        seq = self.env['ir.sequence'].next_by_code('loan.installment') or '/'
         vals['name'] = seq
         return super(LoanInstallment, self).create(vals)
 
