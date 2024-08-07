@@ -20,7 +20,6 @@
             
             <field name="payment_reference"/>
             <field name="invoice_origin"/>
-            <field name="invoice_payment_state"/>
             <field name="amount_total_signed"/>
             <field name="amount_residual_signed"/>
             <field name="currency_id" invisible="1"/>
