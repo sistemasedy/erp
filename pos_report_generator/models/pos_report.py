@@ -20,6 +20,7 @@
 #############################################################################
 
 from odoo import models, fields, api
+from datetime import timedelta
 
 import io
 import json
@@ -33,9 +34,10 @@ except ImportError:
 class PosReportGenerator(models.Model):
     _name = "pos.report"
 
-    pos_report = fields.Char(string="PoS Report")
-    date_from = fields.Datetime(string="Date From")
+    
     date_to = fields.Datetime(string="Date to")
+    date_from = fields.Date(string='Fecha de Inicio', default=lambda self: fields.Date.today() - timedelta(days=30))
+    date_to = fields.Date(string='Fecha de Fin', default=fields.Date.today)
     report_type = fields.Selection([('report_by_order', 'Report By Order'),
                                     ('report_by_order_detail', 'Report By Order Detail'),
                                     ('report_by_product', 'Report By Product'),
