@@ -174,28 +174,28 @@
                         <filter domain="[('invoice_user_id', '=', uid)]" name="myinvoices" help="My Invoices"/>
                         <separator/>
                         <filter string="B15" name="guv" domain="[('l10n_do_fiscal_number', 'ilike', 'B15')]"/>
-                        <filter string="B01" name="guv" domain="[('l10n_do_fiscal_number', 'ilike', 'B01')]"/>
-                        <filter name="draft" string="Draft" domain="[('state','=','draft')]"/>
+                        <filter string="B01" name="b01" domain="[('l10n_do_fiscal_number', 'ilike', 'B01')]"/>
+                        <filter name="draft" string="Borrador" domain="[('state','=','draft')]"/>
 
-                        <filter name="posted" string="Posted" domain="[('state', '=', 'posted')]"/>
-                        <filter name="cancel" string="Cancelled" domain="[('state', '=', 'cancel')]"/>
+                        <filter name="posted" string="Publicado" domain="[('state', '=', 'posted')]"/>
+                        <filter name="cancel" string="Cancelado" domain="[('state', '=', 'cancel')]"/>
                         <separator/>
-                        <filter string="To Check" name="to_check" domain="[('to_check', '=', True)]"/>
+                        <filter string="Para revisar" name="to_check" domain="[('to_check', '=', True)]"/>
                         <separator/>
                         <!-- not_paid & partial -->
-                        <filter name="open" string="Unpaid" domain="[('state', '=', 'posted'), ('payment_state', 'in', ('not_paid', 'partial'))]"/>
+                        <filter name="open" string="No pagado" domain="[('state', '=', 'posted'), ('payment_state', 'in', ('not_paid', 'partial'))]"/>
                         <!-- in_payment & paid -->
-                        <filter name="closed" string="Paid" domain="[('state', '=', 'posted'), ('payment_state', 'in', ('in_payment', 'paid'))]"/>
+                        <filter name="closed" string="Pagado" domain="[('state', '=', 'posted'), ('payment_state', 'in', ('in_payment', 'paid'))]"/>
                         <!-- overdue -->
-                        <filter name="late" string="Overdue" domain="[
+                        <filter name="late" string="Atrasadas" domain="[
                             ('invoice_date_due', '&lt;', time.strftime('%%Y-%%m-%%d')),
                             ('state', '=', 'posted'),
                             ('payment_state', 'in', ('not_paid', 'partial'))
                         ]" help="Overdue invoices, maturity date passed"/>
                         <separator/>
-                        <filter name="invoice_date" string="Invoice Date" date="invoice_date"/>
+                        <filter name="invoice_date" string="Fecha de factura" date="invoice_date"/>
                         <filter name="date" invisible="context.get('default_move_type') in ('out_invoice', 'out_refund', 'out_receipt')" string="Accounting Date" date="date"/>
-                        <filter name="due_date" string="Due Date" date="invoice_date_due"/>
+                        <filter name="due_date" string="Fecha de vencimiento" date="invoice_date_due"/>
                         <separator/>
                         <filter invisible="1" string="Late Activities" name="activities_overdue"
                             domain="[('my_activity_date_deadline', '&lt;', context_today().strftime('%Y-%m-%d'))]"
