@@ -22,7 +22,7 @@ class LoanInstallment(models.Model):
     start_date = fields.Date(string='Fecha de Inicio', default=lambda self: fields.Date.today() - timedelta(days=30))
     end_date = fields.Date(string='Fecha de Fin', default=fields.Date.today)
     currency_id = fields.Many2one('res.currency', 'Currency', required=True, default=lambda self: self.env.company.currency_id.id)
-    #order_line = fields.One2many('report.sale.line', 'order_id', string='Order Lines', states={'cancel': [('readonly', True)], 'done': [('readonly', True)]}, copy=True)
+    order_line = fields.One2many('report.sale.line', 'order_id', string='Order Lines', states={'cancel': [('readonly', True)], 'done': [('readonly', True)]}, copy=True)
     
     state = fields.Selection([('unpaid','Pendiente'),('approve','Aprovado'),('paid','Pagado')],default='unpaid',string="Estado")
     
@@ -422,5 +422,40 @@ class LoanInstallment(models.Model):
    
     def book_interest(self):
         pass
+
+
+
+
+
+
+class ReportSaleLine(models.Model):
+    """Loan repayments """
+    _name = "report.sale.line"
+    _description = "Report Sale Line"
+
+    order_id = fields.Many2one('loan.installment', string='Order Reference', index=True, required=True, ondelete='cascade')
+    product_qty = fields.Float(string='Quantity', digits='Product Unit of Measure', required=True)
+    product_uom_qty = fields.Float(string='Total Quantity', compute='_compute_product_uom_qty', store=True)
+    product_uom = fields.Many2one('uom.uom', string='Unit of Measure', domain="[('category_id', '=', product_uom_category_id)]")
+    product_uom_category_id = fields.Many2one(related='product_id.uom_id.category_id')
+    product_id = fields.Many2one('product.product', string='Product', domain=[('purchase_ok', '=', True)], change_default=True)
+    product_type = fields.Selection(related='product_id.detailed_type', readonly=True)
+    price_unit = fields.Float(string='Unit Price', required=True, digits='Product Price')
+
+    currency_id = fields.Many2one('res.currency', related='order_id.currency_id', store=True, readonly=True, string='Currency')
+    price_subtotal = fields.Monetary(compute='_compute_amount', string='Subtotal', store=True, currency_field='currency_id')
+    price_total = fields.Monetary(compute='_compute_amount', string='Total', store=True, currency_field='currency_id')
+
+    company_id = fields.Many2one('res.company', related='order_id.company_id', string='Company', store=True, readonly=True)
+    state = fields.Selection(related='order_id.state', store=True)
+
+    partner_id = fields.Many2one('res.partner', related='order_id.partner_id', string='Partner', readonly=True, store=True)
+
+    @api.depends('product_qty', 'price_unit')
+    def _compute_amount(self):
+        for line in self:
+            line.price_subtotal = line.product_qty * line.price_unit
+            line.price_total = line.price_subtotal
+
 
 
