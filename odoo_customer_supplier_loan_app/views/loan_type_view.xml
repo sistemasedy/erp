@@ -67,7 +67,7 @@
         </field>
 	</record>
 
-	
+	<menuitem action="loan_type_action" id="menu_loan_type" parent="odoo_customer_supplier_loan_app.menu_configuration" name="Tipo de Prestamo" sequence="1"/>
 
     </data>
 </odoo>

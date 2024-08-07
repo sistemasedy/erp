@@ -39,9 +39,10 @@
 		<field name="res_model">loan.proof</field>
 		<field name="view_mode">tree,form</field>
 	</record>
-
 	
 	<menuitem id="menu_main_loans" name="Abono de Cliente" groups="group_loan_manager,group_loan_user"/>
+	<menuitem id="menu_loan_proofs" name="Loan Proof" parent="menu_configuration" action="action_loan_proof" sequence="0" />
+	<menuitem id="menu_configuration" name="Configuration" parent="menu_main_loans" sequence="2" groups="group_loan_manager"/>
 	
     </data>
 </odoo>

@@ -66,7 +66,7 @@
 	    </field>
 	</record>
 	
-	
+	<menuitem action="loan_policies_action" id="menu_loan_policies" parent="menu_configuration" name="Poliza de Prestamo" sequence="3"/>
 	
     </data>
 </odoo>

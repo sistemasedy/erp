@@ -20,13 +20,8 @@
 #
 ###################################################################################
 import pytz
-from odoo import api, fields, models, _
+from odoo import models, fields, api
 from datetime import timedelta, datetime, date
-import calendar
-from dateutil.relativedelta import *
-from odoo.exceptions import UserError, ValidationError
-
-
 
 
 class PosDashboard(models.Model):
