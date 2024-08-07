@@ -106,6 +106,7 @@
                     <!-- Campos invisibles -->
                     <field name="date" invisible="1"/>
                     <field name="ref" invisible="1"/>
+                    <field name="currency_id" invisible="1">
                     <field name="payment_reference" invisible="1"/>
                     <field name="invoice_origin" invisible="1"/>
                     </tree>
