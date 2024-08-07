@@ -158,30 +158,62 @@
             <field name="inherit_id" ref="account.view_account_invoice_filter"/>
             <field name="arch" type="xml">
                 <xpath expr="//search" position="replace">
-                    <search string="Search Invoice">
-                        <field name="name" string="Invoice" filter_domain="['|', '|', '|', ('name', 'ilike', self), ('invoice_origin', 'ilike', self), ('ref', 'ilike', self), ('partner_id', 'child_of', self)]"/>
+                    
+
+                   <search string="Search Invoice">
+                        <field name="name" string="Invoice"
+                               filter_domain="[
+                                    '|', '|' , '|', '|',
+                                    ('name', 'ilike', self), ('invoice_origin', 'ilike', self),
+                                    ('ref', 'ilike', self), ('payment_reference', 'ilike', self),
+                                    ('partner_id', 'child_of', self)]"/>
+                        <field name="journal_id"/>
                         <field name="partner_id" operator="child_of"/>
-                        <field name="fiscal_ref"/>
-                        <field name="invoice_date"/>
-                        <filter string="Guvernamental" name="guv" domain="[('l10n_do_fiscal_number', 'ilike', 'B15')]"/>
-                        
-                        <filter string="Facturas de Cliente" name="customer" domain="[('move_type', 'in', ('out_invoice', 'out_refund'))]"/>
-                        <filter string="Facturas de Proveedor" name="supplier" domain="[('move_type', 'in', ('in_invoice', 'in_refund'))]"/>
-                        
+                        <field name="invoice_user_id" string="Salesperson" domain="[('share', '=', False)]"/>
+                        <field name="date" string="Period"/>
+                        <filter domain="[('invoice_user_id', '=', uid)]" name="myinvoices" help="My Invoices"/>
                         <separator/>
-                        <filter string="Pagadas" name="paid" domain="[('payment_state', '=', 'paid')]"/>
-                        <filter string="No Pagadas" name="unpaid" domain="[('payment_state', '!=', 'paid')]"/>
-                        
+                        <filter string="B15" name="guv" domain="[('l10n_do_fiscal_number', 'ilike', 'B15')]"/>
+                        <filter string="B01" name="guv" domain="[('l10n_do_fiscal_number', 'ilike', 'B01')]"/>
+                        <filter name="draft" string="Draft" domain="[('state','=','draft')]"/>
+
+                        <filter name="posted" string="Posted" domain="[('state', '=', 'posted')]"/>
+                        <filter name="cancel" string="Cancelled" domain="[('state', '=', 'cancel')]"/>
                         <separator/>
-                        <filter string="Facturas" name="invoices" domain="[('move_type', 'in', ('out_invoice', 'in_invoice'))]"/>
-                        <filter string="Notas de Crédito" name="refunds" domain="[('move_type', 'in', ('out_refund', 'in_refund'))]"/>
-                        
+                        <filter string="To Check" name="to_check" domain="[('to_check', '=', True)]"/>
+                        <separator/>
+                        <!-- not_paid & partial -->
+                        <filter name="open" string="Unpaid" domain="[('state', '=', 'posted'), ('payment_state', 'in', ('not_paid', 'partial'))]"/>
+                        <!-- in_payment & paid -->
+                        <filter name="closed" string="Paid" domain="[('state', '=', 'posted'), ('payment_state', 'in', ('in_payment', 'paid'))]"/>
+                        <!-- overdue -->
+                        <filter name="late" string="Overdue" domain="[
+                            ('invoice_date_due', '&lt;', time.strftime('%%Y-%%m-%%d')),
+                            ('state', '=', 'posted'),
+                            ('payment_state', 'in', ('not_paid', 'partial'))
+                        ]" help="Overdue invoices, maturity date passed"/>
+                        <separator/>
+                        <filter name="invoice_date" string="Invoice Date" date="invoice_date"/>
+                        <filter name="date" invisible="context.get('default_move_type') in ('out_invoice', 'out_refund', 'out_receipt')" string="Accounting Date" date="date"/>
+                        <filter name="due_date" string="Due Date" date="invoice_date_due"/>
+                        <separator/>
+                        <filter invisible="1" string="Late Activities" name="activities_overdue"
+                            domain="[('my_activity_date_deadline', '&lt;', context_today().strftime('%Y-%m-%d'))]"
+                            help="Show all records which has next action date is before today"/>
+                        <filter invisible="1" string="Today Activities" name="activities_today"
+                            domain="[('my_activity_date_deadline', '=', context_today().strftime('%Y-%m-%d'))]"/>
+                        <filter invisible="1" string="Future Activities" name="activities_upcoming_all"
+                            domain="[('my_activity_date_deadline', '&gt;', context_today().strftime('%Y-%m-%d'))]"/>
                         <group expand="0" string="Group By">
-                            <filter string="Cliente/Proveedor" name="partner" context="{'group_by':'partner_id'}"/>
-                            <filter string="Estado" name="status" context="{'group_by':'state'}"/>
-                            <filter string="Fecha de Factura" name="date" context="{'group_by':'invoice_date'}"/>
+                            <filter string="Salesperson" name="salesperson" context="{'group_by':'invoice_user_id'}"/>
+                            <filter name="status" string="Status" context="{'group_by':'state'}"/>
+                            <separator/>
+                            <filter string="Invoice Date" name="invoicedate" context="{'group_by': 'invoice_date'}"/>
+                            <filter string="Due Date" name="duedate" context="{'group_by': 'invoice_date_due'}"/>
                         </group>
                    </search>
+
+
                 </xpath>
             </field>
         </record>
