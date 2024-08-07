@@ -46,7 +46,6 @@ class SaleReportGenerator(models.Model):
     @api.model
     def sale_report(self, option):
         orders = self.env['sale.order'].search([])
-        pos = self.env['pos.order'].search([])
         report_values = self.env['sales.report'].search(
             [('id', '=', option[0])])
         data = {
@@ -72,7 +71,6 @@ class SaleReportGenerator(models.Model):
             'type': 'ir.actions.client',
             'tag': 's_r',
             'orders': data,
-            'pos': pos,
             'filters': filters,
             'report_lines': lines,
             'report_main_line': main_line,

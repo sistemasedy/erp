@@ -5,6 +5,34 @@
     <field name="tag">s_r</field>
 </record>
 
+
+<record id="view_invoice_tree" model="ir.ui.view">
+    <field name="name">view.invoice.tree</field>
+    <field name="model">account.move</field>
+    <field name="arch" type="xml">
+        <tree string="Invoices">
+        	<field name="fiscal_ref"/>
+            <field name="name"/>
+            <field name="partner_id"/>
+            <field name="invoice_date"/>
+            <field name="date"/>
+            <field name="ref"/>
+            
+            <field name="payment_reference"/>
+            <field name="invoice_origin"/>
+            <field name="invoice_payment_state"/>
+            <field name="amount_total_signed"/>
+            <field name="amount_residual_signed"/>
+            <field name="currency_id" invisible="1"/>
+            <field name="company_id" groups="base.group_multi_company"/>
+            <field name="state"/>
+        </tree>
+    </field>
+</record>
+
+
+
+
     <menuitem action="sale_all_report_action" parent="sale.menu_sale_report"
               id="sale_report_sub_menu"
               name="Sales Dynamic Report"/>
