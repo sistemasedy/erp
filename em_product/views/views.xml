@@ -85,9 +85,7 @@
             <field name="model">account.move</field>
             <field name="inherit_id" ref="account.view_invoice_tree"/>
             <field name="arch" type="xml">
-                <tree decoration-info="move_type in ('out_invoice', 'out_refund')" 
-                      decoration-danger="move_type in ('in_invoice', 'in_refund')" 
-                      string="Invoices">
+                <tree string="Invoices">
                     
                     <field name="partner_id" string="Cliente/Proveedor"/>
                     <field name="move_type" invisible="1"/>
