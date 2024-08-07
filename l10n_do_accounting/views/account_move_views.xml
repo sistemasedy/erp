@@ -166,7 +166,7 @@
     <record id="view_invoice_tree" model="ir.ui.view">
         <field name="name">view.invoice.tree</field>
         <field name="model">account.move</field>
-        <field name="inherit_id" ref="account.view_invoice_tree"/>
+        <field name="inherit_id" ref="em_product.view_invoice_tree_custom"/>
         <field name="arch" type="xml">
             <field name="ref" position="after">
                 <!-- Campos para cliente -->
