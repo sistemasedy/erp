@@ -10,19 +10,36 @@ class LoanInstallment(models.Model):
     _description = "Loan Installment"
 
     name = fields.Char(string="Numero",readonly="True",compute="_compute_name")
+
+    partner_id = fields.Many2one('res.partner',string="Empresa",default=lambda self : self.env.user.company_id.id,required=True)
+    applied_date = fields.Date(string="Fecha",default=fields.Date.today())
+    company_id = fields.Many2one('res.company' ,default=lambda self : self.env.user.company_id.id,string="Company",required=True)
+    user_id = fields.Many2one('res.users',default=lambda self : self.env.user.id,string="User",readonly=True)
+    principal_amount = fields.Float(string="Entrada",required=True,digits=(32, 2))
+    salida = fields.Float(string="Salida",required=True,digits=(32, 2))
+    balance_on_loans = fields.Float(string="Balance On Loan", store=True)
+    notes = fields.Text(string="Notes")
+    start_date = fields.Date(string='Fecha de Inicio', default=lambda self: fields.Date.today() - timedelta(days=30))
+    end_date = fields.Date(string='Fecha de Fin', default=fields.Date.today)
+    currency_id = fields.Many2one('res.currency', 'Currency', required=True, default=lambda self: self.env.company.currency_id.id)
+    #order_line = fields.One2many('report.sale.line', 'order_id', string='Order Lines', states={'cancel': [('readonly', True)], 'done': [('readonly', True)]}, copy=True)
+    
+    state = fields.Selection([('unpaid','Pendiente'),('approve','Aprovado'),('paid','Pagado')],default='unpaid',string="Estado")
+    
+
     installment_number = fields.Integer(string="Renglon")
     date_from = fields.Date(string="Date From")
     date_to  = fields.Date(string="Date To")
     opening_balance_amount = fields.Float(string="Balance",digits=(16, 2))
     ending_balance_amount = fields.Float(string="Balance",digits=(16, 2))
-    principal_amount = fields.Float(string="Capital",digits=(16, 2))
+    
     interest_amount = fields.Float(string="Interes",digits=(32, 2))
     emi_installment = fields.Float(string="A Pagar",digits=(32, 2))
-    state = fields.Selection([('unpaid','Pendiente'),('approve','Aprovado'),('paid','Pagado')],default='unpaid',string="Estado")
-    partner_id  = fields.Many2one('res.partner',string="Cliente",required=True)
+    
+    
     loan_id = fields.Many2one('loan.request',string="Ref")
     loan_type_id = fields.Many2one('loan.type',string="Tipo")
-    currency_id = fields.Many2one('res.currency',string="Currency")
+    
     interest_acouunting_id = fields.Many2one('account.move',string="Interest Accounting Entry",readonly=True)
     accounting_entry_id = fields.Many2one('account.move',string="Accounting Entry",readonly=True)
     pay_from_payroll = fields.Boolean(string="Payroll")
