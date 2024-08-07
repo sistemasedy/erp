@@ -78,27 +78,44 @@
             </field>
         </record>
 
+        
+
         <record id="view_invoice_tree" model="ir.ui.view">
             <field name="name">view.invoice.tree</field>
             <field name="model">account.move</field>
             <field name="inherit_id" ref="account.view_invoice_tree"/>
             <field name="arch" type="xml">
-                <field name="ref" position="after">
-                    <field name="fiscal_ref"/>
-                    <field name="partner_email"/>
-                    <field name="partner_phone"/>
+                <tree decoration-info="move_type in ('out_invoice', 'out_refund')" 
+                      decoration-danger="move_type in ('in_invoice', 'in_refund')" 
+                      string="Invoices">
+                    
+                    <field name="partner_id" string="Cliente/Proveedor"/>
+                    <field name="move_type" invisible="1"/>
+                    <field name="partner_vat"/>
                     <field name="invoice_date"/>
+                    <field name="amount_total_signed"/>
+                    <field name="amount_residual_signed"/>
+                    
+                    <!-- Campos para proveedor -->
+                    <field name="fiscal_ref" attrs="{'invisible': [('move_type', 'not in', ('in_invoice', 'in_refund'))]}"/>
+                    
+                    <!-- Campos para cliente -->
+                    <field name="name" attrs="{'invisible': [('move_type', 'not in', ('out_invoice', 'out_refund'))]}"/>
+                    <field name="l10n_do_fiscal_number" attrs="{'invisible': [('move_type', 'not in', ('out_invoice', 'out_refund'))]}"/>
+                    <field name="state" attrs="{'invisible': [('move_type', 'not in', ('out_invoice', 'out_refund'))]}"/>
+                    <field name="company_id" groups="base.group_multi_company" attrs="{'invisible': [('move_type', 'not in', ('out_invoice', 'out_refund'))]}"/>
+                    
+                    
+                    <!-- Campos invisibles -->
                     <field name="date" invisible="1"/>
                     <field name="ref" invisible="1"/>
-                    
-                    
                     <field name="payment_reference" invisible="1"/>
                     <field name="invoice_origin" invisible="1"/>
-                </field>
+                </tree>
             </field>
         </record>
 
-        
+
 
     
 

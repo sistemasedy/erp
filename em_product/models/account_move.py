@@ -11,6 +11,7 @@ class AccountMove(models.Model):
 
     #Journal
     fiscal_ref = fields.Char(string='Comprobante')
+    partner_vat = fields.Char(related='partner_id.vat', string='Teléfono del cliente')
     partner_phone = fields.Char(related='partner_id.phone', string='Teléfono del cliente')
     partner_email = fields.Char(related='partner_id.email', string='Email del cliente')
     validates_journal = fields.Boolean(help="Activa para comfirmar")
