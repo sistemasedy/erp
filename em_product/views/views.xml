@@ -99,7 +99,6 @@
                     
                     <!-- Campos para cliente -->
                     <field name="name" attrs="{'invisible': [('move_type', 'not in', ('out_invoice', 'out_refund'))]}"/>
-                    <field name="l10n_do_fiscal_number" attrs="{'invisible': [('move_type', 'not in', ('out_invoice', 'out_refund'))]}"/>
                     <field name="state" attrs="{'invisible': [('move_type', 'not in', ('out_invoice', 'out_refund'))]}"/>
                     <field name="company_id" groups="base.group_multi_company" attrs="{'invisible': [('move_type', 'not in', ('out_invoice', 'out_refund'))]}"/>
                     

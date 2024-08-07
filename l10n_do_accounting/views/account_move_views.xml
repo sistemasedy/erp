@@ -169,7 +169,8 @@
         <field name="inherit_id" ref="account.view_invoice_tree"/>
         <field name="arch" type="xml">
             <field name="ref" position="after">
-                <field name="l10n_do_fiscal_number"/>
+                <!-- Campos para cliente -->
+                <field name="l10n_do_fiscal_number" attrs="{'invisible': [('move_type', 'not in', ('out_invoice', 'out_refund'))]}"/>
             </field>
         </field>
     </record>
