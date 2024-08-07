@@ -127,7 +127,7 @@
                         <field name="invoice_user_id" optional="hide" invisible="context.get('default_move_type') not in ('out_invoice', 'out_refund','out_receipt')" string="Salesperson" widget="many2one_avatar_user"/>
                         <field name="activity_ids" widget="list_activity" optional="show"/>
                         <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}" optional="hide"/>
-                        <field name="amount_untaxed_signed" string="Proveedor"  sum="Total" optional="show"/>
+                        <field name="amount_untaxed_signed" string="Sut Total"  sum="Total" optional="show"/>
                         <field name="amount_tax_signed" string="Itbis" optional="show" sum="Total"/>
                         <field name="amount_total_signed" string="Total" sum="Total" decoration-bf="1" optional="show"/>
                         <field name="amount_total_in_currency_signed" string="Total in Currency" groups="base.group_multi_currency"  optional="show"/>
@@ -147,6 +147,41 @@
                   </tree>
 
 
+                </xpath>
+            </field>
+        </record>
+
+
+        <record id="view_invoice_filter_custom" model="ir.ui.view">
+            <field name="name">account.move.select.custom</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_account_invoice_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//search" position="replace">
+                    <search string="Search Invoice">
+                        <field name="name" string="Invoice" filter_domain="['|', '|', '|', ('name', 'ilike', self), ('invoice_origin', 'ilike', self), ('ref', 'ilike', self), ('partner_id', 'child_of', self)]"/>
+                        <field name="partner_id" operator="child_of"/>
+                        <field name="fiscal_ref"/>
+                        <field name="invoice_date"/>
+                        <filter string="Guvernamental" name="guv" domain="[('l10n_do_fiscal_number', 'ilike', 'B15')]"/>
+                        
+                        <filter string="Facturas de Cliente" name="customer" domain="[('move_type', 'in', ('out_invoice', 'out_refund'))]"/>
+                        <filter string="Facturas de Proveedor" name="supplier" domain="[('move_type', 'in', ('in_invoice', 'in_refund'))]"/>
+                        
+                        <separator/>
+                        <filter string="Pagadas" name="paid" domain="[('payment_state', '=', 'paid')]"/>
+                        <filter string="No Pagadas" name="unpaid" domain="[('payment_state', '!=', 'paid')]"/>
+                        
+                        <separator/>
+                        <filter string="Facturas" name="invoices" domain="[('move_type', 'in', ('out_invoice', 'in_invoice'))]"/>
+                        <filter string="Notas de Crédito" name="refunds" domain="[('move_type', 'in', ('out_refund', 'in_refund'))]"/>
+                        
+                        <group expand="0" string="Group By">
+                            <filter string="Cliente/Proveedor" name="partner" context="{'group_by':'partner_id'}"/>
+                            <filter string="Estado" name="status" context="{'group_by':'state'}"/>
+                            <filter string="Fecha de Factura" name="date" context="{'group_by':'invoice_date'}"/>
+                        </group>
+                   </search>
                 </xpath>
             </field>
         </record>
