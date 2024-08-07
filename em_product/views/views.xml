@@ -80,13 +80,17 @@
 
 
 
+
         <record id="view_invoice_tree_custom" model="ir.ui.view">
             <field name="name">account.move.tree.custom</field>
             <field name="model">account.move</field>
             <field name="inherit_id" ref="account.view_invoice_tree"/>
             <field name="arch" type="xml">
                 <xpath expr="//tree" position="replace">
-                    <tree >
+                    <tree decoration-info="move_type in ('out_invoice', 'out_refund')" 
+                          decoration-danger="move_type in ('in_invoice', 'in_refund')" 
+                          string="Invoices">
+
                         <field name="partner_id" string="Cliente/Proveedor"/>
                         <field name="move_type" invisible="1"/>
                         <field name="partner_vat"/>
@@ -109,6 +113,8 @@
                         <field name="currency_id" invisible="1">
                         <field name="payment_reference" invisible="1"/>
                         <field name="invoice_origin" invisible="1"/>
+
+
                     </tree>
                 </xpath>
             </field>
