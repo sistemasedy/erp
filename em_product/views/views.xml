@@ -78,15 +78,30 @@
             </field>
         </record>
 
+        
+
         <record id="view_invoice_tree" model="ir.ui.view">
             <field name="name">view.invoice.tree</field>
             <field name="model">account.move</field>
-            <field name="inherit_id" ref="account.view_invoice_tree"/>
             <field name="arch" type="xml">
-                <field name="ref" position="after">
+                <tree string="Invoices">
                     <field name="fiscal_ref"/>
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="invoice_date"/>
+                    <field name="date"/>
+                    <field name="ref"/>
+                    <field name="partner_email"/>
+                    <field name="partner_phone"/>
+                    
                     <field name="payment_reference"/>
-                </field>
+                    <field name="invoice_origin"/>
+                    <field name="amount_total_signed"/>
+                    <field name="amount_residual_signed"/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                    <field name="state"/>
+                </tree>
             </field>
         </record>
 
