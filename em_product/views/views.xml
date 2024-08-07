@@ -105,7 +105,7 @@
 
                         <!-- Campos para proveedor -->
                         <field name="invoice_partner_display_name" invisible="context.get('default_move_type') not in ('in_invoice', 'in_refund','in_receipt')" groups="base.group_user" string="Proveedor" />
-                        <field name="fiscal_ref" attrs="{'invisible': [('move_type', 'not in', ('in_invoice', 'in_refund'))]}"/>
+                        <field name="fiscal_ref" invisible="context.get('default_move_type') not in ('in_invoice', 'in_refund','in_receipt')" groups="base.group_user"/>
                         
                         <!-- Campos para cliente -->
                         
@@ -127,8 +127,8 @@
                         <field name="invoice_user_id" optional="hide" invisible="context.get('default_move_type') not in ('out_invoice', 'out_refund','out_receipt')" string="Salesperson" widget="many2one_avatar_user"/>
                         <field name="activity_ids" widget="list_activity" optional="show"/>
                         <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}" optional="hide"/>
-                        <field name="amount_untaxed_signed" string="Tax Excluded" sum="Total" optional="show"/>
-                        <field name="amount_tax_signed" string="Tax" sum="Total" optional="hide"/>
+                        <field name="amount_untaxed_signed" string="Proveedor"  sum="Total" optional="show"/>
+                        <field name="amount_tax_signed" string="Itbis" optional="show" sum="Total"/>
                         <field name="amount_total_signed" string="Total" sum="Total" decoration-bf="1" optional="show"/>
                         <field name="amount_total_in_currency_signed" string="Total in Currency" groups="base.group_multi_currency"  optional="show"/>
                         <field name="amount_residual_signed" string="Amount Due" sum="Amount Due" optional="hide"/>
