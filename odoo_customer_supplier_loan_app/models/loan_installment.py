@@ -184,7 +184,7 @@ class ReportSaleLine(models.Model):
     @api.depends('product_qty', 'price_unit')
     def _compute_amount(self):
         costo_alterno = 0
-        costo_disponible - 0
+        costo_disponible = 0
         for line in self:
             line.price_subtotal = line.product_qty * line.price_unit
             if line.price_cost > 0:

@@ -122,7 +122,7 @@
 
 
     <record id="loan_installment_action" model="ir.actions.act_window">
-        <field name="name">Pagos de Prestamo</field>
+        <field name="name">Reportes de Ventas</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">loan.installment</field>
         <field name="view_mode">tree,form,kanban</field>
