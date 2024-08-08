@@ -103,7 +103,6 @@ class LoanInstallment(models.Model):
                 'name': product.name,
                 'product_qty': reorder_qty,
                 'product_uom': product.uom_po_id.id,
-                'date_planned': fields.Date.today(),
             })
         
 
