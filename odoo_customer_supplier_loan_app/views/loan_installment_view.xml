@@ -17,7 +17,10 @@
                 <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}" optional="show"/>
                 <field name="user_id" widget="many2one_avatar_user" optional="show"/>
                 
+                
                 <field name="principal_amount" sum="Total amount" widget="monetary" optional="show" decoration-bf="1"/>
+                <field name="salida" sum="Total amount" widget="monetary" optional="show" decoration-bf="1"/>
+                <field name="balance_on_loans" sum="Total amount" widget="monetary" optional="show" decoration-bf="1"/>
                 <field name="state" invisible="1"/>
                 
             </tree>

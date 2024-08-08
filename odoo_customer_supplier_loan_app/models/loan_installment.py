@@ -56,7 +56,7 @@ class LoanInstallment(models.Model):
         venta = 0
         costo = 0
         balance = 0
-        for line in order_line:
+        for line in self.order_line:
             venta = venta + line.price_subtotal
             costo = costo + line.price_total
         self.principal_amount = venta
