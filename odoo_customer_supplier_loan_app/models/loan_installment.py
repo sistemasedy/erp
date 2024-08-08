@@ -15,9 +15,9 @@ class LoanInstallment(models.Model):
     applied_date = fields.Date(string="Fecha",default=fields.Date.today())
     company_id = fields.Many2one('res.company' ,default=lambda self : self.env.user.company_id.id,string="Company",required=True)
     user_id = fields.Many2one('res.users',default=lambda self : self.env.user.id,string="User",readonly=True)
-    principal_amount = fields.Float(string="Entrada", digits=(32, 2))
-    salida = fields.Float(string="Salida", digits=(32, 2))
-    balance_on_loans = fields.Float(string="Balance On Loan", store=True)
+    principal_amount = fields.Float(string="Ventas", digits=(32, 2))
+    salida = fields.Float(string="Costos", digits=(32, 2))
+    balance_on_loans = fields.Float(string="Balance", store=True)
     notes = fields.Text(string="Notes")
     start_date = fields.Date(string='Fecha de Inicio', default=lambda self: fields.Date.today() - timedelta(days=30))
     end_date = fields.Date(string='Fecha de Fin', default=fields.Date.today)
@@ -47,6 +47,22 @@ class LoanInstallment(models.Model):
                                      digits=(16, 2))
 
    
+
+    
+
+    @api.depends('order_line')
+    def _compute_overdue_days(self):
+        #class datetime.timedelta(days=0, seconds=0, microseconds=0, milliseconds=0, minutes=0, hours=0, weeks=0)
+        venta = 0
+        costo = 0
+        balance = 0
+        for line in order_line:
+            venta = venta + line.price_subtotal
+            costo = costo + line.price_total
+        self.principal_amount = venta
+        self.salida = venta
+        self.balance_on_loans = venta - costo
+
 
     def approve_payment(self):
         self.write({'state':'approve'})
@@ -114,6 +130,7 @@ class LoanInstallment(models.Model):
                 'order_id': self.id,
                 'product_id': product.id,
                 'price_unit': product.list_price,
+                'price_cost': product.standard_price,
                 'name': product.name,
                 'product_qty': reorder_qty,
                 'product_uom': product.uom_po_id.id,
@@ -152,6 +169,7 @@ class ReportSaleLine(models.Model):
     product_id = fields.Many2one('product.product', string='Product', domain=[('purchase_ok', '=', True)], change_default=True)
     product_type = fields.Selection(related='product_id.detailed_type', readonly=True)
     price_unit = fields.Float(string='Unit Price', required=True, digits='Product Price')
+    price_cost = fields.Float(string='Costo', digits='Product Price')
 
     currency_id = fields.Many2one('res.currency', related='order_id.currency_id', store=True, readonly=True, string='Currency')
     price_subtotal = fields.Monetary(compute='_compute_amount', string='Subtotal', store=True, currency_field='currency_id')
@@ -166,7 +184,7 @@ class ReportSaleLine(models.Model):
     def _compute_amount(self):
         for line in self:
             line.price_subtotal = line.product_qty * line.price_unit
-            line.price_total = line.price_subtotal
+            line.price_total = line.product_qty * line.price_cost
 
 
 
