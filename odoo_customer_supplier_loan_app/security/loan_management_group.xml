@@ -1,37 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-<data>
+    <data>
+        <!-- Categoría del módulo de Gestión de préstamos -->
+        <record model="ir.module.category" id="module_loan_management">
+            <field name="name">Loan Management</field>
+            <field name="sequence">23</field>
+        </record>
 
-    <record model="ir.module.category" id="module_loan_management">
-        <field name="name">Loan Management</field>
-        <field name="sequence">23</field>
-    </record>
+        <!-- Grupo de usuario de préstamo -->
+        <record id="group_loan_user" model="res.groups">
+            <field name="name">Loan User</field>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="category_id" ref="module_loan_management"/>
+        </record>
 
-    <record id="group_loan_user" model="res.groups">
-        <field name="name">Loan User</field>
-        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
-        <field name="category_id" ref="module_loan_management"/>
-    </record>
-    
-    <record id="group_loan_manager" model="res.groups">
-        <field name="name">Loan Manager</field>
-        <field name="implied_ids" eval="[(4, ref('odoo_customer_supplier_loan_app.group_loan_user')), (4, ref('base.user_admin'))]"/>
-        <field name="category_id" ref="module_loan_management"/>
-    </record>
+        <!-- Grupo de administrador de préstamo -->
+        <record id="group_loan_manager" model="res.groups">
+            <field name="name">Loan Manager</field>
+            <field name="implied_ids" eval="[(4, ref('odoo_customer_supplier_loan_app.group_loan_user')), (4, ref('base.user_admin'))]"/>
+            <field name="category_id" ref="module_loan_management"/>
+        </record>
 
-   <record id="rule_loan_requert_manager" model="ir.rule">
-        <field name="name">Loan Manager Access Rule</field>
-        <field name="model_id" ref="model_loan_request"/>
-        <field name="groups" eval="[(4, ref('odoo_customer_supplier_loan_app.group_loan_manager'))]"/>
-        <field name="domain_force">[(1,'=',1)]</field>
- </record>
+        <!-- Regla de acceso para el administrador de préstamos -->
+        <record id="rule_loan_request_manager" model="ir.rule">
+            <field name="name">Loan Manager Access Rule</field>
+            <field name="model_id" ref="model_loan_request"/>
+            <field name="groups" eval="[(4, ref('odoo_customer_supplier_loan_app.group_loan_manager'))]"/>
+            <field name="domain_force">[(1,'=',1)]</field>
+        </record>
 
-<record id="rule_loan_requert_user" model="ir.rule">
-        <field name="name">Loan User Access Rule</field>
-        <field name="model_id" ref="model_loan_request"/>
-        <field name="groups" eval="[(4, ref('odoo_customer_supplier_loan_app.group_loan_user'))]"/>
-        <field name="domain_force">[('partner_id','=',user.partner_id.id)]</field>
- </record>
+        <!-- Regla de acceso para el usuario de préstamos -->
+        <record id="rule_loan_request_user" model="ir.rule">
+            <field name="name">Loan User Access Rule</field>
+            <field name="model_id" ref="model_loan_request"/>
+            <field name="groups" eval="[(4, ref('odoo_customer_supplier_loan_app.group_loan_user'))]"/>
+            <field name="domain_force">[('partner_id','=',user.partner_id.id)]</field>
+        </record>
 
-</data>
+        <!-- Registro del modelo de solicitud de préstamo -->
+        <record id="model_loan_request" model="ir.model">
+            <field name="name">Loan Request</field>
+            <field name="model">loan.request</field>
+        </record>
+
+        <!-- Registro del modelo de informe de línea de ventas -->
+        <record id="model_report_sale_line" model="ir.model">
+            <field name="name">Report Sale Line</field>
+            <field name="model">report.sale.line</field>
+        </record>
+
+        <!-- Agregar permisos de acceso al modelo de solicitud de préstamo -->
+        <record id="access_loan_request_manager" model="ir.model.access">
+            <field name="name">Loan Request Manager Access</field>
+            <field name="model_id" ref="model_loan_request"/>
+            <field name="group_id" ref="odoo_customer_supplier_loan_app.group_loan_manager"/>
+            <field name="perm_read">1</field>
+            <field name="perm_write">1</field>
+            <field name="perm_create">1</field>
+            <field name="perm_unlink">1</field>
+        </record>
+
+        <record id="access_loan_request_user" model="ir.model.access">
+            <field name="name">Loan Request User Access</field>
+            <field name="model_id" ref="model_loan_request"/>
+            <field name="group_id" ref="odoo_customer_supplier_loan_app.group_loan_user"/>
+            <field name="perm_read">1</field>
+            <field name="perm_write">1</field>
+            <field name="perm_create">1</field>
+            <field name="perm_unlink">0</field>
+        </record>
+
+        <!-- Agregar permisos de acceso al modelo de informe de línea de ventas -->
+        <record id="access_report_sale_line_manager" model="ir.model.access">
+            <field name="name">Report Sale Line Manager Access</field>
+            <field name="model_id" ref="model_report_sale_line"/>
+            <field name="group_id" ref="odoo_customer_supplier_loan_app.group_loan_manager"/>
+            <field name="perm_read">1</field>
+            <field name="perm_write">1</field>
+            <field name="perm_create">1</field>
+            <field name="perm_unlink">1</field>
+        </record>
+
+        <record id="access_report_sale_line_user" model="ir.model.access">
+            <field name="name">Report Sale Line User Access</field>
+            <field name="model_id" ref="model_report_sale_line"/>
+            <field name="group_id" ref="odoo_customer_supplier_loan_app.group_loan_user"/>
+            <field name="perm_read">1</field>
+            <field name="perm_write">0</field>
+            <field name="perm_create">0</field>
+            <field name="perm_unlink">0</field>
+        </record>
+    </data>
 </odoo>
