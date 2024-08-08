@@ -101,6 +101,7 @@
                                     
                                     <field name="price_subtotal" widget="monetary"/>
                                     <field name="price_total" widget="monetary"/>
+                                    <field name="price_balan" widget="monetary"/>
                                 </tree>
                                 
                             </field>

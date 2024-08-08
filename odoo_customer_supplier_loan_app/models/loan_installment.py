@@ -15,9 +15,9 @@ class LoanInstallment(models.Model):
     applied_date = fields.Date(string="Fecha",default=fields.Date.today())
     company_id = fields.Many2one('res.company' ,default=lambda self : self.env.user.company_id.id,string="Company",required=True)
     user_id = fields.Many2one('res.users',default=lambda self : self.env.user.id,string="User",readonly=True)
-    principal_amount = fields.Float(string="Ventas", digits=(32, 2))
-    salida = fields.Float(string="Costos", digits=(32, 2))
-    balance_on_loans = fields.Float(string="Balance", store=True)
+    principal_amount = fields.Float(string="Ventas",compute='_compute_overdue_days', digits=(32, 2), store=True)
+    salida = fields.Float(string="Costos",compute='_compute_overdue_days', digits=(32, 2), store=True)
+    balance_on_loans = fields.Float(string="Balance",compute='_compute_overdue_days', store=True)
     notes = fields.Text(string="Notes")
     start_date = fields.Date(string='Fecha de Inicio', default=lambda self: fields.Date.today() - timedelta(days=30))
     end_date = fields.Date(string='Fecha de Fin', default=fields.Date.today)
@@ -170,6 +170,7 @@ class ReportSaleLine(models.Model):
     product_type = fields.Selection(related='product_id.detailed_type', readonly=True)
     price_unit = fields.Float(string='Unit Price', required=True, digits='Product Price')
     price_cost = fields.Float(string='Costo', digits='Product Price')
+    price_balan = fields.Float(string='Ganancia', digits='Product Price')
 
     currency_id = fields.Many2one('res.currency', related='order_id.currency_id', store=True, readonly=True, string='Currency')
     price_subtotal = fields.Monetary(compute='_compute_amount', string='Subtotal', store=True, currency_field='currency_id')
@@ -185,6 +186,7 @@ class ReportSaleLine(models.Model):
         for line in self:
             line.price_subtotal = line.product_qty * line.price_unit
             line.price_total = line.product_qty * line.price_cost
+            line.price_balan = line.price_subtotal - line.price_total
 
 
 
