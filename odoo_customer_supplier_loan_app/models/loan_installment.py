@@ -17,7 +17,7 @@ class LoanInstallment(models.Model):
     user_id = fields.Many2one('res.users',default=lambda self : self.env.user.id,string="User",readonly=True)
     principal_amount = fields.Float(string="Ventas",compute='_compute_overdue_days', digits=(32, 2), store=True)
     salida = fields.Float(string="Costos",compute='_compute_overdue_days', digits=(32, 2), store=True)
-    balance_on_loans = fields.Float(string="Balance",compute='_compute_overdue_days', store=True)
+    balance_on_loans = fields.Float(string="Ganancia",compute='_compute_overdue_days', store=True)
     notes = fields.Text(string="Notes")
     start_date = fields.Date(string='Fecha de Inicio', default=lambda self: fields.Date.today() - timedelta(days=30))
     end_date = fields.Date(string='Fecha de Fin', default=fields.Date.today)
@@ -60,7 +60,7 @@ class LoanInstallment(models.Model):
             venta = venta + line.price_subtotal
             costo = costo + line.price_total
         self.principal_amount = venta
-        self.salida = venta
+        self.salida = costo
         self.balance_on_loans = venta - costo
 
 
@@ -166,15 +166,15 @@ class ReportSaleLine(models.Model):
     product_uom_qty = fields.Float(string='Total Quantity', compute='_compute_product_uom_qty', store=True)
     product_uom = fields.Many2one('uom.uom', string='Unit of Measure', domain="[('category_id', '=', product_uom_category_id)]")
     product_uom_category_id = fields.Many2one(related='product_id.uom_id.category_id')
-    product_id = fields.Many2one('product.product', string='Product', domain=[('purchase_ok', '=', True)], change_default=True)
+    product_id = fields.Many2one('product.product', string='Producto', domain=[('purchase_ok', '=', True)], change_default=True)
     product_type = fields.Selection(related='product_id.detailed_type', readonly=True)
-    price_unit = fields.Float(string='Unit Price', required=True, digits='Product Price')
-    price_cost = fields.Float(string='Costo', digits='Product Price')
+    price_unit = fields.Float(string='Precio de Venta', required=True, digits='Product Price')
+    price_cost = fields.Float(string='Precio de Compra', digits='Product Price')
     price_balan = fields.Float(string='Ganancia', digits='Product Price')
 
     currency_id = fields.Many2one('res.currency', related='order_id.currency_id', store=True, readonly=True, string='Currency')
-    price_subtotal = fields.Monetary(compute='_compute_amount', string='Subtotal', store=True, currency_field='currency_id')
-    price_total = fields.Monetary(compute='_compute_amount', string='Total', store=True, currency_field='currency_id')
+    price_subtotal = fields.Monetary(compute='_compute_amount', string='Ventas', store=True, currency_field='currency_id')
+    price_total = fields.Monetary(compute='_compute_amount', string='Costos', store=True, currency_field='currency_id')
 
     company_id = fields.Many2one('res.company', related='order_id.company_id', string='Company', store=True, readonly=True)
     state = fields.Selection(related='order_id.state', store=True)
@@ -183,9 +183,15 @@ class ReportSaleLine(models.Model):
 
     @api.depends('product_qty', 'price_unit')
     def _compute_amount(self):
+        costo_alterno = 0
+        costo_disponible - 0
         for line in self:
             line.price_subtotal = line.product_qty * line.price_unit
-            line.price_total = line.product_qty * line.price_cost
+            if line.price_cost > 0:
+                costo_disponible = (line.product_qty * line.price_cost)
+            if line.price_cost == 0:
+                costo_alterno = ((line.product_qty * line.price_unit) * 20/100)
+            line.price_total = costo_alterno + costo_disponible
             line.price_balan = line.price_subtotal - line.price_total
 
 
