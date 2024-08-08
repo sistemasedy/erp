@@ -234,8 +234,10 @@
                         <field name="name"/>
                         <field name="amount"/>
                         <field name="pos_order_id" />
-                        <filter name="payment_date" string="Fecha" date="payment_date"/>
                         <filter name="banco" string="Targeta" domain="[('payment_method_id', '=', 'Banco')]"/>
+                        <separator/>
+                        <filter name="payment_date" string="Fecha" date="payment_date"/>
+                        
                         <filter name="superate" string="Superate" domain="[('payment_method_id', '=', 'Targeta Superate')]"/>
                         <group expand="0" string="Group By">
                             <filter name="group_by_payment_method" string="Payment Method" domain="[]"  context="{'group_by':'payment_method_id'}"/>
