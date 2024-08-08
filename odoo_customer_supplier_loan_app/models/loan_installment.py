@@ -65,7 +65,7 @@ class LoanInstallment(models.Model):
             raise ValidationError(_("No hay Productos configurados."))
 
         
-        
+        products_updated = 0
         for product in products:
             reorder_qty = self._get_reorder_quantity(product)
             if reorder_qty > 0:
