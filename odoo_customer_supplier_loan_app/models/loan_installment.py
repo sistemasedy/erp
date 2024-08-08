@@ -100,6 +100,7 @@ class LoanInstallment(models.Model):
             purchase_order_line_obj.create({
                 'order_id': self.id,
                 'product_id': product.id,
+                'price_unit': product.list_price,
                 'name': product.name,
                 'product_qty': reorder_qty,
                 'product_uom': product.uom_po_id.id,
