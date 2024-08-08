@@ -76,6 +76,19 @@ class LoanInstallment(models.Model):
 
  
 
+    
+
+    def _reload_client_with_message(self, message):
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'reload',
+            'name': 'Productos Actualizados',
+            'params': {'message': message}
+        }
+
+
+
+
     def _get_reorder_quantity(self, product):
         stock_moves = self.env['stock.move'].search([
             ('product_id', '=', product.id),
