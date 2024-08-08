@@ -188,10 +188,10 @@ class ReportSaleLine(models.Model):
         for line in self:
             line.price_subtotal = line.product_qty * line.price_unit
             if line.price_cost > 0:
-                costo_disponible = (line.product_qty * line.price_cost)
+                line.price_total = (line.product_qty * line.price_cost)
             if line.price_cost == 0:
-                costo_alterno = ((line.product_qty * line.price_unit) * 20/100)
-            line.price_total = costo_alterno + costo_disponible
+                line.price_total = ((line.product_qty * line.price_unit) - ((line.product_qty * line.price_unit) * 20/100))
+            #line.price_total = costo_alterno + costo_disponible
             line.price_balan = line.price_subtotal - line.price_total
 
 
