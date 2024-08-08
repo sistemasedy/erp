@@ -220,6 +220,39 @@
 
 
 
+
+        <record id="view_pos_payment_search5" model="ir.ui.view">
+            <field name="name">pos.payment.search.view</field>
+            <field name="model">pos.payment</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_payment_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//search" position="replace">
+                    
+
+                   <search string="Search Invoice">
+
+                        <field name="name"/>
+                        <field name="amount"/>
+                        <field name="pos_order_id" />
+                        <filter name="payment_date" string="Fecha"/>
+                        <group expand="0" string="Group By">
+                            <filter name="group_by_payment_method" string="Payment Method" domain="[]"  context="{'group_by':'payment_method_id'}"/>
+                            <filter name="group_by_session" string="Session" domain="[]"  context="{'group_by':'session_id'}"/>
+                        </group>
+                        
+                   </search>
+
+
+                </xpath>
+            </field>
+            
+        </record>
+
+
+        
+
+
+
     
 
     </data>
