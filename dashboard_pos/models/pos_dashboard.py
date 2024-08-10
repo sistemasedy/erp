@@ -163,7 +163,7 @@ class PosDashboard(models.Model):
     def get_refund_details(self, start_date=None, end_date=None):
 
         if not start_date:
-            start_date = datetime.today().date()
+            start_date = datetime.today().date() - timedelta(days=30)
         if not end_date:
             end_date = datetime.today().date()
         
