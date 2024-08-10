@@ -9,7 +9,7 @@ class LoanInstallment(models.Model):
     _name = 'loan.installment'
     _description = "Loan Installment"
 
-    name = fields.Char(string="Numero",readonly="True" ,default='NUEMERO')
+    name = fields.Char(string="Dia/Fecha",default='DIA/FECHA')
 
     partner_id = fields.Many2one('res.partner',string="Empresa",default=lambda self : self.env.user.company_id.id,required=True)
     applied_date = fields.Date(string="Fecha",default=fields.Date.today())

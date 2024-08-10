@@ -144,8 +144,45 @@ class PosDashboard(models.Model):
             'selling_product': sessions_list,
         }
 
+    
+
+
     @api.model
-    def get_refund_details(self):
+    def _get_reorder_quantity(self, product, start_date, end_date):
+        stock_moves = self.env['stock.move'].search([
+            ('product_id', '=', product.id),
+            ('location_id.usage', '=', 'internal'),
+            ('date', '>=', start_date),
+            ('date', '<=', end_date),
+            ('reference', 'ilike', 'WH/POS/%')
+        ])
+        return abs(sum(stock_moves.mapped('product_qty')))
+
+ 
+    @api.model
+    def get_refund_details(self, start_date=None, end_date=None):
+
+        if not start_date:
+            start_date = datetime.today().date()
+        if not end_date:
+            end_date = datetime.today().date()
+        
+        pos_order = self.env['pos.order'].search([
+            ('date_order', '>=', start_date),
+            ('date_order', '<=', end_date)
+        ])
+        total_sales = 0
+        total_cost = 0
+        total_profit = 0
+
+        for rec in pos_order:
+            total_sales += rec.amount_total
+            total_cost += sum(line.product_id.standard_price * line.qty for line in rec.lines)
+        
+        total_profit = total_sales - total_cost
+
+        # La lógica existente que ya tenías
+
         default_date = datetime.today().date()
         pos_order = self.env['pos.order'].search([])
         orders_today = self.env['pos.order'].search([('date_order', '=', default_date)])
@@ -201,6 +238,9 @@ class PosDashboard(models.Model):
             'total_session': total_session,
             'today_refund_total': today_refund_total,
             'today_sale': today_sale,
+            'total_sale': total_sales,
+            'total_cost': total_cost,
+            'total_profit': total_profit,
         }
 
 

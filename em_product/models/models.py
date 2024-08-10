@@ -35,12 +35,18 @@ class ProductTemplate(models.Model):
     codigo = fields.Char(string='Codigo')
     numero_parte = fields.Char(string='Numero de Parte')
     numero = fields.Char(string='Numero')
-    margen = fields.Char(string='Margen-%', digits=(2, 2), compute='compute_margin', store=True)
+    margen = fields.Char(string='Margen-%', digits=(2, 2), store=True)
     margen_valor = fields.Char(string='Margen Valor', digits=(2, 2), compute='compute_margin', store=True)
     calcular_venta = fields.Boolean(string='Recalcular', default=False)
     calcular_costo = fields.Boolean(string='Calcular el margen', default=False)
     #calcular_margen = fields.Boolean(string='Calcular el Margen' ,default=False)
     available_in_pos = fields.Boolean(string='Available in POS', help='Check if you want this product to appear in the Point of Sale.', default=True)
+
+    calcular_venta_anterior = fields.Boolean(string='Precio Anterior', default=False)
+    precio_venta_anterior = fields.Float(
+        'Sales Price', default=1.0,
+        digits=dp.get_precision('Product Price'),
+        help="Price at which the product is sold to customers.")
 
     list_price = fields.Float(
         'Sales Price', default=1.0,

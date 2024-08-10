@@ -22,19 +22,29 @@ var PosDashboard = AbstractAction.extend({
             'change #pos_sales': 'onclick_pos_sales',
     },
 
+   
+
     init: function(parent, context) {
-        this._super(parent, context);
-        this.dashboards_templates = ['PosOrders','PosChart','PosCustomer'];
-        this.payment_details = [];
-        this.top_salesperson = [];
-        this.selling_product = [];
-        this.total_sale = [];
-        this.total_order_count = [];
-        this.total_refund_count = [];
-        this.total_session = [];
-        this.today_refund_total = [];
-        this.today_sale = [];
-    },
+      this._super(parent, context);
+      this.dashboards_templates = ['PosOrders', 'PosChart', 'PosCustomer'];
+      this.payment_details = [];
+      this.top_salesperson = [];
+      this.selling_product = [];
+      this.total_sale = [];
+      this.total_order_count = [];
+      this.total_refund_count = [];
+      this.total_session = [];
+      this.today_refund_total = [];
+      this.today_sale = [];
+      this.total_cost = [];
+      this.total_profit = [];
+  },
+  
+
+
+
+
+
 
     willStart: function() {
         var self = this;
@@ -53,32 +63,38 @@ var PosDashboard = AbstractAction.extend({
         });
     },
 
-    fetch_data: function() {
-        var self = this;
-        var def1 =  this._rpc({
-                model: 'pos.order',
-                method: 'get_refund_details'
-        }).then(function(result) {
-           self.total_sale = result['total_sale'],
-           self.total_order_count = result['total_order_count']
-           self.total_refund_count = result['total_refund_count']
-           self.total_session = result['total_session']
-           self.today_refund_total = result['today_refund_total']
-           self.today_sale = result['today_sale']
-           self.today_sale_today = result['today_sale_today']
-        });
-      var def2 = self._rpc({
-            model: "pos.order",
-            method: "get_details",
-        })
-        .then(function (res) {
-            self.payment_details = res['payment_details'];
-            self.top_salesperson = res['salesperson'];
-            self.selling_product = res['selling_product'];
-        });
-      
+    
 
-        return $.when(def1,def2);
+
+
+    fetch_data: function() {
+      var self = this;
+      var def1 = this._rpc({
+          model: 'pos.order',
+          method: 'get_refund_details',
+          args: [self.start_date, self.end_date],  // Puedes pasar start_date y end_date aquí
+      }).then(function(result) {
+          self.total_sale = result['total_sale'],
+          self.total_cost = result['total_cost'],
+          self.total_profit = result['total_profit'],
+          self.total_order_count = result['total_order_count'],
+          self.total_refund_count = result['total_refund_count'],
+          self.total_session = result['total_session'],
+          self.today_refund_total = result['today_refund_total'],
+          self.today_sale = result['today_sale'],
+          self.today_sale_today = result['today_sale_today']
+      });
+
+      var def2 = self._rpc({
+          model: "pos.order",
+          method: "get_details",
+      }).then(function(res) {
+          self.payment_details = res['payment_details'];
+          self.top_salesperson = res['salesperson'];
+          self.selling_product = res['selling_product'];
+      });
+
+      return $.when(def1, def2);
     },
 
     render_dashboards: function() {
