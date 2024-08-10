@@ -171,15 +171,15 @@ class PosDashboard(models.Model):
             ('date_order', '>=', start_date),
             ('date_order', '<=', end_date)
         ])
-        total_sales = 0
+        venta = 0
         total_cost = 0
         total_profit = 0
 
         for rec in pos_order:
-            total_sales += rec.amount_total
+            venta += rec.amount_total
             total_cost += sum(line.product_id.standard_price * line.qty for line in rec.lines)
         
-        total_profit = total_sales - total_cost
+        total_profit = venta - total_cost
 
         # La lógica existente que ya tenías
 
@@ -226,9 +226,9 @@ class PosDashboard(models.Model):
             total /= 1000.0
 
         magnitude1 = 0
-        while abs(total_sales) >= 1000:
+        while abs(venta) >= 1000:
             magnitude1 += 1
-            total_sales /= 1000.0
+            venta /= 1000.0
         magnitude2 = 0
         while abs(total_cost) >= 1000:
             magnitude2 += 1
@@ -240,7 +240,7 @@ class PosDashboard(models.Model):
 
         # add more suffixes if you need them
 
-        val1 = '%.2f%s' % (total_sales, ['', 'K', 'M', 'G', 'T', 'P'][magnitude1])
+        val1 = '%.2f%s' % (venta, ['', 'K', 'M', 'G', 'T', 'P'][magnitude1])
         val2 = '%.2f%s' % (total_cost, ['', 'K', 'M', 'G', 'T', 'P'][magnitude2])
         val3 = '%.2f%s' % (total_profit, ['', 'K', 'M', 'G', 'T', 'P'][magnitude3])
 
@@ -258,7 +258,7 @@ class PosDashboard(models.Model):
             'total_session': total_session,
             'today_refund_total': today_refund_total,
             'today_sale': today_sale,
-            'total_sale': val1,
+            'venta': val1,
             'total_cost': val2,
             'total_profit': val3,
         }

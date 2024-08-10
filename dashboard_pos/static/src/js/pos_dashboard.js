@@ -30,7 +30,7 @@ var PosDashboard = AbstractAction.extend({
       this.payment_details = [];
       this.top_salesperson = [];
       this.selling_product = [];
-      this.total_sale = [];
+      this.venta = [];
       this.total_order_count = [];
       this.total_refund_count = [];
       this.total_session = [];
@@ -74,7 +74,7 @@ var PosDashboard = AbstractAction.extend({
           method: 'get_refund_details',
           args: [self.start_date, self.end_date],  // Puedes pasar start_date y end_date aquí
       }).then(function(result) {
-          self.total_sale = result['total_sale'],
+          self.venta = result['venta'],
           self.total_cost = result['total_cost'],
           self.total_profit = result['total_profit'],
           self.total_order_count = result['total_order_count'],

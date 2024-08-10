@@ -16,7 +16,7 @@
                             <div class="stat-icon" style="background:#5bcbd0"><i class="fa fa-shopping-bag"/></div>
                             <div class="stat-content">
                                 <div class="stat-head">Total Venta</div>
-                                <div class="stat_count"><t t-esc="widget.total_sale"/></div>
+                                <div class="stat_count"><t t-esc="widget.venta"/></div>
                             </div>
                         </div>
                     </div>
@@ -29,7 +29,7 @@
                         <div class="stat-widget-one">
                             <div class="stat-icon" style="background:#5bcbd0"><i class="fa fa-shopping-bag"/></div>
                             <div class="stat-content">
-                                <div class="stat-head">Total Cost</div>
+                                <div class="stat-head">Total Costos</div>
                                 <div class="stat_count"><t t-esc="widget.total_cost"/></div>
                             </div>
                         </div>
@@ -42,7 +42,7 @@
                         <div class="stat-widget-one">
                             <div class="stat-icon" style="background:#5bcbd0"><i class="fa fa-money"/></div>
                             <div class="stat-content">
-                                <div class="stat-head">Total Profit</div>
+                                <div class="stat-head">Ganancia</div>
                                 <div class="stat_count"><t t-esc="widget.total_profit"/></div>
                             </div>
                         </div>
