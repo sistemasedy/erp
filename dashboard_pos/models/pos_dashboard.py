@@ -220,27 +220,47 @@ class PosDashboard(models.Model):
         while abs(total_today) >= 1000:
             magnitudes += 1
             total_today /= 1000.0
+
         while abs(total) >= 1000:
             magnitude += 1
             total /= 1000.0
+
+        magnitude1 = 0
+        while abs(total_sales) >= 1000:
+            magnitude1 += 1
+            total_sales /= 1000.0
+        magnitude2 = 0
+        while abs(total_cost) >= 1000:
+            magnitude2 += 1
+            total_cost /= 1000.0
+        magnitude3 = 0
+        while abs(total_profit) >= 1000:
+            magnitude3 += 1
+            total_profit /= 1000.0
+
         # add more suffixes if you need them
+
+        val1 = '%.2f%s' % (total_sales, ['', 'K', 'M', 'G', 'T', 'P'][magnitude1])
+        val2 = '%.2f%s' % (total_cost, ['', 'K', 'M', 'G', 'T', 'P'][magnitude2])
+        val3 = '%.2f%s' % (total_profit, ['', 'K', 'M', 'G', 'T', 'P'][magnitude3])
+
+
         val = '%.2f%s' % (total, ['', 'K', 'M', 'G', 'T', 'P'][magnitude])
-        val2 = '%.2f%s' % (total_today, ['', 'K', 'M', 'G', 'T', 'P'][magnitudes])
+        val5 = '%.2f%s' % (total_today, ['', 'K', 'M', 'G', 'T', 'P'][magnitudes])
         pos_session = self.env['pos.session'].search([])
         total_session = 0
         for record in pos_session:
             total_session = total_session + 1
         return {
-            'total_sale': val,
-            'total_sale_today': val2,
+            'total_sale_today': val5,
             'total_order_count': total_order_count,
             'total_refund_count': total_refund_count,
             'total_session': total_session,
             'today_refund_total': today_refund_total,
             'today_sale': today_sale,
-            'total_sale': total_sales,
-            'total_cost': total_cost,
-            'total_profit': total_profit,
+            'total_sale': val1,
+            'total_cost': val2,
+            'total_profit': val3,
         }
 
 
