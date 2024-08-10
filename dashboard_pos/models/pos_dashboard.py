@@ -166,19 +166,33 @@ class PosDashboard(models.Model):
             start_date = datetime.today().date() - timedelta(days=30)
         if not end_date:
             end_date = datetime.today().date()
-        
+
         pos_order = self.env['pos.order'].search([
             ('date_order', '>=', start_date),
             ('date_order', '<=', end_date)
         ])
+
         venta = 0
-        total_cost = 0
+        total_cost_with_standard_price = 0
+        total_cost_with_assigned_price = 0
         total_profit = 0
 
         for rec in pos_order:
             venta += rec.amount_total
-            total_cost += sum(line.product_id.standard_price * line.qty for line in rec.lines)
-        
+            
+            for line in rec.lines:
+                if line.product_id.standard_price > 0:
+                    # Grupo 1: Productos con standard_price mayor que 0
+                    total_cost_with_standard_price += line.product_id.standard_price * line.qty
+                else:
+                    # Grupo 2: Productos con standard_price igual a 0
+                    assigned_cost = line.price_unit - (line.price_unit * 0.20)  # 20% del precio de venta
+                    total_cost_with_assigned_price += assigned_cost * line.qty
+
+        # Calcular el costo total sumando ambos grupos
+        total_cost = total_cost_with_standard_price + total_cost_with_assigned_price
+
+        # Calcular la ganancia total
         total_profit = venta - total_cost
 
         # La lógica existente que ya tenías
