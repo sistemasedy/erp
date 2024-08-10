@@ -166,7 +166,7 @@ class ReportSaleLine(models.Model):
     product_qty = fields.Float(string='Cantidad', digits='Product Unit of Measure', required=True)  
     price_unit = fields.Float(string='Precio de Venta', required=True, digits='Product Price')
     price_cost = fields.Float(string='Precio de Compra', digits='Product Price')
-    price_margin = fields.Float(string='Margen', digits='Product Price')
+    price_margin = fields.Float(string='Margen%', digits='Product Price')
     price_gan = fields.Float(string='Dif', digits='Product Price')
 
         

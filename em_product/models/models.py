@@ -35,7 +35,7 @@ class ProductTemplate(models.Model):
     codigo = fields.Char(string='Codigo')
     numero_parte = fields.Char(string='Numero de Parte')
     numero = fields.Char(string='Numero')
-    margen = fields.Char(string='Margen-%', digits=(2, 2))
+    margen = fields.Char(string='Margen-%', digits=(2, 2), compute='compute_margin', store=True)
     margen_valor = fields.Char(string='Margen Valor', digits=(2, 2), compute='compute_margin', store=True)
     calcular_venta = fields.Boolean(string='Recalcular', default=False)
     calcular_costo = fields.Boolean(string='Calcular el margen', default=False)
@@ -65,7 +65,7 @@ class ProductTemplate(models.Model):
                     record.margen_valor = 0
                     record.margen = 0
             if record.standard_price == 0:
-                record.price_total = ((record.product_qty * record.list_price) - ((record.product_qty * record.list_price) * 20/100))
+                
                 if record.list_price > 1:
                     record.margen_valor = ((record.list_price)*(20/100))
                     record.margen = 20
