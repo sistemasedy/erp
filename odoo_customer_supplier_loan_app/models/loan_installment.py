@@ -162,24 +162,28 @@ class ReportSaleLine(models.Model):
 
     name = fields.Char(string="Descripcion")
     order_id = fields.Many2one('loan.installment', string='Order Reference', index=True, required=True, ondelete='cascade')
-    product_qty = fields.Float(string='Quantity', digits='Product Unit of Measure', required=True)
+
+    product_qty = fields.Float(string='Cantidad', digits='Product Unit of Measure', required=True)  
+    price_unit = fields.Float(string='Precio de Venta', required=True, digits='Product Price')
+    price_cost = fields.Float(string='Precio de Compra', digits='Product Price')
+    price_margin = fields.Float(string='Margen', digits='Product Price')
+    price_gan = fields.Float(string='Dif', digits='Product Price')
+
+        
+    price_subtotal = fields.Monetary(compute='_compute_amount', string='Ventas', store=True, currency_field='currency_id')
+    price_total = fields.Monetary(compute='_compute_amount', string='Costos', store=True, currency_field='currency_id')
+    price_balan = fields.Float(string='Ganancia', digits='Product Price')
+
+
+    product_type = fields.Selection(related='product_id.detailed_type', readonly=True)
+    currency_id = fields.Many2one('res.currency', related='order_id.currency_id', store=True, readonly=True, string='Currency')
+    company_id = fields.Many2one('res.company', related='order_id.company_id', string='Company', store=True, readonly=True)
+    state = fields.Selection(related='order_id.state', store=True)
+    partner_id = fields.Many2one('res.partner', related='order_id.partner_id', string='Partner', readonly=True, store=True)
     product_uom_qty = fields.Float(string='Total Quantity', compute='_compute_product_uom_qty', store=True)
     product_uom = fields.Many2one('uom.uom', string='Unit of Measure', domain="[('category_id', '=', product_uom_category_id)]")
     product_uom_category_id = fields.Many2one(related='product_id.uom_id.category_id')
     product_id = fields.Many2one('product.product', string='Producto', domain=[('purchase_ok', '=', True)], change_default=True)
-    product_type = fields.Selection(related='product_id.detailed_type', readonly=True)
-    price_unit = fields.Float(string='Precio de Venta', required=True, digits='Product Price')
-    price_cost = fields.Float(string='Precio de Compra', digits='Product Price')
-    price_balan = fields.Float(string='Ganancia', digits='Product Price')
-
-    currency_id = fields.Many2one('res.currency', related='order_id.currency_id', store=True, readonly=True, string='Currency')
-    price_subtotal = fields.Monetary(compute='_compute_amount', string='Ventas', store=True, currency_field='currency_id')
-    price_total = fields.Monetary(compute='_compute_amount', string='Costos', store=True, currency_field='currency_id')
-
-    company_id = fields.Many2one('res.company', related='order_id.company_id', string='Company', store=True, readonly=True)
-    state = fields.Selection(related='order_id.state', store=True)
-
-    partner_id = fields.Many2one('res.partner', related='order_id.partner_id', string='Partner', readonly=True, store=True)
 
     @api.depends('product_qty', 'price_unit')
     def _compute_amount(self):
@@ -189,9 +193,21 @@ class ReportSaleLine(models.Model):
             line.price_subtotal = line.product_qty * line.price_unit
             if line.price_cost > 0:
                 line.price_total = (line.product_qty * line.price_cost)
+                if line.price_unit > 1:
+                    line.price_gan = (line.price_unit - line.price_cost)
+                    line.price_margin = (((line.price_unit - line.price_cost)/line.price_cost)*100)
+                if line.price_unit == 1:
+                    line.price_gan = 0
+                    line.price_margin = 0
             if line.price_cost == 0:
                 line.price_total = ((line.product_qty * line.price_unit) - ((line.product_qty * line.price_unit) * 20/100))
-            #line.price_total = costo_alterno + costo_disponible
+                if line.price_unit > 1:
+                    line.price_gan = ((line.price_unit)*(20/100))
+                    line.price_margin = 20
+                if line.price_unit == 1:
+                    line.price_gan = 0
+                    line.price_margin = 0
+            
             line.price_balan = line.price_subtotal - line.price_total
 
 

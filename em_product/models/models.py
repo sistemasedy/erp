@@ -56,8 +56,24 @@ class ProductTemplate(models.Model):
         """Method to compute the margin of the product."""
         #self.margen = 0
         for record in self:
-            if record.list_price and record.standard_price:
-                record.margen_valor = (record.list_price - record.standard_price)
+            if record.standard_price > 0:
+                
+                if record.list_price > 1:
+                    record.margen_valor = (record.list_price - record.standard_price)
+                    record.margen = (((record.list_price - record.standard_price)/record.standard_price)*100)
+                if record.list_price == 1:
+                    record.margen_valor = 0
+                    record.margen = 0
+            if record.standard_price == 0:
+                record.price_total = ((record.product_qty * record.list_price) - ((record.product_qty * record.list_price) * 20/100))
+                if record.list_price > 1:
+                    record.margen_valor = ((record.list_price)*(20/100))
+                    record.margen = 20
+                if record.list_price == 1:
+                    record.margen_valor = 0
+                    record.margen = 0
+            
+                
 
     @api.depends('list_price', 'standard_price', 'calcular_venta')
     def compute_porcent(self):
