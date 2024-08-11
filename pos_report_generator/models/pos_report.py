@@ -35,7 +35,7 @@ class PosReportGenerator(models.Model):
     _name = "pos.report"
 
     
-    date_to = fields.Datetime(string="Date to")
+    
     date_from = fields.Date(string='Fecha de Inicio', default=lambda self: fields.Date.today() - timedelta(days=7))
     date_to = fields.Date(string='Fecha de Fin', default=fields.Date.today)
     report_type = fields.Selection([('report_by_order', 'Report By Order'),
