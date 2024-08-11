@@ -88,7 +88,7 @@ var PosDashboard = AbstractAction.extend({
       var def1 = this._rpc({
           model: 'pos.order',
           method: 'get_refund_details',
-          args: [filter_data_selected.date_from, filter_data_selected.date_to],  // Puedes pasar start_date y end_date aquí
+          args: [start_date, end_date],  // Puedes pasar start_date y end_date aquí
       }).then(function(result) {
           self.venta = result['venta'],
           self.total_cost = result['total_cost'],
