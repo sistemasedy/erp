@@ -84,14 +84,16 @@ var PosDashboard = AbstractAction.extend({
 
       var filter_data_selected = {};
 
-      if (this.$el.find('.datetimepicker-input[name="date_from"]').val()) {
-        filter_data_selected.date_from = moment(this.$el.find('.datetimepicker-input[name="date_from"]').val(), time.getLangDateFormat()).locale('en').format('YYYY-MM-DD');
+      var dateFromInput = this.$el.find('.datetimepicker-input[name="date_from"]');
+      var dateToInput = this.$el.find('.datetimepicker-input[name="date_to"]');
+
+      if (dateFromInput.length > 0) {
+          filter_data_selected.date_from = moment(dateFromInput.val(), time.getLangDateFormat()).locale('en').format('YYYY-MM-DD');
       }
 
-      if (this.$el.find('.datetimepicker-input[name="date_to"]').val()) {
-        filter_data_selected.date_to = moment(this.$el.find('.datetimepicker-input[name="date_to"]').val(), time.getLangDateFormat()).locale('en').format('YYYY-MM-DD');
+      if (dateToInput.length > 0) {
+          filter_data_selected.date_to = moment(dateToInput.val(), time.getLangDateFormat()).locale('en').format('YYYY-MM-DD');
       }
-
 
       //console.log("start", start_date)
 
