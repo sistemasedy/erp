@@ -56,6 +56,7 @@ var PosDashboard = AbstractAction.extend({
 
     start: function() {
         var self = this;
+        self.initial_render = true;
         this.set("title", 'Dashboard');
         return this._super().then(function() {
             self.render_dashboards();
@@ -71,6 +72,7 @@ var PosDashboard = AbstractAction.extend({
     fetch_data: function() {
       var self = this;
       console.log("fecha")
+      self.initial_render = false;
 
       // Obtener las fechas de los campos de entrada
       //var start_date = $('#start_date').val();
