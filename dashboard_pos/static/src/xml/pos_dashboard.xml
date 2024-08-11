@@ -26,8 +26,7 @@
                     </div>
                     <div style="">
                         <button type="button" id="fetch_data_btn" class="btn btn-primary"
-                                style="margin-right: 5px;
-        padding: 4px;top: 0px; height: 42px; color: white; background-color: #7c7bad; border-color: #7c7bad;">
+                                style="margin-right: 5px;padding: 4px;top: 0px; height: 42px; color: white; background-color: #7c7bad; border-color: #7c7bad;">
                             Apply
                         </button>
                     </div>
