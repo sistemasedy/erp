@@ -90,8 +90,11 @@ var PosDashboard = AbstractAction.extend({
           self.total_session = result['total_session'],
           self.today_refund_total = result['today_refund_total'],
           self.today_sale = result['today_sale'],
+          self.fecha = result['fecha'],
+          self.fecha2 = result['fecha2'],
           self.today_sale_today = result['today_sale_today']
       });
+      console.log("start", self.fecha)
 
       var def2 = self._rpc({
           model: "pos.order",
