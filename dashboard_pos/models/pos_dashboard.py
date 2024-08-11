@@ -162,6 +162,8 @@ class PosDashboard(models.Model):
     @api.model
     def get_refund_details(self, start_date, end_date):
 
+        lafecha = start_date
+
         if not start_date:
             start_date = datetime.today().date() - timedelta(days=30)
         if not end_date:
@@ -276,7 +278,7 @@ class PosDashboard(models.Model):
             'total_cost': val2,
             'total_profit': val3,
             'fecha': start_date,
-            'fecha2': default_date,
+            'fecha2': lafecha,
         }
 
 
