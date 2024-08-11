@@ -9,6 +9,27 @@
     <t t-name="PosOrders">
         <div class="row main-section">
 
+            <div class="row">
+                <!-- Campo para la Fecha de Inicio -->
+                <div class="col-md-6">
+                    <label for="start_date">Start Date:</label>
+                    <input type="date" id="start_date" class="form-control"/>
+                </div>
+
+                <!-- Campo para la Fecha de Fin -->
+                <div class="col-md-6">
+                    <label for="end_date">End Date:</label>
+                    <input type="date" id="end_date" class="form-control"/>
+                </div>
+            </div>
+
+            <!-- Botón para Actualizar los Datos -->
+            <div class="row mt-2">
+                <div class="col-md-12">
+                    <button type="button" class="btn btn-primary" id="fetch_data_btn">Fetch Data</button>
+                </div>
+            </div>
+
             <div class="col-md-4 col-sm-6 pos_order_today oh-payslip">
                 <div class="oh-card" style="width: 288px;">
                     <div class="oh-card-body">

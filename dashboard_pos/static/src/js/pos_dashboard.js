@@ -13,6 +13,7 @@ var QWeb = core.qweb;
 var PosDashboard = AbstractAction.extend({
     template: 'PosDashboard',
     events: {
+            'click #fetch_data_btn': 'fetch_data',
             'click .pos_order_today':'pos_order_today',
             'click .pos_order':'pos_order',
             'click .pos_total_sales':'pos_order',
@@ -69,10 +70,14 @@ var PosDashboard = AbstractAction.extend({
 
     fetch_data: function() {
       var self = this;
+
+      // Obtener las fechas de los campos de entrada
+      var start_date = $('#start_date').val();
+      var end_date = $('#end_date').val();
       var def1 = this._rpc({
           model: 'pos.order',
           method: 'get_refund_details',
-          args: [self.start_date, self.end_date],  // Puedes pasar start_date y end_date aquí
+          args: [start_date, end_date],  // Puedes pasar start_date y end_date aquí
       }).then(function(result) {
           self.venta = result['venta'],
           self.total_cost = result['total_cost'],
