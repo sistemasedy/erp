@@ -75,7 +75,8 @@ var PosDashboard = AbstractAction.extend({
       // Obtener las fechas de los campos de entrada
       var start_date = $('#start_date').val();
       var end_date = $('#end_date').val();
-      
+      console.log("start", start_date)
+
       var def1 = this._rpc({
           model: 'pos.order',
           method: 'get_refund_details',
