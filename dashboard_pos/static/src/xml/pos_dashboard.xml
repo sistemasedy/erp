@@ -8,8 +8,6 @@
     </t>
     <t t-name="PosOrders">
         <div class="row main-section">
-
-            <div class="row">
                 <!-- Campo para la Fecha de Inicio -->
 
 
