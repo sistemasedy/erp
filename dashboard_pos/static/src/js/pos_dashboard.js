@@ -18,6 +18,7 @@ var PosDashboard = AbstractAction.extend({
     template: 'PosDashboard',
     events: {
             'click #fetch_data_btn': 'fetch_data',
+            'click #mes_actual_btn': 'mes_actual',
             'click .pos_order_today':'pos_order_today',
             'click .pos_order':'pos_order',
             'click .pos_total_sales':'pos_order',
@@ -115,6 +116,29 @@ var PosDashboard = AbstractAction.extend({
       });
 
       return $.when(def1, def2);
+    },
+
+    mes_actual: function() {
+      var self = this;
+
+      var def1 = this._rpc({
+          model: 'pos.order',
+          method: 'get_mes_actual',
+          args: [start_date, end_date],  // Puedes pasar start_date y end_date aquí
+      }).then(function(result) {
+          self.venta = result['venta'],
+          self.total_cost = result['total_cost'],
+          self.total_profit = result['total_profit'],
+          self.total_order_count = result['total_order_count'],
+          self.total_refund_count = result['total_refund_count'],
+          self.total_session = result['total_session'],
+          self.today_refund_total = result['today_refund_total'],
+          self.today_sale = result['today_sale'],
+          self.fecha = result['fecha'],
+          self.fecha2 = result['fecha2'],
+          self.today_sale_today = result['today_sale_today']
+      });
+      return $.when(def1);
     },
 
     render_dashboards: function() {
