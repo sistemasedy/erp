@@ -79,23 +79,11 @@ var PosDashboard = AbstractAction.extend({
       self.initial_render = false;
 
       // Obtener las fechas de los campos de entrada
-      //var start_date = $('#start_date').val();
-      //var end_date = $('#end_date').val();
+      var start_date = $('#start_date').val();
+      var end_date = $('#end_date').val();
 
-      var filter_data_selected = {};
 
-      var dateFromInput = this.$el.find('.datetimepicker-input[name="date_from"]');
-      var dateToInput = this.$el.find('.datetimepicker-input[name="date_to"]');
-
-      if (dateFromInput.length > 0) {
-          filter_data_selected.date_from = moment(dateFromInput.val(), time.getLangDateFormat()).locale('en').format('YYYY-MM-DD');
-      }
-
-      if (dateToInput.length > 0) {
-          filter_data_selected.date_to = moment(dateToInput.val(), time.getLangDateFormat()).locale('en').format('YYYY-MM-DD');
-      }
-
-      //console.log("start", start_date)
+      console.log("start", start_date)
 
       var def1 = this._rpc({
           model: 'pos.order',
