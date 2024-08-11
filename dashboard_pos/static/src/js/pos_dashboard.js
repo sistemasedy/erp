@@ -9,6 +9,10 @@ var session = require('web.session');
 var web_client = require('web.web_client');
 var _t = core._t;
 var QWeb = core.qweb;
+var datepicker = require('web.datepicker');
+var time = require('web.time');
+var framework = require('web.framework');
+var session = require('web.session');
 
 var PosDashboard = AbstractAction.extend({
     template: 'PosDashboard',
