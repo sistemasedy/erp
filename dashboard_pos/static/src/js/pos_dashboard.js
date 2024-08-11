@@ -77,11 +77,11 @@ var PosDashboard = AbstractAction.extend({
       //var end_date = $('#end_date').val();
 
       if (this.$el.find('.datetimepicker-input[name="date_from"]').val()) {
-        start_date = moment(this.$el.find('.datetimepicker-input[name="date_from"]').val(), time.getLangDateFormat()).locale('en').format('YYYY-MM-DD');
+        var start_date = moment(this.$el.find('.datetimepicker-input[name="date_from"]').val(), time.getLangDateFormat()).locale('en').format('YYYY-MM-DD');
       }
 
       if (this.$el.find('.datetimepicker-input[name="date_to"]').val()) {
-        end_date = moment(this.$el.find('.datetimepicker-input[name="date_to"]').val(), time.getLangDateFormat()).locale('en').format('YYYY-MM-DD');
+        var end_date = moment(this.$el.find('.datetimepicker-input[name="date_to"]').val(), time.getLangDateFormat()).locale('en').format('YYYY-MM-DD');
       }
 
 
