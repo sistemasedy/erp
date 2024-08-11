@@ -275,6 +275,7 @@ class PosDashboard(models.Model):
             'venta': val1,
             'total_cost': val2,
             'total_profit': val3,
+            'fecha': start_date,
         }
 
 

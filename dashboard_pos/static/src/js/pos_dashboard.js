@@ -75,6 +75,9 @@ var PosDashboard = AbstractAction.extend({
       // Obtener las fechas de los campos de entrada
       var start_date = $('#start_date').val();
       var end_date = $('#end_date').val();
+
+      console.log(end_date, start_date)
+
       var def1 = this._rpc({
           model: 'pos.order',
           method: 'get_refund_details',
@@ -88,7 +91,8 @@ var PosDashboard = AbstractAction.extend({
           self.total_session = result['total_session'],
           self.today_refund_total = result['today_refund_total'],
           self.today_sale = result['today_sale'],
-          self.today_sale_today = result['today_sale_today']
+          self.today_sale_today = result['today_sale_today'],
+          self.fecha = result['fecha'],
       });
 
       var def2 = self._rpc({
