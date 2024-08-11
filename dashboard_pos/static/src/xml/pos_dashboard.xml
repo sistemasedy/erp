@@ -8,9 +8,9 @@
     </t>
     <t t-name="PosOrders">
         <div class="row main-section">
-                <!-- Campo para la Fecha de Inicio -->
+            <!-- Campo para la Fecha de Inicio -->
 
-
+            <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
 
                 <div class="sub_container_right row" style="width: 30%; height: 3%; top: 0px; position: relative; display: flex; justify-content: end; margin-bottom: 20px;">
                     <div class="time_range_pos" style="">
@@ -55,10 +55,7 @@
                         </button>
                     </div>
                 </div>
-
-
-
-
+            </div>
 
             <div class="col-md-4 col-sm-6 pos_order_today oh-payslip">
                 <div class="oh-card" style="width: 288px;">
