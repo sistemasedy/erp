@@ -70,6 +70,7 @@ var PosDashboard = AbstractAction.extend({
 
     fetch_data: function() {
       var self = this;
+      console.log("fecha")
 
       // Obtener las fechas de los campos de entrada
       var start_date = $('#start_date').val();

@@ -23,7 +23,7 @@
                             <div class="form-group">
                                 <label class="" for="date_from">Start Date :</label>
                                 <div class="input-group date" id="date_from" data-target-input="nearest">
-                                    <input type="text" id="start_date" name="date_from" class="form-control datetimepicker-input"
+                                    <input type="date" id="start_date" name="date_from" class="form-control datetimepicker-input"
                                            data-target="#date_from" t-att-name="prefix"/>
                                     <div class="input-group-append" data-target="#date_from" data-toggle="datetimepicker">
                                         <span class="input-group-text">
@@ -35,7 +35,7 @@
                                 <label class="" for="date_to">End Date :</label>
                                 <div class="input-group date" id="date_to" data-target-input="nearest">
 
-                                    <input type="text" id="end_date" name="date_to" class="form-control datetimepicker-input"
+                                    <input type="date" id="end_date" name="date_to" class="form-control datetimepicker-input"
                                            data-target="#date_to" t-att-name="prefix"/>
                                     <div class="input-group-append" data-target="#date_to" data-toggle="datetimepicker">
                                         <span class="input-group-text">
