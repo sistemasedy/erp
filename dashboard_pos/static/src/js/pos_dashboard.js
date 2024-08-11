@@ -78,12 +78,14 @@ var PosDashboard = AbstractAction.extend({
       //var start_date = $('#start_date').val();
       //var end_date = $('#end_date').val();
 
+      var filter_data_selected = {};
+
       if (this.$el.find('.datetimepicker-input[name="date_from"]').val()) {
-        var start_date = moment(this.$el.find('.datetimepicker-input[name="date_from"]').val(), time.getLangDateFormat()).locale('en').format('YYYY-MM-DD');
+        filter_data_selected.date_from = moment(this.$el.find('.datetimepicker-input[name="date_from"]').val(), time.getLangDateFormat()).locale('en').format('YYYY-MM-DD');
       }
 
       if (this.$el.find('.datetimepicker-input[name="date_to"]').val()) {
-        var end_date = moment(this.$el.find('.datetimepicker-input[name="date_to"]').val(), time.getLangDateFormat()).locale('en').format('YYYY-MM-DD');
+        filter_data_selected.date_to = moment(this.$el.find('.datetimepicker-input[name="date_to"]').val(), time.getLangDateFormat()).locale('en').format('YYYY-MM-DD');
       }
 
 
@@ -92,7 +94,7 @@ var PosDashboard = AbstractAction.extend({
       var def1 = this._rpc({
           model: 'pos.order',
           method: 'get_refund_details',
-          args: [start_date, end_date],  // Puedes pasar start_date y end_date aquí
+          args: [filter_data_selected.date_from, filter_data_selected.date_to],  // Puedes pasar start_date y end_date aquí
       }).then(function(result) {
           self.venta = result['venta'],
           self.total_cost = result['total_cost'],
