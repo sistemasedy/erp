@@ -135,6 +135,10 @@ var PosDashboard = AbstractAction.extend({
     mes_actual: function() {
       var self = this;
 
+      // Obtener las fechas de los campos de entrada
+      var start_date = $('#start_date').val();
+      var end_date = $('#end_date').val();
+
       var def1 = this._rpc({
           model: 'pos.order',
           method: 'get_mes_actual',
