@@ -178,61 +178,8 @@ var PosDashboard = AbstractAction.extend({
             self.total_profit = result['total_profit'];
 
             // Función para crear los widgets de estadísticas
-            function createStatWidget(title, iconClass, value, color) {
-                var colDiv = document.createElement('div');
-                colDiv.className = 'col-md-4 col-sm-6 pos_order_today oh-payslip';
+            self.targeta(self.venta,self.total_cost,self.total_profit);
 
-                var cardDiv = document.createElement('div');
-                cardDiv.className = 'oh-card';
-                cardDiv.style.width = '288px';
-
-                var cardBodyDiv = document.createElement('div');
-                cardBodyDiv.className = 'oh-card-body';
-
-                var widgetDiv = document.createElement('div');
-                widgetDiv.className = 'stat-widget-one';
-
-                var iconDiv = document.createElement('div');
-                iconDiv.className = 'stat-icon';
-                iconDiv.style.background = color;
-
-                var iconElement = document.createElement('i');
-                iconElement.className = iconClass;
-
-                var contentDiv = document.createElement('div');
-                contentDiv.className = 'stat-content';
-
-                var headDiv = document.createElement('div');
-                headDiv.className = 'stat-head';
-                headDiv.textContent = title;
-
-                var countDiv = document.createElement('div');
-                countDiv.className = 'stat_count';
-                countDiv.textContent = value;
-
-                iconDiv.appendChild(iconElement);
-                contentDiv.appendChild(headDiv);
-                contentDiv.appendChild(countDiv);
-                widgetDiv.appendChild(iconDiv);
-                widgetDiv.appendChild(contentDiv);
-                cardBodyDiv.appendChild(widgetDiv);
-                cardDiv.appendChild(cardBodyDiv);
-                colDiv.appendChild(cardDiv);
-
-                return colDiv;
-            }
-
-            // Crear y agregar los widgets al DOM
-            var container = document.getElementById('main_container');  // Suponiendo que tienes un contenedor con id 'main_container'
-            container.innerHTML = '';  // Limpiar el contenedor antes de agregar nuevos elementos
-
-            var ventaWidget = createStatWidget('Total Venta', 'fa fa-shopping-bag', self.venta, '#5bcbd0');
-            var costosWidget = createStatWidget('Total Costos', 'fa fa-shopping-bag', self.total_cost, '#5bcbd0');
-            var gananciaWidget = createStatWidget('Ganancia', 'fa fa-money', self.total_profit, '#5bcbd0');
-
-            container.appendChild(ventaWidget);
-            container.appendChild(costosWidget);
-            container.appendChild(gananciaWidget);
         });
 
         var def2 = self._rpc({
@@ -245,6 +192,68 @@ var PosDashboard = AbstractAction.extend({
         });
 
         return $.when(def1, def2);
+    },
+
+    targeta: function(venta,total_cost,total_profit) {
+        var self = this;
+
+        // Función para crear los widgets de estadísticas
+        function createStatWidget(title, iconClass, value, color) {
+            var colDiv = document.createElement('div');
+            colDiv.className = 'col-md-4 col-sm-6 pos_order_today oh-payslip';
+
+            var cardDiv = document.createElement('div');
+            cardDiv.className = 'oh-card';
+            cardDiv.style.width = '288px';
+
+            var cardBodyDiv = document.createElement('div');
+            cardBodyDiv.className = 'oh-card-body';
+
+            var widgetDiv = document.createElement('div');
+            widgetDiv.className = 'stat-widget-one';
+
+            var iconDiv = document.createElement('div');
+            iconDiv.className = 'stat-icon';
+            iconDiv.style.background = color;
+
+            var iconElement = document.createElement('i');
+            iconElement.className = iconClass;
+
+            var contentDiv = document.createElement('div');
+            contentDiv.className = 'stat-content';
+
+            var headDiv = document.createElement('div');
+            headDiv.className = 'stat-head';
+            headDiv.textContent = title;
+
+            var countDiv = document.createElement('div');
+            countDiv.className = 'stat_count';
+            countDiv.textContent = value;
+
+            iconDiv.appendChild(iconElement);
+            contentDiv.appendChild(headDiv);
+            contentDiv.appendChild(countDiv);
+            widgetDiv.appendChild(iconDiv);
+            widgetDiv.appendChild(contentDiv);
+            cardBodyDiv.appendChild(widgetDiv);
+            cardDiv.appendChild(cardBodyDiv);
+            colDiv.appendChild(cardDiv);
+
+            return colDiv;
+        }
+
+        // Crear y agregar los widgets al DOM
+        var container = document.getElementById('main_container');  // Suponiendo que tienes un contenedor con id 'main_container'
+        container.innerHTML = '';  // Limpiar el contenedor antes de agregar nuevos elementos
+
+        var ventaWidget = createStatWidget('Total Venta', 'fa fa-shopping-bag', venta, '#5bcbd0');
+        var costosWidget = createStatWidget('Total Costos', 'fa fa-shopping-bag', total_cost, '#5bcbd0');
+        var gananciaWidget = createStatWidget('Ganancia', 'fa fa-money', total_profit, '#5bcbd0');
+
+        container.appendChild(ventaWidget);
+        container.appendChild(costosWidget);
+        container.appendChild(gananciaWidget);
+        
     },
 
 
