@@ -49,10 +49,8 @@ var PosDashboard = AbstractAction.extend({
 
   actualizar: function(){
         var self = this;
-        return this._super().then(function() {
-             self.fetch_data();
-             self.start();
-        });
+        self.fetch_data();
+        self.start();
     },
   
 
