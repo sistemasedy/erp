@@ -111,7 +111,7 @@ var PosDashboard = AbstractAction.extend({
             self.fecha = result['fecha'];
             self.fecha2 = result['fecha2'];
             self.today_sale_today = result['today_sale_today'];
-            self.targeta2();
+            
             
         });
 
