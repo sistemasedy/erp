@@ -17,7 +17,7 @@ var session = require('web.session');
 var PosDashboard = AbstractAction.extend({
     template: 'PosDashboard',
     events: {
-            'click #fetch_data_btn': 'fetch_data',
+            'click #fetch_data_btn': 'fetch_data2',
             'click #mes_actual_btn': 'mes_actual',
             'click .pos_order_today':'pos_order_today',
             'click .pos_order':'pos_order',
@@ -136,8 +136,7 @@ var PosDashboard = AbstractAction.extend({
             self.fecha = result['fecha'];
             self.fecha2 = result['fecha2'];
             self.today_sale_today = result['today_sale_today'];
-            // Aquí forzamos la actualización del DOM
-            self.renderElement();
+            
         });
 
         console.log("recibida", self.fecha);
@@ -154,6 +153,68 @@ var PosDashboard = AbstractAction.extend({
 
         return $.when(def1, def2);
     },
+
+
+
+    fetch_data2: function() {
+        var self = this;
+        console.log("fecha");
+        self.initial_render = false;
+
+        var start_date = $('#start_date').val();
+        var end_date = $('#end_date').val();
+
+        if (!start_date) {
+            var today = new Date();
+            var pastDate = new Date();
+            pastDate.setDate(today.getDate() - 30);
+            start_date = pastDate.toISOString().split('T')[0];
+        }
+
+        if (!end_date) {
+            var today = new Date();
+            end_date = today.toISOString().split('T')[0];
+        }
+
+        console.log("start", start_date);
+
+        var def1 = this._rpc({
+            model: 'pos.order',
+            method: 'get_refund_details',
+            args: [start_date, end_date],
+        }).then(function(result) {
+            console.log("Respuesta recibida de get_refund_details", result);
+            self.venta = result['venta'];
+            self.total_cost = result['total_cost'];
+            self.total_profit = result['total_profit'];
+
+            // Actualizar los elementos del DOM directamente
+            $('.stat_count[t-esc="widget.venta"]').text(self.venta);
+            $('.stat_count[t-esc="widget.total_cost"]').text(self.total_cost);
+            $('.stat_count[t-esc="widget.total_profit"]').text(self.total_profit);
+        });
+
+        var def2 = self._rpc({
+            model: "pos.order",
+            method: "get_details",
+        }).then(function(res) {
+            self.payment_details = res['payment_details'];
+            self.top_salesperson = res['salesperson'];
+            self.selling_product = res['selling_product'];
+        });
+
+        return $.when(def1, def2);
+    },
+
+
+    renderElement: function() {
+        this._super();
+        // Aquí puedes agregar código adicional para actualizar partes específicas del DOM si es necesario
+    },
+
+
+
+
 
 
     mes_actual: function(events) {
