@@ -218,65 +218,7 @@
 
     <t t-name="PosChart">
             <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
-                <div class="row" style="margin:0px;">
-                    <div class="col-md-6" id="col-graph">
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="card-title">
-                                    <b>
-                                        <h3 class="custom-h3">SALE REPORT</h3>
-                                    </b>
-                                </div>
-                                <div class="card-tools">
-                                <select id="pos_sales">
-    <!--                                <option value="pos_hourly_sales">Select</option>-->
-                                    <option style="display:none;"> -- select an option -- </option>
-                                    <option value="pos_hourly_sales">Hourly</option>
-                                    <option value="pos_monthly_sales">Monthly</option>
-                                    <option value="pos_year_sales">Yearly</option>
-                                </select>
-                            </div>
-                            </div>
-                            <div class="card-body mt-3" id="in_ex_body_hide">
-                                 <div class="row">
-                                    <div class="col-md-12">
-                                       <p id="myelement1"></p>
-                                        <div class="chart">
-                                          <canvas id="canvas_1" width="200" height="90"></canvas>
-                                       </div>
-                                    </div>
-                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-lg-6  top_customer_graph_view">
-                        <div class="oh-card text-color">
-                            <div class="oh-card-body pb-0">
-                                <h4 class="mb-0">
-                                </h4>
-                            </div>
-                            <canvas class="top_customer" width="200" height="120"/>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-lg-6  selling_product_graph_view">
-                        <div class="oh-card text-color">
-                            <div class="oh-card-body pb-0">
-                                <h4 class="mb-0">
-                                </h4>
-                            </div>
-                            <canvas class="top_selling_product" width="200" height="120"/>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-lg-6  selling_product_graph_view">
-                        <div class="oh-card text-color">
-                            <div class="oh-card-body pb-0">
-                                <h4 class="mb-0">
-                                </h4>
-                            </div>
-                            <canvas class="top_product_categories" width="200" height="120"/>
-                        </div>
-                    </div>
-                </div>
+                
             </div>
 
     </t>
