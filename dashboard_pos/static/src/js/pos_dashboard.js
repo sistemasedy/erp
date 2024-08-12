@@ -59,20 +59,6 @@ var PosDashboard = AbstractAction.extend({
         var self = this;
         this.set("title", 'Dashboard');
 
-        // Obtener la fecha actual
-        var today = new Date();
-
-        // Obtener el nombre del mes actual en español
-        var nombre_mes_actual = today.toLocaleString('es-ES', { month: 'long' });
-
-        // Colocar el nombre del mes actual en el texto del botón
-        $('#mes_actual_text').text("Mes actual: " + nombre_mes_actual.charAt(0).toUpperCase() + nombre_mes_actual.slice(1));
-        //self.$el.find('#mes_actual_text').text("Mes actual: " + nombre_mes_actual.charAt(0).toUpperCase() + nombre_mes_actual.slice(1));
-
-        console.log("nombre", nombre_mes_actual.charAt(0).toUpperCase() + nombre_mes_actual.slice(1))
-
-
-
         return this._super().then(function() {
             self.render_dashboards();
             self.render_graphs();
@@ -125,6 +111,7 @@ var PosDashboard = AbstractAction.extend({
             self.fecha = result['fecha'];
             self.fecha2 = result['fecha2'];
             self.today_sale_today = result['today_sale_today'];
+            self.targeta2();
             
         });
 
@@ -179,6 +166,7 @@ var PosDashboard = AbstractAction.extend({
 
             // Función para crear los widgets de estadísticas
             self.targeta(self.venta,self.total_cost,self.total_profit);
+            self.targeta2();
 
         });
 
@@ -257,7 +245,36 @@ var PosDashboard = AbstractAction.extend({
         container.appendChild(gananciaWidget);
     },
 
-    
+    targeta2: function() {
+        var self = this;
+
+        // Obtener la fecha actual
+        var today = new Date();
+
+        // Obtener el nombre del mes actual en español
+        var nombre_mes_actual = today.toLocaleString('es-ES', { month: 'long' });
+
+        // Colocar el nombre del mes actual en el texto del botón
+        $('#mes_actual_text').text("Mes actual: " + nombre_mes_actual.charAt(0).toUpperCase() + nombre_mes_actual.slice(1));
+        
+        // Crear el botón "Apply"
+        var applyButton = document.createElement('button');
+        applyButton.type = "button";
+        applyButton.id = "fetch_data_btn";
+        applyButton.className = "btn btn-primary";
+        applyButton.style = "margin-right: 5px; padding: 4px; top: 0px; height: 42px; color: white; background-color: #7c7bad; border-color: #7c7bad;";
+        applyButton.textContent = nombre_mes_actual.charAt(0).toUpperCase() + nombre_mes_actual.slice(1);
+
+        // Obtener el contenedor con id "mes_actual"
+        var mesActualDiv = document.getElementById('mes_actual');
+
+        // Asegurarse de que el contenedor exista antes de agregar el botón
+        if (mesActualDiv) {
+            mesActualDiv.appendChild(applyButton);
+        }
+
+
+    },
 
 
 
