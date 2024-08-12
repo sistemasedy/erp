@@ -17,7 +17,7 @@ var session = require('web.session');
 var PosDashboard = AbstractAction.extend({
     template: 'PosDashboard',
     events: {
-            'click #fetch_data_btn': 'willStart',
+            'click #fetch_data_btn': 'actualizar',
             'click #mes_actual_btn': 'mes_actual',
             'click .pos_order_today':'pos_order_today',
             'click .pos_order':'pos_order',
@@ -45,6 +45,15 @@ var PosDashboard = AbstractAction.extend({
       this.total_cost = [];
       this.total_profit = [];
   },
+
+
+  actualizar: function(){
+        var self = this;
+        return this._super().then(function() {
+             self.fetch_data();
+             self.start();
+        });
+    },
   
 
 
