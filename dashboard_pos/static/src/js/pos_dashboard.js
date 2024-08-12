@@ -93,9 +93,22 @@ var PosDashboard = AbstractAction.extend({
       console.log("fecha")
       self.initial_render = false;
 
-      // Obtener las fechas de los campos de entrada
-      var start_date = $('#start_date').val();
+      var start_date = $('#start_date').val();  // Suponiendo que obtienes la fecha desde un campo de entrada
       var end_date = $('#end_date').val();
+
+      // Si no se proporciona la fecha de inicio, se establece en 30 días atrás desde hoy
+      if (!start_date) {
+          var today = new Date();
+          var pastDate = new Date();
+          pastDate.setDate(today.getDate() - 30);
+          start_date = pastDate.toISOString().split('T')[0];  // Formato YYYY-MM-DD
+      }
+
+      // Si no se proporciona la fecha de fin, se establece en la fecha de hoy
+      if (!end_date) {
+          var today = new Date();
+          end_date = today.toISOString().split('T')[0];  // Formato YYYY-MM-DD
+      }
 
 
       console.log("start", start_date)

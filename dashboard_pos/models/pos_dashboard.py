@@ -164,10 +164,7 @@ class PosDashboard(models.Model):
 
         lafecha = start_date
 
-        if not start_date:
-            start_date = datetime.today().date() - timedelta(days=30)
-        if not end_date:
-            end_date = datetime.today().date()
+        
 
         pos_order = self.env['pos.order'].search([
             ('date_order', '>=', start_date),
@@ -200,7 +197,7 @@ class PosDashboard(models.Model):
         # La lógica existente que ya tenías
 
         default_date = datetime.today().date()
-        pos_order = self.env['pos.order'].search([])
+        #pos_order = self.env['pos.order'].search([])
         orders_today = self.env['pos.order'].search([('date_order', '=', default_date)])
         pos_order_line = self.env['pos.order.line'].search([])
         total = 0

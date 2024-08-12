@@ -54,13 +54,6 @@
                             Apply
                         </button>
                     </div>
-                    <div style="" id="mes_actual">
-                        <button type="button" id="mes_actual_btn" class="btn btn-primary"
-                                style="margin-right: 5px;padding: 4px;top: 0px; height: 42px; color: white; background-color: #7c7bad; border-color: #7c7bad;">
-                            <!-- El nombre del mes actual se insertará aquí -->
-                            <span id="mes_actual_text"></span>
-                        </button>
-                    </div>
                 </div>
             </div>
 
