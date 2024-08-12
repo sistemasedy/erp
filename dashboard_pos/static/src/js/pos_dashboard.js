@@ -18,6 +18,7 @@ odoo.define('dashboard_pos.Dashboard', function (require) {
       template: 'PosDashboard',
       events: {
               'click #fetch_data_btn': 'fetch_data2',
+              'click #fetch_hoy_btn': 'fetch_hoy',
               'click #mes_actual_btn': 'fetch_actualmes',
               'click #mes_anterior_btn': 'fetch_mesanterior',
               'click .pos_order_today':'pos_order_today',
@@ -229,7 +230,20 @@ odoo.define('dashboard_pos.Dashboard', function (require) {
 
               // Función para crear los widgets de estadísticas
               self.targeta(self.venta,self.total_cost,self.total_profit);
-              self.targeta2();
+              // Obtener el contenedor con id "mes_actual"
+              var mesActualDiv = document.getElementById('mes_actual_btn');
+
+              // Asegurarse de que el contenedor exista antes de agregar el botón
+              if (!mesActualDiv) {
+                  self.targeta2();
+              }
+
+              var mesActualDiv = document.getElementById('mes_anterior_btn');
+
+              // Asegurarse de que el contenedor exista antes de agregar el botón
+              if (!mesActualDiv) {
+                  self.targeta3();
+              }
 
           });
 
@@ -273,7 +287,20 @@ odoo.define('dashboard_pos.Dashboard', function (require) {
 
               // Función para crear los widgets de estadísticas
               self.targeta(self.venta,self.total_cost,self.total_profit);
-              self.targeta2();
+              // Obtener el contenedor con id "mes_actual"
+              var mesActualDiv = document.getElementById('mes_actual_btn');
+
+              // Asegurarse de que el contenedor exista antes de agregar el botón
+              if (!mesActualDiv) {
+                  self.targeta2();
+              }
+
+              var mesActualDiv = document.getElementById('mes_anterior_btn');
+
+              // Asegurarse de que el contenedor exista antes de agregar el botón
+              if (!mesActualDiv) {
+                  self.targeta3();
+              }
 
           });
 
@@ -288,6 +315,64 @@ odoo.define('dashboard_pos.Dashboard', function (require) {
 
           return $.when(def1, def2);
       },
+
+      fetch_hoy: function() {
+          var self = this;
+          console.log("fecha");
+          self.initial_render = false;
+
+          // Obtener la fecha de hoy
+          var today = new Date();
+
+          // Obtener el primer día del mes anterior
+          var pastDate = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+          var start_date = today
+
+          // Obtener el último día del mes anterior
+          var endOfMonth = new Date(today.getFullYear(), today.getMonth(), 0);
+          var end_date = today
+
+          var def1 = this._rpc({
+              model: 'pos.order',
+              method: 'get_refund_details2',
+              args: [start_date, end_date],
+          }).then(function(result) {
+              console.log("Respuesta recibida de get_refund_details", result);
+              self.venta = result['venta'];
+              self.total_cost = result['total_cost'];
+              self.total_profit = result['total_profit'];
+
+              // Función para crear los widgets de estadísticas
+              self.targeta(self.venta,self.total_cost,self.total_profit);
+              // Obtener el contenedor con id "mes_actual"
+              var mesActualDiv = document.getElementById('mes_actual_btn');
+
+              // Asegurarse de que el contenedor exista antes de agregar el botón
+              if (!mesActualDiv) {
+                  self.targeta2();
+              }
+
+              var mesActualDiv = document.getElementById('mes_anterior_btn');
+
+              // Asegurarse de que el contenedor exista antes de agregar el botón
+              if (!mesActualDiv) {
+                  self.targeta3();
+              }
+
+          });
+
+          var def2 = self._rpc({
+              model: "pos.order",
+              method: "get_details",
+          }).then(function(res) {
+              self.payment_details = res['payment_details'];
+              self.top_salesperson = res['salesperson'];
+              self.selling_product = res['selling_product'];
+          });
+
+          return $.when(def1, def2);
+      },
+
 
       targeta: function(venta, total_cost, total_profit) {
           var self = this;
