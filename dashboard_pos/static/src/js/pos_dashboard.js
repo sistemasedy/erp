@@ -47,17 +47,6 @@ var PosDashboard = AbstractAction.extend({
   },
 
 
-  actualizar: function(){
-        var self = this;
-        self.fetch_data();
-        self.start();
-    },
-  
-
-
-
-
-
 
     willStart: function() {
         var self = this;
@@ -188,10 +177,10 @@ var PosDashboard = AbstractAction.extend({
             self.total_cost = result['total_cost'];
             self.total_profit = result['total_profit'];
 
-            // Actualizar los elementos del DOM directamente
-            $('.stat_count[t-esc="widget.venta"]').text(self.venta);
-            $('.stat_count[t-esc="widget.total_cost"]').text(self.total_cost);
-            $('.stat_count[t-esc="widget.total_profit"]').text(self.total_profit);
+             // Re-renderizar solo las partes necesarias
+            self.$('.stat_count[t-esc="widget.venta"]').html(QWeb.render('venta_template', {widget: self}));
+            self.$('.stat_count[t-esc="widget.total_cost"]').html(QWeb.render('total_cost_template', {widget: self}));
+            self.$('.stat_count[t-esc="widget.total_profit"]').html(QWeb.render('total_profit_template', {widget: self}));
         });
 
         var def2 = self._rpc({
