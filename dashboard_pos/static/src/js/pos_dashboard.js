@@ -18,7 +18,7 @@ odoo.define('dashboard_pos.Dashboard', function (require) {
       template: 'PosDashboard',
       events: {
               'click #fetch_data_btn': 'fetch_data2',
-              'click #mes_actual_btn': 'mes_actual',
+              'click #mes_actual_btn': 'fetch_actualmes',
               'click .pos_order_today':'pos_order_today',
               'click .pos_order':'pos_order',
               'click .pos_total_sales':'pos_order',
@@ -74,7 +74,7 @@ odoo.define('dashboard_pos.Dashboard', function (require) {
 
       fetch_data: function() {
           var self = this;
-          self.targeta2();
+
           console.log("fecha");
           self.initial_render = false;
 
@@ -114,6 +114,7 @@ odoo.define('dashboard_pos.Dashboard', function (require) {
               self.fecha = result['fecha'];
               self.fecha2 = result['fecha2'];
               self.today_sale_today = result['today_sale_today'];
+              self.targeta2();
               
           });
 
@@ -146,6 +147,55 @@ odoo.define('dashboard_pos.Dashboard', function (require) {
               var today = new Date();
               var pastDate = new Date();
               pastDate.setDate(today.getDate() - 30);
+              start_date = pastDate.toISOString().split('T')[0];
+          }
+
+          if (!end_date) {
+              var today = new Date();
+              end_date = today.toISOString().split('T')[0];
+          }
+
+          console.log("start", start_date);
+
+          var def1 = this._rpc({
+              model: 'pos.order',
+              method: 'get_refund_details2',
+              args: [start_date, end_date],
+          }).then(function(result) {
+              console.log("Respuesta recibida de get_refund_details", result);
+              self.venta = result['venta'];
+              self.total_cost = result['total_cost'];
+              self.total_profit = result['total_profit'];
+
+              // Función para crear los widgets de estadísticas
+              self.targeta(self.venta,self.total_cost,self.total_profit);
+              self.targeta2();
+
+          });
+
+          var def2 = self._rpc({
+              model: "pos.order",
+              method: "get_details",
+          }).then(function(res) {
+              self.payment_details = res['payment_details'];
+              self.top_salesperson = res['salesperson'];
+              self.selling_product = res['selling_product'];
+          });
+
+          return $.when(def1, def2);
+      },
+
+      fetch_actualmes: function() {
+          var self = this;
+          console.log("fecha");
+          self.initial_render = false;
+
+          var start_date = $('#start_date').val();
+          var end_date = $('#end_date').val();
+
+          if (!start_date) {
+              var today = new Date();
+              var pastDate = new Date(today.getFullYear(), today.getMonth(), 1); // Primer día del mes actual
               start_date = pastDate.toISOString().split('T')[0];
           }
 
@@ -264,7 +314,7 @@ odoo.define('dashboard_pos.Dashboard', function (require) {
           // Crear el botón "Apply"
           var applyButton = document.createElement('button');
           applyButton.type = "button";
-          applyButton.id = "fetch_data_btn";
+          applyButton.id = "mes_actual_btn";
           applyButton.className = "btn btn-primary";
           applyButton.style = "margin-right: 5px; padding: 4px; top: 0px; height: 42px; color: white; background-color: #7c7bad; border-color: #7c7bad;";
           applyButton.textContent = nombre_mes_actual.charAt(0).toUpperCase() + nombre_mes_actual.slice(1);

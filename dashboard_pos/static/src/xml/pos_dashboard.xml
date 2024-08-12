@@ -16,12 +16,12 @@
                     <div class="time_range_pos" style="">
                         <a type="button" class="dropdown-toggle" data-toggle="dropdown">
                             <span class="fa fa-calendar" title="Dates" role="img" aria-label="Dates"/>
-                            Date Range
+                            Rango de Fecha
                         </a>
                         <div class="dropdown-menu" role="menu">
 
                             <div class="form-group">
-                                <label class="" for="date_from">Start Date :</label>
+                                <label class="" for="date_from">Fech Inicial :</label>
                                 <div class="input-group date" id="date_from" data-target-input="nearest">
                                     <input type="date" id="start_date" name="date_from" class="form-control"
                                            data-target="#date_from" t-att-name="prefix"/>
@@ -32,7 +32,7 @@
                                     </div>
                                 </div>
 
-                                <label class="" for="date_to">End Date :</label>
+                                <label class="" for="date_to">Fech Final :</label>
                                 <div class="input-group date" id="date_to" data-target-input="nearest">
 
                                     <input type="date" id="end_date" name="date_to" class="form-control"
@@ -51,7 +51,7 @@
                     <div  style="">
                         <button type="button" id="fetch_data_btn" class="btn btn-primary"
                                 style="margin-right: 5px;padding: 4px;top: 0px; height: 42px; color: white; background-color: #7c7bad; border-color: #7c7bad;">
-                            Apply
+                            Buscar por fecha
                         </button>
                     </div>
 
