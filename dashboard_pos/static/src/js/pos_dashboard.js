@@ -51,7 +51,7 @@ odoo.define('dashboard_pos.Dashboard', function (require) {
       willStart: function() {
           var self = this;
           return $.when(ajax.loadLibs(this), this._super()).then(function() {
-              return self.fetch_data();
+              return self.fetch_data() self.targeta2();
           });
       },
 
@@ -63,7 +63,6 @@ odoo.define('dashboard_pos.Dashboard', function (require) {
 
           return this._super().then(function() {
               self.render_dashboards();
-              self.targeta2();
               self.render_graphs();
               self.$el.parent().addClass('oe_background_grey');
           });
