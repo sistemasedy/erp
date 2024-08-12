@@ -17,7 +17,7 @@ var session = require('web.session');
 var PosDashboard = AbstractAction.extend({
     template: 'PosDashboard',
     events: {
-            'click #fetch_data_btn': 'fetch_data',
+            'click #fetch_data_btn': 'willStart',
             'click #mes_actual_btn': 'mes_actual',
             'click .pos_order_today':'pos_order_today',
             'click .pos_order':'pos_order',
