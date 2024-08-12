@@ -17,7 +17,7 @@ var session = require('web.session');
 var PosDashboard = AbstractAction.extend({
     template: 'PosDashboard',
     events: {
-            'click #fetch_data_btn': 'actualizar',
+            'click #fetch_data_btn': 'fetch_data',
             'click #mes_actual_btn': 'mes_actual',
             'click .pos_order_today':'pos_order_today',
             'click .pos_order':'pos_order',
@@ -96,62 +96,65 @@ var PosDashboard = AbstractAction.extend({
 
 
     fetch_data: function() {
-      var self = this;
-      console.log("fecha")
-      self.initial_render = false;
+        var self = this;
+        console.log("fecha");
+        self.initial_render = false;
 
-      var start_date = $('#start_date').val();  // Suponiendo que obtienes la fecha desde un campo de entrada
-      var end_date = $('#end_date').val();
+        var start_date = $('#start_date').val();  // Obtener fecha desde un campo de entrada
+        var end_date = $('#end_date').val();
 
-      // Si no se proporciona la fecha de inicio, se establece en 30 días atrás desde hoy
-      if (!start_date) {
-          var today = new Date();
-          var pastDate = new Date();
-          pastDate.setDate(today.getDate() - 30);
-          start_date = pastDate.toISOString().split('T')[0];  // Formato YYYY-MM-DD
-      }
+        // Si no se proporciona la fecha de inicio, se establece en 30 días atrás desde hoy
+        if (!start_date) {
+            var today = new Date();
+            var pastDate = new Date();
+            pastDate.setDate(today.getDate() - 30);
+            start_date = pastDate.toISOString().split('T')[0];  // Formato YYYY-MM-DD
+        }
 
-      // Si no se proporciona la fecha de fin, se establece en la fecha de hoy
-      if (!end_date) {
-          var today = new Date();
-          end_date = today.toISOString().split('T')[0];  // Formato YYYY-MM-DD
-      }
+        // Si no se proporciona la fecha de fin, se establece en la fecha de hoy
+        if (!end_date) {
+            var today = new Date();
+            end_date = today.toISOString().split('T')[0];  // Formato YYYY-MM-DD
+        }
 
+        console.log("start", start_date);
 
-      console.log("start", start_date)
+        var def1 = this._rpc({
+            model: 'pos.order',
+            method: 'get_refund_details',
+            args: [start_date, end_date],  // Pasar start_date y end_date aquí
+        }).then(function(result) {
+            console.log("Respuesta recibida de get_refund_details", result);
+            self.venta = result['venta'];
+            self.total_cost = result['total_cost'];
+            self.total_profit = result['total_profit'];
+            self.total_order_count = result['total_order_count'];
+            self.total_refund_count = result['total_refund_count'];
+            self.total_session = result['total_session'];
+            self.today_refund_total = result['today_refund_total'];
+            self.today_sale = result['today_sale'];
+            self.fecha = result['fecha'];
+            self.fecha2 = result['fecha2'];
+            self.today_sale_today = result['today_sale_today'];
+        });
 
-      var def1 = this._rpc({
-          model: 'pos.order',
-          method: 'get_refund_details',
-          args: [start_date, end_date],  // Puedes pasar start_date y end_date aquí
-      }).then(function(result) {
-          console.log("Respuesta recibida de get_refund_details", result);
-          self.venta = result['venta'],
-          self.total_cost = result['total_cost'],
-          self.total_profit = result['total_profit'],
-          self.total_order_count = result['total_order_count'],
-          self.total_refund_count = result['total_refund_count'],
-          self.total_session = result['total_session'],
-          self.today_refund_total = result['today_refund_total'],
-          self.today_sale = result['today_sale'],
-          self.fecha = result['fecha'],
-          self.fecha2 = result['fecha2'],
-          self.today_sale_today = result['today_sale_today']
-      });
-      console.log("recibida", self.fecha)
-      console.log("la defauld", self.fecha2)
+        console.log("recibida", self.fecha);
+        console.log("la default", self.fecha2);
 
-      var def2 = self._rpc({
-          model: "pos.order",
-          method: "get_details",
-      }).then(function(res) {
-          self.payment_details = res['payment_details'];
-          self.top_salesperson = res['salesperson'];
-          self.selling_product = res['selling_product'];
-      });
+        var def2 = self._rpc({
+            model: "pos.order",
+            method: "get_details",
+        }).then(function(res) {
+            self.payment_details = res['payment_details'];
+            self.top_salesperson = res['salesperson'];
+            self.selling_product = res['selling_product'];
+        });
 
-      return $.when(def1, def2);
+        return $.when(def1, def2).then(function() {
+            location.reload();  // Refrescar la página cuando se completan ambas promesas
+        });
     },
+
 
     mes_actual: function(events) {
       var self = this;
