@@ -111,6 +111,7 @@ var PosDashboard = AbstractAction.extend({
             self.fecha = result['fecha'];
             self.fecha2 = result['fecha2'];
             self.today_sale_today = result['today_sale_today'];
+            self.targeta2();
             
         });
 
@@ -165,6 +166,7 @@ var PosDashboard = AbstractAction.extend({
 
             // Función para crear los widgets de estadísticas
             self.targeta(self.venta,self.total_cost,self.total_profit);
+            self.targeta2();
 
         });
 
@@ -243,7 +245,7 @@ var PosDashboard = AbstractAction.extend({
         container.appendChild(gananciaWidget);
     },
 
-    targeta2: function(venta, total_cost, total_profit) {
+    targeta2: function() {
         var self = this;
 
         // Obtener la fecha actual
