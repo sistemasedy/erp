@@ -61,7 +61,6 @@ var PosDashboard = AbstractAction.extend({
 
     start: function() {
         var self = this;
-        self.initial_render = true;
         this.set("title", 'Dashboard');
 
         // Obtener la fecha actual
@@ -74,7 +73,7 @@ var PosDashboard = AbstractAction.extend({
         $('#mes_actual_text').text("Mes actual: " + nombre_mes_actual.charAt(0).toUpperCase() + nombre_mes_actual.slice(1));
         //self.$el.find('#mes_actual_text').text("Mes actual: " + nombre_mes_actual.charAt(0).toUpperCase() + nombre_mes_actual.slice(1));
 
-        console.log("nombre", nombre_mes_actual.charAt(0).toUpperCase() + nombre_mes_actual.slice(1), nombre_mes_actual  )
+        console.log("nombre", nombre_mes_actual.charAt(0).toUpperCase() + nombre_mes_actual.slice(1))
 
 
 
@@ -106,6 +105,7 @@ var PosDashboard = AbstractAction.extend({
           method: 'get_refund_details',
           args: [start_date, end_date],  // Puedes pasar start_date y end_date aquí
       }).then(function(result) {
+          console.log("Respuesta recibida de get_refund_details", result);
           self.venta = result['venta'],
           self.total_cost = result['total_cost'],
           self.total_profit = result['total_profit'],
