@@ -194,7 +194,7 @@ var PosDashboard = AbstractAction.extend({
         return $.when(def1, def2);
     },
 
-    targeta: function(venta,total_cost,total_profit) {
+    targeta: function(venta, total_cost, total_profit) {
         var self = this;
 
         // Función para crear los widgets de estadísticas
@@ -225,10 +225,12 @@ var PosDashboard = AbstractAction.extend({
             var headDiv = document.createElement('div');
             headDiv.className = 'stat-head';
             headDiv.textContent = title;
+            headDiv.style.fontSize = '14px';  // Reducir tamaño de la fuente del título
 
             var countDiv = document.createElement('div');
             countDiv.className = 'stat_count';
             countDiv.textContent = value;
+            countDiv.style.fontSize = '16px';  // Reducir tamaño de la fuente del valor
 
             iconDiv.appendChild(iconElement);
             contentDiv.appendChild(headDiv);
@@ -253,8 +255,8 @@ var PosDashboard = AbstractAction.extend({
         container.appendChild(ventaWidget);
         container.appendChild(costosWidget);
         container.appendChild(gananciaWidget);
-        
     },
+
 
 
 
