@@ -127,7 +127,7 @@ var PosDashboard = AbstractAction.extend({
             self.today_sale_today = result['today_sale_today'];
 
             // Función para crear los widgets de estadísticas
-            self.targeta(self.venta,self.total_cost,self.total_profit);
+            //self.targeta(self.venta,self.total_cost,self.total_profit);
             
         });
 
