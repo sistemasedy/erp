@@ -125,9 +125,6 @@ var PosDashboard = AbstractAction.extend({
             self.fecha = result['fecha'];
             self.fecha2 = result['fecha2'];
             self.today_sale_today = result['today_sale_today'];
-
-            // Función para crear los widgets de estadísticas
-            //self.targeta(self.venta,self.total_cost,self.total_profit);
             
         });
 
@@ -233,7 +230,7 @@ var PosDashboard = AbstractAction.extend({
             var countDiv = document.createElement('div');
             countDiv.className = 'stat_count';
             countDiv.textContent = value;
-            countDiv.style.fontSize = '40px';  // Reducir tamaño de la fuente del valor
+            countDiv.style.fontSize = '25px';  // Reducir tamaño de la fuente del valor
 
             iconDiv.appendChild(iconElement);
             contentDiv.appendChild(headDiv);
