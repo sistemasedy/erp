@@ -71,7 +71,8 @@ var PosDashboard = AbstractAction.extend({
         var nombre_mes_actual = today.toLocaleString('es-ES', { month: 'long' });
 
         // Colocar el nombre del mes actual en el texto del botón
-        self.$el.find('#mes_actual_text').text("Mes actual: " + nombre_mes_actual.charAt(0).toUpperCase() + nombre_mes_actual.slice(1));
+        $('#mes_actual_text').text("Mes actual: " + nombre_mes_actual.charAt(0).toUpperCase() + nombre_mes_actual.slice(1));
+        //self.$el.find('#mes_actual_text').text("Mes actual: " + nombre_mes_actual.charAt(0).toUpperCase() + nombre_mes_actual.slice(1));
 
         console.log("nombre", nombre_mes_actual.charAt(0).toUpperCase() + nombre_mes_actual.slice(1), nombre_mes_actual  )
 
@@ -132,7 +133,7 @@ var PosDashboard = AbstractAction.extend({
       return $.when(def1, def2);
     },
 
-    mes_actual: function() {
+    mes_actual: function(events) {
       var self = this;
 
       // Obtener las fechas de los campos de entrada
