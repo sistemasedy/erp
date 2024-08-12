@@ -57,6 +57,20 @@
                 </div>
             </div>
 
+            <div class="employee_dashboard_main">
+            <div class="row main-section">
+                
+                    <div class="col-md-4 col-lg-4">
+                        <div class="hr_notification" style="background: #fff;transition: transform 0.2s ease, box-shadow 0.2s ease;will-change: transform, box-shadow;box-shadow: 0 10px 40px 0 rgba(62,57,107,0.07), 0 2px 9px 0 rgba(62,57,107,0.06);
+                        height: 316px;overflow-y: auto;margin-bottom: 15px;">
+                            <div class="hr_notification_head"
+                                 style="font-size: 17px;text-align: center;padding: 12px 0;color: #fff;font-weight: 300;background: #de6a5e;margin-bottom: 9px;">
+                           REPORTE DE INGRESOS BRUTO
+                            </div>
+                    </div>
+                    </div>
+             </div>
+
             
 
             <div class="row"  id="main_container">
@@ -94,7 +108,7 @@
                             <div class="stat-widget-one">
                                 <div class="stat-icon" style="background:#5bcbd0"><i class="fa fa-money"/></div>
                                 <div class="stat-content">
-                                    <div class="stat-head">Ganancia</div>
+                                    <div class="stat-head">Ganancia Bruta</div>
                                     <div class="stat_count"><t t-esc="widget.total_profit"/></div>
                                 </div>
                             </div>
@@ -115,60 +129,14 @@
 
     <t t-name="PosCustomer">
          <div class="employee_dashboard_main">
-        <div class="row main-section">
-            
-            <div class="col-md-4 col-lg-4">
-                <div class="hr_notification" style="background: #fff;transition: transform 0.2s ease, box-shadow 0.2s ease;will-change: transform, box-shadow;box-shadow: 0 10px 40px 0 rgba(62,57,107,0.07), 0 2px 9px 0 rgba(62,57,107,0.06);
-                height: 316px;overflow-y: auto;margin-bottom: 15px;">
-                    <div class="hr_notification_head"
-                         style="font-size: 17px;text-align: center;padding: 12px 0;color: #fff;font-weight: 300;background: #de6a5e;margin-bottom: 9px;">
-                   Cajeros
-                    </div>
-                    <div class="col-sm-12 col-lg-12" style="padding:0;">
-                            <div class="text-color">
-                                <div class="">
-                                <div class="media">
-                                <div class="media-body">
-                                    <table class="table table-sm">
-                                        <thead>
-                                            <tr>
-                                                <th rowspan="12">Cajero&#160;&#160;&#160;</th>
-                                                <th rowspan="12">orders</th>
-                                                <th rowspan="12">Monto</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                             <t t-foreach="widget.top_salesperson" t-as="salesperson">
-                                                <tr>
-                                                    <td>
-                                                        <h2 class="text-color display-6" style="font-size: 15px;">
-                                                            <t t-esc="salesperson[0]"/>
-                                                        </h2>
-                                                    </td>
-                                                    <td>
-                                                        <h2 class="text-color display-6" style="font-size: 15px;">
-                                                            <t t-esc="salesperson[2]"/>
-                                                        </h2>
-                                                    </td>
-                                                    <td>
-                                                        <h2 class="text-color display-6" style="font-size: 15px;">
-                                                            <t t-esc="salesperson[1]"/>
-                                                        </h2>
-                                                    </td>
-                                                </tr>
-                                            </t>
-                                        </tbody>
-                                    </table>
-                                </div></div></div></div>
-                            </div>
-                    </div>
-            </div>
-            <div class="col-md-4 col-lg-4">
+            <div class="row main-section">
+                
+                <div class="col-md-4 col-lg-4">
                     <div class="hr_notification" style="background: #fff;transition: transform 0.2s ease, box-shadow 0.2s ease;will-change: transform, box-shadow;box-shadow: 0 10px 40px 0 rgba(62,57,107,0.07), 0 2px 9px 0 rgba(62,57,107,0.06);
                     height: 316px;overflow-y: auto;margin-bottom: 15px;">
                         <div class="hr_notification_head"
-                             style="font-size: 17px;text-align: center;padding: 12px 0;color: #fff;font-weight: 300;background:#de6a5e;;margin-bottom: 9px;">
-                          Metodos de Pagos
+                             style="font-size: 17px;text-align: center;padding: 12px 0;color: #fff;font-weight: 300;background: #de6a5e;margin-bottom: 9px;">
+                       Cajeros
                         </div>
                         <div class="col-sm-12 col-lg-12" style="padding:0;">
                                 <div class="text-color">
@@ -178,21 +146,27 @@
                                         <table class="table table-sm">
                                             <thead>
                                                 <tr>
-                                                    <th rowspan="12">Metodo de Pago&#160;&#160;&#160;</th>
+                                                    <th rowspan="12">Cajero&#160;&#160;&#160;</th>
+                                                    <th rowspan="12">orders</th>
                                                     <th rowspan="12">Monto</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                 <t t-foreach="widget.payment_details" t-as="payment_method">
+                                                 <t t-foreach="widget.top_salesperson" t-as="salesperson">
                                                     <tr>
                                                         <td>
                                                             <h2 class="text-color display-6" style="font-size: 15px;">
-                                                                <t t-esc="payment_method[0]"/>
+                                                                <t t-esc="salesperson[0]"/>
                                                             </h2>
                                                         </td>
                                                         <td>
                                                             <h2 class="text-color display-6" style="font-size: 15px;">
-                                                                <t t-esc="payment_method[1]"/>
+                                                                <t t-esc="salesperson[2]"/>
+                                                            </h2>
+                                                        </td>
+                                                        <td>
+                                                            <h2 class="text-color display-6" style="font-size: 15px;">
+                                                                <t t-esc="salesperson[1]"/>
                                                             </h2>
                                                         </td>
                                                     </tr>
@@ -201,13 +175,49 @@
                                         </table>
                                     </div></div></div></div>
                                 </div>
-                    </div>
-            </div>
-
-
-            
-
-            </div>
+                        </div>
+                </div>
+                <div class="col-md-4 col-lg-4">
+                        <div class="hr_notification" style="background: #fff;transition: transform 0.2s ease, box-shadow 0.2s ease;will-change: transform, box-shadow;box-shadow: 0 10px 40px 0 rgba(62,57,107,0.07), 0 2px 9px 0 rgba(62,57,107,0.06);
+                        height: 316px;overflow-y: auto;margin-bottom: 15px;">
+                            <div class="hr_notification_head"
+                                 style="font-size: 17px;text-align: center;padding: 12px 0;color: #fff;font-weight: 300;background:#de6a5e;;margin-bottom: 9px;">
+                              Metodos de Pagos
+                            </div>
+                            <div class="col-sm-12 col-lg-12" style="padding:0;">
+                                    <div class="text-color">
+                                        <div class="">
+                                        <div class="media">
+                                        <div class="media-body">
+                                            <table class="table table-sm">
+                                                <thead>
+                                                    <tr>
+                                                        <th rowspan="12">Metodo de Pago&#160;&#160;&#160;</th>
+                                                        <th rowspan="12">Monto</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                     <t t-foreach="widget.payment_details" t-as="payment_method">
+                                                        <tr>
+                                                            <td>
+                                                                <h2 class="text-color display-6" style="font-size: 15px;">
+                                                                    <t t-esc="payment_method[0]"/>
+                                                                </h2>
+                                                            </td>
+                                                            <td>
+                                                                <h2 class="text-color display-6" style="font-size: 15px;">
+                                                                    <t t-esc="payment_method[1]"/>
+                                                                </h2>
+                                                            </td>
+                                                        </tr>
+                                                    </t>
+                                                </tbody>
+                                            </table>
+                                        </div></div></div></div>
+                                    </div>
+                        </div>
+                </div>
+                </div>
          </div>
 
 
