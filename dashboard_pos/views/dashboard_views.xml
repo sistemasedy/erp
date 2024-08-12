@@ -5,7 +5,7 @@
             <field name="tag">pos_dashboard</field>
         </record>
 
-        <menuitem name="Dashboard" id="pos_dashboard" parent="point_of_sale.menu_point_rep"
+        <menuitem name="Reporte" id="pos_dashboard" parent="point_of_sale.menu_point_rep"
                   sequence="1"
                   groups="point_of_sale.group_pos_manager"
                   action="action_pos_dashboard"/>

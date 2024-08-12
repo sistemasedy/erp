@@ -63,6 +63,18 @@ var PosDashboard = AbstractAction.extend({
         var self = this;
         self.initial_render = true;
         this.set("title", 'Dashboard');
+
+        // Obtener la fecha actual
+        var today = new Date();
+
+        // Obtener el nombre del mes actual en español
+        var nombre_mes_actual = today.toLocaleString('es-ES', { month: 'long' });
+
+        // Colocar el nombre del mes actual en el texto del botón
+        self.$el.find('#mes_actual_btn').text("Mes actual: " + nombre_mes_actual.charAt(0).toUpperCase() + nombre_mes_actual.slice(1));
+
+
+
         return this._super().then(function() {
             self.render_dashboards();
             self.render_graphs();
@@ -138,7 +150,19 @@ var PosDashboard = AbstractAction.extend({
           self.fecha2 = result['fecha2'],
           self.today_sale_today = result['today_sale_today']
       });
-      return $.when(def1);
+      console.log("mes", self.fecha)
+      console.log("la defauld", self.fecha2)
+
+      var def2 = self._rpc({
+          model: "pos.order",
+          method: "get_details",
+      }).then(function(res) {
+          self.payment_details = res['payment_details'];
+          self.top_salesperson = res['salesperson'];
+          self.selling_product = res['selling_product'];
+      });
+
+      return $.when(def1, def2);
     },
 
     render_dashboards: function() {
