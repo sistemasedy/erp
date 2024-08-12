@@ -63,6 +63,7 @@ odoo.define('dashboard_pos.Dashboard', function (require) {
 
           return this._super().then(function() {
               self.render_dashboards();
+              self.targeta2();
               self.render_graphs();
               self.$el.parent().addClass('oe_background_grey');
           });
@@ -114,7 +115,7 @@ odoo.define('dashboard_pos.Dashboard', function (require) {
               self.fecha = result['fecha'];
               self.fecha2 = result['fecha2'];
               self.today_sale_today = result['today_sale_today'];
-              self.targeta2();
+              
               
           });
 
