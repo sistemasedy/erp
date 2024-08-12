@@ -136,6 +136,8 @@ var PosDashboard = AbstractAction.extend({
             self.fecha = result['fecha'];
             self.fecha2 = result['fecha2'];
             self.today_sale_today = result['today_sale_today'];
+            // Aquí forzamos la actualización del DOM
+            self.renderElement();
         });
 
         console.log("recibida", self.fecha);
@@ -150,9 +152,7 @@ var PosDashboard = AbstractAction.extend({
             self.selling_product = res['selling_product'];
         });
 
-        return $.when(def1, def2).then(function() {
-            self.render_dashboards();
-        });
+        return $.when(def1, def2);
     },
 
 
