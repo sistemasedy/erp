@@ -58,6 +58,9 @@
                     <div id="mes_actual" style="">
                         
                     </div>
+                    <div id="mes_anterior" style="">
+                        
+                    </div>
                 </div>
             </div>
 

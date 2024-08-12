@@ -19,6 +19,7 @@ odoo.define('dashboard_pos.Dashboard', function (require) {
       events: {
               'click #fetch_data_btn': 'fetch_data2',
               'click #mes_actual_btn': 'fetch_actualmes',
+              'click #mes_anterior_btn': 'fetch_mesanterior',
               'click .pos_order_today':'pos_order_today',
               'click .pos_order':'pos_order',
               'click .pos_total_sales':'pos_order',
@@ -31,7 +32,6 @@ odoo.define('dashboard_pos.Dashboard', function (require) {
      
 
       init: function(parent, context) {
-        self.targeta2();
         this._super(parent, context);
         this.dashboards_templates = ['PosOrders', 'PosChart', 'PosCustomer'];
         this.payment_details = [];
@@ -170,7 +170,24 @@ odoo.define('dashboard_pos.Dashboard', function (require) {
 
               // Función para crear los widgets de estadísticas
               self.targeta(self.venta,self.total_cost,self.total_profit);
-              self.targeta2();
+
+              // Obtener el contenedor con id "mes_actual"
+              var mesActualDiv = document.getElementById('mes_actual_btn');
+
+              // Asegurarse de que el contenedor exista antes de agregar el botón
+              if (!mesActualDiv) {
+                  self.targeta2();
+              }
+
+              var mesActualDiv = document.getElementById('mes_anterior_btn');
+
+              // Asegurarse de que el contenedor exista antes de agregar el botón
+              if (!mesActualDiv) {
+                  self.targeta3();
+              }
+
+
+              
 
           });
 
@@ -191,21 +208,58 @@ odoo.define('dashboard_pos.Dashboard', function (require) {
           console.log("fecha");
           self.initial_render = false;
 
-          var start_date = $('#start_date').val();
-          var end_date = $('#end_date').val();
+          var today = new Date();
+          var pastDate = new Date(today.getFullYear(), today.getMonth(), 1); // Primer día del mes actual
+          var start_date = pastDate.toISOString().split('T')[0];
 
-          if (!start_date) {
-              var today = new Date();
-              var pastDate = new Date(today.getFullYear(), today.getMonth(), 1); // Primer día del mes actual
-              start_date = pastDate.toISOString().split('T')[0];
-          }
-
-          if (!end_date) {
-              var today = new Date();
-              end_date = today.toISOString().split('T')[0];
-          }
+          var today = new Date();
+          var end_date = today.toISOString().split('T')[0];
 
           console.log("start", start_date);
+
+          var def1 = this._rpc({
+              model: 'pos.order',
+              method: 'get_refund_details2',
+              args: [start_date, end_date],
+          }).then(function(result) {
+              console.log("Respuesta recibida de get_refund_details", result);
+              self.venta = result['venta'];
+              self.total_cost = result['total_cost'];
+              self.total_profit = result['total_profit'];
+
+              // Función para crear los widgets de estadísticas
+              self.targeta(self.venta,self.total_cost,self.total_profit);
+              self.targeta2();
+
+          });
+
+          var def2 = self._rpc({
+              model: "pos.order",
+              method: "get_details",
+          }).then(function(res) {
+              self.payment_details = res['payment_details'];
+              self.top_salesperson = res['salesperson'];
+              self.selling_product = res['selling_product'];
+          });
+
+          return $.when(def1, def2);
+      },
+
+      fetch_mesanterior: function() {
+          var self = this;
+          console.log("fecha");
+          self.initial_render = false;
+
+          // Obtener la fecha de hoy
+          var today = new Date();
+
+          // Obtener el primer día del mes anterior
+          var pastDate = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+          var start_date = pastDate.toISOString().split('T')[0];
+
+          // Obtener el último día del mes anterior
+          var endOfMonth = new Date(today.getFullYear(), today.getMonth(), 0);
+          var end_date = endOfMonth.toISOString().split('T')[0];
 
           var def1 = this._rpc({
               model: 'pos.order',
@@ -328,6 +382,42 @@ odoo.define('dashboard_pos.Dashboard', function (require) {
               mesActualDiv.appendChild(applyButton);
           }
       },
+     
+
+
+     targeta3: function() {
+          var self = this;
+
+          // Función para crear los widgets de estadísticas
+          // Obtener la fecha actual
+          var today = new Date();
+
+          // Obtener el primer día del mes anterior
+          var firstDayOfPreviousMonth = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+
+          // Obtener el nombre del mes anterior en español
+          var nombre_mes_anterior = firstDayOfPreviousMonth.toLocaleString('es-ES', { month: 'long' });
+
+          // Colocar el nombre del mes anterior en el texto del botón
+          $('#mes_actual_text').text("Mes anterior: " + nombre_mes_anterior.charAt(0).toUpperCase() + nombre_mes_anterior.slice(1));
+
+          // Crear el botón "Apply"
+          var applyButton = document.createElement('button');
+          applyButton.type = "button";
+          applyButton.id = "mes_anterior_btn";
+          applyButton.className = "btn btn-primary";
+          applyButton.style = "margin-right: 5px; padding: 4px; top: 0px; height: 42px; color: white; background-color: #7c7bad; border-color: #7c7bad;";
+          applyButton.textContent = nombre_mes_anterior.charAt(0).toUpperCase() + nombre_mes_anterior.slice(1);
+
+          // Obtener el contenedor con id "mes_actual"
+          var mesActualDiv = document.getElementById('mes_anterior');
+
+          // Asegurarse de que el contenedor exista antes de agregar el botón
+          if (mesActualDiv) {
+              mesActualDiv.appendChild(applyButton);
+          }
+      },
+
 
 
 
