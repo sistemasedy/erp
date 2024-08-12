@@ -107,49 +107,10 @@
 
 
             
-            <div class="col-md-4 col-sm-6 pos_session oh-payslip">
-                                            <div class="oh-card" style="width: 288px;">
-                                                <div class="oh-card-body">
-                                                    <div class="stat-widget-one">
-                                                        <div class="stat-icon" style="background:#d05bb8"><i class="fa fa-signal"/></div>
-                                                        <div class="stat-content">
-                                                            <div class="stat-head">Sessions</div>
-                                                            <div class="stat_count"><t t-esc="widget.total_session"/></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                </div>
+            
 
-            <div class="col-md-4 col-sm-6 pos_refund_orders oh-payslip">
-                                    <div class="oh-card" style="width: 288px;">
-                                        <div class="oh-card-body">
-                                            <div class="stat-widget-one">
-                                                <div class="stat-icon" style="background:#d0c35b"><i class="fa fa-minus-circle"/></div>
-                                                <div class="stat-content">
-                                                    <div class="stat-head">Total Refund Orders</div>
-                                                    <div class="stat_count"><t t-esc="widget.total_refund_count"/></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-            <div class="col-md-4 col-sm-6 pos_refund_today_orders oh-payslip">
-                                    <div class="oh-card" style="width: 350px;">
-                                        <div class="oh-card-body">
-                                            <div class="stat-widget-one">
-                                                <div class="stat-icon" style="background:#5b8ed0"><i class="fa fa-minus-circle"/></div>
-                                                <div class="stat-content">
-                                                    <div class="stat-head">Today Refund Order</div>
-                                                    <div class="stat_count"><t t-esc="widget.today_refund_total"/></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-            </div>
-        </t>
+        </div>
+    </t>
     <t t-name="PosChart">
         <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
             <div class="row" style="margin:0px;">

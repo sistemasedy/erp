@@ -158,9 +158,9 @@ class PosDashboard(models.Model):
         ])
         return abs(sum(stock_moves.mapped('product_qty')))
 
- 
+    
     @api.model
-    def get_refund_details(self, start_date, end_date):
+    def get_refund_details2(self, start_date, end_date):
         lafecha = start_date
 
         pos_order = self.env['pos.order'].search([
@@ -233,6 +233,128 @@ class PosDashboard(models.Model):
             'fecha2': lafecha,
         }
 
+
+
+    @api.model
+    def get_refund_details(self, start_date, end_date):
+
+        lafecha = start_date
+
+        
+
+        pos_order = self.env['pos.order'].search([
+            ('date_order', '>=', start_date),
+            ('date_order', '<=', end_date)
+        ])
+
+        venta = 0
+        total_cost_with_standard_price = 0
+        total_cost_with_assigned_price = 0
+        total_profit = 0
+
+        for rec in pos_order:
+            venta += rec.amount_total
+            
+            for line in rec.lines:
+                if line.product_id.standard_price > 0:
+                    # Grupo 1: Productos con standard_price mayor que 0
+                    total_cost_with_standard_price += line.product_id.standard_price * line.qty
+                else:
+                    # Grupo 2: Productos con standard_price igual a 0
+                    assigned_cost = line.price_unit - (line.price_unit * 0.20)  # 20% del precio de venta
+                    total_cost_with_assigned_price += assigned_cost * line.qty
+
+        # Calcular el costo total sumando ambos grupos
+        total_cost = total_cost_with_standard_price + total_cost_with_assigned_price
+
+        # Calcular la ganancia total
+        total_profit = venta - total_cost
+
+        # La lógica existente que ya tenías
+
+        default_date = datetime.today().date()
+        #pos_order = self.env['pos.order'].search([])
+        orders_today = self.env['pos.order'].search([('date_order', '=', default_date)])
+        pos_order_line = self.env['pos.order.line'].search([])
+        total = 0
+        today_refund_total = 0
+        total_order_count = 0
+        total_refund_count = 0
+        today_sale = 0
+        total_today = 0
+
+        today_sale_amount = 0
+        today_sale_product = 0
+        a = 0
+
+        
+
+        for rec in pos_order:
+            if rec.amount_total < 0.0 and rec.date_order.date() == default_date:
+                today_refund_total = today_refund_total + 1
+                total_sales_today = rec.amount_total
+                total_today = total_today + total_sales_today
+            total_order_count = total_order_count + 1
+            if rec.date_order.date() == default_date:
+                today_sale = today_sale + 1
+
+            if rec.amount_total < 0.0:
+                total_refund_count = total_refund_count + 1
+            total_sales = rec.amount_total
+            total = total + total_sales
+
+
+        magnitudes = 0
+        magnitude = 0
+        while abs(total_today) >= 1000:
+            magnitudes += 1
+            total_today /= 1000.0
+
+        while abs(total) >= 1000:
+            magnitude += 1
+            total /= 1000.0
+
+        magnitude1 = 0
+        while abs(venta) >= 1000:
+            magnitude1 += 1
+            venta /= 1000.0
+        magnitude2 = 0
+        while abs(total_cost) >= 1000:
+            magnitude2 += 1
+            total_cost /= 1000.0
+        magnitude3 = 0
+        while abs(total_profit) >= 1000:
+            magnitude3 += 1
+            total_profit /= 1000.0
+
+        # add more suffixes if you need them
+
+        val1 = '%.2f%s' % (venta, ['', 'K', 'M', 'G', 'T', 'P'][magnitude1])
+        val2 = '%.2f%s' % (total_cost, ['', 'K', 'M', 'G', 'T', 'P'][magnitude2])
+        val3 = '%.2f%s' % (total_profit, ['', 'K', 'M', 'G', 'T', 'P'][magnitude3])
+
+
+        val = '%.2f%s' % (total, ['', 'K', 'M', 'G', 'T', 'P'][magnitude])
+        val5 = '%.2f%s' % (total_today, ['', 'K', 'M', 'G', 'T', 'P'][magnitudes])
+        pos_session = self.env['pos.session'].search([])
+        total_session = 0
+        for record in pos_session:
+            total_session = total_session + 1
+        return {
+            'total_sale_today': val5,
+            'total_order_count': total_order_count,
+            'total_refund_count': total_refund_count,
+            'total_session': total_session,
+            'today_refund_total': today_refund_total,
+            'today_sale': today_sale,
+            'venta': val1,
+            'total_cost': val2,
+            'total_profit': val3,
+            'fecha': start_date,
+            'fecha2': lafecha,
+        }
+
+    
 
     @api.model
     def get_mes_actual(self, start_date, end_date):

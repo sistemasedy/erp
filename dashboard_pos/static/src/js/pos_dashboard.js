@@ -169,7 +169,7 @@ var PosDashboard = AbstractAction.extend({
 
         var def1 = this._rpc({
             model: 'pos.order',
-            method: 'get_refund_details',
+            method: 'get_refund_details2',
             args: [start_date, end_date],
         }).then(function(result) {
             console.log("Respuesta recibida de get_refund_details", result);
