@@ -151,7 +151,7 @@ var PosDashboard = AbstractAction.extend({
         });
 
         return $.when(def1, def2).then(function() {
-            location.reload();  // Refrescar la página cuando se completan ambas promesas
+            self.render_dashboards();
         });
     },
 
