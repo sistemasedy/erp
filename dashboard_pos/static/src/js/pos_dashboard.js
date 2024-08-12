@@ -55,7 +55,7 @@ var PosDashboard = AbstractAction.extend({
     willStart: function() {
         var self = this;
         return $.when(ajax.loadLibs(this), this._super()).then(function() {
-            return self.fetch_data();
+            return self.mes_actual();
         });
     },
 
@@ -72,6 +72,8 @@ var PosDashboard = AbstractAction.extend({
 
         // Colocar el nombre del mes actual en el texto del botón
         self.$el.find('#mes_actual_btn').text("Mes actual: " + nombre_mes_actual.charAt(0).toUpperCase() + nombre_mes_actual.slice(1));
+
+        console.log("nombre", nombre_mes_actual.charAt(0).toUpperCase() + nombre_mes_actual.slice(1), nombre_mes_actual  )
 
 
 
