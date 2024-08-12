@@ -111,80 +111,18 @@
 
         </div>
     </t>
-    <t t-name="PosChart">
-        <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
-            <div class="row" style="margin:0px;">
-                <div class="col-md-6" id="col-graph">
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="card-title">
-                                <b>
-                                    <h3 class="custom-h3">SALE REPORT</h3>
-                                </b>
-                            </div>
-                            <div class="card-tools">
-                            <select id="pos_sales">
-<!--                                <option value="pos_hourly_sales">Select</option>-->
-                                <option style="display:none;"> -- select an option -- </option>
-                                <option value="pos_hourly_sales">Hourly</option>
-                                <option value="pos_monthly_sales">Monthly</option>
-                                <option value="pos_year_sales">Yearly</option>
-                            </select>
-                        </div>
-                        </div>
-                        <div class="card-body mt-3" id="in_ex_body_hide">
-                             <div class="row">
-                                <div class="col-md-12">
-                                   <p id="myelement1"></p>
-                                    <div class="chart">
-                                      <canvas id="canvas_1" width="200" height="90"></canvas>
-                                   </div>
-                                </div>
-                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-lg-6  top_customer_graph_view">
-                    <div class="oh-card text-color">
-                        <div class="oh-card-body pb-0">
-                            <h4 class="mb-0">
-                            </h4>
-                        </div>
-                        <canvas class="top_customer" width="200" height="120"/>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-lg-6  selling_product_graph_view">
-                    <div class="oh-card text-color">
-                        <div class="oh-card-body pb-0">
-                            <h4 class="mb-0">
-                            </h4>
-                        </div>
-                        <canvas class="top_selling_product" width="200" height="120"/>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-lg-6  selling_product_graph_view">
-                    <div class="oh-card text-color">
-                        <div class="oh-card-body pb-0">
-                            <h4 class="mb-0">
-                            </h4>
-                        </div>
-                        <canvas class="top_product_categories" width="200" height="120"/>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </t>
+    
 
     <t t-name="PosCustomer">
          <div class="employee_dashboard_main">
         <div class="row main-section">
+            
             <div class="col-md-4 col-lg-4">
                 <div class="hr_notification" style="background: #fff;transition: transform 0.2s ease, box-shadow 0.2s ease;will-change: transform, box-shadow;box-shadow: 0 10px 40px 0 rgba(62,57,107,0.07), 0 2px 9px 0 rgba(62,57,107,0.06);
                 height: 316px;overflow-y: auto;margin-bottom: 15px;">
                     <div class="hr_notification_head"
                          style="font-size: 17px;text-align: center;padding: 12px 0;color: #fff;font-weight: 300;background: #de6a5e;margin-bottom: 9px;">
-                   Para Productos
+                   Cajeros
                     </div>
                     <div class="col-sm-12 col-lg-12" style="padding:0;">
                             <div class="text-color">
@@ -194,55 +132,9 @@
                                     <table class="table table-sm">
                                         <thead>
                                             <tr>
-                                                <th rowspan="12">Name&#160;&#160;&#160;</th>
-                                                <th rowspan="12">Cantidad</th>
-                                                <th rowspan="12">Amount</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                             <t t-foreach="widget.selling_product" t-as="salesperson">
-                                                <tr>
-                                                    <td>
-                                                        <h2 class="text-color display-6" style="font-size: 15px;">
-                                                            <t t-esc="salesperson.product_name"/>
-                                                        </h2>
-                                                    </td>
-                                                    <td>
-                                                        <h2 class="text-color display-6" style="font-size: 15px;">
-                                                            <t t-esc="salesperson.total_quantity"/>
-                                                        </h2>
-                                                    </td>
-                                                    <td>
-                                                        <h2 class="text-color display-6" style="font-size: 15px;">
-                                                            <t t-esc="salesperson[1]"/>
-                                                        </h2>
-                                                    </td>
-                                                </tr>
-                                            </t>
-                                        </tbody>
-                                    </table>
-                                </div></div></div></div>
-                            </div>
-                    </div>
-            </div>
-            <div class="col-md-4 col-lg-4">
-                <div class="hr_notification" style="background: #fff;transition: transform 0.2s ease, box-shadow 0.2s ease;will-change: transform, box-shadow;box-shadow: 0 10px 40px 0 rgba(62,57,107,0.07), 0 2px 9px 0 rgba(62,57,107,0.06);
-                height: 316px;overflow-y: auto;margin-bottom: 15px;">
-                    <div class="hr_notification_head"
-                         style="font-size: 17px;text-align: center;padding: 12px 0;color: #fff;font-weight: 300;background: #de6a5e;margin-bottom: 9px;">
-                   Sale by Salesperson
-                    </div>
-                    <div class="col-sm-12 col-lg-12" style="padding:0;">
-                            <div class="text-color">
-                                <div class="">
-                                <div class="media">
-                                <div class="media-body">
-                                    <table class="table table-sm">
-                                        <thead>
-                                            <tr>
-                                                <th rowspan="12">Name&#160;&#160;&#160;</th>
+                                                <th rowspan="12">Cajero&#160;&#160;&#160;</th>
                                                 <th rowspan="12">orders</th>
-                                                <th rowspan="12">Amount</th>
+                                                <th rowspan="12">Monto</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -276,7 +168,7 @@
                     height: 316px;overflow-y: auto;margin-bottom: 15px;">
                         <div class="hr_notification_head"
                              style="font-size: 17px;text-align: center;padding: 12px 0;color: #fff;font-weight: 300;background:#de6a5e;;margin-bottom: 9px;">
-                          Payment Method
+                          Metodos de Pagos
                         </div>
                         <div class="col-sm-12 col-lg-12" style="padding:0;">
                                 <div class="text-color">
@@ -286,8 +178,8 @@
                                         <table class="table table-sm">
                                             <thead>
                                                 <tr>
-                                                    <th rowspan="12">Payment Method&#160;&#160;&#160;</th>
-                                                    <th rowspan="12">Amount</th>
+                                                    <th rowspan="12">Metodo de Pago&#160;&#160;&#160;</th>
+                                                    <th rowspan="12">Monto</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -313,56 +205,79 @@
             </div>
 
 
-            <div class="col-md-4 col-lg-4">
-                <div class="hr_notification" style="background: #fff;transition: transform 0.2s ease, box-shadow 0.2s ease;will-change: transform, box-shadow;box-shadow: 0 10px 40px 0 rgba(62,57,107,0.07), 0 2px 9px 0 rgba(62,57,107,0.06);
-                height: 316px;overflow-y: auto;margin-bottom: 15px;">
-                    <div class="hr_notification_head"
-                         style="font-size: 17px;text-align: center;padding: 12px 0;color: #fff;font-weight: 300;background: #de6a5e;margin-bottom: 9px;">
-                 Session Status
-                    </div>
-                    <div class="col-sm-12 col-lg-12" style="padding:0;">
-                            <div class="text-color">
-                                <div class="">
-                                <div class="media">
-                                <div class="media-body">
-                                    <table class="table table-sm">
-                                        <thead>
-                                            <tr>
-                                                <th rowspan="12">Session&#160;&#160;&#160;</th>
-                                                <th rowspan="12">Status</th>
-                                                <!--                                                <th rowspan="12">Amount</th>-->
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                             <t t-foreach="widget.selling_product" t-as="session">
-                                                <tr>
-                                                    <td>
-                                                        <h2 class="text-color display-6" style="font-size: 15px;">
-                                                            <t t-esc="session['session']"/>
-                                                        </h2>
-                                                    </td>
-                                                    <td>
-                                                        <h2 class="text-color display-6" style="font-size: 15px;">
-                                                            <t t-esc="session['status']"/>
-                                                        </h2>
-                                                    </td>
-                                                    <!--                                                    <td>-->
-                                                    <!--                                                        <h2 class="text-color display-6" style="font-size: 15px;">-->
-                                                    <!--                                                            <t t-esc="salesperson[1]"/>-->
-                                                    <!--                                                        </h2>-->
-                                                    <!--                                                    </td>-->
-                                                </tr>
-                                            </t>
-                                        </tbody>
-                                    </table>
-                                </div></div></div></div>
-                            </div>
-                    </div>
-            </div>
+            
 
             </div>
          </div>
 
+
+    </t>
+
+
+
+
+    <t t-name="PosChart">
+            <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                <div class="row" style="margin:0px;">
+                    <div class="col-md-6" id="col-graph">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">
+                                    <b>
+                                        <h3 class="custom-h3">SALE REPORT</h3>
+                                    </b>
+                                </div>
+                                <div class="card-tools">
+                                <select id="pos_sales">
+    <!--                                <option value="pos_hourly_sales">Select</option>-->
+                                    <option style="display:none;"> -- select an option -- </option>
+                                    <option value="pos_hourly_sales">Hourly</option>
+                                    <option value="pos_monthly_sales">Monthly</option>
+                                    <option value="pos_year_sales">Yearly</option>
+                                </select>
+                            </div>
+                            </div>
+                            <div class="card-body mt-3" id="in_ex_body_hide">
+                                 <div class="row">
+                                    <div class="col-md-12">
+                                       <p id="myelement1"></p>
+                                        <div class="chart">
+                                          <canvas id="canvas_1" width="200" height="90"></canvas>
+                                       </div>
+                                    </div>
+                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-6  top_customer_graph_view">
+                        <div class="oh-card text-color">
+                            <div class="oh-card-body pb-0">
+                                <h4 class="mb-0">
+                                </h4>
+                            </div>
+                            <canvas class="top_customer" width="200" height="120"/>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-6  selling_product_graph_view">
+                        <div class="oh-card text-color">
+                            <div class="oh-card-body pb-0">
+                                <h4 class="mb-0">
+                                </h4>
+                            </div>
+                            <canvas class="top_selling_product" width="200" height="120"/>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-6  selling_product_graph_view">
+                        <div class="oh-card text-color">
+                            <div class="oh-card-body pb-0">
+                                <h4 class="mb-0">
+                                </h4>
+                            </div>
+                            <canvas class="top_product_categories" width="200" height="120"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
     </t>
 </templates>
