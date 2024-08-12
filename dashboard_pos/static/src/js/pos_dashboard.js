@@ -51,7 +51,7 @@ odoo.define('dashboard_pos.Dashboard', function (require) {
       willStart: function() {
           var self = this;
           return $.when(ajax.loadLibs(this), this._super()).then(function() {
-              return self.fetch_data() self.targeta2();
+              return self.fetch_data(),self.targeta2();
           });
       },
 
