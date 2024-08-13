@@ -34,13 +34,13 @@
     'depends': ['web', 'mail'],
     'assets': {
         'web.assets_qweb': [
-            'responsive_web/static/src/xml/PivotCustom.xml',
-            'responsive_web/static/templates/side_bar.xml',
-            'responsive_web/static/src/components/apps_menu/link_view.xml',
+            #'responsive_web/static/src/xml/PivotCustom.xml',
+            #'responsive_web/static/templates/side_bar.xml',
+            #'responsive_web/static/src/components/apps_menu/link_view.xml',
         ],
         'web.assets_backend': [
-            'responsive_web/static/src/css/main.css',
-            'responsive_web/static/src/css/menu_order.css',
+            #'responsive_web/static/src/css/main.css',
+            #'responsive_web/static/src/css/menu_order.css',
             #'responsive_web/static/src/components/apps_menu/apps_menu.js',
         ]
     },
