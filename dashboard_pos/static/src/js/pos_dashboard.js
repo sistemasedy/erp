@@ -327,8 +327,8 @@ odoo.define('dashboard_pos.Dashboard', function (require) {
 
           // Formatear la fecha actual al formato ISO (YYYY-MM-DD)
           var current_date = today.toISOString().split('T')[0];
-          var start_date = current_date
-          var end_date = current_date
+          var start_date = today.toISOString().split('T')[0];
+          var end_date = today.toISOString().split('T')[0];
 
           var def1 = this._rpc({
               model: 'pos.order',
@@ -558,16 +558,6 @@ odoo.define('dashboard_pos.Dashboard', function (require) {
               mesActualDiv.appendChild(applyButton);
           }
       },
-
-
-
-
-
-
-
-
-
-
 
 
 
