@@ -14,15 +14,15 @@
                 <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
 
                     <div class="sub_container_left" style="width: 285px; margin-left: 36px;">
+
+                        <div id="mes_actual" style="">
+                            
+                        </div>
+                        <div id="mes_anterior" style="">
+                            
+                        </div>
                         <div class="report_print">
-                            <button type="button" class="btn btn-primary" id="fetch_hoy_btn"
-                                    style="top: 0px; height: 42px; color: white; background-color: #7c7bad; border-color: #7c7bad; width: 127px;">
-                                El Dia de Hoy
-                            </button>
-                            <button type="button" class="btn btn-primary" id="fetch_ayer_btn"
-                                    style="top: 0px; height: 42px; color: white; background-color: #7c7bad; border-color: #7c7bad; width: 127px;">
-                                El Dia de Ayer
-                            </button>
+                            
                             <button type="button" class="btn btn-primary" id="fetch_data_btn"
                                     style="top: 0px; height: 42px; color: white; background-color: #7c7bad; border-color: #7c7bad; width: 127px;">
                                 Buscar por fecha
@@ -70,12 +70,7 @@
                             </div>
                         </div>
 
-                        <div id="mes_actual" style="">
-                            
-                        </div>
-                        <div id="mes_anterior" style="">
-                            
-                        </div>
+                        
                     </div>
                 </div>
 
