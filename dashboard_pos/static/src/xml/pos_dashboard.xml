@@ -19,6 +19,10 @@
                                     style="top: 0px; height: 42px; color: white; background-color: #7c7bad; border-color: #7c7bad; width: 127px;">
                                 El Dia de Hoy
                             </button>
+                            <button type="button" class="btn btn-primary" id="fetch_ayer_btn"
+                                    style="top: 0px; height: 42px; color: white; background-color: #7c7bad; border-color: #7c7bad; width: 127px;">
+                                El Dia de Ayer
+                            </button>
                             <button type="button" class="btn btn-primary" id="fetch_data_btn"
                                     style="top: 0px; height: 42px; color: white; background-color: #7c7bad; border-color: #7c7bad; width: 127px;">
                                 Buscar por fecha
