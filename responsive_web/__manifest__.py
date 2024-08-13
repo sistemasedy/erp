@@ -41,7 +41,7 @@
         'web.assets_backend': [
             'responsive_web/static/src/css/main.css',
             'responsive_web/static/src/css/menu_order.css',
-            'responsive_web/static/src/components/apps_menu/apps_menu.js',
+            #'responsive_web/static/src/components/apps_menu/apps_menu.js',
         ]
     },
     'images': ['static/description/banner.png'],
