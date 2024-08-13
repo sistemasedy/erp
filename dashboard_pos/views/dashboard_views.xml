@@ -5,7 +5,7 @@
             <field name="tag">pos_dashboard</field>
         </record>
 
-        <menuitem id="menu_main_ganancias" name="Reportes de Ganancias"/>
+        <menuitem id="menu_main_ganancias" name="Reportes de Ganancias" web_icon="point_of_sale,static/description/icon.png"/>
 
         <menuitem name="Reporte" id="pos_dashboard_ganancias" parent="menu_main_ganancias"
                   sequence="1"
