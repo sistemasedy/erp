@@ -127,21 +127,6 @@ class PosDashboard(models.Model):
             'selling_product': sessions_list,
         }
 
-    
-
-
-    @api.model
-    def _get_reorder_quantity(self, product, start_date, end_date):
-        stock_moves = self.env['stock.move'].search([
-            ('product_id', '=', product.id),
-            ('location_id.usage', '=', 'internal'),
-            ('date', '>=', start_date),
-            ('date', '<=', end_date),
-            ('reference', 'ilike', 'WH/POS/%')
-        ])
-        return abs(sum(stock_moves.mapped('product_qty')))
-
-    
     @api.model
     def get_refund_details2(self, start_date, end_date):
         lafecha = start_date
@@ -312,6 +297,11 @@ class PosDashboard(models.Model):
 
         # add more suffixes if you need them
 
+        # Formatear los valores con separadores de miles y 2 decimales
+        formatted_venta = "{:,.2f}".format(venta)
+        formatted_total_cost = "{:,.2f}".format(total_cost)
+        formatted_total_profit = "{:,.2f}".format(total_profit)
+
         val1 = '%.2f%s' % (venta, ['', 'K', 'M', 'G', 'T', 'P'][magnitude1])
         val2 = '%.2f%s' % (total_cost, ['', 'K', 'M', 'G', 'T', 'P'][magnitude2])
         val3 = '%.2f%s' % (total_profit, ['', 'K', 'M', 'G', 'T', 'P'][magnitude3])
@@ -330,9 +320,9 @@ class PosDashboard(models.Model):
             'total_session': total_session,
             'today_refund_total': today_refund_total,
             'today_sale': today_sale,
-            'venta': val1,
-            'total_cost': val2,
-            'total_profit': val3,
+            'venta': formatted_venta,
+            'total_cost': formatted_total_cost,
+            'total_profit': formatted_total_profit,
             'fecha': start_date,
             'fecha2': lafecha,
         }

@@ -19,6 +19,7 @@ odoo.define('dashboard_pos.Dashboard', function (require) {
       events: {
               'click #fetch_data_btn': 'fetch_data2',
               'click #fetch_hoy_btn': 'fetch_hoy',
+              'click #fetch_ayer_btn': 'fetch_ayer',
               'click #mes_actual_btn': 'fetch_actualmes',
               'click #mes_anterior_btn': 'fetch_mesanterior',
               'click .pos_order_today':'pos_order_today',
@@ -324,13 +325,67 @@ odoo.define('dashboard_pos.Dashboard', function (require) {
           // Obtener la fecha de hoy
           var today = new Date();
 
-          // Obtener el primer día del mes anterior
-          var pastDate = new Date(today.getFullYear(), today.getMonth() - 1, 1);
-          var start_date = today
+          // Formatear la fecha actual al formato ISO (YYYY-MM-DD)
+          var current_date = today.toISOString().split('T')[0];
+          var start_date = current_date
+          var end_date = current_date
 
-          // Obtener el último día del mes anterior
-          var endOfMonth = new Date(today.getFullYear(), today.getMonth(), 0);
-          var end_date = today
+          var def1 = this._rpc({
+              model: 'pos.order',
+              method: 'get_refund_details2',
+              args: [start_date, end_date],
+          }).then(function(result) {
+              console.log("Respuesta recibida de get_refund_details", result);
+              self.venta = result['venta'];
+              self.total_cost = result['total_cost'];
+              self.total_profit = result['total_profit'];
+
+              // Función para crear los widgets de estadísticas
+              self.targeta(self.venta,self.total_cost,self.total_profit);
+              // Obtener el contenedor con id "mes_actual"
+              var mesActualDiv = document.getElementById('mes_actual_btn');
+
+              // Asegurarse de que el contenedor exista antes de agregar el botón
+              if (!mesActualDiv) {
+                  self.targeta2();
+              }
+
+              var mesActualDiv = document.getElementById('mes_anterior_btn');
+
+              // Asegurarse de que el contenedor exista antes de agregar el botón
+              if (!mesActualDiv) {
+                  self.targeta3();
+              }
+
+          });
+
+          var def2 = self._rpc({
+              model: "pos.order",
+              method: "get_details",
+          }).then(function(res) {
+              self.payment_details = res['payment_details'];
+              self.top_salesperson = res['salesperson'];
+              self.selling_product = res['selling_product'];
+          });
+
+          return $.when(def1, def2);
+      },
+
+      fetch_ayer: function() {
+          var self = this;
+          console.log("fecha");
+          self.initial_render = false;
+
+          // Obtener la fecha de hoy
+          var today = new Date();
+
+          // Restar un día de la fecha actual
+          today.setDate(today.getDate() - 1);
+
+          // Formatear la fecha anterior al formato ISO (YYYY-MM-DD)
+          var previous_date = today.toISOString().split('T')[0];
+          var start_date = previous_date
+          var end_date = previous_date
 
           var def1 = this._rpc({
               model: 'pos.order',
