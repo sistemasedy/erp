@@ -386,6 +386,7 @@ odoo.define('dashboard_pos.Dashboard', function (require) {
           var previous_date = today.toISOString().split('T')[0];
           var start_date = previous_date
           var end_date = previous_date
+          console.log("ver f", previous_date)
 
           var def1 = this._rpc({
               model: 'pos.order',
@@ -928,6 +929,7 @@ odoo.define('dashboard_pos.Dashboard', function (require) {
                   model: "pos.order",
                   method: "get_the_top_products",
               }).then(function (arrays) {
+                console.log("produc", arrays)
 
 
             var data = {
@@ -955,8 +957,6 @@ odoo.define('dashboard_pos.Dashboard', function (require) {
 
               ]
             };
-
-    //options
             var options = {
               responsive: true,
               title: {
