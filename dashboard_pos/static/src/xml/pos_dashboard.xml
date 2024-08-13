@@ -3,62 +3,83 @@
     <t t-name="PosDashboard">
         <div class="oh_dashboards">
             <div class="container-fluid o_pos_dashboard">
-                <!-- Content for PosDashboard goes here -->
             </div>
         </div>
     </t>
     <t t-name="PosOrders">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="d-flex justify-content-end mb-3">
-                        <div class="dropdown">
-                            <a class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown">
-                                <span class="fa fa-calendar" title="Dates"></span>
-                                Rango de Fecha
-                            </a>
-                            <div class="dropdown-menu">
-                                <div class="form-group px-3">
-                                    <label for="date_from">Fecha Inicial:</label>
-                                    <div class="input-group date" id="date_from" data-target-input="nearest">
-                                        <input type="date" id="start_date" name="date_from" class="form-control"
-                                               data-target="#date_from"/>
-                                        <div class="input-group-append" data-target="#date_from" data-toggle="datetimepicker">
-                                            <span class="input-group-text">
-                                                <span class="fa fa-calendar"></span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <label for="date_to">Fecha Final:</label>
-                                    <div class="input-group date" id="date_to" data-target-input="nearest">
-                                        <input type="date" id="end_date" name="date_to" class="form-control"
-                                               data-target="#date_to"/>
-                                        <div class="input-group-append" data-target="#date_to" data-toggle="datetimepicker">
-                                            <span class="input-group-text">
-                                                <span class="fa fa-calendar"></span>
-                                            </span>
-                                        </div>
+        <div class="row main-section">
+            <!-- Campo para la Fecha de Inicio -->
+
+            <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+
+                <div class="sub_container_right row" style="width: 30%; height: 3%; top: 0px; position: relative; display: flex; justify-content: end; margin-bottom: 20px;">
+                    <div class="time_range_pos" style="">
+                        <a type="button" class="dropdown-toggle" data-toggle="dropdown">
+                            <span class="fa fa-calendar" title="Dates" role="img" aria-label="Dates"/>
+                            Rango de Fecha
+                        </a>
+                        <div class="dropdown-menu" role="menu">
+
+                            <div class="form-group">
+                                <label class="" for="date_from">Fech Inicial :</label>
+                                <div class="input-group date" id="date_from" data-target-input="nearest">
+                                    <input type="date" id="start_date" name="date_from" class="form-control"
+                                           data-target="#date_from" t-att-name="prefix"/>
+                                    <div class="input-group-append" data-target="#date_from" data-toggle="datetimepicker">
+                                        <span class="input-group-text">
+                                            <span class="fa fa-calendar" role="img" aria-label="Calendar"/>
+                                        </span>
                                     </div>
                                 </div>
+
+                                <label class="" for="date_to">Fech Final :</label>
+                                <div class="input-group date" id="date_to" data-target-input="nearest">
+
+                                    <input type="date" id="end_date" name="date_to" class="form-control"
+                                           data-target="#date_to" t-att-name="prefix"/>
+                                    <div class="input-group-append" data-target="#date_to" data-toggle="datetimepicker">
+                                        <span class="input-group-text">
+                                            <span class="fa fa-calendar" role="img" aria-label="Calendar"/>
+                                        </span>
+                                    </div>
+                                </div>
+
                             </div>
+                            
                         </div>
-                        <button type="button" id="fetch_data_btn" class="btn btn-primary mx-1">
+                    </div>
+                    <div  style="">
+                        <button type="button" id="fetch_data_btn" class="btn btn-primary"
+                                style="margin-right: 5px;padding: 4px;top: 0px; height: 42px; color: white; background-color: #7c7bad; border-color: #7c7bad;">
                             Buscar por fecha
                         </button>
-                        <button type="button" id="fetch_hoy_btn" class="btn btn-primary mx-1">
+                    </div>
+
+                    <div  style="">
+                        <button type="button" id="fetch_hoy_btn" class="btn btn-primary"
+                                style="margin-right: 5px;padding: 4px;top: 0px; height: 42px; color: white; background-color: #7c7bad; border-color: #7c7bad;">
                             El Dia de Hoy
                         </button>
+                    </div>
+
+                    <div id="mes_actual" style="">
+                        
+                    </div>
+                    <div id="mes_anterior" style="">
+                        
                     </div>
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-md-4 col-sm-6">
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center">
-                                <div class="stat-icon" style="background:#5bcbd0"><i class="fa fa-shopping-bag"></i></div>
-                                <div class="stat-content ml-3">
+
+            <div class="row"  id="main_container">
+
+                <div class="col-md-4 col-sm-6 pos_order_today oh-payslip">
+                    <div class="oh-card" style="width: 288px;">
+                        <div class="oh-card-body">
+                            <div class="stat-widget-one">
+                                <div class="stat-icon" style="background:#5bcbd0"><i class="fa fa-shopping-bag"/></div>
+                                <div class="stat-content">
                                     <div class="stat-head">Total Venta</div>
                                     <div class="stat_count"><t t-esc="widget.venta"/></div>
                                 </div>
@@ -66,12 +87,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center">
-                                <div class="stat-icon" style="background:#5bcbd0"><i class="fa fa-shopping-bag"></i></div>
-                                <div class="stat-content ml-3">
+
+                <div class="col-md-4 col-sm-6 pos_order_today oh-payslip">
+                    <div class="oh-card" style="width: 288px;">
+                        <div class="oh-card-body">
+                            <div class="stat-widget-one">
+                                <div class="stat-icon" style="background:#5bcbd0"><i class="fa fa-shopping-bag"/></div>
+                                <div class="stat-content">
                                     <div class="stat-head">Total Costos</div>
                                     <div class="stat_count"><t t-esc="widget.total_cost"/></div>
                                 </div>
@@ -79,12 +101,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center">
-                                <div class="stat-icon" style="background:#5bcbd0"><i class="fa fa-money"></i></div>
-                                <div class="stat-content ml-3">
+                <div class="col-md-4 col-sm-6 pos_order_today oh-payslip">
+                    <div class="oh-card" style="width: 288px;">
+                        <div class="oh-card-body">
+                            <div class="stat-widget-one">
+                                <div class="stat-icon" style="background:#5bcbd0"><i class="fa fa-money"/></div>
+                                <div class="stat-content">
                                     <div class="stat-head">Ganancia Bruta</div>
                                     <div class="stat_count"><t t-esc="widget.total_profit"/></div>
                                 </div>
@@ -92,73 +114,116 @@
                         </div>
                     </div>
                 </div>
+
             </div>
+
         </div>
     </t>
+    
 
     <t t-name="PosCustomer">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="card mb-3">
-                        <div class="card-header text-center text-white" style="background:#de6a5e;">
-                            Cajeros
+         <div class="employee_dashboard_main">
+            <div class="row main-section">
+                
+                <div class="col-md-4 col-lg-4">
+                    <div class="hr_notification" style="background: #fff;transition: transform 0.2s ease, box-shadow 0.2s ease;will-change: transform, box-shadow;box-shadow: 0 10px 40px 0 rgba(62,57,107,0.07), 0 2px 9px 0 rgba(62,57,107,0.06);
+                    height: 316px;overflow-y: auto;margin-bottom: 15px;">
+                        <div class="hr_notification_head"
+                             style="font-size: 17px;text-align: center;padding: 12px 0;color: #fff;font-weight: 300;background: #de6a5e;margin-bottom: 9px;">
+                       Cajeros
                         </div>
-                        <div class="card-body p-0">
-                            <table class="table table-sm mb-0">
-                                <thead>
-                                    <tr>
-                                        <th>Cajero</th>
-                                        <th>Orders</th>
-                                        <th>Monto</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <t t-foreach="widget.top_salesperson" t-as="salesperson">
-                                        <tr>
-                                            <td><t t-esc="salesperson[0]"/></td>
-                                            <td><t t-esc="salesperson[2]"/></td>
-                                            <td><t t-esc="salesperson[1]"/></td>
-                                        </tr>
-                                    </t>
-                                </tbody>
-                            </table>
+                        <div class="col-sm-12 col-lg-12" style="padding:0;">
+                                <div class="text-color">
+                                    <div class="">
+                                    <div class="media">
+                                    <div class="media-body">
+                                        <table class="table table-sm">
+                                            <thead>
+                                                <tr>
+                                                    <th rowspan="12">Cajero&#160;&#160;&#160;</th>
+                                                    <th rowspan="12">orders</th>
+                                                    <th rowspan="12">Monto</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                 <t t-foreach="widget.top_salesperson" t-as="salesperson">
+                                                    <tr>
+                                                        <td>
+                                                            <h2 class="text-color display-6" style="font-size: 15px;">
+                                                                <t t-esc="salesperson[0]"/>
+                                                            </h2>
+                                                        </td>
+                                                        <td>
+                                                            <h2 class="text-color display-6" style="font-size: 15px;">
+                                                                <t t-esc="salesperson[2]"/>
+                                                            </h2>
+                                                        </td>
+                                                        <td>
+                                                            <h2 class="text-color display-6" style="font-size: 15px;">
+                                                                <t t-esc="salesperson[1]"/>
+                                                            </h2>
+                                                        </td>
+                                                    </tr>
+                                                </t>
+                                            </tbody>
+                                        </table>
+                                    </div></div></div></div>
+                                </div>
                         </div>
-                    </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="card mb-3">
-                        <div class="card-header text-center text-white" style="background:#de6a5e;">
-                            Métodos de Pagos
+                <div class="col-md-4 col-lg-4">
+                        <div class="hr_notification" style="background: #fff;transition: transform 0.2s ease, box-shadow 0.2s ease;will-change: transform, box-shadow;box-shadow: 0 10px 40px 0 rgba(62,57,107,0.07), 0 2px 9px 0 rgba(62,57,107,0.06);
+                        height: 316px;overflow-y: auto;margin-bottom: 15px;">
+                            <div class="hr_notification_head"
+                                 style="font-size: 17px;text-align: center;padding: 12px 0;color: #fff;font-weight: 300;background:#de6a5e;;margin-bottom: 9px;">
+                              Metodos de Pagos
+                            </div>
+                            <div class="col-sm-12 col-lg-12" style="padding:0;">
+                                    <div class="text-color">
+                                        <div class="">
+                                        <div class="media">
+                                        <div class="media-body">
+                                            <table class="table table-sm">
+                                                <thead>
+                                                    <tr>
+                                                        <th rowspan="12">Metodo de Pago&#160;&#160;&#160;</th>
+                                                        <th rowspan="12">Monto</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                     <t t-foreach="widget.payment_details" t-as="payment_method">
+                                                        <tr>
+                                                            <td>
+                                                                <h2 class="text-color display-6" style="font-size: 15px;">
+                                                                    <t t-esc="payment_method[0]"/>
+                                                                </h2>
+                                                            </td>
+                                                            <td>
+                                                                <h2 class="text-color display-6" style="font-size: 15px;">
+                                                                    <t t-esc="payment_method[1]"/>
+                                                                </h2>
+                                                            </td>
+                                                        </tr>
+                                                    </t>
+                                                </tbody>
+                                            </table>
+                                        </div></div></div></div>
+                                    </div>
                         </div>
-                        <div class="card-body p-0">
-                            <table class="table table-sm mb-0">
-                                <thead>
-                                    <tr>
-                                        <th>Método de Pago</th>
-                                        <th>Monto</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <t t-foreach="widget.payment_details" t-as="payment_method">
-                                        <tr>
-                                            <td><t t-esc="payment_method[0]"/></td>
-                                            <td><t t-esc="payment_method[1]"/></td>
-                                        </tr>
-                                    </t>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
                 </div>
-            </div>
-        </div>
+                </div>
+         </div>
+
+
     </t>
+
+
+
 
     <t t-name="PosChart">
-        <div class="container">
-            <!-- Content for PosChart goes here -->
-        </div>
+            <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                
+            </div>
+
     </t>
 </templates>
-
