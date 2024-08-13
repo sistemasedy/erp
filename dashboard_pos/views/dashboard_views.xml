@@ -5,6 +5,13 @@
             <field name="tag">pos_dashboard</field>
         </record>
 
+        <menuitem id="menu_main_ganancias" name="Reportes de Ganancias"/>
+
+        <menuitem name="Reporte" id="pos_dashboard_ganancias" parent="menu_main_ganancias"
+                  sequence="1"
+                  groups="point_of_sale.group_pos_manager"
+                  action="action_pos_dashboard"/>
+
         <menuitem name="Reporte" id="pos_dashboard" parent="point_of_sale.menu_point_rep"
                   sequence="1"
                   groups="point_of_sale.group_pos_manager"
