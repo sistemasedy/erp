@@ -89,7 +89,7 @@ odoo.define('dashboard_pos.Dashboard', function (require) {
               var today = new Date();
               var pastDate = new Date();
               pastDate.setDate(today.getDate() - 1);
-              start_date = pastDate.toISOString().split('T')[0];  // Formato YYYY-MM-DD
+              start_date = today.toISOString().split('T')[0];  // Formato YYYY-MM-DD
           }
 
           // Si no se proporciona la fecha de fin, se establece en la fecha de hoy
