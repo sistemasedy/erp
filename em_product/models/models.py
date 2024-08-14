@@ -65,15 +65,17 @@ class ProductTemplate(models.Model):
             if record.standard_price > 0:
                 
                 if record.list_price > 1:
-                    record.margen_valor = (record.list_price - record.standard_price)
-                    record.margen = (((record.list_price - record.standard_price)/record.standard_price)*100)
+                    # Formatear los valores con separadores de miles y 2 decimales
+        
+                    record.margen_valor =  "{:,.2f}".format((record.list_price - record.standard_price)) 
+                    record.margen = "{:,.2f}".format((((record.list_price - record.standard_price)/record.standard_price)*100))   
                 if record.list_price == 1:
                     record.margen_valor = 0
                     record.margen = 0
             if record.standard_price == 0:
                 
                 if record.list_price > 1:
-                    record.margen_valor = ((record.list_price)*(20/100))
+                    record.margen_valor = "{:,.2f}".format(((record.list_price)*(20/100)))  
                     record.margen = 20
                 if record.list_price == 1:
                     record.margen_valor = 0
