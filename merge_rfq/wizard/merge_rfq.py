@@ -258,18 +258,14 @@ class PurchaseOrder(models.Model):
 
     is_selected = fields.Boolean(string="Auto Pproceso", default=False)
 
-        def action_mark_selected(self):
-            # Verifica que haya al menos una orden seleccionada
-            if not self:
-                raise UserError(_("Please select at least one purchase order."))
+    def action_mark_selected(self):
+        # Verifica que haya al menos una orden seleccionada
+        if not self:
+            raise UserError(_("Please select at least one purchase order."))
 
-            for order in self:
-                # Marcar el campo booleano is_selected como True
-                order.is_selected = True
-
-                
-
-
+        # Actualiza el campo booleano is_selected de False a True
+        for order in self:
+            order.is_selected = True
 
 
 class ProductProduct(models.Model):
@@ -396,6 +392,5 @@ class ResPartnerSupplierUpdate(models.TransientModel):
                 'message': f'{products_updated} productos actualizados correctamente.'
             }
         }
-
 
 
