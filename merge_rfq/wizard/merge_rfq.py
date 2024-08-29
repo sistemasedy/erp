@@ -273,6 +273,15 @@ class PurchaseOrder(models.Model):
             if order.state == 'draft':
                 order.button_confirm()
 
+            # Recepción de productos
+            picking = order.picking_ids.filtered(lambda p: p.state not in ('done', 'cancel'))
+            if picking:
+                picking.action_confirm()
+                picking.action_assign()
+                for move in picking.move_lines:
+                    move.quantity_done = move.product_uom_qty  # Marcando la cantidad recibida como completa
+                picking.button_validate()
+
             # Crear la factura para la orden de compra confirmada
             invoice_vals = {
                 'move_type': 'in_invoice',  # Tipo de factura de proveedor
@@ -301,14 +310,7 @@ class PurchaseOrder(models.Model):
             order.invoice_id = invoice.id
             order.invoice_ref = invoice.name
 
-            # Recepción de productos
-            picking = order.picking_ids.filtered(lambda p: p.state not in ('done', 'cancel'))
-            if picking:
-                picking.action_confirm()
-                picking.action_assign()
-                for move in picking.move_lines:
-                    move.quantity_done = move.product_uom_qty  # Marcando la cantidad recibida como completa
-                picking.button_validate()
+            
 
 class ProductProduct(models.Model):
     _inherit = 'product.template'
