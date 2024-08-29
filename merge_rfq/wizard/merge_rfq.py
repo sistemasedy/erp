@@ -281,6 +281,38 @@ class PurchaseOrder(models.Model):
                 invoice.action_post()
 
 
+    def action_mark_selected(self):
+        # Verifica que haya al menos una orden seleccionada
+        if not self:
+            raise UserError(_("Please select at least one purchase order."))
+
+        for order in self:
+            # Marcar el campo booleano is_selected como True
+            order.is_selected = True
+            
+            # Confirmar la orden de compra si está en estado borrador
+            if order.state == 'draft':
+                order.button_confirm()
+
+            # Crear la factura para la orden de compra confirmada
+            if order.state == 'purchase':  # Verifica si la orden está confirmada
+                invoice = self.env['account.move'].create({
+                    'move_type': 'in_invoice',  # Tipo de factura de proveedor
+                    'partner_id': order.partner_id.id,  # Proveedor asociado
+                    'invoice_origin': order.name,  # Origen de la factura
+                    'invoice_date': order.date_order,  # Fecha de la cotización
+                    'invoice_line_ids': [(0, 0, {
+                        'name': line.name,
+                        'quantity': line.product_qty,
+                        'price_unit': line.price_unit,
+                        'product_id': line.product_id.id,
+                        'account_id': line.product_id.categ_id.property_account_expense_categ_id.id,
+                    }) for line in order.order_line],
+                })
+
+            # Publicar la factura (opcional, si se requiere)
+            invoice.action_post()
+
 class ProductProduct(models.Model):
     _inherit = 'product.template'
 
