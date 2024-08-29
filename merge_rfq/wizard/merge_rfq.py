@@ -270,6 +270,16 @@ class PurchaseOrder(models.Model):
             if order.state in ['draft', 'sent']:
                 order.button_confirm()
 
+            # Crear la factura correspondiente
+            if order.state == 'purchase':  # Verifica si la orden está confirmada
+                invoice = order._create_invoices()
+
+                # Actualizar la fecha de la factura con la fecha de la cotización
+                invoice.invoice_date = order.date_order
+
+                # Confirmar la factura (si es necesario)
+                invoice.action_post()
+
 
 class ProductProduct(models.Model):
     _inherit = 'product.template'
