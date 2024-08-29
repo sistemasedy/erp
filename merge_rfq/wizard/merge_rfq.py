@@ -267,11 +267,9 @@ class PurchaseOrder(models.Model):
                 # Marcar el campo booleano is_selected como True
                 order.is_selected = True
 
-                # Confirmar la orden de compra (si está en estado draft o RFQ)
-                if order.state in ['draft', 'sent']:
-                    order.button_confirm()
+                
 
-               
+
 
 
 class ProductProduct(models.Model):
