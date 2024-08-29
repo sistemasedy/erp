@@ -257,8 +257,8 @@ class PurchaseOrder(models.Model):
         string='Creado por Automatización', default=False)
 
     is_selected = fields.Boolean(string="Auto Pproceso", default=False)
-
-    
+    invoice_id = fields.Many2one('account.move', string="Invoice", readonly=True)
+    invoice_ref = fields.Char(string="Invoice Reference", readonly=True)
 
     def action_mark_selected(self):
         # Verifica que haya al menos una orden seleccionada
@@ -296,6 +296,19 @@ class PurchaseOrder(models.Model):
             # Crear y publicar la factura
             invoice = self.env['account.move'].create(invoice_vals)
             invoice.action_post()
+
+            # Actualizar la orden de compra con la referencia y el ID de la factura
+            order.invoice_id = invoice.id
+            order.invoice_ref = invoice.name
+
+            # Recepción de productos
+            picking = order.picking_ids.filtered(lambda p: p.state not in ('done', 'cancel'))
+            if picking:
+                picking.action_confirm()
+                picking.action_assign()
+                for move in picking.move_lines:
+                    move.quantity_done = move.product_uom_qty  # Marcando la cantidad recibida como completa
+                picking.button_validate()
 
 class ProductProduct(models.Model):
     _inherit = 'product.template'
