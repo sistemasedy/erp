@@ -258,29 +258,7 @@ class PurchaseOrder(models.Model):
 
     is_selected = fields.Boolean(string="Auto Pproceso", default=False)
 
-    def action_mark_selected(self):
-        # Verifica que haya al menos una orden seleccionada
-        if not self:
-            raise UserError(_("Please select at least one purchase order."))
-
-        # Actualiza el campo booleano is_selected de False a True
-        for order in self:
-            order.is_selected = True
-            # Confirmar la orden de compra (si está en estado draft o RFQ)
-            if order.state in ['draft', 'sent']:
-                order.button_confirm()
-
-            # Crear la factura correspondiente
-            if order.state == 'purchase':  # Verifica si la orden está confirmada
-                invoice = order._create_invoices()
-
-                # Actualizar la fecha de la factura con la fecha de la cotización
-                invoice.invoice_date = order.date_order
-
-                # Confirmar la factura (si es necesario)
-                invoice.action_post()
-
-
+    
     def action_mark_selected(self):
         # Verifica que haya al menos una orden seleccionada
         if not self:
