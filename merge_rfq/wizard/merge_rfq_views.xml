@@ -253,6 +253,96 @@
 
 
 
+    <record id="view_purchase_order_filter_custome" model="ir.ui.view">
+            <field name="name">request.quotation.select</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.view_purchase_order_filter"/>
+            <field name="arch" type="xml">
+                
+                <xpath expr="//search" position="replace">
+                    
+
+                   <search string="Search Purchase Order">
+                        <field name="name" string="Order"
+                            filter_domain="['|', '|', ('name', 'ilike', self), ('partner_ref', 'ilike', self), ('partner_id', 'child_of', self)]"/>
+                        <field name="partner_id" operator="child_of"/>
+                        <field name="user_id"/>
+                        <field name="product_id"/>
+                        <field name="origin"/>
+                        <filter name="my_purchases" string="My Purchases" domain="[('user_id', '=', uid)]"/>
+                        <filter string="Starred" name="starred" domain="[('priority', '=', '1')]"/>
+                        <separator/>
+                        <filter name="draft" string="RFQs" domain="[('state', 'in', ('draft', 'sent', 'to approve'))]"/>
+                        <separator/>
+                        <filter name="is_selected" string="Auto Procesado" domain="[('is_selected', '=', True)]"/>
+                        <separator/>
+                        <filter name="approved" string="Purchase Orders" domain="[('state', 'in', ('purchase', 'done'))]"/>
+                        <filter name="to_approve" string="To Approve" domain="[('state', '=', 'to approve')]"/>
+                        <separator/>
+                        <filter name="order_date" string="Order Date" date="date_order"/>
+                        <filter name="draft_rfqs" string="Draft RFQs" domain="[('state', '=', 'draft')]"/>
+                        <filter name="waiting_rfqs" string="Waiting RFQs" domain="[('state', '=', 'sent'), ('date_order', '&gt;=', datetime.datetime.now())]"/>
+                        <filter name="late_rfqs" string="Late RFQs" domain="[('state', 'in', ['draft', 'sent', 'to approve']),('date_order', '&lt;', datetime.datetime.now())]"/>
+                        <separator/>
+                        <filter invisible="1" string="Late Activities" name="activities_overdue"
+                            domain="[('my_activity_date_deadline', '&lt;', context_today().strftime('%Y-%m-%d'))]"
+                            help="Show all records which has next action date is before today"/>
+                        <filter invisible="1" string="Today Activities" name="activities_today"
+                            domain="[('my_activity_date_deadline', '=', context_today().strftime('%Y-%m-%d'))]"/>
+                        <filter invisible="1" string="Future Activities" name="activities_upcoming_all"
+                            domain="[('my_activity_date_deadline', '&gt;', context_today().strftime('%Y-%m-%d'))]"/>
+                        <separator/>
+                        <filter string="Warnings" name="activities_exception"
+                            domain="[('activity_exception_decoration', '!=', False)]"/>
+                        <group expand="0" string="Group By">
+                            <filter string="Vendor" name="vendor" domain="[]" context="{'group_by': 'partner_id'}"/>
+                            <filter string="Purchase Representative" name="representative" domain="[]" context="{'group_by': 'user_id'}"/>
+                            <filter string="Order Date" name="order_date" domain="[]" context="{'group_by': 'date_order'}"/>
+                        </group>
+                    </search>
+
+
+                </xpath>
+
+
+            </field>
+        </record>
+
+
+    <record id="purchase_order_tree" model="ir.ui.view">
+        <field name="name">purchase.order.tree</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_tree"/>
+        <field name="priority" eval="1"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="replace">
+                <tree string="Purchase Order"
+                      decoration-muted="state=='cancel'" sample="1">
+                    <field name="priority" optional="show" widget="priority" nolabel="1"/>
+                    <field name="partner_ref" optional="hide"/>
+                    <field name="name" string="Reference" readonly="1" decoration-info="state in ('draft','sent')"/>
+                    <field name="date_order" invisible="not context.get('quotation_only', False)" optional="show"/>
+                    <field name="date_approve" invisible="context.get('quotation_only', False)" optional="show"/>
+                    <field name="partner_id" readonly="1"/>
+                    <field name="company_id" readonly="1" options="{'no_create': True}"
+                        groups="base.group_multi_company" optional="show"/>
+                    <field name="date_planned" invisible="context.get('quotation_only', False)" optional="show"/>
+                    <field name="user_id" optional="show"/>
+                    <field name="origin" optional="show"/>
+                    <field name="is_selected" optional="show"/>
+                    <field name="amount_untaxed" sum="Total Untaxed amount" string="Untaxed" widget="monetary" optional="hide"/>
+                    <field name="amount_total" sum="Total amount" widget="monetary" optional="show"/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="state" optional="show"/>
+                    <field name="invoice_status" optional="hide"/>
+                    <field name="activity_exception_decoration" widget="activity_exception"/>
+                </tree>
+            </xpath>
+        </field>
+    </record>
+
+
+
 
 
 

@@ -257,8 +257,10 @@ class PurchaseOrder(models.Model):
         string='Creado por Automatización', default=False)
 
     is_selected = fields.Boolean(string="Auto Pproceso", default=False)
-    invoice_id = fields.Many2one('account.move', string="Invoice", readonly=True)
-    invoice_ref = fields.Char(string="Invoice Reference", readonly=True)
+
+    
+
+    
 
     def action_mark_selected(self):
         # Verifica que haya al menos una orden seleccionada
@@ -268,56 +270,29 @@ class PurchaseOrder(models.Model):
         for order in self:
             # Marcar el campo booleano is_selected como True
             order.is_selected = True
-
+            
             # Confirmar la orden de compra si está en estado borrador
             if order.state == 'draft':
                 order.button_confirm()
 
+            # Crear la factura para la orden de compra confirmada
             # Recepción de productos
-            picking = order.picking_ids.filtered(lambda p: p.state not in ('done', 'cancel'))
-            if picking:
+            pickings = order.picking_ids.filtered(lambda p: p.state not in ('done', 'cancel'))
+            for picking in pickings:
                 picking.action_confirm()
                 picking.action_assign()
                 for move in picking.move_lines:
-                    move.quantity_done = move.product_uom_qty  # Marcando la cantidad recibida como completa
+                    move.quantity_done = move.product_uom_qty  # Marcar la cantidad recibida como completa
                 picking.button_validate()
 
-            # Crear la factura para la orden de compra confirmada
-            invoice_vals = {
-                'ref': self.partner_ref or '',
-                'move_type': move_type,
-                'narration': self.notes,
-                'currency_id': self.currency_id.id,
-                'invoice_user_id': self.user_id and self.user_id.id or self.env.user.id,
-                'partner_id': partner_invoice_id,
-                'fiscal_position_id': (self.fiscal_position_id or self.fiscal_position_id.get_fiscal_position(partner_invoice_id)).id,
-                'payment_reference': self.partner_ref or '',
-                'partner_bank_id': partner_bank_id.id,
-                'invoice_origin': self.name,
-                'invoice_payment_term_id': self.payment_term_id.id,
-                'invoice_line_ids': [],
-                'company_id': self.company_id.id,
-            }
-
-            for line in order.order_line:
-                invoice_line_vals = {
-                    'name': line.name,
-                    'quantity': line.product_qty,
-                    'price_unit': line.price_unit,
-                    'product_id': line.product_id.id,
-                    'account_id': line.product_id.categ_id.property_account_expense_categ_id.id,
-                }
-                invoice_vals['invoice_line_ids'].append((0, 0, invoice_line_vals))
-
-            # Crear y publicar la factura
-            invoice = self.env['account.move'].create(invoice_vals)
-            invoice.action_post()
-
-            # Actualizar la orden de compra con la referencia y el ID de la factura
-            order.invoice_id = invoice.id
-            order.invoice_ref = invoice.name
-
             
+
+
+    
+
+    
+
+
 
 class ProductProduct(models.Model):
     _inherit = 'product.template'
