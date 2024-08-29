@@ -259,19 +259,7 @@ class PurchaseOrder(models.Model):
     is_selected = fields.Boolean(string="Auto Pproceso", default=False)
     is_invoice = fields.Boolean(string="Factura", default=False)
 
-    @api.model
-    def action_create_invoice(self):
-        # Llamar al método original
-        res = super(PurchaseOrder, self).action_create_invoice()
-
-        # Tu lógica personalizada aquí
-        for order in self:
-            if order.is_selected:
-                # Realiza alguna acción adicional si el campo is_selected es True
-                # Por ejemplo, enviar una notificación o actualizar algún campo
-                order.is_invoice = True
-
-        return res
+    
 
     
 
