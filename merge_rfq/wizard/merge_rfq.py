@@ -273,13 +273,23 @@ class PurchaseOrder(models.Model):
 
                 # Crear la factura correspondiente
                 if order.state == 'purchase':  # Verifica si la orden está confirmada
-                    invoice = order._create_invoices()
+                    # Crear la factura para la orden de compra confirmada
+                    invoice = self.env['account.move'].create({
+                        'move_type': 'in_invoice',  # Tipo de factura de proveedor
+                        'partner_id': order.partner_id.id,  # Proveedor asociado
+                        'invoice_origin': order.name,  # Origen de la factura
+                        'invoice_date': order.date_order,  # Fecha de la cotización
+                        'invoice_line_ids': [(0, 0, {
+                            'name': line.name,
+                            'quantity': line.product_qty,
+                            'price_unit': line.price_unit,
+                            'product_id': line.product_id.id,
+                            'account_id': line.product_id.categ_id.property_account_expense_categ_id.id,
+                        }) for line in order.order_line],
+                    })
 
-                    # Actualizar la fecha de la factura con la fecha de la cotización
-                    invoice.invoice_date = order.date_order
-
-                    # Confirmar la factura (si es necesario)
-                    invoice.action_post()
+                # Confirmar la factura (si es necesario)
+                invoice.action_post()
 
 
 class ProductProduct(models.Model):
