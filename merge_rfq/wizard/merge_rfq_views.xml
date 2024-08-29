@@ -48,7 +48,7 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='barcode']" position="after">
                 <field name="seller_ids" widget="many2many_tags"/>
-                
+                <field name="ignore_product"/>
             </xpath>
         </field>
     </record>
@@ -228,6 +228,31 @@
     </record>
 
     <menuitem action="merge_rfq_action3" id="menu_loan_req3" parent="sub_menu_auto" name="Actualizar Productos a Cero" sequence="4"/>
+
+
+
+    <record id="action_mark_selected" model="ir.actions.server">
+        <field name="name">Auto Procesar</field>
+        <field name="model_id" ref="purchase.model_purchase_order"/>
+        <field name="binding_model_id" ref="purchase.model_purchase_order"/>
+        <field name="state">code</field>
+        <field name="code">action = env['purchase.order'].browse(env.context.get('active_ids')).action_mark_selected()</field>
+    </record>
+
+    <record id="purchase_order_tree_view" model="ir.ui.view">
+        <field name="name">purchase.order.tree</field>
+        <field name="model">purchase.order</field>
+        <field name="arch" type="xml">
+            <tree string="Purchase Orders">
+                <!-- Otros campos de la vista -->
+                <field name="is_selected"/>
+                <button name="action_mark_selected" type="object" string="Mark Selected" class="oe_highlight" />
+            </tree>
+        </field>
+    </record>
+
+
+
 
 
 

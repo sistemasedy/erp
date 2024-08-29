@@ -256,6 +256,17 @@ class PurchaseOrder(models.Model):
     automation_created = fields.Boolean(
         string='Creado por Automatización', default=False)
 
+    is_selected = fields.Boolean(string="Auto Pproceso", default=False)
+
+    def action_mark_selected(self):
+        # Verifica que haya al menos una orden seleccionada
+        if not self:
+            raise UserError(_("Please select at least one purchase order."))
+
+        # Actualiza el campo booleano is_selected de False a True
+        for order in self:
+            order.is_selected = True
+
 
 class ProductProduct(models.Model):
     _inherit = 'product.template'
