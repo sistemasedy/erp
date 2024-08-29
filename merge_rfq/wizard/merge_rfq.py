@@ -274,43 +274,24 @@ class PurchaseOrder(models.Model):
                 order.button_confirm()
 
             # Recepción de productos
-            picking = order.picking_ids.filtered(lambda p: p.state not in ('done', 'cancel'))
-            if picking:
+            pickings = order.picking_ids.filtered(lambda p: p.state not in ('done', 'cancel'))
+            for picking in pickings:
                 picking.action_confirm()
                 picking.action_assign()
                 for move in picking.move_lines:
-                    move.quantity_done = move.product_uom_qty  # Marcando la cantidad recibida como completa
+                    move.quantity_done = move.product_uom_qty  # Marcar la cantidad recibida como completa
                 picking.button_validate()
 
             # Crear la factura para la orden de compra confirmada
-            invoice_vals = {
-                'move_type': 'in_invoice',  # Tipo de factura de proveedor
-                'partner_id': order.partner_id.id,  # Proveedor asociado
-                'invoice_origin': order.name,  # Origen de la factura
-                'invoice_date': order.date_order,  # Fecha de la cotización
-                'purchase_id': order.id,  # Relación con la orden de compra
-                'invoice_line_ids': [],
-            }
+            invoice = order._create_invoices()  # Utiliza la función estándar de Odoo para crear la factura
 
-            for line in order.order_line:
-                invoice_line_vals = {
-                    'name': line.name,
-                    'quantity': line.product_qty,
-                    'price_unit': line.price_unit,
-                    'product_id': line.product_id.id,
-                    'account_id': line.product_id.categ_id.property_account_expense_categ_id.id,
-                }
-                invoice_vals['invoice_line_ids'].append((0, 0, invoice_line_vals))
+            # Publicar la factura si se ha creado correctamente
+            if invoice:
+                invoice.action_post()
 
-            # Crear y publicar la factura
-            invoice = self.env['account.move'].create(invoice_vals)
-            invoice.action_post()
-
-            # Actualizar la orden de compra con la referencia y el ID de la factura
-            order.invoice_id = invoice.id
-            order.invoice_ref = invoice.name
-
-            
+                # Actualizar la orden de compra con la referencia y el ID de la factura
+                order.invoice_id = invoice.id
+                order.invoice_ref = invoice.name
 
 class ProductProduct(models.Model):
     _inherit = 'product.template'
