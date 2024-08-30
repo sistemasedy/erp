@@ -338,7 +338,6 @@
 
             
             <xpath expr="//field[@name='date_approve']" position="after">
-                <field name="calcular_venta"/>
                 <field name="is_selected" />
                 <field name="is_invoice" />
             </xpath>
