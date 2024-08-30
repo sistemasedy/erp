@@ -337,8 +337,7 @@
         <field name="arch" type="xml">
 
             
-            <xpath expr="//field[@name='date_approve']" position="after">
-                <field name="is_selected" />
+            <xpath expr="//field[@name='date_order']" position="after">
                 <field name="is_invoice" />
             </xpath>
 
