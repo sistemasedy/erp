@@ -47,7 +47,14 @@ odoo.define('em_pos_credit.PosClient', function(require) {
                     }
 
                     if (currentClient.due_amount + method > currentClient.blocking_stage) {
-                        showErrorPopup('Control de Cuenta de Clientes', "El Monto Excede el límite de Crédito.");
+                        const deudaPendiente = currentClient.due_amount;
+                        const saldoDisponible = currentClient.blocking_stage - deudaPendiente;
+                        
+                        const mensajeError = `El Monto Excede el límite de Crédito. 
+                                              Deuda pendiente: ${deudaPendiente.toFixed(2)}. 
+                                              Saldo disponible: ${saldoDisponible.toFixed(2)}.`;
+                        
+                        showErrorPopup('Control de Cuenta de Clientes', mensajeError);
                         return;
                     }
                 }
