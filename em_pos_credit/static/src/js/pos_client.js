@@ -27,6 +27,7 @@ odoo.define('em_pos_credit.PosClient', function(require) {
 
             //VALIDATION, MENSAGE CONTROL, MENSAGE ERROR, ORDERVALIDATE
 
+
             async validateOrder(isForceValidate) {
 			    const order = this.currentOrder;
 			    const currentClient = order.get_client();
@@ -47,11 +48,17 @@ odoo.define('em_pos_credit.PosClient', function(require) {
 			        }
 			    };
 
-			    if (currentClient && currentClient.active_limit) {
-			        if (method > 0 && currentClient.due_amount + method > currentClient.blocking_stage) {
-			            showErrorPopup('Control de Cuenta de Clientes', "El Monto Excede el limite de Credito.");
+			    if (currentClient) {
+			        if (!currentClient.active_limit) {
+			            showErrorPopup('Control de Cuenta de Clientes', "El cliente no tiene crédito activado y no puede realizar compras a crédito.");
 			            return;
 			        }
+
+			        if (method > 0 && currentClient.due_amount + method > currentClient.blocking_stage) {
+			            showErrorPopup('Control de Cuenta de Clientes', "El Monto Excede el límite de Crédito.");
+			            return;
+			        }
+
 			        await handleValidation();
 			    } else {
 			        await handleValidation();
