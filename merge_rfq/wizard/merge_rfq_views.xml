@@ -276,7 +276,7 @@
                         <separator/>
                         <filter name="is_selected" string="Auto Procesado" domain="[('is_selected', '=', True)]"/>
                         <separator/>
-                        <filter string="Factura" name="is_invoice" domain="[('is_invoice', '=', False)]"/>
+                        <filter string="No Factura" name="is_invoice" domain="[('is_invoice', '=', False)]"/>
                         <separator/>
                         <filter name="approved" string="Ordenes de compras" domain="[('state', 'in', ('purchase', 'done'))]"/>
                         <filter name="to_approve" string="Para a Probar" domain="[('state', '=', 'to approve')]"/>
