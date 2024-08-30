@@ -341,6 +341,15 @@
                     <field name="activity_exception_decoration" widget="activity_exception"/>
                 </tree>
             </xpath>
+            <xpath expr="//tree" position="inside">
+                <field name="is_selected" optional="show"/>
+                <field name="is_invoice" optional="show"/>
+                
+            </xpath>
+            <xpath expr="//tree" position="attributes">
+              <attribute name="editable">bottom</attribute>
+            </xpath>
+
         </field>
     </record>
 
