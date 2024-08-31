@@ -36,6 +36,7 @@ class PosOrder(models.Model):
     _inherit = 'pos.order'
 
     #order_ncf = fields.Char(string='NCF')
+    #order_ncf = fields.Char(string='NCF')
     client_name = fields.Char(string='Nombre del Cliente')
     client_vat = fields.Char(string='NIF/CIF del Cliente')
     client_address = fields.Char(string='Dirección del Cliente')
@@ -55,6 +56,22 @@ class PosOrder(models.Model):
             'invoice_total': ui_order.get('invoice_total'),
         })
         return res
+
+    @api.model
+    def create(self, vals):
+        order = super(PosOrder, self).create(vals)
+        order.update_order_fields()
+        return order
+
+    def update_order_fields(self):
+        move = self.env['account.move'].search([('invoice_origin', '=', self.name)], limit=1)
+        if move:
+            self.client_name = move.partner_id.name
+            self.client_vat = move.partner_id.vat
+            self.client_address = move.partner_id.contact_address
+            self.invoice_number = move.name
+            self.invoice_date = move.invoice_date
+            self.invoice_total = move.amount_total
 
     @api.model
     def get_invoice(self, id):
