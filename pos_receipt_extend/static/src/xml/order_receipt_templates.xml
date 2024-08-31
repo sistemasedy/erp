@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates id="OrderReceipt" xml:space="preserve">
     <t t-name="OrderReceipt" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension" owl="1">
-        <!--This XML template defines an extension for the 'OrderReceipt' in the context of a point of sale system.
-        The extension customizes the appearance of the order receipt by adding various customer
-        details and optional elements like invoice number and QR code image.-->
         <xpath expr="//div[hasclass('pos-receipt-contact')]" position="inside">
             <t t-log="this"/>
             <t t-log="env"/>
@@ -36,12 +33,24 @@
                     </t>
                 </t>
             </t>
-            <!-- Agregar información del cliente y número de factura -->
+            <!-- Información del cliente y factura actualizada -->
             <div>
-                <strong>Cliente: </strong><t t-esc='env.pos._previousAttributes.selectedClient.name or "null"'/>
+                <strong>Cliente: </strong><t t-esc="env.pos._previousAttributes.selectedOrder.client_name or 'null'"/>
             </div>
             <div>
-                <strong>Número de Factura: </strong><t t-esc='env.pos._previousAttributes.selectedOrder.invoice_id.number or "null"'/>
+                <strong>NIF/CIF: </strong><t t-esc="env.pos._previousAttributes.selectedOrder.client_vat or 'null'"/>
+            </div>
+            <div>
+                <strong>Dirección: </strong><t t-esc="env.pos._previousAttributes.selectedOrder.client_address or 'null'"/>
+            </div>
+            <div>
+                <strong>Número de Factura: </strong><t t-esc="env.pos._previousAttributes.selectedOrder.invoice_number or 'null'"/>
+            </div>
+            <div>
+                <strong>Fecha de Factura: </strong><t t-esc="env.pos._previousAttributes.selectedOrder.invoice_date or 'null'"/>
+            </div>
+            <div>
+                <strong>Total de Factura: </strong><t t-esc="env.pos.format_currency(env.pos._previousAttributes.selectedOrder.invoice_total) or 'null'"/>
             </div>
         </xpath>
     </t>

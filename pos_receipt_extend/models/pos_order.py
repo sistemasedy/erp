@@ -36,14 +36,25 @@ class PosOrder(models.Model):
     _inherit = 'pos.order'
 
     #order_ncf = fields.Char(string='NCF')
-
+    client_name = fields.Char(string='Nombre del Cliente')
+    client_vat = fields.Char(string='NIF/CIF del Cliente')
+    client_address = fields.Char(string='Dirección del Cliente')
+    invoice_number = fields.Char(string='Número de Factura')
+    invoice_date = fields.Date(string='Fecha de Factura')
+    invoice_total = fields.Float(string='Total de Factura', digits=(16, 2))
 
     @api.model
-    def _create_invoice(self,move_vals):
-        invoice = super(PosOrder, self)._create_invoice(move_vals)
-        if invoice:
-            self.invoice_id = invoice.id
-        return invoice
+    def _order_fields(self, ui_order):
+        res = super(PosOrder, self)._order_fields(ui_order)
+        res.update({
+            'client_name': ui_order.get('client_name'),
+            'client_vat': ui_order.get('client_vat'),
+            'client_address': ui_order.get('client_address'),
+            'invoice_number': ui_order.get('invoice_number'),
+            'invoice_date': ui_order.get('invoice_date'),
+            'invoice_total': ui_order.get('invoice_total'),
+        })
+        return res
 
     @api.model
     def get_invoice(self, id):
