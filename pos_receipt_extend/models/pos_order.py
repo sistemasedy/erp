@@ -19,7 +19,7 @@
 #    If not, see <http://www.gnu.org/licenses/>.
 #
 # #############################################################################
-from odoo import api, models
+from odoo import api, fields, models
 try:
     import qrcode
 except ImportError:
