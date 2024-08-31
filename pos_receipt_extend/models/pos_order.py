@@ -64,14 +64,22 @@ class PosOrder(models.Model):
         return order
 
     def update_order_fields(self):
+        # Buscar la factura asociada a este pedido
         move = self.env['account.move'].search([('invoice_origin', '=', self.name)], limit=1)
+        
         if move:
-            self.client_name = move.partner_id.name
-            self.client_vat = move.partner_id.vat
-            self.client_address = move.partner_id.contact_address
-            self.invoice_number = move.name
-            self.invoice_date = move.invoice_date
-            self.invoice_total = move.amount_total
+            # Preparar los valores a actualizar
+            update_values = {
+                'client_name': move.partner_id.name,
+                'client_vat': move.partner_id.vat,
+                'client_address': move.partner_id.contact_address,
+                'invoice_number': move.name,
+                'invoice_date': move.invoice_date,
+                'invoice_total': move.amount_total,
+            }
+            
+            # Actualizar el pedido con los valores obtenidos de la factura
+            self.write(update_values)
 
     @api.model
     def get_invoice(self, id):
