@@ -35,25 +35,27 @@
             </t>
             <!-- Información del cliente y factura actualizada -->
             <div>
-                <strong>Cliente: </strong><t t-esc="env.pos._previousAttributes.selectedOrder.client_name or 'null'"/>
+                <strong>Cliente: </strong><t t-esc="env.pos.get_order().get_client_name() || 'N/A'"/>
             </div>
             <div>
-                <strong>NIF/CIF: </strong><t t-esc="env.pos._previousAttributes.selectedOrder.client_vat or 'null'"/>
+                <strong>NIF/CIF: </strong><t t-esc="env.pos.get_order().get_client_vat() || 'N/A'"/>
             </div>
             <div>
-                <strong>Dirección: </strong><t t-esc="env.pos._previousAttributes.selectedOrder.client_address or 'null'"/>
+                <strong>Dirección: </strong><t t-esc="env.pos.get_order().get_client_address() || 'N/A'"/>
             </div>
             <div>
-                <strong>Número de Factura: </strong><t t-esc="env.pos._previousAttributes.selectedOrder.invoice_number or 'null'"/>
+                <strong>Número de Factura: </strong><t t-esc="env.pos.get_order().get_invoice_number() || 'N/A'"/>
             </div>
             <div>
-                <strong>Fecha de Factura: </strong><t t-esc="env.pos._previousAttributes.selectedOrder.invoice_date or 'null'"/>
+                <strong>Fecha de Factura: </strong><t t-esc="env.pos.get_order().get_invoice_date() || 'N/A'"/>
             </div>
             <div>
-                <strong>Total de Factura: </strong><t t-esc="env.pos.format_currency(env.pos._previousAttributes.selectedOrder.invoice_total) or 'null'"/>
+                <strong>Total de Factura: </strong><t t-esc="env.pos.format_currency(env.pos.get_order().get_invoice_total()) || 'N/A'"/>
             </div>
         </xpath>
     </t>
+
+
 
     <t t-name="OrderReceipt" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension" owl="1">
        <xpath expr="//div[hasclass('orderlines')]" position="replace"> 

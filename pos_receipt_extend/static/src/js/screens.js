@@ -1,28 +1,9 @@
-odoo.define('pos_extended.screens', function(require) {
+odoo.define('pos_extended.order', function (require) {
     'use strict';
-    var rpc = require('web.rpc');
-    const PaymentScreen = require('point_of_sale.PaymentScreen');
-    const Registries = require('point_of_sale.Registries');
+
     var models = require('point_of_sale.models');
-    const OrderReceipt = require('point_of_sale.OrderReceipt');
-
-    // Load models to retrieve configuration and account move data
-    models.load_models([{
-        model: 'pos.config',
-        fields: ['is_customer_details', 'is_customer_name', 'is_customer_address', 'is_customer_mobile', 'is_customer_phone', 'is_customer_email', 'is_customer_vat', 'is_qr_code', 'is_invoice_number'],
-        loaded: function(self, pos_config) {
-            self.pos_config = pos_config;
-        }
-    }, {
-        model: 'account.move',
-        fields: ['name'],
-        loaded: function(self, account_move) {
-            self.account_move = account_move;
-        }
-    }]);
-
-    // Extend the Order model
     var _super_order = models.Order.prototype;
+
     models.Order = models.Order.extend({
         initialize: function(attributes, options) {
             _super_order.initialize.apply(this, arguments);
@@ -52,70 +33,56 @@ odoo.define('pos_extended.screens', function(require) {
             this.invoice_date = json.invoice_date || "";
             this.invoice_total = json.invoice_total || 0.0;
         },
-        export_for_printing: function() {
-            var receipt = _super_order.export_for_printing.apply(this, arguments);
-            receipt.client_name = this.get_client_name();
-            receipt.client_vat = this.get_client_vat();
-            receipt.client_address = this.get_client_address();
-            receipt.invoice_number = this.get_invoice_number();
-            receipt.invoice_date = this.get_invoice_date();
-            receipt.invoice_total = this.get_invoice_total();
-            return receipt;
+        set_client: function(client) {
+            _super_order.set_client.apply(this, arguments);
+            if (client) {
+                this.set_client_name(client.name);
+                this.set_client_vat(client.vat);
+                this.set_client_address(client.address);
+            }
         },
-        set_client_name: function(client_name) {
-            this.client_name = client_name;
+        set_client_name: function(name) {
+            this.client_name = name;
             this.trigger('change', this);
         },
         get_client_name: function() {
             return this.client_name;
         },
-        set_client_vat: function(client_vat) {
-            this.client_vat = client_vat;
+        set_client_vat: function(vat) {
+            this.client_vat = vat;
             this.trigger('change', this);
         },
         get_client_vat: function() {
             return this.client_vat;
         },
-        set_client_address: function(client_address) {
-            this.client_address = client_address;
+        set_client_address: function(address) {
+            this.client_address = address;
             this.trigger('change', this);
         },
         get_client_address: function() {
             return this.client_address;
         },
-        set_invoice_number: function(invoice_number) {
-            this.invoice_number = invoice_number;
+        set_invoice_number: function(number) {
+            this.invoice_number = number;
             this.trigger('change', this);
         },
         get_invoice_number: function() {
             return this.invoice_number;
         },
-        set_invoice_date: function(invoice_date) {
-            this.invoice_date = invoice_date;
+        set_invoice_date: function(date) {
+            this.invoice_date = date;
             this.trigger('change', this);
         },
         get_invoice_date: function() {
             return this.invoice_date;
         },
-        set_invoice_total: function(invoice_total) {
-            this.invoice_total = invoice_total;
+        set_invoice_total: function(total) {
+            this.invoice_total = total;
             this.trigger('change', this);
         },
         get_invoice_total: function() {
             return this.invoice_total;
         }
     });
-
-    const ExtendedOrderReceipt = (OrderReceipt) =>
-        class extends OrderReceipt {
-            setup() {
-                super.setup();
-            }
-            // You can add more custom logic here if needed
-        };
-
-    Registries.Component.extend(OrderReceipt, ExtendedOrderReceipt);
-
-    return OrderReceipt;
 });
 
