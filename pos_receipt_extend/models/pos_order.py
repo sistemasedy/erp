@@ -39,8 +39,8 @@ class PosOrder(models.Model):
 
 
     @api.model
-    def _create_invoice(self):
-        invoice = super(PosOrder, self)._create_invoice()
+    def _create_invoice(self,move_vals):
+        invoice = super(PosOrder, self)._create_invoice(move_vals)
         if invoice:
             self.invoice_id = invoice.id
         return invoice
