@@ -37,6 +37,14 @@ class PosOrder(models.Model):
 
     #order_ncf = fields.Char(string='NCF')
 
+
+    @api.model
+    def _create_invoice(self):
+        invoice = super(PosOrder, self)._create_invoice()
+        if invoice:
+            self.invoice_id = invoice.id
+        return invoice
+
     @api.model
     def get_invoice(self, id):
         """Retrieve the corresponding invoice details based on the provided ID.
