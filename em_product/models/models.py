@@ -55,6 +55,7 @@ class ProductTemplate(models.Model):
         'Sales Price', default=1.0,
         digits=dp.get_precision('Product Price'),
         help="Price at which the product is sold to customers.")
+    fecha_de_vencimiento = fields.Date(string='Fecha de Vencimiento')
 
     # standard_price = fields.Float(
     #   'Cost', compute='_compute_standard_price_costo', store=True,

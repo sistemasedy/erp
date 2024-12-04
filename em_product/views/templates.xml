@@ -54,6 +54,7 @@
                 </page>
             </xpath>
             <xpath expr="//field[@name='detailed_type']" position="after">
+                <field name="fecha_de_vencimiento">
                 <field name="calcular_venta"/>
                 <field name="margen"/>
                 <field name="margen_valor"/>
