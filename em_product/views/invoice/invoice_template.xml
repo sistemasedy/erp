@@ -252,8 +252,9 @@
                     </div>
                     <div class="col-auto col-3 mw-100 mb-2" t-if="o.invoice_date_due and o.move_type == 'out_invoice' and o.state == 'posted'" name="due_date">
                         <strong>COTIZACION:</strong>
-                        FECHA:<span class="m-0" t-field="o.invoice_date_due"/><br/>
+                        <br/>
                         <strong>
+                        FECHA:<span class="m-0" t-field="o.invoice_date_due"/>
                             
                         </strong><br/>
                         No. <span t-if="o.name != '/'" t-field="o.name"/><br/>
