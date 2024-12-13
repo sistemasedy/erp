@@ -30,6 +30,20 @@
         </record>
 
 
+
+        <!-- report action  -->
+        <record id="action_tax_cotizacion_report" model="ir.actions.report">
+            <field name="name"> Cotizacion </field>
+            <field name="model">account.move</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">em_product.account_cotiza_report</field>
+            <field name="report_file">em_product.account_cotiza_report</field>
+            <field name="print_report_name">'Cotiza - %s' % (object.name).replace('/', '')</field>
+            <field name="binding_model_id" ref="account.model_account_move"/>
+            <field name="binding_type">report</field>
+        </record>
+
+
       
 
         
