@@ -252,12 +252,11 @@
                     </div>
                     <div class="col-auto col-3 mw-100 mb-2" t-if="o.invoice_date_due and o.move_type == 'out_invoice' and o.state == 'posted'" name="due_date">
                         <strong>COTIZACION:</strong>
-                        <span t-field="o.sequence_number"/><br/>
                         FECHA:<span class="m-0" t-field="o.invoice_date_due"/><br/>
                         <strong>
-                            <span t-field="o.l10n_latam_document_type_id.report_name"/>
+                            
                         </strong><br/>
-                        No.<span t-if="o.name != '/'" t-field="o.name"/><br/>
+                        No. <span t-if="o.name != '/'" t-field="o.name"/><br/>
 
                         
                     </div>
