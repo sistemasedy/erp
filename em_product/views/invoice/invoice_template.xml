@@ -44,7 +44,8 @@
                             <span t-field="o.l10n_latam_document_type_id.report_name"/>
                         </strong><br/>
                         NCF:<span t-if="o.name != '/'" t-field="o.l10n_do_fiscal_number"/><br/>
-                        <span>VENCE EL 31 DE DICIEMBRE  <span t-esc="o.invoice_date_due.strftime('%Y')"/><br/>
+                        VENCE EL 31 DE DICIEMBRE 
+                        <span t-esc="o.invoice_date_due.strftime('%Y')"/><br/>
 
                     </div>
                 </div>
