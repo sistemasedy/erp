@@ -23,7 +23,7 @@
                     <div id="informations" class="row mt32 mb32">
                     <div class="col-auto col-3 mw-100 mb-2" >
                         
-                        <strong>INSTITUCION:</strong><br/>
+                        <strong>INSTITUCION edy:</strong><br/>
                         <strong>
                             <t t-if="vat_len == 9">RNC:</t>
                             <t t-elif="vat_len == 11">Cédula:</t>
