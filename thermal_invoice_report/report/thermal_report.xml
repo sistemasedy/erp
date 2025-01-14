@@ -60,7 +60,7 @@
                                             </strong><br/>
                                             NCF:<span t-if="o.name != '/'" t-field="o.l10n_do_fiscal_number"/><br/>
 
-                                            <span>VENCE EL 31 DE DICIEMBRE 2024</span>
+                                            <span>VENCE EL 31 DE DICIEMBRE 2025</span>
                                         </h6>
                                     </div>
                                    
