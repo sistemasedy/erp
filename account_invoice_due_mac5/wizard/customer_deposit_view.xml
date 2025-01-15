@@ -10,6 +10,7 @@
                 <field name="partner_id"/>
                 <field name="deposit_date"/>
                 <field name="amount"/>
+                <field name="remaining_amount"/>
                 <field name="state"/>
             </tree>
         </field>
@@ -26,6 +27,7 @@
                         <field name="partner_id"/>
                         <field name="deposit_date"/>
                         <field name="amount"/>
+                        <field name="remaining_amount" readonly="1"/>
                         <field name="currency_id"/>
                         <field name="state" readonly="1"/>
                     </group>
@@ -38,7 +40,6 @@
         </field>
     </record>
 
-    
     <record id="action_customer_deposit" model="ir.actions.act_window">
         <field name="name">Depósitos de Clientes</field>
         <field name="res_model">customer.deposit</field>
@@ -50,9 +51,16 @@
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
-            <button name="action_register_deposit" string="Registrar Depósito" type="object" class="oe_highlight" icon="fa-money"/>
+            
         </field>
     </record>
 
-    
+    <record id="view_account_move_form_inherit_deposit" model="ir.ui.view">
+        <field name="name">account.move.form.inherit.deposit</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <button name="action_apply_deposit" string="Aplicar Depósitos" type="object" class="oe_highlight"/>
+        </field>
+    </record>
 </odoo>
