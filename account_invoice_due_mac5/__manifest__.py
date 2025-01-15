@@ -16,7 +16,7 @@ Odoo Due Vendor Bills, Odoo Due Invoices
     'author': 'MAC5',
     'contributors': ['MAC5'],
     'website': 'https://apps.odoo.com/apps/modules/browse?author=MAC5',
-    'depends': ['account'],
+    'depends': ['base','account'],
     'data': [
         #'security/ir.model.access.csv',
         #'wizard/account_invoice_due_list_view.xml',
