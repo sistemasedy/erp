@@ -20,6 +20,7 @@ Odoo Due Vendor Bills, Odoo Due Invoices
     'data': [
         #'security/ir.model.access.csv',
         #'wizard/account_invoice_due_list_view.xml',
+        'wizard/customer_deposit_view.xml',
     ],
     'installable': True,
     'application': False,

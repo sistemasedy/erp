@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <record id="view_customer_deposit_tree" model="ir.ui.view">
+        <field name="name">customer.deposit.tree</field>
+        <field name="model">customer.deposit</field>
+        <field name="arch" type="xml">
+            <tree string="Depósitos de Clientes">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="deposit_date"/>
+                <field name="amount"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_customer_deposit_form" model="ir.ui.view">
+        <field name="name">customer.deposit.form</field>
+        <field name="model">customer.deposit</field>
+        <field name="arch" type="xml">
+            <form string="Depósito de Cliente">
+                <sheet>
+                    <group>
+                        <field name="name" readonly="1"/>
+                        <field name="partner_id"/>
+                        <field name="deposit_date"/>
+                        <field name="amount"/>
+                        <field name="currency_id"/>
+                        <field name="state" readonly="1"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button string="Confirmar" type="object" name="action_confirm" states="draft" class="btn-primary"/>
+                    <button string="Cancelar" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    
+    <record id="action_customer_deposit" model="ir.actions.act_window">
+        <field name="name">Depósitos de Clientes</field>
+        <field name="res_model">customer.deposit</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="view_res_partner_form_inherit_deposit" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.deposit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <button name="action_register_deposit" string="Registrar Depósito" type="object" class="oe_highlight" icon="fa-money"/>
+        </field>
+    </record>
+
+    
+</odoo>
