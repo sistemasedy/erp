@@ -51,8 +51,7 @@
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
-            <!-- Inserta el botón después del campo 'vat' como ejemplo -->
-            <xpath expr="//field[@name='vat']" position="after">
+            <xpath expr="//header" position="inside">
                 <button name="action_register_deposit" string="Registrar Depósito" type="object" class="oe_highlight" icon="fa-money"/>
             </xpath>
         </field>
