@@ -48,12 +48,5 @@
 
     
 
-    <record id="view_account_move_form_inherit_deposit" model="ir.ui.view">
-        <field name="name">account.move.form.inherit.deposit</field>
-        <field name="model">account.move</field>
-        <field name="inherit_id" ref="account.view_move_form"/>
-        <field name="arch" type="xml">
-            <button name="action_apply_deposit" string="Aplicar Depósitos" type="object" class="oe_highlight"/>
-        </field>
-    </record>
+    
 </odoo>
