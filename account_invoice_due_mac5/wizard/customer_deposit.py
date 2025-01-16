@@ -16,6 +16,10 @@ class CustomerDeposit(models.Model):
         ('confirmed', 'Confirmado')
     ], string="Estado", default='draft', required=True)
     remaining_amount = fields.Monetary(string="Monto Restante", compute="_compute_remaining_amount", store=True)
+    journal_id = fields.Many2one('account.journal', string="Diario", required=True, 
+                                 default=lambda self: self.env['account.journal'].search([('type', '=', 'cash')], limit=1))
+    liquidity_account_id = fields.Many2one('account.account', string="Cuenta de Liquidez", required=True, 
+                                           default=lambda self: self.env['account.account'].search([('user_type_id.type', '=', 'liquidity')], limit=1))
 
     @api.depends('amount', 'state')
     def _compute_remaining_amount(self):
@@ -51,10 +55,9 @@ class CustomerDeposit(models.Model):
         move_env = self.env['account.move']
         move_line_env = self.env['account.move.line']
 
-        # Crear un asiento de diario para registrar el depósito
         move = move_env.create({
             'partner_id': self.partner_id.id,
-            'journal_id': self.env['account.journal'].search([('type', '=', 'cash')], limit=1).id,  # Seleccionar un diario de efectivo o personalizable
+            'journal_id': self.journal_id.id,
             'date': self.deposit_date,
             'ref': _('Depósito confirmado: %s') % self.name,
             'line_ids': []
@@ -72,7 +75,7 @@ class CustomerDeposit(models.Model):
         move_line_env.create({
             'move_id': move.id,
             'partner_id': self.partner_id.id,
-            'account_id': self.env['account.account'].search([('user_type_id.type', '=', 'liquidity')], limit=1).id,  # Cuenta de liquidez (banco o efectivo)
+            'account_id': self.liquidity_account_id.id,
             'debit': 0.0,
             'credit': amount,
             'name': _('Depósito confirmado: %s') % self.name,

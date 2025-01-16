@@ -29,6 +29,8 @@
                         <field name="amount"/>
                         <field name="remaining_amount" readonly="1"/>
                         <field name="currency_id"/>
+                        <field name="journal_id"/>
+                        <field name="liquidity_account_id"/>
                         <field name="state" readonly="1"/>
                     </group>
                 </sheet>
