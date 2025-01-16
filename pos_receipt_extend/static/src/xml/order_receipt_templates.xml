@@ -26,27 +26,23 @@
             
        </xpath>
 
-       <!-- Reemplazo del bloque de totales -->
-        <xpath expr="//div[hasclass('summary')]" position="replace">
-            <div class="summary">
-                <hr style="border: 1px dashed black;"/>
-
-                <!-- Totales -->
-                <div style="text-align: right; margin-bottom: 10px;">
-                    <div>Total: <t t-esc="receipt.total_with_tax"/></div>
-                    <div>Discounts: <t t-esc="receipt.total_discount"/></div>
-                    <div>Total Taxes: <t t-esc="receipt.total_tax"/></div>
-                </div>
-
-                <!-- Pagos -->
-                <div style="margin-bottom: 10px;">
-                    <div>Cash: <t t-esc="receipt.paymentlines[0].amount"/></div>
-                    <div>Change: <t t-esc="receipt.change"/></div>
-                </div>
-
-                <div style="text-align: center; font-size: 12px; margin-top: 10px;">
-                    <strong>THANK YOU. PLEASE VISIT AGAIN!</strong>
-                </div>
+       <!-- Reemplazo de los totales -->
+        <xpath expr="//div[@class='pos-receipt-right-align'][following-sibling::div[@class='pos-receipt-amount']]" position="replace">
+            <div style="text-align: right; margin-bottom: 10px;">
+                <div><strong>Subtotal:</strong> <t t-esc="env.pos.format_currency(receipt.subtotal)" /></div>
+                <t t-foreach="receipt.tax_details" t-as="tax" t-key="tax.name">
+                    <div>
+                        <strong><t t-esc="tax.name" />:</strong> 
+                        <span t-esc="env.pos.format_currency_no_symbol(tax.amount)" />
+                    </div>
+                </t>
+                <div><strong>Total Taxes:</strong> <t t-esc="env.pos.format_currency(receipt.total_tax)" /></div>
+                <hr style="border: 1px dashed black;" />
+                <div><strong>Total:</strong> <t t-esc="env.pos.format_currency(receipt.total_with_tax)" /></div>
+                <t t-if="receipt.total_rounded != receipt.total_with_tax">
+                    <div><strong>Rounding:</strong> <t t-esc="env.pos.format_currency(receipt.rounding_applied)" /></div>
+                    <div><strong>To Pay:</strong> <t t-esc="env.pos.format_currency(receipt.total_rounded)" /></div>
+                </t>
             </div>
         </xpath>
        
