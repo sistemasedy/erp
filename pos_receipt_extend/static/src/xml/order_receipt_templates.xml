@@ -1,62 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<templates id="OrderReceipt" xml:space="preserve">
-    <t t-name="OrderReceipt" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension" owl="1">
-        <xpath expr="//div[hasclass('pos-receipt-contact')]" position="inside">
-            <t t-log="this"/>
-            <t t-log="env"/>
-            <t t-if="env.pos._previousAttributes.selectedClient">
-                <t t-if="env.pos.pos_config[0].is_customer_details">
-                    <t t-if="env.pos.pos_config[0].is_customer_name">
-                        <div style="font-weight:bold;">
-                            <t t-esc="env.pos._previousAttributes.selectedClient.name or 'null'"/>
-                        </div>
-                    </t>
-                    <t t-if="env.pos.pos_config[0].is_customer_address">
-                        <div style="font-weight:bold;">
-                            <t t-esc="env.pos._previousAttributes.selectedClient.address or 'null'"/>
-                        </div>
-                    </t>
-                    <t t-if="env.pos.pos_config[0].is_customer_phone">
-                        <div style="font-weight:bold;">
-                            <t t-esc="env.pos._previousAttributes.selectedClient.phone or null"/>
-                        </div>
-                    </t>
-                    <t t-if="env.pos.pos_config[0].is_customer_email">
-                        <div style="font-weight:bold;">
-                            <t t-esc="env.pos._previousAttributes.selectedClient.email or 'null'"/>
-                        </div>
-                    </t>
-                    <t t-if="env.pos.pos_config[0].is_customer_name">
-                        <div style="font-weight:bold;">RNC:
-                            <t t-esc="env.pos._previousAttributes.selectedClient.vat or 'null'"/>
-                        </div>
-                    </t>
-                </t>
-            </t>
-            <!-- Información del cliente y factura actualizada -->
-            <div>
-                <strong>Cliente: </strong><t t-esc="env.pos.get_order().get_client_name() || 'N/A'"/>
-            </div>
-            <div>
-                <strong>NIF/CIF: </strong><t t-esc="env.pos.get_order().get_client_vat() || 'N/A'"/>
-            </div>
-            <div>
-                <strong>Dirección: </strong><t t-esc="env.pos.get_order().get_client_address() || 'N/A'"/>
-            </div>
-            <div>
-                <strong>Número de Factura: </strong><t t-esc="env.pos.get_order().get_invoice_number() || 'N/A'"/>
-            </div>
-            <div>
-                <strong>Fecha de Factura: </strong><t t-esc="env.pos.get_order().get_invoice_date() || 'N/A'"/>
-            </div>
-            <div>
-                <strong>Total de Factura: </strong><t t-esc="env.pos.format_currency(env.pos.get_order().get_invoice_total()) || 'N/A'"/>
-            </div>
-        </xpath>
-    </t>
-
-
-
+<templates id="point_of_sale.template" xml:space="preserve">
     <t t-name="OrderReceipt" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension" owl="1">
        <xpath expr="//div[hasclass('orderlines')]" position="replace"> 
             <div class="orderlines">      
@@ -78,7 +21,7 @@
                             <t t-esc="orderline.get_product().display_name"/>
                              <t t-if="orderline.get_discount() > 0">
                                 <div class="pos-disc-font">
-                                    Con un <t t-esc="orderline.get_discount()"/>% descuento
+                                    With a <t t-esc="orderline.get_discount()"/>% discount
                                 </div>
                             </t>
                         </td>
@@ -86,7 +29,10 @@
                             <t t-esc="orderline.get_quantity_str_with_unit()"/>
                         </td>
                         <td>
+                            <!-- <t t-set="a" t-value="orderline.quantityStr"></t> -->
                             <t t-esc="env.pos.format_currency(orderline.get_unit_display_price())"></t>
+                            <!-- <t t-set="c" t-value="b/a"></t>
+                            <t t-esc="c"/> -->
                         </td>
                         <td style='text-align:right'>
                             <t t-esc="env.pos.format_currency(orderline.get_price_with_tax())"/>
@@ -95,6 +41,13 @@
                 </table>
             </div>
        </xpath>
+       <!--
+       <xpath expr="//t[@t-foreach='receipt.paymentlines']" position="replace">
+           <div class="pos-receipt-amount receipt-change">
+                <t t-esc="receipt.paymentlines[0].name" />
+                <span t-esc="env.pos.format_currency_no_symbol(receipt.paymentlines[0].amount)" class="pos-receipt-right-align"/>
+            </div>
+       </xpath>   
+       -->
     </t>
 </templates>
-
