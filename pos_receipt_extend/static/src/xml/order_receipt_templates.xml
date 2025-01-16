@@ -2,13 +2,13 @@
 <templates id="point_of_sale.template" xml:space="preserve">
     <t t-name="OrderReceipt" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension" owl="1">
         <xpath expr="//div[hasclass('pos-receipt')]" position="replace">
-            <div class="pos-receipt">
+            <div class="pos-receipt" style="font-size: 9.6px;">
                 <t t-if="receipt.company.logo">
                     <img class="pos-receipt-logo" t-att-src="receipt.company.logo" alt="Logo"/>
                     <br/>
                 </t>
                 <t t-if="!receipt.company.logo">
-                    <h2 class="pos-receipt-center-align">
+                    <h2 class="pos-receipt-center-align" style="font-size: 12.8px;">
                         <t t-esc="receipt.company.name" />
                     </h2>
                     <br/>
@@ -47,7 +47,7 @@
                 <!-- Orderlines -->
 
                 <!-- Detalles de productos -->
-                <table style="width: 100%; font-size: 12px; border-collapse: collapse; margin-bottom: 10px;">
+                <table style="width: 100%; font-size: 9.6px; border-collapse: collapse; margin-bottom: 10px;">
                     <thead>
                         <tr style="border-bottom: 1px dashed black;">
                             <th style="text-align: left;">Producto</th>
@@ -57,9 +57,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        
-
-
                         <tr t-foreach="orderlines" t-as="orderline" t-key="orderline.id">
                             <td>
                                 <t t-esc="orderline.get_product().display_name"/>
@@ -73,53 +70,44 @@
                                 <t t-esc="orderline.get_quantity_str_with_unit()"/>
                             </td>
                             <td>
-                                <!-- <t t-set="a" t-value="orderline.quantityStr"></t> -->
-                                <t t-esc="env.pos.format_currency(orderline.get_unit_display_price())"></t>
-                                <!-- <t t-set="c" t-value="b/a"></t>
-                                <t t-esc="c"/> -->
+                                <t t-esc="env.pos.format_currency(orderline.get_unit_display_price())"/>
                             </td>
                             <td style='text-align:right'>
                                 <t t-esc="env.pos.format_currency(orderline.get_price_with_tax())"/>
                             </td>
                         </tr>
-
-
-
                     </tbody>
                 </table>
                 
                 <hr style="border: 1px dashed black;"/>
 
                 <!-- Totales -->
-                <div style="text-align: right; margin-bottom: 10px;">
-                    
+                <div style="text-align: right; margin-bottom: 10px; font-size: 9.6px;">
                     <div>Descuentos: <t t-esc="receipt.total_discount"/></div>
-                    <div>Impuestos : <t t-esc="receipt.total_tax"/></div>
+                    <div>Impuestos: <t t-esc="receipt.total_tax"/></div>
                     <div>Total: <t t-esc="receipt.total_with_tax"/></div>
                 </div>
 
                 <!-- Pagos -->
-                <div style="margin-bottom: 10px;">
+                <div style="margin-bottom: 10px; font-size: 9.6px;">
                     <div>Efectivo: <t t-esc="receipt.paymentlines[0].amount"/></div>
                     <div>Cambio: <t t-esc="receipt.change"/></div>
                 </div>
 
-                <div style="text-align: center; font-size: 12px; margin-top: 10px;">
+                <div style="text-align: center; font-size: 9.6px; margin-top: 10px;">
                     <strong>¡GRACIAS! ¡VUELVA PRONTO!</strong>
                 </div>
                 <br/><br/>
 
                 <!-- Payment Lines -->             
-               
-
                 <div class="before-footer" />
 
                 <!-- Footer -->
-                <div t-if="receipt.footer_html"  class="pos-receipt-center-align">
+                <div t-if="receipt.footer_html" class="pos-receipt-center-align">
                     <t t-raw="receipt.footer_html" />
                 </div>
 
-                <div t-if="!receipt.footer_html and receipt.footer"  class="pos-receipt-center-align" style="white-space:pre-line">
+                <div t-if="!receipt.footer_html and receipt.footer" class="pos-receipt-center-align" style="white-space:pre-line">
                     <br/>
                     <t t-esc="receipt.footer" />
                     <br/>
@@ -151,3 +139,4 @@
         </xpath>
     </t>
 </templates>
+
