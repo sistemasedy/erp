@@ -109,6 +109,18 @@ class AccountMove(models.Model):
 
 
     def action_apply_deposit(self):
+        self.ensure_one()
+        return {
+            'name': _('Aplicar Depósitos'),
+            'type': 'ir.actions.act_window',
+            'res_model': 'account.move',
+            'view_mode': 'form',
+            'res_id': self.id,
+            'view_id': self.env.ref('your_module.view_apply_deposit_form').id,
+            'target': 'new',
+            'context': {
+                'default_partner_id': self.partner_id.id,
+            }
         for invoice in self:
             deposits = self.env['customer.deposit'].search([
                 ('partner_id', '=', invoice.partner_id.id),
