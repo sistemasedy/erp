@@ -135,7 +135,7 @@ odoo.define("em_pos_credit.PosClient", function (require) {
             ["partner_id", "=", clientId],
             ["state", "=", "posted"],
             ["payment_state", "!=", "paid"],
-            ["type", "=", "out_invoice"], // Solo facturas de cliente
+            ["move_type", "=", "out_invoice"], // Corrección: 'move_type' en lugar de 'type'
             [
               "invoice_date_due",
               "<",
