@@ -33,11 +33,30 @@ class CustomerDeposit(models.Model):
     def create(self, vals):
         if vals.get('name', _('Nuevo')) == _('Nuevo'):
             vals['name'] = self.env['ir.sequence'].next_by_code('customer.deposit') or _('Nuevo')
-        return super(CustomerDeposit, self).create(vals)
+        deposit = super(CustomerDeposit, self).create(vals)
+        # Actualizar balance positivo del cliente
+        if deposit.state == 'confirmed':
+            deposit._update_partner_balance(deposit.amount)
+        return deposit
 
     def action_confirm(self):
         for record in self:
-            record.state = 'confirmed'
+            if record.state != 'confirmed':
+                record.state = 'confirmed'
+                # Actualizar balance positivo del cliente
+                record._update_partner_balance(record.amount)
+
+    def _update_partner_balance(self, amount):
+        account_move_line_env = self.env['account.move.line']
+        self.ensure_one()
+        account_move_line_env.create({
+            'partner_id': self.partner_id.id,
+            'account_id': self.partner_id.property_account_receivable_id.id,
+            'debit': amount,
+            'credit': 0.0,
+            'name': _('Depósito confirmado: %s') % self.name,
+            'move_id': None,  # Crear línea contable sin asiento asociado
+        })
 
 class ResPartner(models.Model):
     _inherit = 'res.partner'
@@ -75,19 +94,38 @@ class AccountMove(models.Model):
 
             for deposit in available_deposits:
                 if invoice.amount_residual <= 0:
-                    break
+                    break  # Si la factura ya está cubierta, salir del bucle.
 
+                # Determinar cuánto aplicar del depósito (lo menor entre el saldo del depósito y el residual de la factura).
                 to_apply = min(deposit.remaining_amount, invoice.amount_residual)
 
+                # Crear la línea de crédito (aplicación del depósito).
                 self.env['account.move.line'].create({
                     'move_id': invoice.id,
                     'name': _('Aplicación de Depósito: %s') % deposit.name,
                     'partner_id': invoice.partner_id.id,
-                    'account_id': invoice.journal_id.default_account_id.id,
+                    'account_id': invoice.journal_id.default_account_id.id,  # Cuenta predeterminada del diario.
                     'debit': 0.0,
                     'credit': to_apply,
                     'currency_id': deposit.currency_id.id,
                     'deposit_id': deposit.id
                 })
 
+                # Crear la contrapartida de débito.
+                self.env['account.move.line'].create({
+                    'move_id': invoice.id,
+                    'name': _('Contrapartida Depósito: %s') % deposit.name,
+                    'partner_id': invoice.partner_id.id,
+                    'account_id': deposit.partner_id.property_account_receivable_id.id,  # Cuenta por cobrar del cliente.
+                    'debit': to_apply,
+                    'credit': 0.0,
+                    'currency_id': deposit.currency_id.id,
+                    'deposit_id': deposit.id
+                })
+
+                # Reducir el residual de la factura y actualizar el balance restante del depósito.
                 invoice.amount_residual -= to_apply
+                deposit.remaining_amount -= to_apply
+
+                # Registrar el cambio en el depósito.
+                deposit.write({'remaining_amount': deposit.remaining_amount})
