@@ -18,16 +18,16 @@
                         <div><t t-esc="receipt.company.contact_address" /></div>
                     </t>
                     <t t-if="receipt.company.phone">
-                        <div>Tel:<t t-esc="receipt.company.phone" /></div>
+                        <div>Teléfono: <t t-esc="receipt.company.phone" /></div>
                     </t>
                     <t t-if="receipt.company.vat">
-                        <div><t t-esc="receipt.company.vat_label"/>:<t t-esc="receipt.company.vat" /></div>
+                        <div><t t-esc="receipt.company.vat_label"/>: <t t-esc="receipt.company.vat" /></div>
                     </t>
                     <t t-if="receipt.company.email">
-                        <div><t t-esc="receipt.company.email" /></div>
+                        <div>Email: <t t-esc="receipt.company.email" /></div>
                     </t>
                     <t t-if="receipt.company.website">
-                        <div><t t-esc="receipt.company.website" /></div>
+                        <div>Sitio Web: <t t-esc="receipt.company.website" /></div>
                     </t>
                     <t t-if="receipt.header_html">
                         <t t-raw="receipt.header_html" />
@@ -38,7 +38,7 @@
                     <t t-if="receipt.cashier">
                         <div class="cashier">
                             <div>--------------------------------</div>
-                            <div>Served by <t t-esc="receipt.cashier" /></div>
+                            <div>Atendido por: <t t-esc="receipt.cashier" /></div>
                         </div>
                     </t>
                 </div>
@@ -50,10 +50,10 @@
                 <table style="width: 100%; font-size: 12px; border-collapse: collapse; margin-bottom: 10px;">
                     <thead>
                         <tr style="border-bottom: 1px dashed black;">
-                            <th style="text-align: left;">Product</th>
-                            <th style="text-align: center;">Qty</th>
-                            <th style="text-align: right;">Unit Price</th>
-                            <th style="text-align: right;">Amount</th>
+                            <th style="text-align: left;">Producto</th>
+                            <th style="text-align: center;">Cant.</th>
+                            <th style="text-align: right;">Precio Unit.</th>
+                            <th style="text-align: right;">Monto</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -71,38 +71,22 @@
                 <!-- Totales -->
                 <div style="text-align: right; margin-bottom: 10px;">
                     <div>Total: <t t-esc="receipt.total_with_tax"/></div>
-                    <div>Discounts: <t t-esc="receipt.total_discount"/></div>
-                    <div>Total Taxes: <t t-esc="receipt.total_tax"/></div>
+                    <div>Descuentos: <t t-esc="receipt.total_discount"/></div>
+                    <div>Impuestos : <t t-esc="receipt.total_tax"/></div>
                 </div>
 
                 <!-- Pagos -->
                 <div style="margin-bottom: 10px;">
-                    <div>Cash: <t t-esc="receipt.paymentlines[0].amount"/></div>
-                    <div>Change: <t t-esc="receipt.change"/></div>
+                    <div>Efectivo: <t t-esc="receipt.paymentlines[0].amount"/></div>
+                    <div>Cambio: <t t-esc="receipt.change"/></div>
                 </div>
 
                 <div style="text-align: center; font-size: 12px; margin-top: 10px;">
-                    <strong>THANK YOU. PLEASE VISIT AGAIN!</strong>
+                    <strong>¡GRACIAS! ¡VUELVA PRONTO!</strong>
                 </div>
                 <br/><br/>
 
-                <!-- Payment Lines -->
-
-                <t t-foreach="receipt.paymentlines" t-as="line" t-key="line.cid">
-                    <div>
-                        <t t-esc="line.name" />
-                        <span t-esc="env.pos.format_currency_no_symbol(line.amount)" class="pos-receipt-right-align"/>
-                    </div>
-                </t>
-                <br/>
-
-                <div class="pos-receipt-amount receipt-change">
-                    CHANGE
-                    <span t-esc="env.pos.format_currency(receipt.change)" class="pos-receipt-right-align"/>
-                </div>
-                <br/>
-
-               
+                <!-- Payment Lines -->             
                
 
                 <div class="before-footer" />
@@ -144,4 +128,3 @@
         </xpath>
     </t>
 </templates>
-
