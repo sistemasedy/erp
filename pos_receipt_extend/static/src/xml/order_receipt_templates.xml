@@ -23,6 +23,24 @@
                     </tbody>
                 </table>
             </div>
+            <hr style="border: 1px dashed black;"/>
+
+            <!-- Totales -->
+            <div style="text-align: right; margin-bottom: 10px;">
+                <div>Total: <t t-esc="receipt.total_with_tax"/></div>
+                <div>Discounts: <t t-esc="receipt.total_discount"/></div>
+                <div>Total Taxes: <t t-esc="receipt.total_tax"/></div>
+            </div>
+
+            <!-- Pagos -->
+            <div style="margin-bottom: 10px;">
+                <div>Cash: <t t-esc="receipt.paymentlines[0].amount"/></div>
+                <div>Change: <t t-esc="receipt.change"/></div>
+            </div>
+
+            <div style="text-align: center; font-size: 12px; margin-top: 10px;">
+                <strong>THANK YOU. PLEASE VISIT AGAIN!</strong>
+            </div>
        </xpath>
        
     </t>
