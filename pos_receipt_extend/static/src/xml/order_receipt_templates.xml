@@ -1,53 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates id="point_of_sale.template" xml:space="preserve">
     <t t-name="OrderReceipt" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension" owl="1">
-       <xpath expr="//div[hasclass('orderlines')]" position="replace"> 
-            <div class="orderlines">      
-                <table class='receipt-orderlines'>
-                    <colgroup>
-                        <col width='30%' />
-                        <col width='15%' />
-                        <col width='20%' />
-                        <col width='30%' />
-                    </colgroup>
-                    <tr style="border-bottom: 1px dashed black;">
-                        <th style='text-align:left'>Descripcion</th>
-                        <th style='text-align:left'>Cant.</th>
-                        <th style='text-align:right'>Precio</th>
-                        <th style='text-align:right'>Valor</th>
-                    </tr>
-                    <tr t-foreach="orderlines" t-as="orderline" t-key="orderline.id">
-                        <td>
-                            <t t-esc="orderline.get_product().display_name"/>
-                             <t t-if="orderline.get_discount() > 0">
-                                <div class="pos-disc-font">
-                                    With a <t t-esc="orderline.get_discount()"/>% discount
-                                </div>
-                            </t>
-                        </td>
-                        <td>
-                            <t t-esc="orderline.get_quantity_str_with_unit()"/>
-                        </td>
-                        <td>
-                            <!-- <t t-set="a" t-value="orderline.quantityStr"></t> -->
-                            <t t-esc="env.pos.format_currency(orderline.get_unit_display_price())"></t>
-                            <!-- <t t-set="c" t-value="b/a"></t>
-                            <t t-esc="c"/> -->
-                        </td>
-                        <td style='text-align:right'>
-                            <t t-esc="env.pos.format_currency(orderline.get_price_with_tax())"/>
-                        </td>
-                    </tr>
+        <xpath expr="//div[hasclass('pos-receipt')]" position="replace">
+            <div class="pos-receipt">
+                <!-- Encabezado -->
+                <div style="text-align: center; margin-bottom: 10px;">
+                    <img t-att-src="receipt.company.logo" style="height: 60px;" alt="Company Logo"/>
+                    <div><strong><t t-esc="receipt.company.name"/></strong></div>
+                    <div><t t-esc="receipt.company.contact_address"/></div>
+                    <div>Tel: <t t-esc="receipt.company.phone"/></div>
+                    <div><t t-esc="receipt.company.website"/></div>
+                </div>
+                
+                <!-- Información del recibo -->
+                <div style="margin-bottom: 10px;">
+                    <div>Receipt: <t t-esc="receipt.name"/></div>
+                    <div>Date: <t t-esc="receipt.date.order"/></div>
+                    <div>Client: <t t-esc="receipt.client.name"/></div>
+                    <div>Served by: <t t-esc="receipt.user.name"/></div>
+                </div>
+                
+                <hr style="border: 1px dashed black;"/>
+
+                <!-- Detalles de productos -->
+                <table style="width: 100%; font-size: 12px; border-collapse: collapse; margin-bottom: 10px;">
+                    <thead>
+                        <tr style="border-bottom: 1px dashed black;">
+                            <th style="text-align: left;">Product</th>
+                            <th style="text-align: center;">Qty</th>
+                            <th style="text-align: right;">Unit Price</th>
+                            <th style="text-align: right;">Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="receipt.orderlines" t-as="line">
+                            <td><t t-esc="line.product_name"/></td>
+                            <td style="text-align: center;"><t t-esc="line.quantity"/></td>
+                            <td style="text-align: right;"><t t-esc="line.price_unit"/></td>
+                            <td style="text-align: right;"><t t-esc="line.price_subtotal_incl"/></td>
+                        </tr>
+                    </tbody>
                 </table>
+                
+                <hr style="border: 1px dashed black;"/>
+
+                <!-- Totales -->
+                <div style="text-align: right; margin-bottom: 10px;">
+                    <div>Total: <t t-esc="receipt.total_with_tax"/></div>
+                    <div>Discounts: <t t-esc="receipt.total_discount"/></div>
+                    <div>Total Taxes: <t t-esc="receipt.total_tax"/></div>
+                </div>
+
+                <!-- Pagos -->
+                <div style="margin-bottom: 10px;">
+                    <div>Cash: <t t-esc="receipt.paymentlines[0].amount"/></div>
+                    <div>Change: <t t-esc="receipt.change"/></div>
+                </div>
+
+                <div style="text-align: center; font-size: 12px; margin-top: 10px;">
+                    <strong>THANK YOU. PLEASE VISIT AGAIN!</strong>
+                </div>
             </div>
-       </xpath>
-       <!--
-       <xpath expr="//t[@t-foreach='receipt.paymentlines']" position="replace">
-           <div class="pos-receipt-amount receipt-change">
-                <t t-esc="receipt.paymentlines[0].name" />
-                <span t-esc="env.pos.format_currency_no_symbol(receipt.paymentlines[0].amount)" class="pos-receipt-right-align"/>
-            </div>
-       </xpath>   
-       -->
+        </xpath>
     </t>
 </templates>
+
