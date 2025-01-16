@@ -64,7 +64,7 @@ class CustomerDeposit(models.Model):
         })
 
         # Crear las líneas contables asociadas al asiento
-        move_line_env.create({
+        debit_line = move_line_env.create({
             'move_id': move.id,
             'partner_id': self.partner_id.id,
             'account_id': self.partner_id.property_account_receivable_id.id,
@@ -72,7 +72,7 @@ class CustomerDeposit(models.Model):
             'credit': 0.0,
             'name': _('Depósito confirmado: %s') % self.name,
         })
-        move_line_env.create({
+        credit_line = move_line_env.create({
             'move_id': move.id,
             'partner_id': self.partner_id.id,
             'account_id': self.liquidity_account_id.id,
@@ -81,9 +81,14 @@ class CustomerDeposit(models.Model):
             'name': _('Depósito confirmado: %s') % self.name,
         })
 
+        # Asegurarse de que las líneas contables estén balanceadas
+        if debit_line.debit != credit_line.credit:
+            raise UserError(_('El asiento de diario no está balanceado. '
+                            'Débito: %s, Crédito: %s,Mont: %s') % (debit_line.debit, credit_line.credit, amount))
+
+
         # Publicar el asiento de diario
         move.action_post()
-
 
 class ResPartner(models.Model):
     _inherit = 'res.partner'
