@@ -52,16 +52,16 @@
                         <tr style="border-bottom: 1px dashed black;">
                             <th style="text-align: left;">Producto</th>
                             <th style="text-align: center;">Cant.</th>
-                            <th style="text-align: right;">Precio Unit.</th>
+                            <th style="text-align: right;">P. Unit.</th>
                             <th style="text-align: right;">Monto</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr t-foreach="receipt.orderlines" t-as="line">
-                            <td><t t-esc="line.product_name"/></td>
-                            <td style="text-align: center;"><t t-esc="line.quantity"/></td>
-                            <td style="text-align: right;"><t t-esc="line.price_unit"/></td>
-                            <td style="text-align: right;"><t t-esc="line.price_subtotal_incl"/></td>
+                            <td><t t-debug="line.product_name"/><t t-esc="line.product_name"/></td>
+                            <td style="text-align: center;"><t t-debug="line.quantity"/><t t-esc="line.quantity"/></td>
+                            <td style="text-align: right;"><t t-debug="line.price_unit"/><t t-esc="line.price_unit"/></td>
+                            <td style="text-align: right;"><t t-debug="line.price_subtotal_incl"/><t t-esc="line.price_subtotal_incl"/></td>
                         </tr>
                     </tbody>
                 </table>
@@ -70,9 +70,10 @@
 
                 <!-- Totales -->
                 <div style="text-align: right; margin-bottom: 10px;">
-                    <div>Total: <t t-esc="receipt.total_with_tax"/></div>
+                    
                     <div>Descuentos: <t t-esc="receipt.total_discount"/></div>
                     <div>Impuestos : <t t-esc="receipt.total_tax"/></div>
+                    <div>Total: <t t-esc="receipt.total_with_tax"/></div>
                 </div>
 
                 <!-- Pagos -->
