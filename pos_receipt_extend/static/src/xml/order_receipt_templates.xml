@@ -57,12 +57,34 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr t-foreach="receipt.orderlines" t-as="line">
-                            <td><t t-debug="line.product_name"/><t t-esc="line.product_name"/></td>
-                            <td style="text-align: center;"><t t-debug="line.quantity"/><t t-esc="line.quantity"/></td>
-                            <td style="text-align: right;"><t t-debug="line.price_unit"/><t t-esc="line.price_unit"/></td>
-                            <td style="text-align: right;"><t t-debug="line.price_subtotal_incl"/><t t-esc="line.price_subtotal_incl"/></td>
+                        
+
+
+                        <tr t-foreach="orderlines" t-as="orderline" t-key="orderline.id">
+                            <td>
+                                <t t-esc="orderline.get_product().display_name"/>
+                                <t t-if="orderline.get_discount() > 0">
+                                    <div class="pos-disc-font">
+                                        With a <t t-esc="orderline.get_discount()"/>% discount
+                                    </div>
+                                </t>
+                            </td>
+                            <td>
+                                <t t-esc="orderline.get_quantity_str_with_unit()"/>
+                            </td>
+                            <td>
+                                <!-- <t t-set="a" t-value="orderline.quantityStr"></t> -->
+                                <t t-esc="env.pos.format_currency(orderline.get_unit_display_price())"></t>
+                                <!-- <t t-set="c" t-value="b/a"></t>
+                                <t t-esc="c"/> -->
+                            </td>
+                            <td style='text-align:right'>
+                                <t t-esc="env.pos.format_currency(orderline.get_price_with_tax())"/>
+                            </td>
                         </tr>
+
+
+
                     </tbody>
                 </table>
                 
