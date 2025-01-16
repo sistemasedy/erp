@@ -47,16 +47,40 @@ class CustomerDeposit(models.Model):
                 record._update_partner_balance(record.amount)
 
     def _update_partner_balance(self, amount):
-        account_move_line_env = self.env['account.move.line']
         self.ensure_one()
-        account_move_line_env.create({
+        move_env = self.env['account.move']
+        move_line_env = self.env['account.move.line']
+
+        # Crear un asiento de diario para registrar el depósito
+        move = move_env.create({
+            'partner_id': self.partner_id.id,
+            'journal_id': self.env['account.journal'].search([('type', '=', 'cash')], limit=1).id,  # Seleccionar un diario de efectivo o personalizable
+            'date': self.deposit_date,
+            'ref': _('Depósito confirmado: %s') % self.name,
+            'line_ids': []
+        })
+
+        # Crear las líneas contables asociadas al asiento
+        move_line_env.create({
+            'move_id': move.id,
             'partner_id': self.partner_id.id,
             'account_id': self.partner_id.property_account_receivable_id.id,
             'debit': amount,
             'credit': 0.0,
             'name': _('Depósito confirmado: %s') % self.name,
-            'move_id': None,  # Crear línea contable sin asiento asociado
         })
+        move_line_env.create({
+            'move_id': move.id,
+            'partner_id': self.partner_id.id,
+            'account_id': self.env['account.account'].search([('user_type_id.type', '=', 'liquidity')], limit=1).id,  # Cuenta de liquidez (banco o efectivo)
+            'debit': 0.0,
+            'credit': amount,
+            'name': _('Depósito confirmado: %s') % self.name,
+        })
+
+        # Publicar el asiento de diario
+        move.action_post()
+
 
 class ResPartner(models.Model):
     _inherit = 'res.partner'
