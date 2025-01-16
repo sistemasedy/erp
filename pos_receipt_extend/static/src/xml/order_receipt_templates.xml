@@ -1,27 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates id="point_of_sale.template" xml:space="preserve">
     <t t-name="OrderReceipt" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension" owl="1">
-        <xpath expr="//div[hasclass('pos-receipt')]" position="replace">
-            <div class="pos-receipt">
-                <!-- Encabezado -->
-                <div style="text-align: center; margin-bottom: 10px;">
-                    <img t-att-src="receipt.company.logo" style="height: 60px;" alt="Company Logo"/>
-                    <div><strong><t t-esc="receipt.company.name"/></strong></div>
-                    <div><t t-esc="receipt.company.contact_address"/></div>
-                    <div>Tel: <t t-esc="receipt.company.phone"/></div>
-                    <div><t t-esc="receipt.company.website"/></div>
-                </div>
-                
-                <!-- Información del recibo -->
-                <div style="margin-bottom: 10px;">
-                    <div>Receipt: <t t-esc="receipt.name"/></div>
-                    <div>Date: <t t-esc="receipt.date.order"/></div>
-                    <div>Client: <t t-esc="receipt.client.name"/></div>
-                    <div>Served by: <t t-esc="receipt.user.name"/></div>
-                </div>
-                
-                <hr style="border: 1px dashed black;"/>
-
+       <xpath expr="//div[hasclass('orderlines')]" position="replace"> 
+            <div class="orderlines">      
                 <!-- Detalles de productos -->
                 <table style="width: 100%; font-size: 12px; border-collapse: collapse; margin-bottom: 10px;">
                     <thead>
@@ -41,27 +22,15 @@
                         </tr>
                     </tbody>
                 </table>
-                
-                <hr style="border: 1px dashed black;"/>
-
-                <!-- Totales -->
-                <div style="text-align: right; margin-bottom: 10px;">
-                    <div>Total: <t t-esc="receipt.total_with_tax"/></div>
-                    <div>Discounts: <t t-esc="receipt.total_discount"/></div>
-                    <div>Total Taxes: <t t-esc="receipt.total_tax"/></div>
-                </div>
-
-                <!-- Pagos -->
-                <div style="margin-bottom: 10px;">
-                    <div>Cash: <t t-esc="receipt.paymentlines[0].amount"/></div>
-                    <div>Change: <t t-esc="receipt.change"/></div>
-                </div>
-
-                <div style="text-align: center; font-size: 12px; margin-top: 10px;">
-                    <strong>THANK YOU. PLEASE VISIT AGAIN!</strong>
-                </div>
             </div>
-        </xpath>
+       </xpath>
+       <!--
+       <xpath expr="//t[@t-foreach='receipt.paymentlines']" position="replace">
+           <div class="pos-receipt-amount receipt-change">
+                <t t-esc="receipt.paymentlines[0].name" />
+                <span t-esc="env.pos.format_currency_no_symbol(receipt.paymentlines[0].amount)" class="pos-receipt-right-align"/>
+            </div>
+       </xpath>   
+       -->
     </t>
 </templates>
-
