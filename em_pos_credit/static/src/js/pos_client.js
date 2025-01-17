@@ -21,7 +21,6 @@ odoo.define("em_pos_credit.PosClient", function (require) {
     "due_amount",
     "blocking_stage",
     "active_limit",
-    "overdue_days_limit",
   ]);
 
   const PosClient = (PaymentScreen) =>

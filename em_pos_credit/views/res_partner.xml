@@ -11,16 +11,10 @@
                 <xpath expr="//field[@name='email']" position="after">
                     <field name="active_limit"/>
                     <field name="blocking_stage" attrs="{'invisible': [('active_limit', '=', False)]}"/>
-                    <field name="overdue_days_limit"/>
+                    
                     
                 </xpath>
-                 <xpath expr="//field[@name='phone']" position="before">
-                    
-                    <field name="overdue_days_limit"/>
-                    <field name="active_limit"/>
-                    <field name="blocking_stage" attrs="{'invisible': [('active_limit', '=', False)]}"/>
-                    
-                </xpath>
+                 
                 <xpath expr="//tree" position="attributes">
                   <attribute name="editable">bottom</attribute>
                 </xpath>
