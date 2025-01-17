@@ -89,7 +89,7 @@ odoo.define("em_pos_credit.PosClient", function (require) {
 
           // Verificar facturas pendientes de más de 30 días
           // Verificar facturas pendientes según el campo personalizado en res.partner
-          const overdueDaysLimit = currentClient.overdue_days_limit || 120; // Por defecto 120 días
+          const overdueDaysLimit = currentClient.overdue_days_limit || 500; // Por defecto 120 días
 
           const overdueInvoices = await this._getOverdueInvoices(
             currentClient.id
@@ -114,7 +114,7 @@ odoo.define("em_pos_credit.PosClient", function (require) {
               )
               .join("\n");
 
-            const mensajeError = `El cliente tiene facturas vencidas según el límite de ${overdueDaysLimit} días:\n${detallesFacturas}`;
+            const mensajeError = `Probando funcion edy El cliente tiene facturas vencidas según el límite de ${overdueDaysLimit} días:\n${detallesFacturas}`;
             showErrorPopup("Facturas Vencidas", mensajeError);
             return;
           }

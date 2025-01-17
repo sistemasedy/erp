@@ -33,11 +33,7 @@ class ResPartner(models.Model):
                                       "selected customer is crossed warning "
                                       "amount. Set its value to 0.00 to"
                                       " disable this feature")
-    overdue_days_limits = fields.Integer(
-        string="Límite de Días para Facturas Vencidas",
-        default=120,
-        help="Número de días que se considerarán para evaluar si una factura está vencida."
-    )
+    
 
     blocking_stage = fields.Float(string='Blocking Amount',
                                   help="Cannot make sales once the selected "
