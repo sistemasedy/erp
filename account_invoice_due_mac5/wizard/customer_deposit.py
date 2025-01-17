@@ -153,41 +153,42 @@ class AccountMove(models.Model):
     def action_confirm_apply_deposit(self):
         """Aplica los depósitos seleccionados a la factura."""
         self.ensure_one()
-        deposits = self.env['customer.deposit'].search([
-            ('partner_id', '=', self.partner_id.id),
-            ('remaining_amount', '>', 0),
-            ('state', '=', 'confirmed')
-        ])
 
-        if not deposits:
-            raise UserError(_('No hay depósitos disponibles para aplicar.'))
+        # Validar si existen depósitos seleccionados
+        if not self.deposit_ids:
+            raise UserError(_('No se han seleccionado depósitos para aplicar.'))
 
         move_lines = []
-        for deposit in deposits:
+        for deposit in self.deposit_ids:
             if self.amount_residual <= 0:
                 break
 
+            # Calcular cuánto se aplicará del depósito (mínimo entre el depósito y el saldo pendiente)
             to_apply = min(deposit.remaining_amount, self.amount_residual)
 
-            # Crear las líneas contables para aplicar el depósito
-            move_lines.append((0, 0, {
-                'partner_id': self.partner_id.id,
-                'account_id': deposit.partner_id.property_account_receivable_id.id,
-                'name': _('Aplicación de Depósito: %s') % deposit.name,
-                'debit': to_apply,
-                'credit': 0.0,
-                'currency_id': deposit.currency_id.id,
-                'deposit_id': deposit.id,
-            }))
-            move_lines.append((0, 0, {
-                'partner_id': self.partner_id.id,
-                'account_id': self.journal_id.default_account_id.id,
-                'name': _('Contrapartida Depósito: %s') % deposit.name,
-                'debit': 0.0,
-                'credit': to_apply,
-                'currency_id': deposit.currency_id.id,
-                'deposit_id': deposit.id,
-            }))
+            # Crear las líneas contables para reflejar el uso del depósito
+            move_lines.extend([
+                # Línea de débito (aplicación del depósito al cliente)
+                (0, 0, {
+                    'partner_id': self.partner_id.id,
+                    'account_id': self.partner_id.property_account_receivable_id.id,
+                    'name': _('Aplicación de Depósito: %s') % deposit.name,
+                    'debit': to_apply,
+                    'credit': 0.0,
+                    'currency_id': deposit.currency_id.id,
+                    'deposit_id': deposit.id,
+                }),
+                # Línea de crédito (reducción del depósito)
+                (0, 0, {
+                    'partner_id': self.partner_id.id,
+                    'account_id': self.journal_id.default_account_id.id,
+                    'name': _('Contrapartida Depósito: %s') % deposit.name,
+                    'debit': 0.0,
+                    'credit': to_apply,
+                    'currency_id': deposit.currency_id.id,
+                    'deposit_id': deposit.id,
+                }),
+            ])
 
             # Actualizar los montos residuales
             self.amount_residual -= to_apply
@@ -198,8 +199,20 @@ class AccountMove(models.Model):
         if move_lines:
             move = self.env['account.move'].create({
                 'journal_id': self.journal_id.id,
-                'date': self.date,
+                'date': fields.Date.today(),
                 'ref': _('Aplicación de Depósitos para Factura: %s') % self.name,
                 'line_ids': move_lines,
             })
             move.action_post()
+
+        # Actualizar la factura como pagada si el saldo pendiente llega a 0
+        if self.amount_residual == 0:
+            self.payment_state = 'paid'
+
+
+
+class AccountMoveLine(models.Model):
+    _inherit = 'account.move.line'
+
+    deposit_id = fields.Many2one('customer.deposit', string="Depósito Aplicado")
+
