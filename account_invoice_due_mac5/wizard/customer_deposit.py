@@ -99,7 +99,28 @@ class AccountMoveLine(models.Model):
 class AccountMove(models.Model):
     _inherit = 'account.move'
 
-    deposit_ids = fields.Many2many('customer.deposit', string="Depósitos Aplicados")
+    deposit_ids = fields.Many2many(
+        'customer.deposit', string='Depósitos',
+        domain="[('partner_id', '=', partner_id), ('remaining_amount', '>', 0), ('state', '=', 'confirmed')]"
+    )
+    applied_balance = fields.Monetary(
+        string='Monto Aplicado', compute='_compute_applied_balance', store=True
+    )
+    remaining_balance = fields.Monetary(
+        string='Saldo Pendiente Final', compute='_compute_remaining_balance', store=True
+    )
+    
+    @api.depends('deposit_ids', 'deposit_ids.remaining_amount')
+    def _compute_applied_balance(self):
+        """Calcula el monto total de los depósitos seleccionados"""
+        for move in self:
+            move.applied_balance = sum(deposit.remaining_amount for deposit in move.deposit_ids)
+
+    @api.depends('amount_residual', 'applied_balance')
+    def _compute_remaining_balance(self):
+        """Calcula el saldo pendiente de la factura después de aplicar depósitos"""
+        for move in self:
+            move.remaining_balance = move.amount_residual - move.applied_balance
 
     
 
