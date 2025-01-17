@@ -107,12 +107,7 @@
                         <field name="remaining_balance" readonly="1" string="Saldo Pendiente Final"/>
                     </group>
 
-                    <group>
-                        <!-- Facturas relacionadas (opcional para mostrar en una lista) -->
-                        <field name="invoice_ids" widget="many2many_tags" 
-                            domain="[('partner_id', '=', partner_id), ('state', 'not in', ['paid', 'cancel'])]" 
-                            string="Facturas del Cliente"/>
-                    </group>
+                    
                 </sheet>
 
                 <footer>
