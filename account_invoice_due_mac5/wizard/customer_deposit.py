@@ -12,7 +12,9 @@ class CustomerDeposit(models.Model):
     currency_id = fields.Many2one('res.currency', string="Moneda", required=True, default=lambda self: self.env.company.currency_id)
     state = fields.Selection([
         ('draft', 'Borrador'),
-        ('confirmed', 'Confirmado')
+        ('confirmed', 'Confirmado'),
+        ('applied', 'Aplicado'),
+        ('applied_parcial', 'Aplicado Parcial')
     ], string="Estado", default='draft', required=True)
     remaining_amount = fields.Monetary(string="Monto Restante", compute="_compute_remaining_amount", store=True)
     journal_id = fields.Many2one('account.journal', string="Diario", required=True, 
@@ -23,7 +25,14 @@ class CustomerDeposit(models.Model):
     @api.depends('amount', 'state')
     def _compute_remaining_amount(self):
         for record in self:
-            if record.state == 'confirmed':
+            if record.state == 'applied_parcial':
+                applied_amount = sum(self.env['account.move.line'].search([
+                    ('deposit_id', '=', record.id),
+                    ('move_id.state', '=', 'posted')
+                ]).mapped('debit'))
+                record.remaining_amount = record.amount - applied_amount
+
+            if record.state == 'applied':
                 applied_amount = sum(self.env['account.move.line'].search([
                     ('deposit_id', '=', record.id),
                     ('move_id.state', '=', 'posted')
@@ -195,6 +204,12 @@ class AccountMove(models.Model):
             deposit.remaining_amount -= to_apply
             deposit.write({'remaining_amount': deposit.remaining_amount})
 
+         # Actualizar el estado del depósito a 'applied' si se ha usado completamente
+        if deposit.remaining_amount == 0:
+            deposit.write({'state': 'applied'})
+        else:
+            deposit.write({'state': 'applied_parcial'})
+        
         # Crear y publicar el asiento contable
         if move_lines:
             move = self.env['account.move'].create({
