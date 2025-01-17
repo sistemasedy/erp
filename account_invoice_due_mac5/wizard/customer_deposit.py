@@ -121,7 +121,7 @@ class AccountMove(models.Model):
             'res_model': 'account.move',
             'view_mode': 'form',
             'res_id': self.id,
-            'view_id': self.env.ref('your_module.view_apply_deposit_form').id,
+            'view_id': self.env.ref('customer_deposit.view_apply_deposit_form').id,
             'target': 'new',
             'context': {
                 'default_partner_id': self.partner_id.id,
