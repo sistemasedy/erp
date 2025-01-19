@@ -22,7 +22,7 @@ Odoo Due Vendor Bills, Odoo Due Invoices
             'account_invoice_due_mac5/static/src/js/account_payment_field_extension.js',
         ],
         'web.assets_qweb': [
-            'account_invoice_due_mac5/static/src/xml/account_payment.xml',
+            #'account_invoice_due_mac5/static/src/xml/account_payment.xml',
         ],
     },
     'data': [
