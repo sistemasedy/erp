@@ -62,7 +62,7 @@
         </field>
     </record>
 
-    <!-- Botón en account.move para aplicar depósitos -->
+    <!-- Botón en account.move para aplicar depósitos 
     <record id="view_account_move_form_inherit_deposit" model="ir.ui.view">
         <field name="name">account.move.form.inherit.deposit</field>
         <field name="model">account.move</field>
@@ -73,6 +73,8 @@
             </xpath>
         </field>
     </record>
+
+    -->
 
     <!-- Vista para aplicar depósitos -->
     <record id="view_apply_deposit_form" model="ir.ui.view">
