@@ -12,8 +12,8 @@ odoo.define(
       _onOutstandingCreditAssign: function (event) {
         var self = this;
         event.preventDefault();
-
-        Dialog.confirm(
+        console.log("credito");
+        console.Dialog.confirm(
           this,
           _t("¿Está seguro que desea asignar este crédito a la factura?"),
           {
