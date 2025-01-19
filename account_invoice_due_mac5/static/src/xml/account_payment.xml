@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-extend="ShowPaymentLineWidget">
+        <t t-jquery=".outstanding_credit_assign" t-operation="attributes">
+            <attribute name="class">oe_form_field btn btn-secondary outstanding_credit_assign confirm_assign</attribute>
+            <attribute name="title">asignar a la factura EDY</attribute>
+        </t>
+    </t>
+</templates>
