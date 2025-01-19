@@ -65,7 +65,7 @@ class CustomerDeposit(models.Model):
                 (0, 0, {
                     'account_id': self.partner_id.property_account_receivable_id.id,
                     'partner_id': self.partner_id.id,
-                    'name': _('Depósito confirmado: %s') % self.name,
+                    'name': _('Depósito confirmado: %s (%s)') % (self.name, formatted_date),
                     'debit': 0.0,
                     'credit': self.amount,
                     'currency_id': self.currency_id.id,
@@ -74,7 +74,7 @@ class CustomerDeposit(models.Model):
                 (0, 0, {
                     'account_id': self.liquidity_account_id.id,
                     'partner_id': self.partner_id.id,
-                    'name': _('Depósito confirmado: %s') % self.name,
+                    'name': _('Depósito confirmado: %s (%s)') % (self.name, formatted_date),
                     'debit': self.amount,
                     'credit': 0.0,
                     'currency_id': self.currency_id.id,
