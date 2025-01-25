@@ -1,25 +1,31 @@
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError
 
+
 class CustomerDeposit(models.Model):
     _name = 'customer.deposit'
     _description = 'Depósitos de Clientes'
 
-    name = fields.Char(string="Referencia", required=True, copy=False, readonly=True, default=lambda self: _('Nuevo'))
-    partner_id = fields.Many2one('res.partner', string="Cliente", required=True)
-    deposit_date = fields.Date(string="Fecha del Depósito", default=fields.Date.today, required=True)
+    name = fields.Char(string="Referencia", required=True,
+                       copy=False, readonly=True, default=lambda self: _('Nuevo'))
+    partner_id = fields.Many2one(
+        'res.partner', string="Cliente", required=True)
+    deposit_date = fields.Date(
+        string="Fecha del Depósito", default=fields.Date.today, required=True)
     amount = fields.Monetary(string="Monto", required=True)
-    currency_id = fields.Many2one('res.currency', string="Moneda", required=True, default=lambda self: self.env.company.currency_id)
+    currency_id = fields.Many2one('res.currency', string="Moneda",
+                                  required=True, default=lambda self: self.env.company.currency_id)
     state = fields.Selection([
         ('draft', 'Borrador'),
         ('confirmed', 'Confirmado'),
         ('applied', 'Aplicado'),
         ('applied_parcial', 'Aplicado Parcial')
     ], string="Estado", default='draft', required=True)
-    remaining_amount = fields.Monetary(string="Monto Restante", compute="_compute_remaining_amount", store=True)
-    journal_id = fields.Many2one('account.journal', string="Diario", required=True, 
+    remaining_amount = fields.Monetary(
+        string="Monto Restante", compute="_compute_remaining_amount", store=True)
+    journal_id = fields.Many2one('account.journal', string="Diario", required=True,
                                  default=lambda self: self.env['account.journal'].search([('type', '=', 'cash')], limit=1))
-    liquidity_account_id = fields.Many2one('account.account', string="Cuenta de Liquidez", required=True, 
+    liquidity_account_id = fields.Many2one('account.account', string="Cuenta de Liquidez", required=True,
                                            default=lambda self: self.env['account.account'].search([('user_type_id.type', '=', 'liquidity')], limit=1))
 
     @api.depends('amount', 'state')
@@ -44,7 +50,8 @@ class CustomerDeposit(models.Model):
     @api.model
     def create(self, vals):
         if vals.get('name', _('Nuevo')) == _('Nuevo'):
-            vals['name'] = self.env['ir.sequence'].next_by_code('customer.deposit') or _('Nuevo')
+            vals['name'] = self.env['ir.sequence'].next_by_code(
+                'customer.deposit') or _('Nuevo')
         return super(CustomerDeposit, self).create(vals)
 
     def action_confirm(self):
@@ -88,7 +95,8 @@ class CustomerDeposit(models.Model):
 class ResPartner(models.Model):
     _inherit = 'res.partner'
 
-    
+    days_limit = fields.Char(string='Dias de Vencimiento')
+
     def action_register_deposit(self):
         return {
             'name': _('Registrar Depósito'),
@@ -103,7 +111,8 @@ class ResPartner(models.Model):
 class AccountMoveLine(models.Model):
     _inherit = 'account.move.line'
 
-    deposit_id = fields.Many2one('customer.deposit', string="Depósito Aplicado")
+    deposit_id = fields.Many2one(
+        'customer.deposit', string="Depósito Aplicado")
 
 
 class AccountMove(models.Model):
@@ -119,21 +128,19 @@ class AccountMove(models.Model):
     remaining_balance = fields.Monetary(
         string='Saldo Pendiente Final', compute='_compute_remaining_balance', store=True
     )
-    
+
     @api.depends('deposit_ids', 'deposit_ids.remaining_amount')
     def _compute_applied_balance(self):
         """Calcula el monto total de los depósitos seleccionados"""
         for move in self:
-            move.applied_balance = sum(deposit.remaining_amount for deposit in move.deposit_ids)
+            move.applied_balance = sum(
+                deposit.remaining_amount for deposit in move.deposit_ids)
 
     @api.depends('amount_residual', 'applied_balance')
     def _compute_remaining_balance(self):
         """Calcula el saldo pendiente de la factura después de aplicar depósitos"""
         for move in self:
             move.remaining_balance = move.amount_residual - move.applied_balance
-
-    
-
 
     def action_open_apply_deposit_form(self):
         """Muestra el formulario para aplicar depósitos."""
@@ -159,14 +166,14 @@ class AccountMove(models.Model):
             }
         }
 
-
     def action_confirm_apply_deposit(self):
         """Aplica los depósitos seleccionados a la factura."""
         self.ensure_one()
 
         # Validar si existen depósitos seleccionados
         if not self.deposit_ids:
-            raise UserError(_('No se han seleccionado depósitos para aplicar.'))
+            raise UserError(
+                _('No se han seleccionado depósitos para aplicar.'))
 
         move_lines = []
         for deposit in self.deposit_ids:
@@ -210,7 +217,7 @@ class AccountMove(models.Model):
             deposit.write({'state': 'applied'})
         else:
             deposit.write({'state': 'applied_parcial'})
-        
+
         # Crear y publicar el asiento contable
         if move_lines:
             move = self.env['account.move'].create({
@@ -226,9 +233,8 @@ class AccountMove(models.Model):
             self.payment_state = 'paid'
 
 
-
 class AccountMoveLine(models.Model):
     _inherit = 'account.move.line'
 
-    deposit_id = fields.Many2one('customer.deposit', string="Depósito Aplicado")
-
+    deposit_id = fields.Many2one(
+        'customer.deposit', string="Depósito Aplicado")
