@@ -62,6 +62,20 @@
         </field>
     </record>
 
+     <record id="view_res_partner_form_inherit_ref" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.ref</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <!-- Localiza el campo 'phone' y coloca 'ref' antes -->
+            <xpath expr="//field[@name='phone']" position="before">
+                <field name="ref" string="Dias de vencimiento"/>
+            </xpath>
+        </field>
+    </record>
+
+
+
     <!-- Botón en account.move para aplicar depósitos 
     <record id="view_account_move_form_inherit_deposit" model="ir.ui.view">
         <field name="name">account.move.form.inherit.deposit</field>
