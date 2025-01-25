@@ -67,10 +67,9 @@
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
-            <!-- Localiza el campo 'phone' y coloca 'ref' antes -->
-            <xpath expr="//field[@name='phone']" position="before">
-                <label for="ref">Días de vencimiento</label>
-                <field name="ref" string="Dias de vencimiento" nolabel="0"/>
+            <!-- Place 'ref' field inline with 'phone' -->
+            <xpath expr="//field[@name='phone']" position="after">
+                <field name="ref" string="Días de vencimiento" nolabel="1" class="oe_inline"/>
             </xpath>
         </field>
     </record>
