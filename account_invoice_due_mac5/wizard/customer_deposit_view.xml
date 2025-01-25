@@ -62,14 +62,18 @@
         </field>
     </record>
 
-     <record id="view_res_partner_form_inherit_ref" model="ir.ui.view">
-        <field name="name">res.partner.form.inherit.ref</field>
+    <record id="view_res_partner_credit_limit_form" model="ir.ui.view">
+        <field name="name">res.partner.credit.limit.form</field>
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
-            <!-- Place 'ref' field inline with 'phone' -->
-            <xpath expr="//field[@name='phone']" position="after">
-                <field name="ref" string="Días de vencimiento" nolabel="1" class="oe_inline"/>
+            <xpath expr="//page[@name='sales_purchases']" position="after">
+                <page name="credit_limit" string="Credit Limits">
+                    <group>
+                        <field name="credit_limit"/>
+                        <field name="ref" string="Días de vencimiento"/>
+                    </group>
+                </page>
             </xpath>
         </field>
     </record>
