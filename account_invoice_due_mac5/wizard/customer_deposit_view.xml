@@ -70,7 +70,6 @@
             <xpath expr="//page[@name='sales_purchases']" position="after">
                 <page name="credit_limit" string="Credit Limits">
                     <group>
-                        <field name="credit_limit"/>
                         <field name="ref" string="Días de vencimiento"/>
                     </group>
                 </page>
