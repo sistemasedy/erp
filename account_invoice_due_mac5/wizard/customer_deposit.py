@@ -95,7 +95,7 @@ class CustomerDeposit(models.Model):
 class ResPartner(models.Model):
     _inherit = 'res.partner'
 
-    days_limit = fields.Char(string='Dias de Vencimiento')
+    # days_limit = fields.Char(string='Dias de Vencimiento')
 
     def action_register_deposit(self):
         return {
