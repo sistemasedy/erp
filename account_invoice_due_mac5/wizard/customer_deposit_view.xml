@@ -69,7 +69,7 @@
         <field name="arch" type="xml">
             <!-- Localiza el campo 'phone' y coloca 'ref' antes -->
             <xpath expr="//field[@name='phone']" position="before">
-                <field name="ref" string="Dias de vencimiento"/>
+                <field name="ref" string="Dias de vencimiento" nolabel="0"/>
             </xpath>
         </field>
     </record>

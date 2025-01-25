@@ -19,6 +19,7 @@ odoo.define("em_pos_credit.PosClient", function (require) {
     "credit",
     "credit_limit",
     "due_amount",
+    "ref",
     "blocking_stage",
     "active_limit",
   ]);
@@ -89,7 +90,7 @@ odoo.define("em_pos_credit.PosClient", function (require) {
 
           // Verificar facturas pendientes de más de 30 días
           // Verificar facturas pendientes según el campo personalizado en res.partner
-          const overdueDaysLimit = currentClient.overdue_days_limit || 500; // Por defecto 120 días
+          const overdueDaysLimit = currentClient.ref || 45; // Por defecto 120 días
 
           const overdueInvoices = await this._getOverdueInvoices(
             currentClient.id
