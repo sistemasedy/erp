@@ -66,4 +66,29 @@
     </record>
 
 
+
+    <record id="view_product_filter_february_custom" model="ir.ui.view">
+        <field name="name">product.template.search.february</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_search_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <separator/>
+                <filter string="Creados desde Febrero" 
+                        name="created_from_february" 
+                        domain="[('create_date', '>=', '2025-02-10')]"/>
+                <filter string="Creados este mes" 
+                        name="created_this_month"
+                        domain="[('create_date', '>=', (context_today() + relativedelta(day=1)).strftime('%Y-%m-%d'))]"/>
+                <filter string="Creados el mes pasado"
+                        name="created_last_month"
+                        domain="[
+                            ('create_date', '>=', (context_today() + relativedelta(months=-1, day=1)).strftime('%Y-%m-%d')),
+                            ('create_date', '&lt;', (context_today() + relativedelta(day=1)).strftime('%Y-%m-%d'))
+                        ]"/>
+            </xpath>
+        </field>
+    </record>
+
+
 </odoo>
