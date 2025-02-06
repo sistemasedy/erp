@@ -168,8 +168,6 @@
 
                         <field name="name" string="Order Number" decoration-bf="1"/>
                         <field name="partner_id" string="Customer"/>
-                        <field name="partner_id" widget="many2one_avatar"/>
-                        <field name="partner_id" domain="[('customer_rank','>', 0)]"/>
                         
                         <!-- Date fields -->
                         <field name="date_order" optional="show" string="Order Date"/>
@@ -208,11 +206,6 @@
                             decoration-success="state == 'sale'"
                             decoration-info="state == 'draft'"
                             decoration-warning="state == 'sent'"
-                            optional="show"/>
-                        
-                        <!-- Delivery status if you have sale_stock installed -->
-                        <field name="delivery_status" 
-                            widget="badge"
                             optional="show"/>
                     </tree>
                 </xpath>
