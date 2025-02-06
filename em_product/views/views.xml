@@ -168,12 +168,12 @@
 
                         <field name="name" string="Order Number" decoration-bf="1"/>
                         <field name="partner_id" string="Customer"/>
-                        <field name="partner_vat"/>
+                        <field name="partner_id" widget="many2one_avatar"/>
+                        <field name="partner_id" domain="[('customer_rank','>', 0)]"/>
                         
                         <!-- Date fields -->
                         <field name="date_order" optional="show" string="Order Date"/>
                         <field name="commitment_date" optional="show" string="Commitment Date"/>
-                        <field name="expected_date" optional="hide" string="Expected Date"/>
                         
                         <!-- Reference fields -->
                         <field name="client_order_ref" optional="hide" string="Customer Reference"/>
@@ -190,7 +190,6 @@
                         
                         <!-- Currency fields -->
                         <field name="currency_id" groups="base.group_multi_currency" optional="hide"/>
-                        <field name="company_currency_id" invisible="1"/>
                         
                         <!-- Activity and status fields -->
                         <field name="activity_ids" widget="list_activity" optional="show"/>
@@ -211,16 +210,10 @@
                             decoration-warning="state == 'sent'"
                             optional="show"/>
                         
-                        <!-- Delivery status -->
+                        <!-- Delivery status if you have sale_stock installed -->
                         <field name="delivery_status" 
                             widget="badge"
                             optional="show"/>
-                        
-                        <!-- Technical fields -->
-                        <field name="pricelist_id" invisible="1"/>
-                        <field name="campaign_id" invisible="1"/>
-                        <field name="medium_id" invisible="1"/>
-                        <field name="source_id" invisible="1"/>
                     </tree>
                 </xpath>
             </field>
