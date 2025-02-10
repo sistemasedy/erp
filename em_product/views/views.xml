@@ -78,72 +78,7 @@
             </field>
         </record>
 
-        <record id="view_sale_order_filter_custom" model="ir.ui.view">
-            <field name="name">sale.order.select.custom</field>
-            <field name="model">sale.order</field>
-            <field name="inherit_id" ref="sale.view_sales_order_filter"/>
-            <field name="arch" type="xml">
-                <xpath expr="//search" position="replace">
-                    <search string="Search Sale Order">
-                        <field name="name" string="Order"
-                            filter_domain="[
-                                    '|', '|', '|',
-                                    ('name', 'ilike', self),
-                                    ('client_order_ref', 'ilike', self),
-                                    ('partner_id', 'child_of', self),
-                                    ('user_id', 'ilike', self)]"/>
-                        <field name="partner_id" operator="child_of"/>
-                        <field name="user_id" string="Salesperson" domain="[('share', '=', False)]"/>
-                        <field name="date_order" string="Period"/>
-                        
-                        <filter domain="[('user_id', '=', uid)]" name="my_orders" help="My Orders"/>
-                        <separator/>
-                        
-                        <!-- Status filters -->
-                        <filter name="draft" string="Quotation" domain="[('state','=','draft')]"/>
-                        <separator/>
-                        <filter string="B15" name="guvf" domain="[('partner_ref', 'ilike', 'B15')]"/>
-                        <filter string="B01" name="b01f" domain="[('partner_ref', 'ilike', 'B01')]"/>
-                        <separator/>
-                        <filter name="sent" string="Quotation Sent" domain="[('state','=','sent')]"/>
-                        <filter name="sale" string="Sales Order" domain="[('state','=','sale')]"/>
-                        <filter name="done" string="Done" domain="[('state','=','done')]"/>
-                        <filter name="cancel" string="Cancelled" domain="[('state','=','cancel')]"/>
-                        
-                        <separator/>
-                        
-                        <!-- Payment status filters -->
-                        <filter name="to_invoice" string="To Invoice" domain="[('invoice_status','=','to invoice')]"/>
-                        <filter name="fully_invoiced" string="Fully Invoiced" domain="[('invoice_status','=','invoiced')]"/>
-                        
-                        <separator/>
-                        
-                        <!-- Date filters -->
-                        <filter name="order_date" string="Order Date" date="date_order"/>
-                        <filter name="commitment_date" string="Commitment Date" date="commitment_date"/>
-                        
-                        <separator/>
-                        
-                        <!-- Activity filters -->
-                        <filter invisible="1" string="Late Activities" name="activities_overdue"
-                            domain="[('my_activity_date_deadline', '&lt;', context_today().strftime('%Y-%m-%d'))]"/>
-                        <filter invisible="1" string="Today Activities" name="activities_today"
-                            domain="[('my_activity_date_deadline', '=', context_today().strftime('%Y-%m-%d'))]"/>
-                        <filter invisible="1" string="Future Activities" name="activities_upcoming_all"
-                            domain="[('my_activity_date_deadline', '&gt;', context_today().strftime('%Y-%m-%d'))]"/>
-                        
-                        <group expand="0" string="Group By">
-                            <filter string="Salesperson" name="salesperson" context="{'group_by':'user_id'}"/>
-                            <filter name="status" string="Status" context="{'group_by':'state'}"/>
-                            <separator/>
-                            <filter string="Order Date" name="orderdate" context="{'group_by': 'date_order'}"/>
-                            <filter string="Commitment Date" name="commitmentdate" context="{'group_by': 'commitment_date'}"/>
-                            <filter string="Customer" name="customer" context="{'group_by': 'partner_id'}"/>
-                        </group>
-                    </search>
-                </xpath>
-            </field>
-        </record>
+        
 
 
 
