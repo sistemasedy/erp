@@ -90,6 +90,28 @@
 							<t t-esc="env.pos.format_currency_no_symbol(sub_total)"/>
 						</td>
 					</tr>
+
+                    <br />
+                    <tr style="border-top: 2px solid black;">
+						<td>Apertura:</td>
+						<td style="text-align: right;">
+							
+						</td>
+					</tr>
+                    <br />
+                    <tr style="border-top: 2px solid black;">
+						<td>Esperado:</td>
+						<td style="text-align: right;">
+							
+						</td>
+					</tr>
+                    <br />
+                    <tr style="border-top: 2px solid black;">
+						<td>Contado:</td>
+						<td style="text-align: right;">
+							
+						</td>
+					</tr>
 				</tbody>
 			</table>
         </div>
