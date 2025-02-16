@@ -95,15 +95,10 @@ class CustomerDeposit(models.Model):
 class ResPartner(models.Model):
     _inherit = 'res.partner'
 
-    deposit_ids = fields.One2many('customer.deposit', 'partner_id', 'Deposits', compute='_compute_deposits') # Added field
+    deposit_ids = fields.One2many('customer.deposit', 'partner_id', 'Deposits') # Added field
     #... other fields...
 
-    @api.depends('id')  # Trigger recomputation when the partner changes
-    def _compute_deposits(self):
-        for partner in self:
-            partner.deposit_ids = self.env['customer.deposit'].search([('partner_id', '=', partner.id)])
-
-    
+       
 
     def action_register_deposit(self):
         return {
