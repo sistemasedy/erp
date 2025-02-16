@@ -111,7 +111,7 @@ class ResPartner(models.Model):
     deposit_ids = fields.One2many('customer.deposit', 'partner_id', 'Deposits', compute='_compute_deposits') # Added field
     #... other fields...
 
-    @api.depends('payment_amount_due_amt')  # Trigger recomputation when the partner changes
+    @api.depends('bi_amount_due_pay.payment_amount_due_amt')  # Trigger recomputation when the partner changes
     def _compute_deposits(self):
         for partner in self:
             partner.deposit_ids = self.env['customer.deposit'].search([('partner_id', '=', partner.id)])
