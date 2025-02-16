@@ -6,8 +6,20 @@ class CustomerDeposit(models.Model):
     _name = 'customer.deposit'
     _description = 'Depósitos de Clientes'
 
-    name = fields.Char(string="Referencia", required=True,
-                       copy=False, readonly=True, default=lambda self: _('Nuevo'))
+    name = fields.Char(
+        string="Referencia",
+        required=True,
+        copy=False,
+        readonly=True,
+        default=lambda self: _('depositonuevo')  # Cambio aquí
+    )
+
+    @api.model
+    def create(self, vals):
+        if vals.get('name', _('depositonuevo')) == _('depositonuevo'):  # Cambio aquí
+            vals['name'] = self.env['ir.sequence'].next_by_code('customer.deposit') or _('depositonuevo')
+        return super(CustomerDeposit, self).create(vals)
+        
     partner_id = fields.Many2one(
         'res.partner', string="Cliente", required=True)
     deposit_date = fields.Date(
