@@ -72,13 +72,15 @@
                     <group>
                         <field name="ref" string="Días de vencimiento"/>
                     </group>
-                     <field name="partner_deposits" widget="one2many_list">  <tree string="Depósitos de Clientes">
+                     <field name="move_ids" widget="one2many_list">
+                        <tree string="Invoices and Refunds">
                             <field name="name"/>
-                            <field name="partner_id"/>
-                            <field name="deposit_date"/>
-                            <field name="amount"/>
-                            <field name="remaining_amount"/>
-                            <field name="state"/>
+                            <field name="move_type"/>
+                            <field name="invoice_date"/>
+                            <field name="amount_total"/>
+                            <field name="amount_residual"/>
+                            <field name="payment_state"/>
+                            <filter string="Pending Payment" domain="[('payment_state', '!=', 'paid')]"/>
                         </tree>
                     </field>
 
