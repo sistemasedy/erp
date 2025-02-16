@@ -106,7 +106,7 @@ class CustomerDeposit(models.Model):
 
 class ResPartner(models.Model):
     _inherit = 'res.partner'
-     checkbox_upt = fields.Boolean(string="actualizar")
+    checkbox_upt = fields.Boolean(string="actualizar")
 
 
     deposit_ids = fields.One2many('customer.deposit', 'partner_id', 'Deposits', compute='_compute_deposits') # Added field
