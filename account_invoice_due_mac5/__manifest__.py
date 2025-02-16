@@ -16,7 +16,7 @@ Odoo Due Vendor Bills, Odoo Due Invoices
     'author': 'MAC5',
     'contributors': ['MAC5'],
     'website': 'https://apps.odoo.com/apps/modules/browse?author=MAC5',
-    'depends': ['base','account'],
+    'depends': ['base','account','contacts'],
     'assets': {
         'web.assets_backend': [
             'account_invoice_due_mac5/static/src/js/account_payment_field_extension.js',
