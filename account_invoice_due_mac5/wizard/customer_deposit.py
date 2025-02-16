@@ -107,8 +107,15 @@ class CustomerDeposit(models.Model):
 class ResPartner(models.Model):
     _inherit = 'res.partner'
 
-    deposit_ids = fields.One2many('customer.deposit', 'partner_id', 'Deposits') # Added field
+    #deposit_ids = fields.One2many('customer.deposit', 'partner_id', 'Deposits') # Added field
     #... other fields...
+
+    deposit_ids = fields.One2many('customer.deposit', 'partner_id', compute='_compute_partner_deposits')
+
+    @api.depends('customer.deposit.partner_id')  # Depend on the related partner_id
+    def _compute_partner_deposits(self):
+        for partner in self:
+            partner.partner_deposits = self.env['customer.deposit'].search([('partner_id', '=', partner.id)])
 
        
 
