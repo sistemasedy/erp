@@ -72,6 +72,9 @@
                     <group>
                         <field name="ref" string="Días de vencimiento"/>
                     </group>
+                    <group>
+                        <field name="checkbox_upt" string="actualizar"/>
+                    </group>
                      <field name="deposit_ids" widget="one2many_list" context="{'default_partner_id': active_id}">
                         <tree string="Depósitos de Clientes">
                             <field name="name"/>
