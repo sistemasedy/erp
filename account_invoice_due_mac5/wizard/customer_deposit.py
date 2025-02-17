@@ -59,12 +59,7 @@ class CustomerDeposit(models.Model):
             else:
                 record.remaining_amount = record.amount
 
-    @api.model
-    def create(self, vals):
-        if vals.get('name', _('Nuevo')) == _('Nuevo'):
-            vals['name'] = self.env['ir.sequence'].next_by_code(
-                'customer.deposit') or _('Nuevo')
-        return super(CustomerDeposit, self).create(vals)
+    
 
     def action_confirm(self):
         for record in self:
