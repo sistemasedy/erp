@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- Vista Tree para depósitos -->
+
+    <data noupdate="1">  <record id="seq_customer_deposit" model="ir.sequence">
+            <field name="name">Customer Deposit Sequence</field>
+            <field name="code">customer.deposit.sequence</field>
+            <field name="prefix">DEP-</field>
+            <field name="padding">5</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+            <field name="implementation">standard</field>
+        </record>
+
+    </data>
+
+
+<!-- Vista Tree para depósitos -->
     <record id="view_customer_deposit_tree" model="ir.ui.view">
         <field name="name">customer.deposit.tree</field>
         <field name="model">customer.deposit</field>

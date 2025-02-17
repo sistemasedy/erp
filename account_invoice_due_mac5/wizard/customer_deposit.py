@@ -11,13 +11,14 @@ class CustomerDeposit(models.Model):
         required=True,
         copy=False,
         readonly=True,
-        default=lambda self: _('depositonuevo')  # Cambio aquí
+        index=True,  # ¡Importante para búsquedas!
+        default=lambda self: _('Nuevo')
     )
 
     @api.model
     def create(self, vals):
-        if vals.get('name', _('depositonuevo')) == _('depositonuevo'):  # Cambio aquí
-            vals['name'] = self.env['ir.sequence'].next_by_code('customer.deposit') or _('depositonuevo')
+        if vals.get('name', _('Nuevo')) == _('Nuevo'):
+            vals['name'] = self.env['ir.sequence'].next_by_code('customer.deposit.sequence') or _('Nuevo')
         return super(CustomerDeposit, self).create(vals)
         
     partner_id = fields.Many2one(
