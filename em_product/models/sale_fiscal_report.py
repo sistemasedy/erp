@@ -3,9 +3,7 @@
 from odoo import models, fields, api
 
 class SaleFiscalReport(models.Model):
-    _name = 'sale.fiscal.report'
     _inherit = 'purchase.order'
-    _description = 'Reporte Fiscal de Ventas (Extensión de sale.order)'
 
     ncf_tax = fields.Monetary(string='Impuesto NCF',
                                currency_field='currency_id',
