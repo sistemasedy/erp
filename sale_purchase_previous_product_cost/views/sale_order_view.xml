@@ -1,25 +1,16 @@
 <?xml version="1.0"?>
 <odoo>
 
-    <record id="purchase_order_form_inherit_fiscal" model="ir.ui.view">
+    <record id="purchase_order_form_inherit_f" model="ir.ui.view">
         <field name="name">purchase.order.form.inherit</field>
         <field name="model">purchase.order</field>
         <field name="inherit_id" ref="purchase.purchase_order_form"/>
         <field name="arch" type="xml">
             <xpath expr="//notebook" position="inside">
-            <page string="Información Fiscal (NCF)" name="ncf_page">
+            <page string="Información Fiscal (NCF)" name="ncf_page_f">
                 <group>
                     <group string="Datos NCF" name="ncf_data_group">
-                        <field name="ncf_tax_p"/>
-                        <field name="ncf_amount_purchase_p"/>
-                        <field name="ncf_total_p"/>
-                        <field name="ncf_day_p"/>
                         <field name="ncf_year_month_p"/>
-                        <field name="ncf_check_p"/>
-                    </group>
-                    <group string="Verificaciones" name="ncf_checks_group">
-                        <field name="check_complete_p"/>
-                        <field name="check_verificate_p"/>
                     </group>
                 </group>
             </page>
