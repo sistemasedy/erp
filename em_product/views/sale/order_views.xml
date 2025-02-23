@@ -17,6 +17,32 @@
             </field>
         </record>
 
+        <record id="purchase_order_form_inherit_fiscal" model="ir.ui.view">
+            <field name="name">purchase.order.form.inherit.fiscal</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="inside">
+                <page string="Información Fiscal (NCF)" name="ncf_page">
+                    <group>
+                        <group string="Datos NCF" name="ncf_data_group">
+                            <field name="ncf_tax"/>
+                            <field name="ncf_amount_sale"/>
+                            <field name="ncf_total"/>
+                            <field name="ncf_day"/>
+                            <field name="ncf_year_month"/>
+                            <field name="ncf_check"/>
+                        </group>
+                        <group string="Verificaciones" name="ncf_checks_group">
+                            <field name="check_complete"/>
+                            <field name="check_verificate"/>
+                        </group>
+                    </group>
+                </page>
+                </xpath>
+            </field>
+        </record>
+
         
     
 
