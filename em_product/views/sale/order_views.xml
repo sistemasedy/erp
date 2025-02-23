@@ -26,15 +26,16 @@
                 <page string="Información Fiscal (NCF)" name="ncf_page">
                     <group>
                         <group string="Datos NCF" name="ncf_data_group">
-                            <field name="ncf_amount_sale"/>
-                            <field name="ncf_total"/>
-                            <field name="ncf_day"/>
-                            <field name="ncf_year_month"/>
-                            <field name="ncf_check"/>
+                            <field name="ncf_tax_p"/>
+                            <field name="ncf_amount_purchase_p"/>
+                            <field name="ncf_total_p"/>
+                            <field name="ncf_day_p"/>
+                            <field name="ncf_year_month_p"/>
+                            <field name="ncf_check_p"/>
                         </group>
                         <group string="Verificaciones" name="ncf_checks_group">
-                            <field name="check_complete"/>
-                            <field name="check_verificate"/>
+                            <field name="check_complete_p"/>
+                            <field name="check_verificate_p"/>
                         </group>
                     </group>
                 </page>
