@@ -26,7 +26,6 @@
                 <page string="Información Fiscal (NCF)" name="ncf_page">
                     <group>
                         <group string="Datos NCF" name="ncf_data_group">
-                            <field name="ncf_tax"/>
                             <field name="ncf_amount_sale"/>
                             <field name="ncf_total"/>
                             <field name="ncf_day"/>
