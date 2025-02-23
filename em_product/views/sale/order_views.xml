@@ -17,49 +17,7 @@
             </field>
         </record>
 
-        <record id="purchase_order_form_inherit_fiscal" model="ir.ui.view">
-            <field name="name">purchase.order.form.inherit.fiscal</field>
-            <field name="model">purchase.order</field>
-            <field name="inherit_id" ref="purchase.purchase_order_form"/>
-            <field name="arch" type="xml">
-                <xpath expr="//notebook" position="inside">
-                <page string="Información Fiscal (NCF)" name="ncf_page">
-                    <group>
-                        <group string="Datos NCF" name="ncf_data_group">
-                            <field name="ncf_tax"/>
-                            <field name="ncf_amount_sale"/>
-                            <field name="ncf_total"/>
-                            <field name="ncf_day"/>
-                            <field name="ncf_year_month"/>
-                            <field name="ncf_check"/>
-                        </group>
-                        <group string="Verificaciones" name="ncf_checks_group">
-                            <field name="check_complete"/>
-                            <field name="check_verificate"/>
-                        </group>
-                    </group>
-                </page>
-                </xpath>
-            </field>
-        </record>
-
-        <record id="purchase_order_tree_inherit_fiscal" model="ir.ui.view">
-            <field name="name">purchase.order.tree.inherit.fiscal</field>
-            <field name="model">purchase.order</field>
-            <field name="inherit_id" ref="purchase.purchase_order_tree"/>
-            <field name="arch" type="xml">
-                <xpath expr="//field[@name='amount_total']" position="after">
-                    <field name="ncf_tax" optional="show"/>
-                    <field name="ncf_amount_sale" optional="show"/>
-                    <field name="ncf_total" optional="show"/>
-                    <field name="ncf_day" optional="hide"/>
-                    <field name="ncf_year_month" optional="hide"/>
-                    <field name="ncf_check" optional="hide"/>
-                    <field name="check_complete"/>
-                    <field name="check_verificate"/>
-                </xpath>
-            </field>
-        </record>
+        
     
 
 
