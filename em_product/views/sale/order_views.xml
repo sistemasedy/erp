@@ -18,7 +18,7 @@
         </record>
 
         <record id="purchase_order_form_inherit_fiscal" model="ir.ui.view">
-            <field name="name">purchase.order.form.inherit.fiscal</field>
+            <field name="name">purchase.order.form.inherit</field>
             <field name="model">purchase.order</field>
             <field name="inherit_id" ref="purchase.purchase_order_form"/>
             <field name="arch" type="xml">
