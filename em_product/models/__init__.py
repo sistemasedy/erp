@@ -2,3 +2,4 @@
 
 from . import models
 from . import account_move
+from . import sale_fiscal_report
