@@ -19,8 +19,3 @@ class PurchaseFiscal(models.Model):
 
 
 
-class PurchaseFiscalReport(models.Model):
-    _name = 'purchase.fiscal.report'
-    _inherit = 'purchase.order' # purchase.order, NOT sale.order
-
-    
