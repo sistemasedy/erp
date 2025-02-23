@@ -2,7 +2,7 @@
 
 from odoo import models, fields, api
 
-class SaleFiscalReport(models.Model):
+class PurchaseFiscalReport(models.Model):
     _inherit = 'purchase.order'
 
     ncf_tax = fields.Monetary(string='Impuesto NCF',
@@ -58,13 +58,6 @@ class SaleFiscalReport(models.Model):
                 order.ncf_day = False
                 order.ncf_year_month = False
 
-
-    def action_confirm(self):
-        res = super(SaleFiscalReport, self).action_confirm()
-        for order in self:
-            #  Se podria agregar logica adicional aqui si es necesario
-            pass
-        return res
 
 
     
