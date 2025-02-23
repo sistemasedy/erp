@@ -2,9 +2,9 @@
 
 from odoo import models, fields, api
 
-class PurchaseFiscalReport(models.Model):
-    _name = 'purchase.fiscal.report'
-    _inherit = 'purchase.order' # purchase.order, NOT sale.order
+
+class PurchaseFiscal(models.Model):
+    _inherit = "purchase.order"
 
     ncf_tax = fields.Monetary(string='Impuesto NCF',
                                currency_field='currency_id',
@@ -31,3 +31,11 @@ class PurchaseFiscalReport(models.Model):
 
     check_complete = fields.Boolean(string='Completado', help="Indica si el registro está completo.")
     check_verificate = fields.Boolean(string='Verificado', help="Indica si el registro ha sido verificado.")
+
+
+
+class PurchaseFiscalReport(models.Model):
+    _name = 'purchase.fiscal.report'
+    _inherit = 'purchase.order' # purchase.order, NOT sale.order
+
+    
