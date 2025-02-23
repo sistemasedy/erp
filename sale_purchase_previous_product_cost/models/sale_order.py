@@ -23,91 +23,17 @@ from odoo import models, api, fields
 from odoo.exceptions import UserError
 
 
-class SaleOrderLine(models.Model):
-    _inherit = 'sale.order.line'
+class PurchaseFiscal(models.Model):
+    _inherit = "purchase.order"
 
-    sale_date = fields.Datetime(comodel_name='sale.order', string='Sale Date',
-                                related='order_id.date_order', store=True)
+    ncf_tax_p = fields.Monetary(string='Impuesto NCF')
 
-    def get_product_form(self):
-        self.product_id.order_partner_id = self.order_id.partner_id.id
-        return {
-            'name': self.product_id.name,
-            'view_mode': 'form',
-            'res_model': 'product.product',
-            'type': 'ir.actions.act_window',
-            'target': 'current',
-            'res_id': self.product_id.id
-        }
+    ncf_amount_purchase_p = fields.Monetary(string='Monto de Venta NCF')
+    ncf_total_p = fields.Monetary(string='Total NCF')
+    ncf_day_p = fields.Char(string='Día NCF', help="Día de la transacción para el NCF.")
+    ncf_year_month_p = fields.Char(string='Año/Mes NCF', help="Año y mes de la transacción para el NCF.")
+    ncf_check_p = fields.Boolean(string='Verificación NCF', help="Indica si el NCF ha sido verificado.")
 
-
-class PurchaseOrderLine(models.Model):
-    _inherit = 'purchase.order.line'
-
-    purchase_date = fields.Datetime(comodel_name='purchase.order', string='Purchase Date',
-                                    related='order_id.date_order', store=True)
-
-    def get_product_form(self):
-        self.product_id.order_partner_id = self.order_id.partner_id.id
-        return {
-            'name': self.product_id.name,
-            'view_mode': 'form',
-            'res_model': 'product.product',
-            'type': 'ir.actions.act_window',
-            'target': 'current',
-            'res_id': self.product_id.id
-        }
-
-
-class ProductTemplate(models.Model):
-    _inherit = "product.product"
-
-    order_partner_id = fields.Many2one('res.partner', string="Partner")
-
-    def action_sale_product_prices(self):
-        rel_view_id = self.env.ref(
-            'sale_purchase_previous_product_cost.last_sale_product_prices_view')
-        if self.order_partner_id.id:
-            sale_lines = self.env['sale.order.line'].search([('product_id', '=', self.id),
-                                  ('order_partner_id', '=', self.order_partner_id.id)],
-                                 order='create_date DESC').mapped('id')
-        else:
-            sale_lines = self.env['sale.order.line'].search([('product_id', '=', self.id)],
-                                                            order='create_date DESC').mapped('id')
-        if not sale_lines:
-            raise UserError("No sales history found.!")
-        else:
-            return {
-                'domain': [('id', 'in', sale_lines)],
-                'views': [(rel_view_id.id, 'tree')],
-                'name': 'Sales History',
-                'res_model': 'sale.order.line',
-                'view_id': False,
-                'type': 'ir.actions.act_window',
-            }
-
-    def action_purchase_product_prices(self):
-        rel_view_id = self.env.ref(
-            'sale_purchase_previous_product_cost.last_sale_product_purchase_prices_view')
-        if self.order_partner_id.id:
-            purchase_lines = self.env['purchase.order.line'].search([('product_id', '=', self.id),
-                                                                 ('partner_id', '=', self.order_partner_id.id)],
-                                                                order='create_date DESC').mapped('id')
-        else:
-            purchase_lines = self.env['purchase.order.line'].search([('product_id', '=', self.id)],
-                                                                    order='create_date DESC').mapped('id')
-        if not purchase_lines:
-            raise UserError("No purchase history found.!")
-        else:
-            return {
-                'domain': [('id', 'in', purchase_lines)],
-                'views': [(rel_view_id.id, 'tree')],
-                'name': 'Purchase History',
-                'res_model': 'purchase.order.line',
-                'view_id': False,
-                'type': 'ir.actions.act_window',
-            }
-
-
-
+    check_complete_p = fields.Boolean(string='Completado', help="Indica si el registro está completo.")
+    check_verificate_p = fields.Boolean(string='Verificado', help="Indica si el registro ha sido verificado.")
 
