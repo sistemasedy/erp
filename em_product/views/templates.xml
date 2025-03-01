@@ -90,28 +90,7 @@
         </field>
     </record>
 
-    <record id="view_sale_order_filter_date_custom" model="ir.ui.view">
-        <field name="name">sale.order.search.date</field>
-        <field name="model">sale.order</field>
-        <field name="inherit_id" ref="sale.view_sales_order_filter"/>
-        <field name="arch" type="xml">
-            <xpath expr="//search" position="inside">
-                <separator/>
-                <filter string="Ventas desde Febrero" 
-                        name="sales_from_february" 
-                        domain="[('date_order', '>=', '2024-02-10')]"/>
-                <filter string="Ventas este mes" 
-                        name="sales_this_month"
-                        domain="[('date_order', '>=', (context_today() + relativedelta(day=1)).strftime('%Y-%m-%d'))]"/>
-                <filter string="Ventas el mes pasado"
-                        name="sales_last_month"
-                        domain="[
-                            ('date_order', '>=', (context_today() + relativedelta(months=-1, day=1)).strftime('%Y-%m-%d')),
-                            ('date_order', '<', (context_today() + relativedelta(day=1)).strftime('%Y-%m-%d'))
-                        ]"/>
-            </xpath>
-        </field>
-    </record>
+    
 
 
 </odoo>
