@@ -76,4 +76,7 @@ class cotizacion(models.Model):
     def _compute_itbis(self):
         for r in self:
             # r.itbis = ((r.price_subtotal*((r.tax_id.amount)/100)))
-            r.itbis = ((r.price_subtotal * ((r.tax_ids[:1].amount) / 100)))
+            if hasattr(r, 'tax_ids') and r.tax_ids:
+                r.itbis = r.price_subtotal * (r.tax_ids[:1].amount / 100)
+            else:
+                r.itbis = 0 
