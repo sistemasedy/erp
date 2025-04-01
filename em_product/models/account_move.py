@@ -79,19 +79,4 @@ class cotizacion(models.Model):
             if hasattr(r, 'tax_ids') and r.tax_ids:
                 r.itbis = r.price_subtotal * (r.tax_ids[:1].amount / 100)
             else:
-                r.itbis = 0 
-
-
-
-class Purcnhase(models.Model):
-    _inherit = 'purchase.order'
-
-    monto = fields.Float(
-        string='Monto', digits=(2, 2), store=True)
-    itbis = fields.Float(
-        string='Itbis', digits=(2, 2), store=True)
-
-    subtotal = fields.Float(
-        string='Sub Total', digits=(2, 2), store=True)
-
-    
+                r.itbis = 0
