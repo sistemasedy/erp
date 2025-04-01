@@ -3,8 +3,8 @@
 	<data>
 	
 	<record id="view_loan_installment_tree" model="ir.ui.view">
-	    <field name="name">loan.installment.tree</field>
-	    <field name="model">loan.installment</field>
+	    <field name="name">report.sale.tree</field>
+	    <field name="model">report.sale</field>
 	    <field name="priority">2</field>
 	    <field name="arch" type="xml">
 	    	<tree decoration-muted="state == 'cancel'"
@@ -28,8 +28,8 @@
 	</record>
 
 	<record id="view_loan_installment_form" model="ir.ui.view">
-	    <field name="name">loan.installment.form</field>
-	    <field name="model">loan.installment</field>
+	    <field name="name">report.sale.form</field>
+	    <field name="model">loan.report.sale</field>
 	    <field name="priority">2</field>
 	    <field name="arch" type="xml">
 	        <form string="Report Sale" class="o_purchase_order">
@@ -124,9 +124,9 @@
 
 
     <record id="loan_installment_action" model="ir.actions.act_window">
-        <field name="name">Reportes de Ventas</field>
+        <field name="name">Reportes de Ventas0</field>
         <field name="type">ir.actions.act_window</field>
-        <field name="res_model">loan.installment</field>
+        <field name="res_model">report.sale</field>
         <field name="view_mode">tree,form,kanban</field>
         <field name="help" type="html">
             <p class="oe_view_nocontent_create"> </p>
@@ -134,13 +134,13 @@
         </field>
     </record>
 
-    <menuitem id="sub_menu_reportsale" parent="account.account_account_menu" name="Reporte de Ventas" sequence="1"/>
 
+    <menuitem id="menu_main_loans" name="Pedidos" web_icon="em_report,static/description/icon3.png" />
+    <menuitem id="sub_req_menu_loan" parent="menu_main_loans" name="Reportes" sequence="0"/>
 
-
-	
-    <menuitem action="loan_installment_action" id="menu_loan_installment" parent="sub_req_menu_loan" name="Reporte de Ventas" sequence="2" groups="group_loan_manager"/>
-    <menuitem action="loan_installment_action" id="menu_reportsale" parent="sub_menu_reportsale" name="Reporte de Ventas" sequence="2" groups="group_loan_manager"/>
+   
+    <menuitem action="loan_installment_action" id="menu_loan_installment" parent="sub_req_menu_loan" name="Reporte de Ventas" sequence="2" />
+    
 
 	</data>
 </odoo>

@@ -6,8 +6,8 @@ from odoo.exceptions import UserError, ValidationError
 from datetime import timedelta, datetime
 
 class LoanInstallment(models.Model):
-    _name = 'loan.installment'
-    _description = "Loan Installment"
+    _name = 'report.sale'
+    _description = "Report Sale"
 
     name = fields.Char(string="Dia/Fecha",default='DIA/FECHA')
 
@@ -161,7 +161,7 @@ class ReportSaleLine(models.Model):
     _description = "Report Sale Line"
 
     name = fields.Char(string="Descripcion")
-    order_id = fields.Many2one('loan.installment', string='Order Reference', index=True, required=True, ondelete='cascade')
+    order_id = fields.Many2one('report.sale', string='Order Reference', index=True, required=True, ondelete='cascade')
 
     product_qty = fields.Float(string='Cantidad', digits='Product Unit of Measure', required=True)  
     price_unit = fields.Float(string='Precio de Venta', required=True, digits='Product Price')

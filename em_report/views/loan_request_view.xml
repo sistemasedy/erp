@@ -121,7 +121,7 @@
         <field name="padding">4</field>
     </record>
 
-    <menuitem id="sub_req_menu_loan" parent="menu_main_loans" name="Reportes" sequence="0"/>
+    
     <menuitem action="loan_req_action" id="menu_loan_req" parent="sub_req_menu_loan" name="Solicitudes" sequence="0"/>
 
     <record id="loan_req_approve_action" model="ir.actions.act_window">

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': 'Loan Management for Customer and Supplier',
+    'name': 'Em Report',
     "author": "Edge Technologies",
     'version': '16.0.1.0',
     'summary': 'Customer loan management supplier loan management partner loan installments vender loan management vendor credit loan interest for loan installment customer loan portal loan processing fee approve loan request customer disburse loan emi for customer emi',
@@ -35,25 +35,15 @@ Loan client
 
         
 """,
-    "license" : "OPL-1",
-    'depends': ['sale_management','account','purchase','stock'],
+    "license": "OPL-1",
+    'depends': ['account', 'base', 'stock'],
     'data': [
-            'security/loan_management_group.xml',
-            'security/ir.model.access.csv',
-            'views/loan_proof_view.xml',
-            'views/loan_type_view.xml',
-            'views/loan_policies_view.xml',
-            'views/loan_request_view.xml',
             'views/loan_installment_view.xml',
-            'views/partner_views.xml',
-            'views/account_payment_view.xml',
     ],
-    'live_test_url':'https://youtu.be/1rDd1dxqemg',
-    "images":['static/description/main_screenshot.png'],
+    'live_test_url': 'https://youtu.be/1rDd1dxqemg',
+    "images": ['static/description/main_screenshot.png'],
     'installable': True,
     'auto_install': False,
-    'price': 45,
-    'currency': "EUR",
     'category': 'Sales',
 }
 
