@@ -44,6 +44,7 @@ Loan client
     "images": ['static/description/main_screenshot.png'],
     'installable': True,
     'auto_install': False,
+    'application': True,
     'category': 'Sales',
 }
 
