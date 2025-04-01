@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+
+	<record id="res_partner_form_view_inherit_id" model="ir.ui.view">
+	    <field name="name">res.partner.form.inherite</field>
+	    <field name="model">res.partner</field>
+	    <field name="priority" eval="8" />
+	    <field name="inherit_id" ref="base.view_partner_form"/>
+	    <field name="arch" type="xml">
+	        <xpath expr="//page[@name='contact_addresses']" position="before">
+	            <page name="loan" string="Abonos de Clientes" attrs="{'invisible': [('allow_multiple_loan', '=', False)]}">
+	                <field name="loan_ids"/>
+	            </page>
+	            
+	        </xpath>
+	        
+	        <xpath expr="//field[@name='phone']" position="before">
+	            <field name="payment_amount_loan_amt" attrs="{'invisible': [('allow_multiple_loan', '=', False)]}"  widget='monetary' options="{'currency_field': 'currency_id'}"/>
+	            <field name="allow_multiple_loan"/>
+	            <field name="loan_defaulter" invisible="1"/>
+	            <field name="currency_id" invisible="1"/>
+	            
+	        </xpath>
+
+	        
+	        
+	    </field>
+	</record>
+
+	</data>
+</odoo>
