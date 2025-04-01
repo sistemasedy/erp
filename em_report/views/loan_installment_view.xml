@@ -124,7 +124,7 @@
 
 
     <record id="loan_installment_action" model="ir.actions.act_window">
-        <field name="name">Reportes de Ventas0</field>
+        <field name="name">Reportes de Ventas</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">report.sale</field>
         <field name="view_mode">tree,form,kanban</field>
@@ -135,7 +135,7 @@
     </record>
 
 
-    <menuitem id="menu_main_loans" name="Pedidos" web_icon="em_report,static/description/icon3.png" />
+    <menuitem id="menu_main_loans" name="Pedidos" web_icon="em_report/static/description/icon3.png" />
     <menuitem id="sub_req_menu_loan" parent="menu_main_loans" name="Reportes" sequence="0"/>
 
    
