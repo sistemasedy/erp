@@ -135,7 +135,7 @@
     </record>
 
 
-    <menuitem id="menu_main_loans" name="Pedidos" web_icon="em_report/static/description/icon3.png" />
+    <menuitem id="menu_main_loans" name="Pedidos" web_icon="em_report,static/description/icon3.png" />
     <menuitem id="sub_req_menu_loan" parent="menu_main_loans" name="Reportes" sequence="0"/>
 
    
