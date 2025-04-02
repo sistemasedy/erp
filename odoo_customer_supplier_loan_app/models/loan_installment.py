@@ -87,14 +87,13 @@ class LoanInstallment(models.Model):
         supplier_infos = supplier_info_obj.search(
             [('name', '=', self.partner_id.id)])
 
-        products = supplier_info.product_tmpl_id
-
-        if not products:
+        if not supplier_infos:
             raise ValidationError(_("No hay Productos configurados."))
 
         products_updated = 0
 
-        for product in products:
+        for supplier_info in supplier_infos:
+            product = supplier_info.product_tmpl_id
             reorder_qty = self._get_reorder_quantity(product)
             if reorder_qty > 0:
                 self._create_or_update_purchase_order_line(
