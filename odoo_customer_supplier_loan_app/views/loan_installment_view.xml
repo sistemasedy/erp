@@ -174,7 +174,6 @@
         <field name="report_type">qweb-pdf</field>
         <field name="report_name">odoo_customer_supplier_loan_app.report_loan_installment</field>
         <field name="report_file">odoo_customer_supplier_loan_app.report_loan_installment</field>
-        <field name="print_sequence">1</field>
         <field name="binding_type">report</field>
     </record>
 
