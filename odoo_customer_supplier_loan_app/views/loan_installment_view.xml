@@ -167,16 +167,15 @@
 
 
     <record id="action_generate_loan_installment_excel" model="ir.actions.act_window">
-        <field name="name">Exportar  a Excel</field>
+        <field name="name">Export Loan Installments to Excel</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">loan.installment</field>
         <field name="view_mode">tree,form</field>
-        <field name="target">self</field>
-        <field name="context">{'active_ids': active_ids}</field>
+        <field name="target">current</field>  <field name="context">{'active_ids': active_ids}</field>
     </record>
 
     <record id="action_generate_loan_installment_excel_server" model="ir.actions.server">
-        <field name="name">Exportar a Excel</field>
+        <field name="name">Export to Excel</field>
         <field name="model_id" ref="model_loan_installment"/>
         <field name="binding_model_id" ref="model_loan_installment"/>
         <field name="state">code</field>
@@ -186,7 +185,7 @@
     </record>
 
     <record id="menu_loan_installment_export_excel" model="ir.ui.menu">
-        <field name="name">Exportar</field>
+        <field name="name">Export Loan Installments</field>
         <field name="parent_id" ref="base.menu_reporting_menu"/>
         <field name="action" ref="action_generate_loan_installment_excel_server"/>
         <field name="sequence">20</field>
