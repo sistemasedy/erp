@@ -36,8 +36,7 @@
                 <header>
                     <button name="action_payment"  string="General Reporte" type="object"  class="oe_highlight" data-hotkey="g"/>
 
-                    <button name="generate_excel_report"  string="Exportar Reporte" type="object"  class="oe_highlight" data-hotkey="g"/>
-
+                    
                     <button name="action_payment" string="Print RFQ" type="object" states="draft" class="oe_highlight" groups="base.group_user" data-hotkey="k"/>
                     <button name="action_payment" type="object" states="sent" string="Confirm Order" class="oe_highlight" id="bid_confirm" data-hotkey="v"/>
                     
@@ -160,6 +159,45 @@
         <field name="help" type="html">
             <p class="oe_view_nocontent_create"> </p>
             <p></p>
+        </field>
+    </record>
+
+
+
+
+
+
+
+    <record id="action_generate_sale_report_excel" model="ir.actions.act_window">
+        <field name="name">Exportar a Excel</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">loan.installment</field>
+        <field name="view_mode">tree,form</field>
+        <field name="target">current</field>
+        <field name="context">{'active_ids': active_ids}</field>
+    </record>
+
+    <record id="action_generate_sale_report_excel_server" model="ir.actions.server">
+        <field name="name">Exportar a Excel</field>
+        <field name="model_id" ref="model_loan_installment"/>
+        <field name="binding_model_id" ref="model_loan_installment"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = model.generate_excel_report()
+        </field>
+    </record>
+
+    
+
+
+    <record id="loan_installment_form_view" model="ir.ui.view">
+        <field name="name">loan.installment.form</field>
+        <field name="model">loan.installment</field>
+        <field name="inherit_id" ref="loan_installment_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="%(action_generate_loan_installment_excel_server)d" type="action" string="Exportar a Excel" class="oe_highlight"/>
+            </xpath>
         </field>
     </record>
 
