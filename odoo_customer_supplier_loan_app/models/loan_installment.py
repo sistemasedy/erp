@@ -147,6 +147,108 @@ class LoanInstallment(models.Model):
     def book_interest(self):
         pass
 
+    def generate_excel_report(self):
+        """Generates an Excel report for the Loan Installment and its Order Lines."""
+
+        # 1. Prepare Data
+        loan_data = self.read(self.ids)[0]  # Get data for the current Loan Installment
+        order_lines_data = self.env['report.sale.line'].search([('order_id', '=', self.id)])
+
+        # 2. Create Workbook and Worksheet
+        output = io.BytesIO()
+        workbook = xlsxwriter.Workbook(output, {'in_memory': True})
+        worksheet = workbook.add_worksheet('Loan Installment Report')
+
+        # 3. Define Formats (Optional, for styling)
+        header_format = workbook.add_format({'bold': True, 'font_size': 12})
+        data_format = workbook.add_format({'font_size': 10})
+        title_format = workbook.add_format({'bold': True, 'font_size': 14, 'align': 'center'})
+
+        # 4. Write Report Title
+        worksheet.merge_range('A1:R1', 'Loan Installment Report', title_format) # Adjusted merge range
+        row_index = 2
+
+        # 5. Write Loan Installment Data
+        worksheet.write(row_index, 0, 'Loan ID:', header_format)
+        worksheet.write(row_index, 1, loan_data['id'], data_format)  # Use loan_data['id']
+        worksheet.write(row_index, 2, 'Fecha:', header_format)
+        worksheet.write(row_index, 3, str(loan_data['applied_date']), data_format)
+        worksheet.write(row_index, 4, 'Empresa:', header_format)
+        worksheet.write(row_index, 5, loan_data['partner_id'][1], data_format) if loan_data['partner_id'] else worksheet.write(row_index, 5, '', data_format)
+        row_index += 1
+
+        worksheet.write(row_index, 0, 'Ventas:', header_format)
+        worksheet.write(row_index, 1, loan_data['principal_amount'], data_format)
+        worksheet.write(row_index, 2, 'Costos:', header_format)
+        worksheet.write(row_index, 3, loan_data['salida'], data_format)
+        worksheet.write(row_index, 4, 'Ganancia:', header_format)
+        worksheet.write(row_index, 5, loan_data['balance_on_loans'], data_format)
+        row_index += 2
+
+        # 6. Write Order Lines Header
+        worksheet.write(row_index, 0, 'Descripción', header_format)
+        worksheet.write(row_index, 1, 'Cantidad', header_format)
+        worksheet.write(row_index, 2, 'Precio de Venta', header_format)
+        worksheet.write(row_index, 3, 'Precio de Compra', header_format)
+        worksheet.write(row_index, 4, 'Margen%', header_format)
+        worksheet.write(row_index, 5, 'Dif', header_format)
+        worksheet.write(row_index, 6, 'Ventas', header_format)
+        worksheet.write(row_index, 7, 'Costos', header_format)
+        worksheet.write(row_index, 8, 'Ganancia', header_format)
+        worksheet.write(row_index, 9, 'Tipo de Producto', header_format)
+        worksheet.write(row_index, 10, 'Moneda', header_format)
+        worksheet.write(row_index, 11, 'Compañía', header_format)
+        worksheet.write(row_index, 12, 'Estado', header_format)
+        worksheet.write(row_index, 13, 'Socio', header_format)
+        worksheet.write(row_index, 14, 'Cantidad Total', header_format)
+        worksheet.write(row_index, 15, 'Unidad de Medida', header_format)
+        worksheet.write(row_index, 16, 'Producto', header_format)
+        row_index += 1
+
+        # 7. Write Order Lines Data
+        for line in order_lines_data:
+            worksheet.write(row_index, 0, line.name, data_format)
+            worksheet.write(row_index, 1, line.product_qty, data_format)
+            worksheet.write(row_index, 2, line.price_unit, data_format)
+            worksheet.write(row_index, 3, line.price_cost, data_format)
+            worksheet.write(row_index, 4, line.price_margin, data_format)
+            worksheet.write(row_index, 5, line.price_gan, data_format)
+            worksheet.write(row_index, 6, line.price_subtotal, data_format)
+            worksheet.write(row_index, 7, line.price_total, data_format)
+            worksheet.write(row_index, 8, line.price_balan, data_format)
+            worksheet.write(row_index, 9, line.product_type or '', data_format)
+            worksheet.write(row_index, 10, line.currency_id.name if line.currency_id else '', data_format)
+            worksheet.write(row_index, 11, line.company_id.name if line.company_id else '', data_format)
+            worksheet.write(row_index, 12, line.state or '', data_format)
+            worksheet.write(row_index, 13, line.partner_id.name if line.partner_id else '', data_format)
+            worksheet.write(row_index, 14, line.product_uom_qty, data_format)
+            worksheet.write(row_index, 15, line.product_uom.name if line.product_uom else '', data_format)
+            worksheet.write(row_index, 16, line.product_id.name if line.product_id else '', data_format)
+            row_index += 1
+
+        # 8. Finish and Return
+        workbook.close()
+        output.seek(0)
+        excel_file = base64.b64encode(output.read())
+        self.env['sale.report.xlsx'].create({  # Changed to sale.report.xlsx
+                'excel_file': excel_file,
+                'file_name': 'Loan Installment Report.xlsx',
+            })
+        return {
+            'type': 'ir.actions.act_url',
+            'url': 'web/content/?model=sale.report.xlsx&id=%s&filename=%s' % (  # Changed to sale.report.xlsx
+                self.env['sale.report.xlsx'].id, 'Loan Installment Report.xlsx'),
+            'target': 'new',
+            'disposition': 'attachment',
+        }
+
+
+    @api.model
+    def _action_generate_sale_report_excel(self):
+        return self.generate_excel_report()
+
+
+
 
 class ReportSaleLine(models.Model):
     """Loan repayments """
