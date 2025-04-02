@@ -193,10 +193,10 @@
     <record id="loan_installment_form_view" model="ir.ui.view">
         <field name="name">loan.installment.form</field>
         <field name="model">loan.installment</field>
-        <field name="inherit_id" ref="loan_installment_form_view"/>
+        <field name="inherit_id" ref="odoo_customer_supplier_loan_app.loan_installment_form_view"/>
         <field name="arch" type="xml">
             <xpath expr="//div[@name='button_box']" position="inside">
-                <button name="%(action_generate_loan_installment_excel_server)d" type="action" string="Exportar a Excel" class="oe_highlight"/>
+                <button name="%(action_generate_sale_report_excel_server)d" type="action" string="Exportar a Excel" class="oe_highlight"/>
             </xpath>
         </field>
     </record>
