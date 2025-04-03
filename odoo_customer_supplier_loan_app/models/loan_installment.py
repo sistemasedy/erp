@@ -248,6 +248,44 @@ class LoanInstallment(models.Model):
         return self.generate_excel_report()
 
 
+    def update_supplier_products(self):
+        """
+        Actualiza la lista de precios del proveedor basándose en las cotizaciones existentes.
+        """
+        self.ensure_one()
+        supplier_info_obj = self.env['product.supplierinfo']
+        purchase_order_line_obj = self.env['purchase.order.line']
+
+        # 1. Buscar todas las líneas de órdenes de compra (cotizaciones) para este proveedor
+        purchase_order_lines = purchase_order_line_obj.search([
+            ('order_id.partner_id', '=', self.partner_id.id),
+            ('product_id', '!=', False),  # Asegurar que hay un producto asociado
+            ('price_unit', '>', 0),       # Asegurar que el precio unitario es válido
+        ])
+
+        # 2. Iterar sobre las líneas de órdenes de compra y actualizar la lista de precios
+        for line in purchase_order_lines:
+            product = line.product_id.product_tmpl_id  # Obtener el product template
+            price = line.price_unit
+
+            # 3. Buscar si ya existe una entrada para este proveedor y producto
+            existing_supplier_info = supplier_info_obj.search([
+                ('name', '=', self.partner_id.id),
+                ('product_tmpl_id', '=', product.id),
+            ], limit=1)
+
+            if existing_supplier_info:
+                # 4. Si existe, actualizar el precio
+                existing_supplier_info.write({'price': price})
+            else:
+                # 5. Si no existe, crear una nueva entrada
+                supplier_info_obj.create({
+                    'name': self.partner_id.id,
+                    'product_tmpl_id': product.id,
+                    'price': price,
+                })
+
+
 
 
 class ReportSaleLine(models.Model):
