@@ -287,7 +287,61 @@ class LoanInstallment(models.Model):
                     'price': price,
                 })
 
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'reload',
+            'name': 'Productos Actualizados',
+            'params': {
+                'message': f'{products_updated} Productos actualizados correctamente.'
+            }
+        }
+    
 
+    def create_purchase_orders(self):
+        """
+        Crea órdenes de compra a partir de las líneas de pedido en self.order_line.
+        """
+        purchase_order_obj = self.env['purchase.order']
+        purchase_order_line_obj = self.env['purchase.order.line']
+
+        # Agrupar las líneas de pedido por proveedor para crear una orden de compra por proveedor.
+        orders_by_partner = {}
+        for line in self.order_line:
+            if line.partner_id not in orders_by_partner:
+                orders_by_partner[line.partner_id] = []
+            orders_by_partner[line.partner_id].append(line)
+
+        for partner, lines in orders_by_partner.items():
+            # Crear la orden de compra
+            purchase_order_vals = {
+                'partner_id': partner.id,
+                'company_id': self.company_id.id,  # Asegurar que la orden de compra esté en la misma compañía que el reporte.
+                'currency_id': self.currency_id.id, # Asegurar la misma moneda
+                'origin': self.name,  # Referencia al reporte de venta
+            }
+            purchase_order = purchase_order_obj.create(purchase_order_vals)
+
+            # Crear las líneas de la orden de compra
+            for line in lines:
+                purchase_order_line_vals = {
+                    'order_id': purchase_order.id,
+                    'product_id': line.product_id.id,
+                    'product_qty': line.product_qty,
+                    'price_unit': line.price_cost,  # Usar el precio de costo
+                    'name': line.name,
+                    'product_uom': line.product_uom.id,
+                    'date_planned': fields.Date.today(),  # Puedes ajustar esto
+                }
+                purchase_order_line_obj.create(purchase_order_line_vals)
+
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'reload',
+            'name': 'Orden Creada',
+            'params': {
+                'message': f'{products_updated} Orden Creada correctamente.'
+            }
+        }
 
 
 class ReportSaleLine(models.Model):
