@@ -101,17 +101,12 @@ class LoanInstallment(models.Model):
                 products_updated += 1
 
         # Mostrar un mensaje de éxito al usuario
-        if products_updated > 0:
-            message = _(
-                "Se han creado %s órdenes de compra.") % products_updated
-        else:
-            message = _("No se ha creado ninguna orden de compra.")
-
         return {
             'type': 'ir.actions.client',
-            'title': _('Órdenes de Compra Creadas'),
-            'message': message,
-            'sticky': False,  # El mensaje no se cierra automáticamente
+            'name': 'Productos Actualizados',
+            'params': {
+                'message': f'{products_updated} productos actualizados correctamente.'
+            }
         }
 
     def _get_reorder_quantity(self, product):
@@ -307,17 +302,12 @@ class LoanInstallment(models.Model):
                 products_updated += 1
 
         # Mostrar un mensaje de éxito al usuario
-        if products_updated > 0:
-            message = _(
-                "Se han actualizado %s Productos.") % products_updated
-        else:
-            message = _("No se ha actualizado ningun producto.")
-
         return {
             'type': 'ir.actions.client',
-            'title': _('Órdenes de Compra Creadas'),
-            'message': message,
-            'sticky': False,  # El mensaje no se cierra automáticamente
+            'name': 'Productos Actualizados',
+            'params': {
+                'message': f'{products_updated} productos actualizados correctamente.'
+            }
         }
 
     def create_purchase_orders(self):
@@ -362,17 +352,12 @@ class LoanInstallment(models.Model):
                 products_updated += 1
 
         # Mostrar un mensaje de éxito al usuario
-        if products_updated > 0:
-            message = _(
-                "Se han creado %s órdenes de compra.") % products_updated
-        else:
-            message = _("No se ha creado ninguna orden de compra.")
-
         return {
             'type': 'ir.actions.client',
-            'title': _('Órdenes de Compra Creadas'),
-            'message': message,
-            'sticky': False,  # El mensaje no se cierra automáticamente
+            'name': 'Productos Actualizados',
+            'params': {
+                'message': f'{products_updated} productos actualizados correctamente.'
+            }
         }
 
 
