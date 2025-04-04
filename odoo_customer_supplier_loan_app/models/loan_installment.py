@@ -44,7 +44,7 @@ class LoanInstallment(models.Model):
     suma_inte = fields.Float(string="Mora", help="Amount",
                              digits=(16, 2))
 
-    anterior_interes = fields.Float(string="I Anterior", help="Amount",
+    anterior_interes = fields.Float(string="Itereses Anterior", help="Amount",
                                     digits=(16, 2))
 
     sum_paid = fields.Float(string="Pagos", help="Amount",
