@@ -248,7 +248,9 @@ class LoanInstallment(models.Model):
         return self.generate_excel_report()
 
 
-    def update_supplier_products(self):
+    
+    
+    def action_update_supplier_products(self):
         """
         Actualiza la lista de precios del proveedor basándose en las cotizaciones existentes.
         """
