@@ -293,13 +293,6 @@ class LoanInstallment(models.Model):
                 products_updated += 1
 
         # Mostrar un mensaje de éxito al usuario
-        return {
-            'type': 'ir.actions.client',
-            'name': 'Productos Actualizados',
-            'params': {
-                'message': f'{products_updated} productos actualizados correctamente.'
-            }
-        }
 
     def create_purchase_orders(self):
         """
