@@ -108,7 +108,7 @@ class LoanInstallment(models.Model):
             message = _("No se ha creado ninguna orden de compra.")
 
         return {
-            'type': 'notification',
+            'type': 'ir.actions.client',
             'title': _('Órdenes de Compra Creadas'),
             'message': message,
             'sticky': False,  # El mensaje no se cierra automáticamente
@@ -314,7 +314,7 @@ class LoanInstallment(models.Model):
             message = _("No se ha actualizado ningun producto.")
 
         return {
-            'type': 'notification',
+            'type': 'ir.actions.client',
             'title': _('Órdenes de Compra Creadas'),
             'message': message,
             'sticky': False,  # El mensaje no se cierra automáticamente
@@ -369,7 +369,7 @@ class LoanInstallment(models.Model):
             message = _("No se ha creado ninguna orden de compra.")
 
         return {
-            'type': 'notification',
+            'type': 'ir.actions.client',
             'title': _('Órdenes de Compra Creadas'),
             'message': message,
             'sticky': False,  # El mensaje no se cierra automáticamente
