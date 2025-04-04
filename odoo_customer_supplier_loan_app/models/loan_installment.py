@@ -100,15 +100,6 @@ class LoanInstallment(models.Model):
                     product, reorder_qty)
                 products_updated += 1
 
-        # Mostrar un mensaje de éxito al usuario
-        return {
-            'type': 'ir.actions.client',
-            'name': 'Productos Actualizados',
-            'params': {
-                'message': f'{products_updated} productos actualizados correctamente.'
-            }
-        }
-
     def _get_reorder_quantity(self, product):
         stock_moves = self.env['stock.move'].search([
             ('product_id', '=', product.id),
@@ -350,15 +341,6 @@ class LoanInstallment(models.Model):
                 }
                 purchase_order_line_obj.create(purchase_order_line_vals)
                 products_updated += 1
-
-        # Mostrar un mensaje de éxito al usuario
-        return {
-            'type': 'ir.actions.client',
-            'name': 'Productos Actualizados',
-            'params': {
-                'message': f'{products_updated} productos actualizados correctamente.'
-            }
-        }
 
 
 class ReportSaleLine(models.Model):
