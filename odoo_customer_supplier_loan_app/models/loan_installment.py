@@ -265,6 +265,8 @@ class LoanInstallment(models.Model):
             ('price_unit', '>', 0),       # Asegurar que el precio unitario es válido
         ])
 
+        products_updated = 0
+
         # 2. Iterar sobre las líneas de órdenes de compra y actualizar la lista de precios
         for line in purchase_order_lines:
             product = line.product_id.product_tmpl_id  # Obtener el product template
@@ -286,6 +288,7 @@ class LoanInstallment(models.Model):
                     'product_tmpl_id': product.id,
                     'price': price,
                 })
+                products_updated += 1
 
         return {
             'type': 'ir.actions.client',
@@ -306,6 +309,8 @@ class LoanInstallment(models.Model):
 
         # Agrupar las líneas de pedido por proveedor para crear una orden de compra por proveedor.
         orders_by_partner = {}
+        products_updated = 0
+
         for line in self.order_line:
             if line.partner_id not in orders_by_partner:
                 orders_by_partner[line.partner_id] = []
@@ -333,6 +338,7 @@ class LoanInstallment(models.Model):
                     'date_planned': fields.Date.today(),  # Puedes ajustar esto
                 }
                 purchase_order_line_obj.create(purchase_order_line_vals)
+                products_updated += 1
 
         return {
             'type': 'ir.actions.client',
