@@ -100,14 +100,18 @@ class LoanInstallment(models.Model):
                     product, reorder_qty)
                 products_updated += 1
 
-        return self._reload_client_with_message(f'{products_updated} ordenes creadas o actualizadas correctamente.')
+        # Mostrar un mensaje de éxito al usuario
+        if purchase_order_count > 0:
+            message = _(
+                "Se han creado %s órdenes de compra.") % products_updated
+        else:
+            message = _("No se ha creado ninguna orden de compra.")
 
-    def _reload_client_with_message(self, message):
         return {
-            'type': 'ir.actions.client',
-            'tag': 'reload',
-            'name': 'Productos Actualizados',
-            'params': {'message': message}
+            'type': 'notification',
+            'title': _('Órdenes de Compra Creadas'),
+            'message': message,
+            'sticky': False,  # El mensaje no se cierra automáticamente
         }
 
     def _get_reorder_quantity(self, product):
@@ -151,8 +155,10 @@ class LoanInstallment(models.Model):
         """Generates an Excel report for the Loan Installment and its Order Lines."""
 
         # 1. Prepare Data
-        loan_data = self.read(self.ids)[0]  # Get data for the current Loan Installment
-        order_lines_data = self.env['report.sale.line'].search([('order_id', '=', self.id)])
+        # Get data for the current Loan Installment
+        loan_data = self.read(self.ids)[0]
+        order_lines_data = self.env['report.sale.line'].search(
+            [('order_id', '=', self.id)])
 
         # 2. Create Workbook and Worksheet
         output = io.BytesIO()
@@ -162,27 +168,34 @@ class LoanInstallment(models.Model):
         # 3. Define Formats (Optional, for styling)
         header_format = workbook.add_format({'bold': True, 'font_size': 12})
         data_format = workbook.add_format({'font_size': 10})
-        title_format = workbook.add_format({'bold': True, 'font_size': 14, 'align': 'center'})
+        title_format = workbook.add_format(
+            {'bold': True, 'font_size': 14, 'align': 'center'})
 
         # 4. Write Report Title
-        worksheet.merge_range('A1:R1', 'Loan Installment Report', title_format) # Adjusted merge range
+        # Adjusted merge range
+        worksheet.merge_range('A1:R1', 'Loan Installment Report', title_format)
         row_index = 2
 
         # 5. Write Loan Installment Data
         worksheet.write(row_index, 0, 'Loan ID:', header_format)
-        worksheet.write(row_index, 1, loan_data['id'], data_format)  # Use loan_data['id']
+        # Use loan_data['id']
+        worksheet.write(row_index, 1, loan_data['id'], data_format)
         worksheet.write(row_index, 2, 'Fecha:', header_format)
-        worksheet.write(row_index, 3, str(loan_data['applied_date']), data_format)
+        worksheet.write(row_index, 3, str(
+            loan_data['applied_date']), data_format)
         worksheet.write(row_index, 4, 'Empresa:', header_format)
-        worksheet.write(row_index, 5, loan_data['partner_id'][1], data_format) if loan_data['partner_id'] else worksheet.write(row_index, 5, '', data_format)
+        worksheet.write(row_index, 5, loan_data['partner_id'][1], data_format) if loan_data['partner_id'] else worksheet.write(
+            row_index, 5, '', data_format)
         row_index += 1
 
         worksheet.write(row_index, 0, 'Ventas:', header_format)
-        worksheet.write(row_index, 1, loan_data['principal_amount'], data_format)
+        worksheet.write(
+            row_index, 1, loan_data['principal_amount'], data_format)
         worksheet.write(row_index, 2, 'Costos:', header_format)
         worksheet.write(row_index, 3, loan_data['salida'], data_format)
         worksheet.write(row_index, 4, 'Ganancia:', header_format)
-        worksheet.write(row_index, 5, loan_data['balance_on_loans'], data_format)
+        worksheet.write(
+            row_index, 5, loan_data['balance_on_loans'], data_format)
         row_index += 2
 
         # 6. Write Order Lines Header
@@ -217,13 +230,18 @@ class LoanInstallment(models.Model):
             worksheet.write(row_index, 7, line.price_total, data_format)
             worksheet.write(row_index, 8, line.price_balan, data_format)
             worksheet.write(row_index, 9, line.product_type or '', data_format)
-            worksheet.write(row_index, 10, line.currency_id.name if line.currency_id else '', data_format)
-            worksheet.write(row_index, 11, line.company_id.name if line.company_id else '', data_format)
+            worksheet.write(
+                row_index, 10, line.currency_id.name if line.currency_id else '', data_format)
+            worksheet.write(
+                row_index, 11, line.company_id.name if line.company_id else '', data_format)
             worksheet.write(row_index, 12, line.state or '', data_format)
-            worksheet.write(row_index, 13, line.partner_id.name if line.partner_id else '', data_format)
+            worksheet.write(
+                row_index, 13, line.partner_id.name if line.partner_id else '', data_format)
             worksheet.write(row_index, 14, line.product_uom_qty, data_format)
-            worksheet.write(row_index, 15, line.product_uom.name if line.product_uom else '', data_format)
-            worksheet.write(row_index, 16, line.product_id.name if line.product_id else '', data_format)
+            worksheet.write(
+                row_index, 15, line.product_uom.name if line.product_uom else '', data_format)
+            worksheet.write(
+                row_index, 16, line.product_id.name if line.product_id else '', data_format)
             row_index += 1
 
         # 8. Finish and Return
@@ -231,9 +249,9 @@ class LoanInstallment(models.Model):
         output.seek(0)
         excel_file = base64.b64encode(output.read())
         self.env['sale.report.xlsx'].create({  # Changed to sale.report.xlsx
-                'excel_file': excel_file,
-                'file_name': 'Loan Installment Report.xlsx',
-            })
+            'excel_file': excel_file,
+            'file_name': 'Loan Installment Report.xlsx',
+        })
         return {
             'type': 'ir.actions.act_url',
             'url': 'web/content/?model=sale.report.xlsx&id=%s&filename=%s' % (  # Changed to sale.report.xlsx
@@ -242,14 +260,10 @@ class LoanInstallment(models.Model):
             'disposition': 'attachment',
         }
 
-
     @api.model
     def _action_generate_sale_report_excel(self):
         return self.generate_excel_report()
 
-
-    
-    
     def action_update_supplier_products(self):
         """
         Actualiza la lista de precios del proveedor basándose en las cotizaciones existentes.
@@ -261,8 +275,10 @@ class LoanInstallment(models.Model):
         # 1. Buscar todas las líneas de órdenes de compra (cotizaciones) para este proveedor
         purchase_order_lines = purchase_order_line_obj.search([
             ('order_id.partner_id', '=', self.partner_id.id),
-            ('product_id', '!=', False),  # Asegurar que hay un producto asociado
-            ('price_unit', '>', 0),       # Asegurar que el precio unitario es válido
+            # Asegurar que hay un producto asociado
+            ('product_id', '!=', False),
+            # Asegurar que el precio unitario es válido
+            ('price_unit', '>', 0),
         ])
 
         products_updated = 0
@@ -290,15 +306,19 @@ class LoanInstallment(models.Model):
                 })
                 products_updated += 1
 
+        # Mostrar un mensaje de éxito al usuario
+        if purchase_order_count > 0:
+            message = _(
+                "Se han actualizado %s Productos.") % products_updated
+        else:
+            message = _("No se ha actualizado ningun producto.")
+
         return {
-            'type': 'ir.actions.client',
-            'tag': 'reload',
-            'name': 'Productos Actualizados',
-            'params': {
-                'message': f'{products_updated} Productos actualizados correctamente.'
-            }
+            'type': 'notification',
+            'title': _('Órdenes de Compra Creadas'),
+            'message': message,
+            'sticky': False,  # El mensaje no se cierra automáticamente
         }
-    
 
     def create_purchase_orders(self):
         """
@@ -320,8 +340,9 @@ class LoanInstallment(models.Model):
             # Crear la orden de compra
             purchase_order_vals = {
                 'partner_id': partner.id,
-                'company_id': self.company_id.id,  # Asegurar que la orden de compra esté en la misma compañía que el reporte.
-                'currency_id': self.currency_id.id, # Asegurar la misma moneda
+                # Asegurar que la orden de compra esté en la misma compañía que el reporte.
+                'company_id': self.company_id.id,
+                'currency_id': self.currency_id.id,  # Asegurar la misma moneda
                 'origin': self.name,  # Referencia al reporte de venta
             }
             purchase_order = purchase_order_obj.create(purchase_order_vals)
@@ -340,13 +361,18 @@ class LoanInstallment(models.Model):
                 purchase_order_line_obj.create(purchase_order_line_vals)
                 products_updated += 1
 
+        # Mostrar un mensaje de éxito al usuario
+        if purchase_order_count > 0:
+            message = _(
+                "Se han creado %s órdenes de compra.") % products_updated
+        else:
+            message = _("No se ha creado ninguna orden de compra.")
+
         return {
-            'type': 'ir.actions.client',
-            'tag': 'reload',
-            'name': 'Orden Creada',
-            'params': {
-                'message': f'{products_updated} Orden Creada correctamente.'
-            }
+            'type': 'notification',
+            'title': _('Órdenes de Compra Creadas'),
+            'message': message,
+            'sticky': False,  # El mensaje no se cierra automáticamente
         }
 
 
@@ -427,3 +453,5 @@ class ProductProduct(models.Model):
         'supplier_rank', '>', 0)], help='Proveedor principal para reordenar automáticamente')
     auto_reorder = fields.Boolean(string='Reordenar Automáticamente')
     ignore_product = fields.Boolean(string='Ignoral', default=False)
+    product_pack = fields.Float(string='Cantida Paquete', store=True)
+    qty_pack = fields.Float(string='Pedido', store=True)
