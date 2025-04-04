@@ -362,7 +362,7 @@ class LoanInstallment(models.Model):
                 products_updated += 1
 
         # Mostrar un mensaje de éxito al usuario
-        if purchase_order_count > 0:
+        if products_updated > 0:
             message = _(
                 "Se han creado %s órdenes de compra.") % products_updated
         else:
