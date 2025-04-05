@@ -352,7 +352,7 @@ class ReportSaleLine(models.Model):
                                index=True, required=True, ondelete='cascade')
 
     product_qty = fields.Float(
-        string='Cantidad', digits='Product Unit of Measure', required=True)
+        string='Cantidad',compute='_compute_calculate', digits='Product Unit of Measure', required=True)
     price_unit = fields.Float(string='Precio de Venta',
                               required=True, digits='Product Price')
     price_cost = fields.Float(
@@ -383,6 +383,26 @@ class ReportSaleLine(models.Model):
         related='product_id.uom_id.category_id')
     product_id = fields.Many2one('product.product', string='Producto', domain=[
                                  ('purchase_ok', '=', True)], change_default=True)
+
+    calculate = fields.Selection([('manual', 'Manual'), ('automate', 'Automatico')], default='automate', string="Pedido")
+
+    @api.depends('calculate')
+    def _compute_calculate(self):
+        for record in self:
+            if record.calculate == 'manual' and record.product_id:
+                record.product_qty = record._get_reorder_quantity(record.product_id)
+                record.price_unit = record.product_id.list_price
+
+
+    def _get_reorder_quantity(self, product):
+        stock_moves = self.env['stock.move'].search([
+            ('product_id', '=', product.id),
+            ('location_id.usage', '=', 'internal'),
+            ('date', '>=', self.order_id.start_date),
+            ('date', '<=', self.order_id.end_date),
+            ('reference', 'ilike', 'WH/POS/%')
+        ])
+        return abs(sum(stock_moves.mapped('product_qty')))
 
     @api.depends('product_qty', 'price_unit')
     def _compute_amount(self):
