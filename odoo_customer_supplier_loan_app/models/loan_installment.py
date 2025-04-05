@@ -118,8 +118,13 @@ class LoanInstallment(models.Model):
             ('product_id', '=', product.id)
         ], limit=1)
 
+        purchase_order_line2 = purchase_order_line_obj.search([
+            ('order_id', '=', self.id)
+        ], limit=1)
+
         if purchase_order_line:
             purchase_order_line.product_qty = reorder_qty
+            purchase_order_line2.product_qty = reorder_qty
         else:
             purchase_order_line_obj.create({
                 'order_id': self.id,
