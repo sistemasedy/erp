@@ -352,7 +352,7 @@ class ReportSaleLine(models.Model):
                                index=True, required=True, ondelete='cascade')
 
     product_qty = fields.Float(
-        string='Cantidad',compute='_compute_calculate', digits='Product Unit of Measure', required=True)
+        string='Cantidad', digits='Product Unit of Measure', required=True)
     price_unit = fields.Float(string='Precio de Venta',
                               required=True, digits='Product Price')
     price_cost = fields.Float(
@@ -383,8 +383,11 @@ class ReportSaleLine(models.Model):
         related='product_id.uom_id.category_id')
     product_id = fields.Many2one('product.product', string='Producto', domain=[
                                  ('purchase_ok', '=', True)], change_default=True)
-
     calculate = fields.Selection([('manual', 'Manual'), ('automate', 'Automatico')], default='automate', string="Pedido")
+
+    '''
+
+    
 
     @api.depends('calculate')
     def _compute_calculate(self):
@@ -403,6 +406,8 @@ class ReportSaleLine(models.Model):
             ('reference', 'ilike', 'WH/POS/%')
         ])
         return abs(sum(stock_moves.mapped('product_qty')))
+
+    '''
 
     @api.depends('product_qty', 'price_unit')
     def _compute_amount(self):

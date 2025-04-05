@@ -111,7 +111,6 @@
                                     <field name="price_gan"/>
                                     <field name="price_margin"/>
 
-                                    <field name="calculate"/>
                                     
                                     <field name="price_subtotal" widget="monetary"/>
                                     <field name="price_total" widget="monetary"/>
