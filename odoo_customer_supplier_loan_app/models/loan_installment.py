@@ -334,6 +334,12 @@ class LoanInstallment(models.Model):
                 }
                 purchase_order_line_obj.create(purchase_order_line_vals)
                 products_updated += 1
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'reload',
+            'name': 'Orden Creada',
+            'params': {'message': 'Orden Creada'}
+        }
 
 
 class ReportSaleLine(models.Model):
