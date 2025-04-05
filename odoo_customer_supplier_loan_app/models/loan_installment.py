@@ -97,7 +97,7 @@ class LoanInstallment(models.Model):
         for supplier_info2 in purchase_order_line_obj:
             product2 = supplier_info2.product_id
             reorder_qty2 = self._get_reorder_quantity(product2)
-            if reorder_qty2 == 0:
+            if reorder_qty2 > 0:
                 self._create_or_update_purchase_order_line(
                     product2, reorder_qty2)
                 products_updated += 1
