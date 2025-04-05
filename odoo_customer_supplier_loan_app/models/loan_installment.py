@@ -92,6 +92,16 @@ class LoanInstallment(models.Model):
 
         products_updated = 0
 
+        purchase_order_line_obj = self.env['report.sale.line']
+
+        for supplier_info2 in purchase_order_line_obj:
+            product2 = supplier_info2.product_id
+            reorder_qty2 = self._get_reorder_quantity(product2)
+            if reorder_qty2 == 0:
+                self._create_or_update_purchase_order_line(
+                    product2, reorder_qty2)
+                products_updated += 1
+
         for supplier_info in supplier_infos:
             product = supplier_info.product_tmpl_id
             reorder_qty = self._get_reorder_quantity(product)
@@ -118,13 +128,10 @@ class LoanInstallment(models.Model):
             ('product_id', '=', product.id)
         ], limit=1)
 
-        purchase_order_line2 = purchase_order_line_obj.search([
-            ('order_id', '=', self.id)
-        ], limit=1)
+        
 
         if purchase_order_line:
             purchase_order_line.product_qty = reorder_qty
-            purchase_order_line2.product_qty = reorder_qty
         else:
             purchase_order_line_obj.create({
                 'order_id': self.id,
@@ -135,6 +142,7 @@ class LoanInstallment(models.Model):
                 'product_qty': reorder_qty,
                 'product_uom': product.uom_po_id.id,
             })
+
 
     def reset_draft(self):
         self.write({'state': 'unpaid'})
