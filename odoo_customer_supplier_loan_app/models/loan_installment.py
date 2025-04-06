@@ -92,7 +92,8 @@ class LoanInstallment(models.Model):
 
         products_updated = 0
 
-        purchase_order_line_obj = self.env['report.sale.line'].search([])
+        purchase_order_line_obj = self.env['report.sale.line'].search(
+            [('partner_id', '=', self.partner_id.id)])
 
         for supplier_info2 in purchase_order_line_obj:
             product2 = supplier_info2.product_id
