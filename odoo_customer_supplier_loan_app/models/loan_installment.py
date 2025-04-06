@@ -10,7 +10,7 @@ class LoanInstallment(models.Model):
     _name = 'loan.installment'
     _description = "Loan Installment"
 
-    name = fields.Char(string="Dia/Fecha", default='DIA/FECHA')
+    name = fields.Char(string="Nombre")
 
     partner_id = fields.Many2one('res.partner', string="Empresa",
                                  default=lambda self: self.env.user.company_id.id, required=True)
@@ -54,6 +54,12 @@ class LoanInstallment(models.Model):
                                 digits=(16, 2))
     sum_int_pendiente = fields.Float(string="Intereses Pendiente", help="Amount",
                                      digits=(16, 2))
+
+    @api.model
+    def create(self, vals):
+        seq = self.env['ir.sequence'].next_by_code('loan.installment') or '/'
+        vals['name'] = seq
+        return super(LoanInstallment, self).create(vals)
 
     @api.depends('order_line')
     def _compute_overdue_days(self):
