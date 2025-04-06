@@ -92,7 +92,7 @@ class LoanInstallment(models.Model):
 
         products_updated = 0
 
-        purchase_order_line_obj = self.env['report.sale.line']
+        purchase_order_line_obj = self.env['report.sale.line'].search([])
 
         for supplier_info2 in purchase_order_line_obj:
             product2 = supplier_info2.product_id
@@ -100,7 +100,6 @@ class LoanInstallment(models.Model):
             if reorder_qty2 > 0:
                 self._create_or_update_purchase_order_line(
                     product2, reorder_qty2)
-                products_updated += 1
 
         for supplier_info in supplier_infos:
             product = supplier_info.product_tmpl_id
