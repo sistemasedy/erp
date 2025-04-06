@@ -57,7 +57,7 @@ class LoanInstallment(models.Model):
 
     @api.model
     def create(self, vals):
-        seq = self.env['ir.sequence'].next_by_code('loan.installment') or '/'
+        seq = self.env['ir.sequence'].next_by_code('loan.installment') or 'Pedido Automatizado'
         vals['name'] = seq
         return super(LoanInstallment, self).create(vals)
 
