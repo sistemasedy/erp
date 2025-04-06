@@ -275,7 +275,7 @@ class LoanInstallment(models.Model):
             # Asegurar que hay un producto asociado
             ('product_id', '!=', False),
             # Asegurar que el precio unitario es válido
-            ('price_unit', '>', 0),
+            #('price_unit', '>', 0),
         ])
 
         products_updated = 0
