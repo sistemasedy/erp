@@ -57,7 +57,8 @@ class LoanInstallment(models.Model):
 
     @api.model
     def create(self, vals):
-        seq = self.env['ir.sequence'].next_by_code('loan.installment') or 'Pedido Automatizado'
+        seq = self.env['ir.sequence'].next_by_code(
+            'loan.installment') or 'Pedido Automatizado'
         vals['name'] = seq
         return super(LoanInstallment, self).create(vals)
 
@@ -98,8 +99,6 @@ class LoanInstallment(models.Model):
 
         products_updated = 0
 
-       
-
         for supplier_info in supplier_infos:
             product = supplier_info.product_tmpl_id
             reorder_qty = self._get_reorder_quantity(product)
@@ -126,8 +125,6 @@ class LoanInstallment(models.Model):
             ('product_id', '=', product.id)
         ], limit=1)
 
-        
-
         if purchase_order_line:
             purchase_order_line.product_qty = reorder_qty
         else:
@@ -141,6 +138,26 @@ class LoanInstallment(models.Model):
                 'product_uom': product.uom_po_id.id,
             })
 
+    def update_report_line(self, product, reorder_qty):
+        purchase_order_line_obj = self.env['report.sale.line']
+
+        purchase_order_line = purchase_order_line_obj.search([
+            ('order_id', '=', self.id),
+            ('product_id', '=', product.id)
+        ], limit=1)
+
+        if purchase_order_line:
+            purchase_order_line.product_qty = reorder_qty
+        else:
+            purchase_order_line_obj.create({
+                'order_id': self.id,
+                'product_id': product.id,
+                'price_unit': product.list_price,
+                'price_cost': product.standard_price,
+                'name': product.name,
+                'product_qty': reorder_qty,
+                'product_uom': product.uom_po_id.id,
+            })
 
     def reset_draft(self):
         self.write({'state': 'unpaid'})
@@ -275,7 +292,7 @@ class LoanInstallment(models.Model):
             # Asegurar que hay un producto asociado
             ('product_id', '!=', False),
             # Asegurar que el precio unitario es válido
-            #('price_unit', '>', 0),
+            # ('price_unit', '>', 0),
         ])
 
         products_updated = 0
@@ -394,7 +411,8 @@ class ReportSaleLine(models.Model):
         related='product_id.uom_id.category_id')
     product_id = fields.Many2one('product.product', string='Producto', domain=[
                                  ('purchase_ok', '=', True)], change_default=True)
-    calculate = fields.Selection([('manual', 'Manual'), ('automate', 'Automatico')], default='automate', string="Pedido")
+    calculate = fields.Selection(
+        [('manual', 'Manual'), ('automate', 'Automatico')], default='automate', string="Pedido")
 
     '''
 

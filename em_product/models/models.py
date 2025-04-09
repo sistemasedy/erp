@@ -57,6 +57,14 @@ class ProductTemplate(models.Model):
         help="Price at which the product is sold to customers.")
     fecha_de_vencimiento = fields.Date(string='Fecha de Vencimiento')
 
+    empaque = fields.Selection([
+        ('caja', 'Caja'),
+        ('saco', 'Saco'),
+        ('paquete', 'Paquete'),
+    ], string="Tipo de Empaque", help="Tipo de empaque del producto.")
+    cantidad_por_empaque = fields.Char(
+        string="Cantidad por Empaque", help="Ejemplo: 24/1")
+
     # standard_price = fields.Float(
     #   'Cost', compute='_compute_standard_price_costo', store=True,
     #  digits=dp.get_precision('Product Price'), groups="base.group_user",
@@ -120,3 +128,39 @@ class ProductProduct(models.Model):
             args += [('name', operator, name)]
         products = self.search(args, limit=limit)
         return products.name_get()
+
+
+class ResPartner(models.Model):
+    _inherit = 'res.partner'
+
+    dia_pedido = fields.Selection([
+        ('lunes', 'Lunes'),
+        ('martes', 'Martes'),
+        ('miercoles', 'Miércoles'),
+        ('jueves', 'Jueves'),
+        ('viernes', 'Viernes'),
+        ('sabado', 'Sábado'),
+        ('domingo', 'Domingo'),
+        ('diario', 'Diario'),
+        ('ocacional', 'Ocacional'),
+    ], string="Día de Pedido", help="Día de la semana para realizar el pedido de este producto.")
+    dia_entrega = fields.Selection([
+        ('lunes', 'Lunes'),
+        ('martes', 'Martes'),
+        ('miercoles', 'Miércoles'),
+        ('jueves', 'Jueves'),
+        ('viernes', 'Viernes'),
+        ('sabado', 'Sábado'),
+        ('domingo', 'Domingo'),
+        ('diario', 'Diario'),
+        ('ocacional', 'Ocacional'),
+    ], string="Día de Entrega", help="Día de la semana en que se espera la entrega del producto.")
+    frecuencia_entrega = fields.Selection([
+        ('diario', 'Diario'),
+        ('semanal', 'Semanal'),
+        ('quincenal', 'Quincenal'),
+        ('mensual', 'Mensual'),
+        ('ocacional', 'Ocacional'),
+    ], string="Frecuencia de Entrega", help="Frecuencia con la que se recibe el producto.")
+
+    # Esto es un e
