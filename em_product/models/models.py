@@ -22,6 +22,37 @@ class ResPartner(models.Model):
     vat = fields.Char(string='RNC ', index=True,
                       help="The Tax Identification Number. Complete it if the contact is subjected to government taxes. Used in some legal statements.")
     # otros_dias = fields.Char(string='Otros Dias', index=True)
+    dia_pedido = fields.Selection([
+        ('lunes', 'Lunes'),
+        ('martes', 'Martes'),
+        ('miercoles', 'Miércoles'),
+        ('jueves', 'Jueves'),
+        ('viernes', 'Viernes'),
+        ('sabado', 'Sábado'),
+        ('domingo', 'Domingo'),
+        ('diario', 'Diario'),
+        ('ocacional', 'Ocacional'),
+    ], string="Día de Pedido", help="Día de la semana para realizar el pedido de este producto.")
+    dia_entrega = fields.Selection([
+        ('lunes', 'Lunes'),
+        ('martes', 'Martes'),
+        ('miercoles', 'Miércoles'),
+        ('jueves', 'Jueves'),
+        ('viernes', 'Viernes'),
+        ('sabado', 'Sábado'),
+        ('domingo', 'Domingo'),
+        ('diario', 'Diario'),
+        ('ocacional', 'Ocacional'),
+    ], string="Día de Entrega", help="Día de la semana en que se espera la entrega del producto.")
+    frecuencia_entrega = fields.Selection([
+        ('diario', 'Diario'),
+        ('semanal', 'Semanal'),
+        ('quincenal', 'Quincenal'),
+        ('mensual', 'Mensual'),
+        ('ocacional', 'Ocacional'),
+    ], string="Frecuencia de Entrega", help="Frecuencia con la que se recibe el producto.")
+
+    # Esto es un e
 
 
 class ProductTemplate(models.Model):
@@ -128,39 +159,3 @@ class ProductProduct(models.Model):
             args += [('name', operator, name)]
         products = self.search(args, limit=limit)
         return products.name_get()
-
-
-class ResPartner(models.Model):
-    _inherit = 'res.partner'
-
-    dia_pedido = fields.Selection([
-        ('lunes', 'Lunes'),
-        ('martes', 'Martes'),
-        ('miercoles', 'Miércoles'),
-        ('jueves', 'Jueves'),
-        ('viernes', 'Viernes'),
-        ('sabado', 'Sábado'),
-        ('domingo', 'Domingo'),
-        ('diario', 'Diario'),
-        ('ocacional', 'Ocacional'),
-    ], string="Día de Pedido", help="Día de la semana para realizar el pedido de este producto.")
-    dia_entrega = fields.Selection([
-        ('lunes', 'Lunes'),
-        ('martes', 'Martes'),
-        ('miercoles', 'Miércoles'),
-        ('jueves', 'Jueves'),
-        ('viernes', 'Viernes'),
-        ('sabado', 'Sábado'),
-        ('domingo', 'Domingo'),
-        ('diario', 'Diario'),
-        ('ocacional', 'Ocacional'),
-    ], string="Día de Entrega", help="Día de la semana en que se espera la entrega del producto.")
-    frecuencia_entrega = fields.Selection([
-        ('diario', 'Diario'),
-        ('semanal', 'Semanal'),
-        ('quincenal', 'Quincenal'),
-        ('mensual', 'Mensual'),
-        ('ocacional', 'Ocacional'),
-    ], string="Frecuencia de Entrega", help="Frecuencia con la que se recibe el producto.")
-
-    # Esto es un e
