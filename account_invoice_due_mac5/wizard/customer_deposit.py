@@ -107,6 +107,18 @@ class ResPartner(models.Model):
 
     deposit_ids = fields.One2many('customer.deposit', 'partner_id', 'Deposits') # Added field
     #... other fields...
+    # otros_dias = fields.Char(string='Otros Dias', index=True)
+    dia_pedido = fields.Selection([
+        ('lunes', 'Lunes'),
+        ('martes', 'Martes'),
+        ('miercoles', 'Miércoles'),
+        ('jueves', 'Jueves'),
+        ('viernes', 'Viernes'),
+        ('sabado', 'Sábado'),
+        ('domingo', 'Domingo'),
+        ('diario', 'Diario'),
+        ('ocacional', 'Ocacional'),
+    ], string="Día de Pedido", help="Día de la semana para realizar el pedido de este producto.")
 
     
 

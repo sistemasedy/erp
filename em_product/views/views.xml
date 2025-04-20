@@ -78,10 +78,6 @@
             </field>
         </record>
 
-        
-
-
-
 
 
         <record id="view_sale_order_tree_custom" model="ir.ui.view">
