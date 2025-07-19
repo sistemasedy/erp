@@ -26,7 +26,7 @@ class ResPartner(models.Model):
 class ProductTemplate(models.Model):
     _inherit = "product.template"
 
-    grupo = fields.Char(string='Grupo')
+    grupo = fields.Char(string='Lote')
     localization = fields.Char(string='Localizacion')
     category_em = fields.Char(string='Categoria')
     medida = fields.Char(string='Medida')
