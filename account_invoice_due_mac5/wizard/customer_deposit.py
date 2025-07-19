@@ -106,7 +106,7 @@ class ResPartner(models.Model):
     deposit_ids = fields.One2many(
         'customer.deposit', 'partner_id', 'Deposits')  # Added field
     # ... other fields...
-    otros_dias = fields.Char(string='Otros Dias', index=True)
+    # otros_dias = fields.Char(string='Otros Dias', index=True)
 
     def action_register_deposit(self):
         return {
