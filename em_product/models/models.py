@@ -22,7 +22,7 @@ class ResPartner(models.Model):
     vat = fields.Char(string='RNC ', index=True,
                       help="The Tax Identification Number. Complete it if the contact is subjected to government taxes. Used in some legal statements.")
     # otros_dias = fields.Char(string='Otros Dias', index=True)
-    dia_pedido = fields.Selection([
+
         ('lunes', 'Lunes'),
         ('martes', 'Martes'),
         ('miercoles', 'Miércoles'),
@@ -32,7 +32,8 @@ class ResPartner(models.Model):
         ('domingo', 'Domingo'),
         ('diario', 'Diario'),
         ('ocacional', 'Ocacional'),
-    ], string="Día de Pedido", help="Día de la semana para realizar el pedido de este producto.")
+    ], string = "Día de Pedido", help = "Día de la semana para realizar el pedido de este producto.")
+
     dia_entrega = fields.Selection([
         ('lunes', 'Lunes'),
         ('martes', 'Martes'),
@@ -43,14 +44,14 @@ class ResPartner(models.Model):
         ('domingo', 'Domingo'),
         ('diario', 'Diario'),
         ('ocacional', 'Ocacional'),
-    ], string="Día de Entrega", help="Día de la semana en que se espera la entrega del producto.")
+    ], string = "Día de Entrega", help = "Día de la semana en que se espera la entrega del producto.")
     frecuencia_entrega = fields.Selection([
         ('diario', 'Diario'),
         ('semanal', 'Semanal'),
         ('quincenal', 'Quincenal'),
         ('mensual', 'Mensual'),
         ('ocacional', 'Ocacional'),
-    ], string="Frecuencia de Entrega", help="Frecuencia con la que se recibe el producto.")
+    ], string = "Frecuencia de Entrega", help = "Frecuencia con la que se recibe el producto.")
 
     # Esto es un e
 
@@ -66,9 +67,9 @@ class ProductTemplate(models.Model):
     numero_parte = fields.Char(string='Numero de Parte')
     numero = fields.Char(string='Numero')
     margen = fields.Float(string='Margen (%)', digits=(
-        16, 2), compute='compute_margin', store=True)
+        16, 2), compute = 'compute_margin', store = True)
     margen_valor = fields.Float(string='Margen Valor', digits=(
-        16, 2), compute='compute_margin', store=True)
+        16, 2), compute = 'compute_margin', store = True)
     calcular_venta = fields.Boolean(string='Recalcular', default=False)
     calcular_costo = fields.Boolean(string='Calcular el margen', default=False)
     # calcular_margen = fields.Boolean(string='Calcular el Margen' ,default=False)
@@ -92,7 +93,7 @@ class ProductTemplate(models.Model):
         ('caja', 'Caja'),
         ('saco', 'Saco'),
         ('paquete', 'Paquete'),
-    ], string="Tipo de Empaque", help="Tipo de empaque del producto.")
+    ], string = "Tipo de Empaque", help = "Tipo de empaque del producto.")
     cantidad_por_empaque = fields.Char(
         string="Cantidad por Empaque", help="Ejemplo: 24/1")
 
@@ -100,7 +101,7 @@ class ProductTemplate(models.Model):
     #   'Cost', compute='_compute_standard_price_costo', store=True,
     #  digits=dp.get_precision('Product Price'), groups="base.group_user",
     # help = "Cost used for stock valuation in standard price and as a first price to set in average/FIFO.")
-    @api.depends('list_price', 'standard_price', 'calcular_venta', 'margen')
+    @ api.depends('list_price', 'standard_price', 'calcular_venta', 'margen')
     def compute_margin(self):
         """Method to compute the margin of the product."""
         for record in self:
@@ -121,7 +122,7 @@ class ProductTemplate(models.Model):
                     record.margen_valor = 0.0
                     record.margen = 0.0
 
-    @api.depends('list_price', 'standard_price', 'calcular_venta')
+    @ api.depends('list_price', 'standard_price', 'calcular_venta')
     def compute_porcent(self):
         """Method to compute the margin of the product."""
         self.margen = 0
@@ -130,7 +131,7 @@ class ProductTemplate(models.Model):
                 record.margen = (
                     record.list_price - record.standard_price) / record.list_price * 100
 
-    @api.depends('product_variant_ids', 'product_variant_ids.standard_price', 'list_price', 'margen')
+    @ api.depends('product_variant_ids', 'product_variant_ids.standard_price', 'list_price', 'margen')
     def _compute_standard_price_costo(self):
         unique_variants = self.filtered(
             lambda template: len(template.product_variant_ids) == 1)
@@ -151,7 +152,7 @@ class ProductTemplate(models.Model):
 class ProductProduct(models.Model):
     _inherit = 'product.product'
 
-    @api.model
+    @ api.model
     def name_search(self, name, args=None, operator='ilike', limit=5):
         if not args:
             args = []

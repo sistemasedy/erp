@@ -18,9 +18,10 @@ class CustomerDeposit(models.Model):
     @api.model
     def create(self, vals):
         if vals.get('name', _('Nuevo')) == _('Nuevo'):
-            vals['name'] = self.env['ir.sequence'].next_by_code('customer.deposit.sequence') or _('Nuevo')
+            vals['name'] = self.env['ir.sequence'].next_by_code(
+                'customer.deposit.sequence') or _('Nuevo')
         return super(CustomerDeposit, self).create(vals)
-        
+
     partner_id = fields.Many2one(
         'res.partner', string="Cliente", required=True)
     deposit_date = fields.Date(
@@ -59,8 +60,6 @@ class CustomerDeposit(models.Model):
                 record.remaining_amount = record.amount - applied_amount
             else:
                 record.remaining_amount = record.amount
-
-    
 
     def action_confirm(self):
         for record in self:
@@ -102,28 +101,12 @@ class CustomerDeposit(models.Model):
 
 class ResPartner(models.Model):
     _inherit = 'res.partner'
-    #checkbox_upt = fields.Boolean(string="actualizar")
+    # checkbox_upt = fields.Boolean(string="actualizar")
 
-
-    deposit_ids = fields.One2many('customer.deposit', 'partner_id', 'Deposits') # Added field
-    #... other fields...
+    deposit_ids = fields.One2many(
+        'customer.deposit', 'partner_id', 'Deposits')  # Added field
+    # ... other fields...
     otros_dias = fields.Char(string='Otros Dias', index=True)
-    dia_pedido = fields.Selection([
-        ('lunes', 'Lunes'),
-        ('martes', 'Martes'),
-        ('miercoles', 'Miércoles'),
-        ('jueves', 'Jueves'),
-        ('viernes', 'Viernes'),
-        ('sabado', 'Sábado'),
-        ('domingo', 'Domingo'),
-        ('diario', 'Diario'),
-        ('ocasional', 'Ocasional'),
-    ], string="Día de Pedido", help="Día de la semana para realizar el pedido de este producto.")
-
-    
-
-    
-       
 
     def action_register_deposit(self):
         return {
