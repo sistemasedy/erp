@@ -71,6 +71,7 @@ class ProductTemplate(models.Model):
     # Campo para que el usuario ingrese el margen deseado para el cálculo del precio
     fixed_margin = fields.Float(
         string='Margen Fijo (%)',
+        default=33,
         help="Introduzca el margen de beneficio deseado para calcular el precio de venta."
     )
 
