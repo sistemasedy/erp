@@ -50,6 +50,40 @@ class ProductTemplate(models.Model):
         digits=dp.get_precision('Product Price'),
         help="Price at which the product is sold to customers.")
 
+
+    
+
+    # Campo de selección para elegir el modo de cálculo
+    calculation_mode = fields.Selection(
+        [
+            ('none', 'No Calcular'),
+            ('price_to_margin', 'Calcular Margen desde Precio'),
+            ('margin_to_price', 'Calcular Precio desde Margen')
+        ],
+        string="Modo de Cálculo",
+        default='none',
+        help="Define cómo se relacionan el precio de venta, el costo y el margen.\n"
+             "- No Calcular: Comportamiento por defecto.\n"
+             "- Calcular Margen desde Precio: Muestra el margen basado en el precio de venta y el costo.\n"
+             "- Calcular Precio desde Margen: Calcula el precio de venta basado en el costo y un margen fijo."
+    )
+
+    # Campo para que el usuario ingrese el margen deseado para el cálculo del precio
+    fixed_margin = fields.Float(
+        string='Margen Fijo (%)',
+        help="Introduzca el margen de beneficio deseado para calcular el precio de venta."
+    )
+
+    # Campo de margen calculado (funcionalidad original)
+    product_margin = fields.Float(
+        string='Margen de Producto (%)',
+        compute='_compute_product_margin',
+        store=True,
+        help="Muestra el margen de beneficio basado en el Precio de Venta y el Costo."
+    )
+
+    
+
     list_price = fields.Float(
         'Sales Price', default=1.0,
         digits=dp.get_precision('Product Price'),
