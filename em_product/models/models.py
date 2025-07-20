@@ -179,7 +179,7 @@ class ProductTemplate(models.Model):
 
             if self.standard_price > 0:
                 # Fórmula: Precio de Venta = Costo / (1 - (Margen / 100))
-                self.list_price = self.standard_price * (1 + (self.fixed_margin/100))
+                self.list_price = self.standard_price * (1 + (self.fixed_margin))
             else:
                 self.list_price = 0.0
     
