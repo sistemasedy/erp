@@ -2,13 +2,18 @@
 <templates id="point_of_sale.template" xml:space="preserve">
     <t t-name="OrderReceipt" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension" owl="1">
         <xpath expr="//div[hasclass('pos-receipt')]" position="replace">
-            <div class="pos-receipt" style="font-size: 9.6px;">
+            <!--
+              Se aumenta el tamaño de fuente base para todo el recibo a 14px.
+              Los elementos internos heredarán este tamaño a menos que se especifique lo contrario.
+            -->
+            <div class="pos-receipt" style="font-size: 14px; line-height: 1.4;">
                 <t t-if="receipt.company.logo">
                     <img class="pos-receipt-logo" t-att-src="receipt.company.logo" alt="Logo"/>
                     <br/>
                 </t>
                 <t t-if="!receipt.company.logo">
-                    <h2 class="pos-receipt-center-align" style="font-size: 12.8px;">
+                    <!-- Aumentamos el tamaño del nombre de la empresa para mayor jerarquía -->
+                    <h2 class="pos-receipt-center-align" style="font-size: 18px;">
                         <t t-esc="receipt.company.name" />
                     </h2>
                     <br/>
@@ -44,10 +49,8 @@
                 </div>
                 <br /><br />
 
-                <!-- Orderlines -->
-
-                <!-- Detalles de productos -->
-                <table style="width: 100%; font-size: 9.6px; border-collapse: collapse; margin-bottom: 10px;">
+                <!-- Detalles de productos: Heredan el font-size de 14px del contenedor principal -->
+                <table style="width: 100%; border-collapse: collapse; margin-bottom: 10px;">
                     <thead>
                         <tr style="border-bottom: 1px dashed black;">
                             <th style="text-align: left;">Producto</th>
@@ -66,10 +69,10 @@
                                     </div>
                                 </t>
                             </td>
-                            <td>
+                            <td style="text-align: center;">
                                 <t t-esc="orderline.get_quantity_str_with_unit()"/>
                             </td>
-                            <td>
+                            <td style="text-align: right;">
                                 <t t-esc="env.pos.format_currency(orderline.get_unit_display_price())"/>
                             </td>
                             <td style='text-align:right'>
@@ -81,39 +84,36 @@
                 
                 <hr style="border: 1px dashed black;"/>
 
-                <!-- Totales -->
-                <div style="text-align: right; margin-bottom: 10px; font-size: 9.6px;">
+                <!-- Totales: Heredan el font-size de 14px -->
+                <div style="text-align: right; margin-bottom: 10px;">
                     <div>Descuentos: <t t-esc="receipt.total_discount"/></div>
                     <div>Impuestos: <t t-esc="receipt.total_tax"/></div>
                     <div>Total: <t t-esc="receipt.total_with_tax"/></div>
                 </div>
 
-                <!-- Pagos -->
-                <div style="margin-bottom: 10px; font-size: 9.6px;">
-                    <div>Efectivo: <t t-esc="receipt.paymentlines[0].amount"/></div>
-                    <div>Cambio: <t t-esc="receipt.change"/></div>
+                <!-- Pagos: Heredan el font-size de 14px -->
+                <div style="margin-bottom: 10px;">
+                    <t t-foreach="receipt.paymentlines" t-as="paymentline">
+                        <div><t t-esc="paymentline.name"/>: <t t-esc="env.pos.format_currency(paymentline.amount)"/></div>
+                    </t>
+                    <div>Cambio: <t t-esc="env.pos.format_currency(receipt.change)"/></div>
                 </div>
 
-                <div style="text-align: center; font-size: 9.6px; margin-top: 10px;">
-                    <strong>¡GRACIAS! ¡VUELVA PRONTO!</strong>
+                <!-- Mensaje de agradecimiento: Aumentado y en negrita para destacar -->
+                <div style="text-align: center; font-size: 16px; margin-top: 10px; font-weight: bold;">
+                    ¡GRACIAS! ¡VUELVA PRONTO!
                 </div>
                 <br/><br/>
 
-                <!-- Payment Lines -->             
-                <div class="before-footer" />
-
-                <!-- Footer -->
+                <!-- Footer y otros datos -->
                 <div t-if="receipt.footer_html" class="pos-receipt-center-align">
                     <t t-raw="receipt.footer_html" />
                 </div>
-
                 <div t-if="!receipt.footer_html and receipt.footer" class="pos-receipt-center-align" style="white-space:pre-line">
                     <br/>
                     <t t-esc="receipt.footer" />
-                    <br/>
-                    <br/>
+                    <br/><br/>
                 </div>
-
                 <div class="after-footer">
                     <t t-foreach="receipt.paymentlines" t-as="line">
                         <t t-if="line.ticket">
@@ -124,7 +124,6 @@
                         </t>
                     </t>
                 </div>
-
                 <br/>
                 <div class="pos-receipt-order-data">
                     <div><t t-esc="receipt.name" /></div>
@@ -139,4 +138,5 @@
         </xpath>
     </t>
 </templates>
+
 
