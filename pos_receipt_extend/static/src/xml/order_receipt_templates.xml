@@ -73,10 +73,10 @@
                                 <t t-esc="orderline.get_quantity_str_with_unit()"/>
                             </td>
                             <td style="text-align: right;">
-                                <t t-esc="env.pos.format_currency(orderline.get_unit_display_price())"/>
+                                <t t-esc="orderline.get_unit_display_price()"/>
                             </td>
                             <td style='text-align:right'>
-                                <t t-esc="env.pos.format_currency(orderline.get_price_with_tax())"/>
+                                <t t-esc="orderline.get_price_with_tax()"/>
                             </td>
                         </tr>
                     </tbody>
