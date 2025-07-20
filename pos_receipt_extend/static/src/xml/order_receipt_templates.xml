@@ -8,7 +8,7 @@
                         <img class="pos-receipt-logo" t-att-src="receipt.company.logo" alt="Logo" style="max-width: 100px; margin-bottom: 5px;"/>
                     </t>
                     <t t-if="!receipt.company.logo">
-                        <h2 style="font-size: 18px; margin: 0;"><t t-esc="receipt.company.name" /></h2>
+                        
                     </t>
                     <t t-if="receipt.company.contact_address">
                         <div><t t-esc="receipt.company.contact_address" /></div>
