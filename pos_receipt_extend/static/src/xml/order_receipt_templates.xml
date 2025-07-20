@@ -55,8 +55,8 @@
                         <tr style="border-bottom: 1px dashed black;">
                             <th style="text-align: left;">Producto</th>
                             <th style="text-align: center;">Cant.</th>
-                            <th style="text-align: right;">P. Unit.</th>
-                            <th style="text-align: right;">Monto</th>
+                            <th style="text-align: right;">Pre.</th>
+                            <th style="text-align: right;">Total</th>
                         </tr>
                     </thead>
                     <tbody>
