@@ -68,6 +68,50 @@
 
 
 
+    <record id="product_template_margin_form_view" model="ir.ui.view">
+        <field name="name">product.template.margin.form</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <!--
+            Agregamos un nuevo grupo después del grupo de precios para nuestra lógica.
+            Esto mantiene la interfaz organizada.
+            -->
+            <xpath expr="//group[@name='group_standard_price']" position="after">
+                <group name="group_margin_calculation" string="Cálculos de Precio y Margen">
+                    <field name="calculation_mode"/>
+                    <!--
+                    El campo para fijar el margen solo es visible si el modo es 'margin_to_price'.
+                    Se usa el widget de porcentaje para una mejor visualización.
+                    -->
+                    <field name="fixed_margin"
+                        widget="percentage"
+                        attrs="{'invisible': [('calculation_mode', '!=', 'margin_to_price')]}"/>
+                    <!--
+                    El campo de margen calculado solo es visible si el modo es 'price_to_margin'.
+                    Es de solo lectura porque se calcula automáticamente.
+                    -->
+                    <field name="product_margin"
+                        widget="percentage"
+                        readonly="1"
+                        attrs="{'invisible': [('calculation_mode', '!=', 'price_to_margin')]}"/>
+                </group>
+            </xpath>
+
+            <!--
+            Hacemos que el campo de Precio de Venta sea de solo lectura si se calcula desde el margen,
+            para evitar que el usuario lo edite manualmente y rompa la lógica del onchange.
+            -->
+            <xpath expr="//field[@name='list_price']" position="attributes">
+                <attribute name="attrs">{'readonly': [('calculation_mode', '=', 'margin_to_price')]}</attribute>
+            </xpath>
+        </field>
+    </record>
+
+
+
+
+
     <record id="view_product_filter_february_custom" model="ir.ui.view">
         <field name="name">product.template.search.february</field>
         <field name="model">product.template</field>
