@@ -50,22 +50,21 @@ class ProductTemplate(models.Model):
         digits=dp.get_precision('Product Price'),
         help="Price at which the product is sold to customers.")
 
-
-    
-
-    # Campo de selección para elegir el modo de cálculo
+    # Campo de selección para elegir el modo de cálculo, ahora con la nueva opción
     calculation_mode = fields.Selection(
         [
             ('none', 'No Calcular'),
             ('price_to_margin', 'Calcular Margen desde Precio'),
-            ('margin_to_price', 'Calcular Precio desde Margen')
+            ('margin_to_price', 'Calcular Precio desde Margen'),
+            ('price_to_cost', 'Calcular Costo desde Precio')
         ],
         string="Modo de Cálculo",
         default='none',
         help="Define cómo se relacionan el precio de venta, el costo y el margen.\n"
              "- No Calcular: Comportamiento por defecto.\n"
              "- Calcular Margen desde Precio: Muestra el margen basado en el precio de venta y el costo.\n"
-             "- Calcular Precio desde Margen: Calcula el precio de venta basado en el costo y un margen fijo."
+             "- Calcular Precio desde Margen: Calcula el precio de venta basado en el costo y un margen fijo.\n"
+             "- Calcular Costo desde Precio: Calcula el costo basado en el precio de venta y un margen fijo."
     )
 
     # Campo para que el usuario ingrese el margen deseado para el cálculo del precio
@@ -82,8 +81,6 @@ class ProductTemplate(models.Model):
         store=True,
         help="Muestra el margen de beneficio basado en el Precio de Venta y el Costo."
     )
-
-
 
     list_price = fields.Float(
         'Sales Price', default=1.0,
@@ -144,8 +141,6 @@ class ProductTemplate(models.Model):
             # if self.calcular_costo:
         # self.standard_price = self.list_price *(1-self.margen/100)
 
-    
-    
     @api.depends('list_price', 'standard_price', 'calculation_mode')
     def _compute_product_margin(self):
         """
@@ -155,37 +150,50 @@ class ProductTemplate(models.Model):
         for product in self:
             # Solo calcular si el modo es el correcto y el precio de venta no es cero
             if product.calculation_mode == 'price_to_margin' and product.list_price > 0:
-                margin = ((product.list_price - product.standard_price) / product.list_price) * 100
+                margin = (
+                    (product.list_price - product.standard_price) / product.list_price)
                 product.product_margin = margin
             else:
                 # En cualquier otro caso, el margen calculado es 0
                 product.product_margin = 0.0
 
-    @api.onchange('calculation_mode', 'fixed_margin', 'standard_price')
-    def _onchange_calculate_price_from_margin(self):
+    @api.onchange('calculation_mode', 'fixed_margin', 'standard_price', 'list_price')
+    def _onchange_recalculate_values(self):
         """
-        Calcula y actualiza el Precio de Venta en el formulario cuando cambia el modo,
-        el margen fijo o el costo. Se activa solo si el modo es 'Calcular Precio desde Margen'.
+        Calcula y actualiza el Precio de Venta o el Costo en el formulario cuando cambia el modo.
         """
+        # --- Lógica para calcular Precio desde Margen ---
         if self.calculation_mode == 'margin_to_price':
             if self.fixed_margin >= 100 or self.fixed_margin < 0:
-                # Si el margen es inválido, se podría mostrar una advertencia al usuario.
-                # Por ahora, simplemente no se calcula un nuevo precio.
                 return {
-                     'warning': {
-                         'title': "Advertencia de Margen",
-                         'message': "El margen debe ser un valor entre 0 y 99.99%.",
-                     }
-                 }
-
+                    'warning': {
+                        'title': "Advertencia de Margen",
+                        'message': "El margen debe ser un valor entre 0 y 99.99%.",
+                    }
+                }
             if self.standard_price > 0:
                 # Fórmula: Precio de Venta = Costo / (1 - (Margen / 100))
-                self.list_price = self.standard_price * (1 + (self.fixed_margin))
+                self.list_price = self.standard_price * \
+                    (1 + (self.fixed_margin))
             else:
                 self.list_price = 0.0
-    
-    
-    
+
+        # --- Nueva lógica para calcular Costo desde Precio ---
+        elif self.calculation_mode == 'price_to_cost':
+            if self.fixed_margin >= 100 or self.fixed_margin < 0:
+                return {
+                    'warning': {
+                        'title': "Advertencia de Margen",
+                        'message': "El margen debe ser un valor entre 0 y 99.99%.",
+                    }
+                }
+            if self.list_price > 0:
+                # Fórmula: Costo = Precio de Venta * (1 - (Margen / 100))
+                self.standard_price = self.list_price * \
+                    (1 - (self.fixed_margin))
+            else:
+                self.standard_price = 0.0
+
     # @api.onchange('standard_price','margen')
     # def _compute_costo(self):
         # lista = list(self.rango_valores_reales(0.0, 100.0, 0.1))

@@ -62,7 +62,7 @@
                         <tr style="border-bottom: 1px solid black; border-top: 1px solid black;">
                             <th style="text-align: left; padding: 2px 0;">NOMBRE</th>
                             <th style="text-align: center; padding: 2px 0;">CTD</th>
-                            <th style="text-align: right; padding: 2px 0;">PRECIO</th>
+                            <th style="text-align: right; padding: 2px 0;">P.</th>
                             <th style="text-align: right; padding: 2px 0;">TOTAL</th>
                         </tr>
                     </thead>
