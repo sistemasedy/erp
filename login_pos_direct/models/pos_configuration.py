@@ -24,29 +24,29 @@ from odoo import fields, models
 
 
 
+from odoo import models
+
 class PosConfig(models.Model):
     _inherit = "pos.config"
 
-    def _search(self, args, offset=0, limit=None, order=None, count=False):
+    def _search(self, args, offset=0, limit=None, order=None, count=False, access_rights_uid=None):
         # Obtener el usuario actual
         user = self.env.user
 
         # Verificar si el usuario es administrador
         if user.has_group('base.group_system'):
             # Los administradores pueden ver todos los puntos de venta
-            return super(PosConfig, self)._search(args, offset=offset, limit=limit, order=order, count=count)
+            return super(PosConfig, self)._search(args, offset=offset, limit=limit, order=order, count=count, access_rights_uid=access_rights_uid)
         else:
             # Para usuarios no-administradores
             if user.pos_conf_id:
                 # Si el usuario tiene un PDV asignado, restringir la búsqueda a ese PDV
                 domain = [('id', '=', user.pos_conf_id.id)]
-                return super(PosConfig, self)._search(args + domain, offset=offset, limit=limit, order=order, count=count)
+                return super(PosConfig, self)._search(args + domain, offset=offset, limit=limit, order=order, count=count, access_rights_uid=access_rights_uid)
             else:
                 # Si el usuario no tiene un PDV asignado, no mostrar nada
                 domain = [('id', '=', False)]
-                return super(PosConfig, self)._search(args + domain, offset=offset, limit=limit, order=order, count=count)
-
-                
+                return super(PosConfig, self)._search(args + domain, offset=offset, limit=limit, order=order, count=count, access_rights_uid=access_rights_uid)
 
 
 class ResUsers(models.Model):
