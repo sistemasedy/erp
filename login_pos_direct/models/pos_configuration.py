@@ -54,3 +54,4 @@ class ResUsers(models.Model):
     _inherit = "res.users"
 
     pos_conf_id = fields.Many2one('pos.config', string="POS Configuration")
+    pos_direct_login = fields.Boolean(string="Enter POS Directly", default=False)
