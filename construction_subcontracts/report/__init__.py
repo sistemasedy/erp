@@ -1,2 +1,2 @@
-from . import subcontract_report
--*- coding: utf-8 - *-
+
+# from . import subcontract_report
