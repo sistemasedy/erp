@@ -1,0 +1,213 @@
+# ARCHIVOS DE SEGURIDAD DEL MÓDULO
+# ============================================================================
+
+# =========================================================================
+# ARCHIVO: security/security.xml
+# DEFINICIÓN DE GRUPOS DE USUARIOS Y REGLAS DE REGISTRO
+# =========================================================================
+
+
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        
+        <!-- ============================================================ -->
+        <!-- CATEGORÍA DEL MÓDULO -->
+        <!-- ============================================================ -->
+        <record id="module_category_construction" model="ir.module.category">
+            <field name="name">Construcción</field>
+            <field name="description">Gestión de proyectos de construcción, subcontratos y nómina de obra</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <!-- ============================================================ -->
+        <!-- GRUPOS DE USUARIOS -->
+        <!-- ============================================================ -->
+        
+        <!-- GRUPO 1: Capataz/Maestro de Obra (Acceso Limitado) -->
+        <record id="group_construction_foreman" model="res.groups">
+            <field name="name">Capataz / Maestro de Obra</field>
+            <field name="category_id" ref="module_category_construction"/>
+            <field name="comment">
+                Puede registrar avances de obra y asistencia de personal.
+                Solo ve información de SU proyecto asignado.
+            </field>
+        </record>
+
+        <!-- GRUPO 2: Ingeniero Residente (Validación y Control) -->
+        <record id="group_construction_engineer" model="res.groups">
+            <field name="name">Ingeniero Residente</field>
+            <field name="category_id" ref="module_category_construction"/>
+            <field name="implied_ids" eval="[(4, ref('group_construction_foreman'))]"/>
+            <field name="comment">
+                Puede validar avances, crear tareas, ver presupuestos y reportes.
+                Tiene acceso a todos los proyectos.
+            </field>
+        </record>
+
+        <!-- GRUPO 3: Gerente de Construcción (Acceso Total) -->
+        <record id="group_construction_manager" model="res.groups">
+            <field name="name">Gerente de Construcción</field>
+            <field name="category_id" ref="module_category_construction"/>
+            <field name="implied_ids" eval="[(4, ref('group_construction_engineer'))]"/>
+            <field name="comment">
+                Acceso total al módulo: crear/modificar/eliminar subcontratos,
+                liberar garantías, aprobar pagos finales.
+            </field>
+        </record>
+
+        <!-- ============================================================ -->
+        <!-- REGLAS DE REGISTRO (RECORD RULES) -->
+        <!-- Controlan QUÉ registros puede ver cada usuario -->
+        <!-- ============================================================ -->
+
+        <!-- REGLA 1: Capataz solo ve subcontratos de SU proyecto -->
+        <record id="subcontract_foreman_rule" model="ir.rule">
+            <field name="name">Capataz: Solo sus proyectos asignados</field>
+            <field name="model_id" ref="model_construction_subcontract"/>
+            <field name="domain_force">[
+                '|',
+                    ('project_id.user_id', '=', user.id),
+                    ('project_id.member_ids', 'in', [user.id])
+            ]</field>
+            <field name="groups" eval="[(4, ref('group_construction_foreman'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <!-- REGLA 2: Ingeniero y Gerente ven todo -->
+        <record id="subcontract_engineer_manager_rule" model="ir.rule">
+            <field name="name">Ingeniero/Gerente: Todos los subcontratos</field>
+            <field name="model_id" ref="model_construction_subcontract"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_construction_engineer')), (4, ref('group_construction_manager'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <!-- REGLA 3: Capataz solo ve avances de SU proyecto -->
+        <record id="work_progress_foreman_rule" model="ir.rule">
+            <field name="name">Capataz: Solo avances de sus proyectos</field>
+            <field name="model_id" ref="model_construction_work_progress"/>
+            <field name="domain_force">[
+                '|',
+                    ('project_id.user_id', '=', user.id),
+                    ('project_id.member_ids', 'in', [user.id])
+            ]</field>
+            <field name="groups" eval="[(4, ref('group_construction_foreman'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <!-- REGLA 4: Ingeniero/Gerente ven todos los avances -->
+        <record id="work_progress_engineer_manager_rule" model="ir.rule">
+            <field name="name">Ingeniero/Gerente: Todos los avances</field>
+            <field name="model_id" ref="model_construction_work_progress"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_construction_engineer')), (4, ref('group_construction_manager'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <!-- REGLA 5: Restricción especial - Solo validados pueden borrarse -->
+        <record id="work_progress_delete_restriction" model="ir.rule">
+            <field name="name">Solo Gerente puede eliminar avances validados</field>
+            <field name="model_id" ref="model_construction_work_progress"/>
+            <field name="domain_force">[('state', '!=', 'validated')]</field>
+            <field name="groups" eval="[(4, ref('group_construction_engineer'))]"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <!-- ============================================================ -->
+        <!-- REGLAS DE CAMPO (FIELD SECURITY) -->
+        <!-- Controlan QUÉ campos puede ver/editar cada usuario -->
+        <!-- ============================================================ -->
+
+        <!-- Campos sensibles solo para Gerente -->
+        <record id="field_subcontract_guarantee_percentage" model="ir.model.fields">
+            <field name="model_id" ref="model_construction_subcontract"/>
+            <field name="name">guarantee_percentage</field>
+            <field name="groups" eval="[(4, ref('group_construction_manager'))]"/>
+        </record>
+
+        <!-- ============================================================ -->
+        <!-- CONFIGURACIÓN DE AUDITORÍA -->
+        <!-- ============================================================ -->
+
+        <!-- Habilitar tracking automático de cambios críticos -->
+        <record id="audit_subcontract_amounts" model="ir.rule">
+            <field name="name">Auditar cambios en montos de contratos</field>
+            <field name="model_id" ref="model_construction_subcontract"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('base.group_system'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <!-- ============================================================ -->
+        <!-- REGLAS ADICIONALES DE SEGURIDAD -->
+        <!-- ============================================================ -->
+
+        <!-- REGLA: Multi-Compañía - Cada usuario solo ve datos de su empresa -->
+        <record id="subcontract_company_rule" model="ir.rule">
+            <field name="name">Subcontrato: Filtro por Compañía</field>
+            <field name="model_id" ref="model_construction_subcontract"/>
+            <field name="domain_force">['|',
+                ('company_id', '=', False),
+                ('company_id', 'in', company_ids)
+            ]</field>
+            <field name="global" eval="True"/>
+        </record>
+
+        <record id="work_progress_company_rule" model="ir.rule">
+            <field name="name">Avance: Filtro por Compañía</field>
+            <field name="model_id" ref="model_construction_work_progress"/>
+            <field name="domain_force">['|',
+                ('subcontract_id.company_id', '=', False),
+                ('subcontract_id.company_id', 'in', company_ids)
+            ]</field>
+            <field name="global" eval="True"/>
+        </record>
+
+        <!-- ============================================================ -->
+        <!-- REGLA: Estado de Avances - Restricciones por estado -->
+        <!-- ============================================================ -->
+
+        <!-- Capataz NO puede editar avances validados -->
+        <record id="work_progress_foreman_state_rule" model="ir.rule">
+            <field name="name">Capataz: No editar avances validados</field>
+            <field name="model_id" ref="model_construction_work_progress"/>
+            <field name="domain_force">[('state', 'in', ['draft', 'pending'])]</field>
+            <field name="groups" eval="[(4, ref('group_construction_foreman'))]"/>
+            <field name="perm_write" eval="True"/>
+        </record>
+
+        <!-- ============================================================ -->
+        <!-- REGLA: Aprobaciones Financieras -->
+        <!-- ============================================================ -->
+
+        <!-- Solo Gerente puede cambiar montos de contratos activos -->
+        <record id="subcontract_amount_change_rule" model="ir.rule">
+            <field name="name">Solo Gerente modifica contratos activos</field>
+            <field name="model_id" ref="model_construction_subcontract"/>
+            <field name="domain_force">['|',
+                ('state', '=', 'draft'),
+                '&amp;', ('state', '=', 'active'), ('write_uid', '=', user.id)
+            ]</field>
+            <field name="groups" eval="[(4, ref('group_construction_engineer'))]"/>
+            <field name="perm_write" eval="True"/>
+        </record>
+
+
+    </data>
+</odoo>

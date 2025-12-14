@@ -1,0 +1,70 @@
+# =========================================================================
+# ARCHIVO: security/ir.model.access.csv
+# PERMISOS CRUD (Create, Read, Update, Delete) POR MODELO Y GRUPO
+# =========================================================================
+
+
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+# ==============================================================================
+# MODELO: construction.subcontract (Subcontratos)
+# ==============================================================================
+
+# Capataz: Solo lectura
+access_construction_subcontract_foreman,access.construction.subcontract.foreman,model_construction_subcontract,group_construction_foreman,1,0,0,0
+
+# Ingeniero: Puede crear y modificar, NO eliminar
+access_construction_subcontract_engineer,access.construction.subcontract.engineer,model_construction_subcontract,group_construction_engineer,1,1,1,0
+
+# Gerente: Acceso total (incluyendo eliminar)
+access_construction_subcontract_manager,access.construction.subcontract.manager,model_construction_subcontract,group_construction_manager,1,1,1,1
+
+# Contadora: Lectura y modificación (para registrar pagos)
+access_construction_subcontract_accountant,access.construction.subcontract.accountant,model_construction_subcontract,account.group_account_invoice,1,1,0,0
+
+# ==============================================================================
+# MODELO: construction.work.progress (Avances de Obra)
+# ==============================================================================
+
+# Capataz: Puede crear y modificar SUS avances (draft y pending), NO eliminar
+access_construction_work_progress_foreman,access.construction.work.progress.foreman,model_construction_work_progress,group_construction_foreman,1,1,1,0
+
+# Ingeniero: Puede validar, modificar y crear, NO eliminar validados
+access_construction_work_progress_engineer,access.construction.work.progress.engineer,model_construction_work_progress,group_construction_engineer,1,1,1,1
+
+# Gerente: Acceso total
+access_construction_work_progress_manager,access.construction.work.progress.manager,model_construction_work_progress,group_construction_manager,1,1,1,1
+
+# Contadora: Lectura completa para reportes
+access_construction_work_progress_accountant,access.construction.work.progress.accountant,model_construction_work_progress,account.group_account_invoice,1,0,0,0
+
+# ==============================================================================
+# MODELO: res.partner (Proveedores/Ajusteros)
+# Hereda permisos del módulo de contactos, pero agregamos lectura para capataces
+# ==============================================================================
+
+access_res_partner_foreman,access.res.partner.foreman,base.model_res_partner,group_construction_foreman,1,0,0,0
+
+# ==============================================================================
+# MODELO: project.project (Proyectos)
+# Hereda permisos del módulo project, pero aseguramos acceso
+# ==============================================================================
+
+access_project_project_foreman,access.project.project.foreman,project.model_project_project,group_construction_foreman,1,0,0,0
+access_project_project_engineer,access.project.project.engineer,project.model_project_project,group_construction_engineer,1,1,1,0
+access_project_project_manager,access.project.project.manager,project.model_project_project,group_construction_manager,1,1,1,1
+
+# ==============================================================================
+# MODELO: account.move (Facturas)
+# Solo lectura para construcción, la contadora gestiona
+# ==============================================================================
+
+access_account_move_engineer,access.account.move.engineer,account.model_account_move,group_construction_engineer,1,0,0,0
+access_account_move_manager,access.account.move.manager,account.model_account_move,group_construction_manager,1,1,0,0
+
+# ==============================================================================
+# PERMISOS ESPECIALES PARA MULTI-COMPAÑÍA
+# ==============================================================================
+
+# Si usas multi-compañía, asegura que los usuarios solo vean datos de SU empresa
+access_construction_subcontract_company,access.construction.subcontract.company,model_construction_subcontract,base.group_user,1,0,0,0

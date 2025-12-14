@@ -1,0 +1,20 @@
+# =========================================================================
+# ARCHIVO: data/measurement_units.xml
+# Datos iniciales para unidades de medida
+# =========================================================================
+
+
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        
+        <!-- Categoría de unidades de construcción -->
+        <record id="uom_categ_construction" model="uom.category">
+            <field name="name">Construcción</field>
+        </record>
+        
+        <!-- Unidades de medida personalizadas (opcional) -->
+        <!-- Por defecto Odoo ya tiene m, m², m³, etc. -->
+        
+    </data>
+</odoo>

@@ -1,0 +1,251 @@
+<odoo>
+   <!-- ================================================================ -->
+    <!-- ARCHIVO: views/work_progress_views.xml -->
+    <!-- VISTAS PARA EL MODELO construction.work.progress -->
+    <!-- ================================================================ -->
+
+    <!-- ============================================================ -->
+    <!-- VISTA TREE DE AVANCES -->
+    <!-- ============================================================ -->
+    <record id="view_construction_work_progress_tree" model="ir.ui.view">
+        <field name="name">construction.work.progress.tree</field>
+        <field name="model">construction.work.progress</field>
+        <field name="arch" type="xml">
+            <tree string="Avances de Obra"
+                  decoration-muted="state=='draft'"
+                  decoration-warning="state=='pending'"
+                  decoration-success="state=='validated'"
+                  decoration-danger="state=='rejected'">
+                
+                <field name="name" string="Avance #"/>
+                <field name="date"/>
+                <field name="subcontract_id" string="Contrato"/>
+                <field name="partner_id" string="Ajustero"/>
+                <field name="project_id" string="Proyecto"/>
+                <field name="quantity_done" sum="Total Cantidad"/>
+                <field name="measurement_unit"/>
+                <field name="amount" widget="monetary" sum="Total Monto"/>
+                <field name="guarantee_amount" widget="monetary" sum="Total Garantía"/>
+                <field name="net_payment" widget="monetary" sum="Total a Pagar"/>
+                <field name="validated_by"/>
+                <field name="state" widget="badge"/>
+                <field name="currency_id" invisible="1"/>
+                
+                <!-- BOTONES DE ACCIÓN INLINE -->
+                <button name="action_submit" 
+                        string="Enviar" 
+                        type="object" 
+                        icon="fa-paper-plane"
+                        attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                <button name="action_validate" 
+                        string="Validar" 
+                        type="object" 
+                        icon="fa-check"
+                        attrs="{'invisible': [('state', '!=', 'pending')]}"
+                        groups="construction_subcontracts.group_construction_engineer"/>
+                <button name="action_reject" 
+                        string="Rechazar" 
+                        type="object" 
+                        icon="fa-times"
+                        attrs="{'invisible': [('state', '!=', 'pending')]}"
+                        groups="construction_subcontracts.group_construction_engineer"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- VISTA FORM DE AVANCES -->
+    <!-- ============================================================ -->
+    <record id="view_construction_work_progress_form" model="ir.ui.view">
+        <field name="name">construction.work.progress.form</field>
+        <field name="model">construction.work.progress</field>
+        <field name="arch" type="xml">
+            <form string="Avance de Obra">
+                <header>
+                    <button name="action_submit" 
+                            string="Enviar para Validación" 
+                            type="object" 
+                            class="oe_highlight"
+                            attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                    
+                    <button name="action_validate" 
+                            string="Validar y Generar Factura" 
+                            type="object" 
+                            class="oe_highlight"
+                            attrs="{'invisible': [('state', '!=', 'pending')]}"
+                            groups="construction_subcontracts.group_construction_engineer"/>
+                    
+                    <button name="action_reject" 
+                            string="Rechazar" 
+                            type="object"
+                            attrs="{'invisible': [('state', '!=', 'pending')]}"
+                            groups="construction_subcontracts.group_construction_engineer"/>
+                    
+                    <field name="state" widget="statusbar" 
+                           statusbar_visible="draft,pending,validated"/>
+                </header>
+
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+
+                    <!-- ALERTAS -->
+                    <div class="alert alert-info" role="alert"
+                         attrs="{'invisible': [('state', '!=', 'pending')]}">
+                        <strong>Pendiente de Validación</strong><br/>
+                        Este avance requiere aprobación del Ingeniero Residente antes de generar el pago.
+                    </div>
+
+                    <div class="alert alert-success" role="alert"
+                         attrs="{'invisible': [('state', '!=', 'validated')]}">
+                        <strong>Avance Validado</strong><br/>
+                        Validado por <field name="validated_by" readonly="1" nolabel="1"/> 
+                        el <field name="validation_date" readonly="1" nolabel="1"/>
+                    </div>
+
+                    <div class="alert alert-danger" role="alert"
+                         attrs="{'invisible': [('state', '!=', 'rejected')]}">
+                        <strong>Avance Rechazado</strong><br/>
+                        <field name="rejection_reason" readonly="1" nolabel="1" 
+                               placeholder="No se especificó motivo"/>
+                    </div>
+
+                    <!-- INFORMACIÓN PRINCIPAL -->
+                    <group>
+                        <group string="Referencias">
+                            <field name="subcontract_id" 
+                                   options="{'no_create': True}"
+                                   attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="partner_id" readonly="1"/>
+                            <field name="project_id" readonly="1"/>
+                            <field name="date" 
+                                   attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        </group>
+
+                        <group string="Medición">
+                            <field name="quantity_done" 
+                                   attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="measurement_unit" readonly="1"/>
+                            <field name="unit_price" widget="monetary" readonly="1"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </group>
+
+                    <!-- CÁLCULOS FINANCIEROS -->
+                    <group string="Cálculos">
+                        <group>
+                            <field name="amount" widget="monetary" readonly="1"/>
+                            <field name="guarantee_percentage" widget="percentage" readonly="1"/>
+                            <field name="guarantee_amount" widget="monetary" readonly="1"
+                                   class="text-warning"/>
+                        </group>
+                        <group>
+                            <field name="net_payment" widget="monetary" readonly="1"
+                                   class="oe_subtotal_footer_separator text-success"/>
+                        </group>
+                    </group>
+
+                    <!-- DESCRIPCIÓN Y EVIDENCIAS -->
+                    <group string="Descripción del Trabajo Realizado">
+                        <field name="description" 
+                               placeholder="Describa el trabajo realizado esta semana: ubicación, cantidad, condiciones especiales..."
+                               nolabel="1"
+                               attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                    </group>
+
+                    <group string="Evidencias Fotográficas">
+                        <field name="attachment_ids" widget="many2many_binary" 
+                               nolabel="1"
+                               attrs="{'readonly': [('state', 'in', ['validated', 'rejected'])]}"/>
+                    </group>
+
+                    <!-- INFORMACIÓN DE FACTURA (si existe) -->
+                    <group string="Factura Generada" 
+                           attrs="{'invisible': [('invoice_id', '=', False)]}">
+                        <field name="invoice_id"/>
+                        <field name="invoice_state"/>
+                    </group>
+
+                    <!-- MOTIVO DE RECHAZO -->
+                    <group attrs="{'invisible': [('state', '!=', 'rejected')]}">
+                        <field name="rejection_reason" readonly="1"/>
+                    </group>
+                </sheet>
+
+                <!-- CHATTER -->
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- VISTA CALENDAR DE AVANCES -->
+    <!-- ============================================================ -->
+    <record id="view_construction_work_progress_calendar" model="ir.ui.view">
+        <field name="name">construction.work.progress.calendar</field>
+        <field name="model">construction.work.progress</field>
+        <field name="arch" type="xml">
+            <calendar string="Avances" 
+                      date_start="date" 
+                      color="state"
+                      mode="month"
+                      quick_add="False">
+                <field name="partner_id"/>
+                <field name="quantity_done"/>
+                <field name="net_payment"/>
+            </calendar>
+        </field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- VISTA SEARCH DE AVANCES -->
+    <!-- ============================================================ -->
+    <record id="view_construction_work_progress_search" model="ir.ui.view">
+        <field name="name">construction.work.progress.search</field>
+        <field name="model">construction.work.progress</field>
+        <field name="arch" type="xml">
+            <search string="Buscar Avances">
+                <field name="name" string="Avance"/>
+                <field name="subcontract_id" string="Contrato"/>
+                <field name="partner_id" string="Ajustero"/>
+                <field name="project_id" string="Proyecto"/>
+
+                <!-- FILTROS -->
+                <separator/>
+                <filter string="Pendientes" name="pending"
+                        domain="[('state', '=', 'pending')]"/>
+                <filter string="Validados" name="validated"
+                        domain="[('state', '=', 'validated')]"/>
+                <filter string="Rechazados" name="rejected"
+                        domain="[('state', '=', 'rejected')]"/>
+                
+                <separator/>
+                <filter string="Esta Semana" name="this_week"
+                        domain="[('date', '&gt;=', (context_today() - datetime.timedelta(days=7)).strftime('%Y-%m-%d'))]"/>
+                <filter string="Este Mes" name="this_month"
+                        domain="[('date', '&gt;=', (context_today().replace(day=1)).strftime('%Y-%m-%d'))]"/>
+
+                <!-- AGRUPACIONES -->
+                <group expand="0" string="Agrupar Por">
+                    <filter string="Contrato" name="group_subcontract"
+                            context="{'group_by': 'subcontract_id'}"/>
+                    <filter string="Proyecto" name="group_project"
+                            context="{'group_by': 'project_id'}"/>
+                    <filter string="Ajustero" name="group_partner"
+                            context="{'group_by': 'partner_id'}"/>
+                    <filter string="Estado" name="group_state"
+                            context="{'group_by': 'state'}"/>
+                    <filter string="Fecha" name="group_date"
+                            context="{'group_by': 'date:week'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+</odoo>

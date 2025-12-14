@@ -1,0 +1,62 @@
+# =========================================================================
+# ARCHIVO: security/ir.rule (Reglas adicionales en XML si se necesitan)
+# =========================================================================
+
+
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ============================================================ -->
+    <!-- REGLAS ADICIONALES DE SEGURIDAD -->
+    <!-- ============================================================ -->
+
+    <!-- REGLA: Multi-Compañía - Cada usuario solo ve datos de su empresa -->
+    <record id="subcontract_company_rule" model="ir.rule">
+        <field name="name">Subcontrato: Filtro por Compañía</field>
+        <field name="model_id" ref="model_construction_subcontract"/>
+        <field name="domain_force">['|',
+            ('company_id', '=', False),
+            ('company_id', 'in', company_ids)
+        ]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="work_progress_company_rule" model="ir.rule">
+        <field name="name">Avance: Filtro por Compañía</field>
+        <field name="model_id" ref="model_construction_work_progress"/>
+        <field name="domain_force">['|',
+            ('subcontract_id.company_id', '=', False),
+            ('subcontract_id.company_id', 'in', company_ids)
+        ]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- REGLA: Estado de Avances - Restricciones por estado -->
+    <!-- ============================================================ -->
+
+    <!-- Capataz NO puede editar avances validados -->
+    <record id="work_progress_foreman_state_rule" model="ir.rule">
+        <field name="name">Capataz: No editar avances validados</field>
+        <field name="model_id" ref="model_construction_work_progress"/>
+        <field name="domain_force">[('state', 'in', ['draft', 'pending'])]</field>
+        <field name="groups" eval="[(4, ref('group_construction_foreman'))]"/>
+        <field name="perm_write" eval="True"/>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- REGLA: Aprobaciones Financieras -->
+    <!-- ============================================================ -->
+
+    <!-- Solo Gerente puede cambiar montos de contratos activos -->
+    <record id="subcontract_amount_change_rule" model="ir.rule">
+        <field name="name">Solo Gerente modifica contratos activos</field>
+        <field name="model_id" ref="model_construction_subcontract"/>
+        <field name="domain_force">['|',
+            ('state', '=', 'draft'),
+            '&amp;', ('state', '=', 'active'), ('write_uid', '=', user.id)
+        ]</field>
+        <field name="groups" eval="[(4, ref('group_construction_engineer'))]"/>
+        <field name="perm_write" eval="True"/>
+    </record>
+
+</odoo>

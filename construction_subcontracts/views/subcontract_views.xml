@@ -1,0 +1,315 @@
+<odoo>
+    <!-- ================================================================ -->
+    <!-- ARCHIVO: views/subcontract_views.xml -->
+    <!-- VISTAS PARA EL MODELO construction.subcontract -->
+    <!-- ================================================================ -->
+
+    <!-- ============================================================ -->
+    <!-- VISTA TREE (LISTA) DE SUBCONTRATOS -->
+    <!-- ============================================================ -->
+    <record id="view_construction_subcontract_tree" model="ir.ui.view">
+        <field name="name">construction.subcontract.tree</field>
+        <field name="model">construction.subcontract</field>
+        <field name="arch" type="xml">
+            <tree string="Subcontratos" 
+                  decoration-info="state=='draft'"
+                  decoration-success="state=='active'"
+                  decoration-muted="state in ['completed','cancelled']">
+                
+                <field name="name" string="Contrato #"/>
+                <field name="project_id" string="Proyecto"/>
+                <field name="partner_id" string="Ajustero"/>
+                <field name="work_description" string="Trabajo"/>
+                <field name="contract_amount" widget="monetary" string="Monto Total"/>
+                <field name="percentage_completed" widget="progressbar" string="% Completado"/>
+                <field name="total_paid" widget="monetary" string="Pagado"/>
+                <field name="total_guarantee_retained" widget="monetary" string="Garantía Retenida"/>
+                <field name="date_start" string="Inicio"/>
+                <field name="state" 
+                       string="Estado"
+                       decoration-info="state=='draft'"
+                       decoration-success="state=='active'"
+                       decoration-muted="state in ['completed','cancelled']"
+                       widget="badge"/>
+                <field name="currency_id" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- VISTA FORM (FORMULARIO) DE SUBCONTRATOS -->
+    <!-- ============================================================ -->
+    <record id="view_construction_subcontract_form" model="ir.ui.view">
+        <field name="name">construction.subcontract.form</field>
+        <field name="model">construction.subcontract</field>
+        <field name="arch" type="xml">
+            <form string="Subcontrato">
+                <!-- HEADER CON BOTONES DE ACCIÓN -->
+                <header>
+                    <button name="action_activate" 
+                            string="Activar Contrato" 
+                            type="object" 
+                            class="oe_highlight"
+                            attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                    
+                    <button name="action_complete" 
+                            string="Completar" 
+                            type="object" 
+                            class="oe_highlight"
+                            attrs="{'invisible': [('state', '!=', 'active')]}"/>
+                    
+                    <button name="action_view_progress" 
+                            string="Ver Avances" 
+                            type="object" 
+                            class="btn-primary"
+                            attrs="{'invisible': [('state', '=', 'draft')]}"/>
+                    
+                    <button name="action_release_guarantee" 
+                            string="Liberar Garantía" 
+                            type="object" 
+                            class="btn-warning"
+                            attrs="{'invisible': [('state', '!=', 'completed')]}"
+                            confirm="¿Confirma que desea liberar la garantía retenida? Esta acción generará un pago."/>
+                    
+                    <button name="action_cancel" 
+                            string="Cancelar" 
+                            type="object"
+                            attrs="{'invisible': [('state', 'in', ['completed', 'cancelled'])]}"/>
+                    
+                    <field name="state" widget="statusbar" 
+                           statusbar_visible="draft,active,completed"/>
+                </header>
+
+                <sheet>
+                    <!-- TÍTULO Y BADGES -->
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+
+                    <div class="oe_button_box" name="button_box">
+                        <!-- Indicador de % Completado -->
+                        <button class="oe_stat_button" type="object" 
+                                name="action_view_progress" icon="fa-tasks">
+                            <field name="percentage_completed" widget="statinfo" 
+                                   string="Completado"/>
+                        </button>
+                    </div>
+
+                    <!-- INFORMACIÓN PRINCIPAL -->
+                    <group>
+                        <group string="Información General">
+                            <field name="partner_id" 
+                                   options="{'no_create': True, 'no_open': True}"/>
+                            <field name="project_id" 
+                                   options="{'no_create': True}"/>
+                            <field name="date_start"/>
+                            <field name="date_end"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+
+                        <group string="Condiciones Contractuales">
+                            <field name="measurement_unit"/>
+                            <field name="unit_price" widget="monetary"/>
+                            <field name="estimated_quantity"/>
+                            <field name="contract_amount" widget="monetary" 
+                                   class="oe_subtotal_footer_separator"/>
+                            <field name="guarantee_percentage" 
+                                   widget="percentage"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </group>
+
+                    <!-- DESCRIPCIÓN DEL TRABAJO -->
+                    <group string="Descripción del Trabajo">
+                        <field name="work_description" 
+                               placeholder="Ej: Instalación de andamios metálicos en Torre, Niveles 3 al 7, incluyendo montaje, desmontaje y traslados verticales"
+                               nolabel="1"/>
+                    </group>
+
+                    <!-- NOTEBOOK CON PESTAÑAS -->
+                    <notebook>
+                        <!-- PESTAÑA: AVANCES DE OBRA -->
+                        <page string="Avances de Obra" name="progress">
+                            <field name="progress_ids" 
+                                   context="{'default_subcontract_id': active_id}"
+                                   mode="tree">
+                                <tree string="Avances" 
+                                      decoration-muted="state=='draft'"
+                                      decoration-warning="state=='pending'"
+                                      decoration-success="state=='validated'"
+                                      decoration-danger="state=='rejected'"
+                                      editable="bottom">
+                                    <field name="date"/>
+                                    <field name="description"/>
+                                    <field name="quantity_done"/>
+                                    <field name="measurement_unit" invisible="1"/>
+                                    <field name="amount" widget="monetary" sum="Total"/>
+                                    <field name="guarantee_amount" widget="monetary" sum="Total Garantía"/>
+                                    <field name="net_payment" widget="monetary" sum="Total a Pagar"/>
+                                    <field name="state" widget="badge"/>
+                                    <field name="validated_by"/>
+                                    <field name="currency_id" invisible="1"/>
+                                    <button name="action_submit" 
+                                            string="Enviar" 
+                                            type="object" 
+                                            icon="fa-paper-plane"
+                                            attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                                    <button name="action_validate" 
+                                            string="Validar" 
+                                            type="object" 
+                                            icon="fa-check"
+                                            attrs="{'invisible': [('state', '!=', 'pending')]}"
+                                            groups="construction_subcontracts.group_construction_engineer"/>
+                                </tree>
+                            </field>
+
+                            <!-- TOTALES EN LA PARTE INFERIOR -->
+                            <group class="oe_subtotal_footer oe_right">
+                                <field name="total_quantity_done" 
+                                       string="Total Ejecutado"
+                                       widget="float"/>
+                                <field name="total_amount_invoiced" 
+                                       widget="monetary"/>
+                                <field name="total_guarantee_retained" 
+                                       widget="monetary"
+                                       class="text-warning"/>
+                                <field name="total_paid" 
+                                       widget="monetary"
+                                       class="oe_subtotal_footer_separator text-success"/>
+                            </group>
+                        </page>
+
+                        <!-- PESTAÑA: NOTAS Y DOCUMENTOS -->
+                        <page string="Notas" name="notes">
+                            <field name="notes" 
+                                   placeholder="Notas adicionales sobre el contrato, clausulas especiales, etc."/>
+                        </page>
+                    </notebook>
+                </sheet>
+
+                <!-- CHATTER (Mensajes y Actividades) -->
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- VISTA KANBAN DE SUBCONTRATOS -->
+    <!-- ============================================================ -->
+    <record id="view_construction_subcontract_kanban" model="ir.ui.view">
+        <field name="name">construction.subcontract.kanban</field>
+        <field name="model">construction.subcontract</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile" 
+                    default_group_by="state">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="project_id"/>
+                <field name="contract_amount"/>
+                <field name="percentage_completed"/>
+                <field name="state"/>
+                
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="oe_kanban_content">
+                                <!-- Cabecera -->
+                                <div class="row mb-2">
+                                    <div class="col-8">
+                                        <strong><field name="name"/></strong>
+                                    </div>
+                                    <div class="col-4 text-end">
+                                        <field name="state" widget="label_selection" 
+                                               options="{'classes': {'draft': 'default', 'active': 'success', 'completed': 'info', 'cancelled': 'danger'}}"/>
+                                    </div>
+                                </div>
+
+                                <!-- Información -->
+                                <div class="row">
+                                    <div class="col-12">
+                                        <i class="fa fa-building text-muted"/> 
+                                        <field name="project_id"/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <i class="fa fa-user text-muted"/> 
+                                        <field name="partner_id"/>
+                                    </div>
+                                </div>
+
+                                <!-- Monto -->
+                                <div class="row mt-2">
+                                    <div class="col-12">
+                                        <strong>
+                                            <field name="contract_amount" widget="monetary"/>
+                                        </strong>
+                                    </div>
+                                </div>
+
+                                <!-- Barra de Progreso -->
+                                <div class="row mt-2">
+                                    <div class="col-12">
+                                        <field name="percentage_completed" widget="progressbar"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- VISTA SEARCH (FILTROS Y AGRUPACIONES) -->
+    <!-- ============================================================ -->
+    <record id="view_construction_subcontract_search" model="ir.ui.view">
+        <field name="name">construction.subcontract.search</field>
+        <field name="model">construction.subcontract</field>
+        <field name="arch" type="xml">
+            <search string="Buscar Subcontratos">
+                <!-- BARRA DE BÚSQUEDA -->
+                <field name="name" string="Contrato"
+                       filter_domain="[('name', 'ilike', self)]"/>
+                <field name="partner_id" string="Ajustero"
+                       filter_domain="[('partner_id', 'child_of', self)]"/>
+                <field name="project_id" string="Proyecto"/>
+                <field name="work_description" string="Descripción"/>
+
+                <!-- FILTROS PREDEFINIDOS -->
+                <separator/>
+                <filter string="Activos" name="active"
+                        domain="[('state', '=', 'active')]"/>
+                <filter string="Completados" name="completed"
+                        domain="[('state', '=', 'completed')]"/>
+                <filter string="Por Proyecto" name="by_project"
+                        context="{'group_by': 'project_id'}"/>
+                
+                <separator/>
+                <filter string="Este Mes" name="this_month"
+                        domain="[('date_start', '&gt;=', (context_today() - datetime.timedelta(days=30)).strftime('%Y-%m-%d'))]"/>
+                <filter string="Este Año" name="this_year"
+                        domain="[('date_start', '&gt;=', context_today().strftime('%Y-01-01'))]"/>
+
+                <!-- AGRUPACIONES -->
+                <group expand="0" string="Agrupar Por">
+                    <filter string="Proyecto" name="group_project"
+                            context="{'group_by': 'project_id'}"/>
+                    <filter string="Ajustero" name="group_partner"
+                            context="{'group_by': 'partner_id'}"/>
+                    <filter string="Estado" name="group_state"
+                            context="{'group_by': 'state'}"/>
+                    <filter string="Fecha Inicio" name="group_date"
+                            context="{'group_by': 'date_start:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+</odoo>

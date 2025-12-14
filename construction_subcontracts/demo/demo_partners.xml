@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="partner_ajustero_demo_main" model="res.partner">
+            <field name="name">Hormigones del Sur S.R.L.</field>
+            <field name="supplier_rank">1</field>
+            <field name="company_type">company</field>
+            <field name="phone">809-777-9000</field>
+            <field name="email">contacto@hormigonesdelsur.com</field>
+            <field name="is_company">True</field>
+        </record>
+
+        <record id="partner_ajustero_electricidad" model="res.partner">
+            <field name="name">Instalaciones Eléctricas Rápido C. por A.</field>
+            <field name="supplier_rank">1</field>
+            <field name="company_type">company</field>
+            <field name="phone">809-333-5555</field>
+            <field name="email">electrico@instalaciones.com</field>
+            <field name="is_company">True</field>
+        </record>
+
+        <record id="partner_ajustero_plomeria" model="res.partner">
+            <field name="name">AquaFlow Solutions</field>
+            <field name="supplier_rank">1</field>
+            <field name="company_type">company</field>
+            <field name="phone">809-222-1111</field>
+            <field name="email">plomeria@aquaflow.com</field>
+            <field name="is_company">True</field>
+        </record>
+
+        <record id="partner_ajustero_demo" model="res.partner">
+            <field name="name">Andamios del Caribe S.R.L.</field>
+            <field name="supplier_rank">1</field>
+            <field name="company_type">company</field>
+            <field name="phone">809-555-1234</field>
+            <field name="email">info@andamiosdelcaribe.com</field>
+            <field name="is_company">True</field>
+        </record>
+
+    </data>
+</odoo>
