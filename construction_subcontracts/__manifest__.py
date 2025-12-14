@@ -56,26 +56,27 @@ Roles y Permisos:
     ],
 
     # Archivos de datos (SE CARGAN EN ESTE ORDEN)
+    # En construction_subcontracts/__manifest__.py
     'data': [
-        # 1. SEGURIDAD (PRIMERO)
-        'security/security.xml',              # Grupos de usuarios
-        'security/ir.model.access.csv',       # Permisos CRUD
+        # 1. SEGURIDAD BASE (Grupos y Reglas de Acceso por registro)
+        'security/security.xml',              # GRUPOS y ROLES (res.groups)
 
-        # 2. DATOS MAESTROS
+        # 2. DATOS MAESTROS Y SECUENCIAS
         'data/sequences.xml',                 # Numeración automática
         'data/measurement_units.xml',         # Unidades de medida
 
-        # 3. VISTAS
+        # A PARTIR DE AQUÍ, LOS MODELOS PYTHON DEBEN ESTAR CARGADOS.
+
+        # 3. REGLAS DE ACCESO (Permisos de Modelo y Campo)
+        # Recomendación: Mover los registros 'ir.model.fields' de security.xml a este archivo.
+        'security/ir.model.access.csv',       # Permisos CRUD (ir.model.access)
+
+        # 4. VISTAS
         'views/subcontract_views.xml',
         'views/work_progress_views.xml',
+        'views/guarantee_retention_views.xml',  # Asumo que este archivo existe
         'views/menu.xml',
-
-        # 4. REPORTES (opcional)
-        # 'report/subcontract_report_template.xml',
-        # 'report/work_progress_report_template.xml',
-
-        # 5. WIZARDS (opcional)
-        # 'wizard/release_guarantee_wizard_views.xml',
+        # ...
     ],
 
     # Archivos de demostración (solo se cargan si demo=True al crear BD)
