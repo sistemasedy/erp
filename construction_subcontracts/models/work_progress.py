@@ -49,9 +49,10 @@ class ConstructionWorkProgress(models.Model):
     # ============================
     # CAMPOS DE MEDICIÓN
     # ============================
-    measurement_unit = fields.Selection(
+    measurement_unit = fields.Char(  # <-- Cambiado a Char para coincidir
         related='subcontract_id.measurement_unit',
         string='Unidad',
+        readonly=True,  # Recomendado para campos 'related' simples
         store=True
     )
 
