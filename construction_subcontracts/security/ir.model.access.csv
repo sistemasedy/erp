@@ -1,22 +1,34 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_construction_subcontract_foreman,Subcontrato Capataz (Read),model_construction_subcontract,group_construction_foreman,1,0,0,0
-access_construction_subcontract_engineer,Subcontrato Ingeniero (C,R,W),model_construction_subcontract,group_construction_engineer,1,1,1,0
-access_construction_subcontract_manager,Subcontrato Gerente (CRUD),model_construction_subcontract,group_construction_manager,1,1,1,1
-access_construction_subcontract_accountant,Subcontrato Contadora (R,W),model_construction_subcontract,account.group_account_invoice,1,1,0,0
+# ---------------------------------------------------------------------------------------------------------
+# MODELO: construction.subcontract
+# ---------------------------------------------------------------------------------------------------------
+access_subcontract_foreman,Subcontrato Capataz,model_construction_subcontract,group_construction_foreman,1,0,0,0
+access_subcontract_engineer,Subcontrato Ingeniero,model_construction_subcontract,group_construction_engineer,1,1,1,0
+access_subcontract_manager,Subcontrato Gerente,model_construction_subcontract,group_construction_manager,1,1,1,1
+access_subcontract_accountant,Subcontrato Contadora,model_construction_subcontract,account.group_account_invoice,1,1,0,0
 
-access_construction_work_progress_foreman,Avance Capataz (C,R,W),model_construction_work_progress,group_construction_foreman,1,1,1,0
-access_construction_work_progress_engineer,Avance Ingeniero (C,R,W,D),model_construction_work_progress,group_construction_engineer,1,1,1,1
-access_construction_work_progress_manager,Avance Gerente (CRUD),model_construction_work_progress,group_construction_manager,1,1,1,1
-access_construction_work_progress_accountant,Avance Contadora (Read),model_construction_work_progress,account.group_account_invoice,1,0,0,0
+# ---------------------------------------------------------------------------------------------------------
+# MODELO: construction.work.progress
+# ---------------------------------------------------------------------------------------------------------
+access_work_progress_foreman,Avance Capataz,model_construction_work_progress,group_construction_foreman,1,1,1,0
+access_work_progress_engineer,Avance Ingeniero,model_construction_work_progress,group_construction_engineer,1,1,1,1
+access_work_progress_manager,Avance Gerente,model_construction_work_progress,group_construction_manager,1,1,1,1
+access_work_progress_accountant,Avance Contadora,model_construction_work_progress,account.group_account_invoice,1,0,0,0
 
-access_construction_guarantee_retention_foreman,Retención Capataz (Read),model_construction_guarantee_retention,group_construction_foreman,1,0,0,0
-access_construction_guarantee_retention_manager,Retención Gerente (CRUD),model_construction_guarantee_retention,group_construction_manager,1,1,1,1
-access_construction_guarantee_retention_accountant,Retención Contadora (R,W),model_construction_guarantee_retention,account.group_account_invoice,1,1,0,0
+# ---------------------------------------------------------------------------------------------------------
+# MODELO: construction.guarantee.retention
+# ---------------------------------------------------------------------------------------------------------
+access_guarantee_retention_foreman,Retención Capataz,model_construction_guarantee_retention,group_construction_foreman,1,0,0,0
+access_guarantee_retention_manager,Retención Gerente,model_construction_guarantee_retention,group_construction_manager,1,1,1,1
+access_guarantee_retention_accountant,Retención Contadora,model_construction_guarantee_retention,account.group_account_invoice,1,1,0,0
 
-access_res_partner_foreman,Partner Capataz (Read),base.model_res_partner,group_construction_foreman,1,0,0,0
-access_project_project_foreman,Proyecto Capataz (Read),project.model_project_project,group_construction_foreman,1,0,0,0
-access_project_project_engineer,Proyecto Ingeniero (R,W,C),project.model_project_project,group_construction_engineer,1,1,1,0
-access_project_project_manager,Proyecto Gerente (CRUD),project.model_project_project,group_construction_manager,1,1,1,1
+# ---------------------------------------------------------------------------------------------------------
+# Permisos a Modelos Externos (Proyectos, Partners, Facturas)
+# ---------------------------------------------------------------------------------------------------------
+access_res_partner_foreman,Partner Capataz,base.model_res_partner,group_construction_foreman,1,0,0,0
+access_project_project_foreman,Proyecto Capataz,project.model_project_project,group_construction_foreman,1,0,0,0
+access_project_project_engineer,Proyecto Ingeniero,project.model_project_project,group_construction_engineer,1,1,1,0
+access_project_project_manager,Proyecto Gerente,project.model_project_project,group_construction_manager,1,1,1,1
 
-access_account_move_engineer,Facturas Ingeniero (Read),account.model_account_move,group_construction_engineer,1,0,0,0
-access_account_move_manager,Facturas Gerente (Read),account.model_account_move,group_construction_manager,1,0,0,0
+access_account_move_engineer,Facturas Ingeniero,account.model_account_move,group_construction_engineer,1,0,0,0
+access_account_move_manager,Facturas Gerente,account.model_account_move,group_construction_manager,1,0,0,0
