@@ -61,7 +61,7 @@ Roles y Permisos:
     # En construction_subcontracts/__manifest__.py
     'data': [
         # 1. SEGURIDAD BASE (Grupos y Reglas de Acceso por registro)
-        'security/security.xml',              # GRUPOS y ROLES (res.groups)
+        # 'security/security.xml',              # GRUPOS y ROLES (res.groups)
 
         # 2. DATOS MAESTROS Y SECUENCIAS
         'data/sequences.xml',                 # Numeración automática
