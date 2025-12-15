@@ -1,8 +1,3 @@
-# =========================================================================
-# ARCHIVO: data/measurement_units.xml
-# Datos iniciales para unidades de medida
-# =========================================================================
-
 
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
