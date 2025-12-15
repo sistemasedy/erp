@@ -116,17 +116,7 @@
             <field name="perm_unlink" eval="True"/>
         </record>
 
-        <!-- ============================================================ -->
-        <!-- REGLAS DE CAMPO (FIELD SECURITY) -->
-        <!-- Controlan QUÉ campos puede ver/editar cada usuario -->
-        <!-- ============================================================ -->
-
-        <!-- Campos sensibles solo para Gerente -->
-        <record id="field_subcontract_guarantee_percentage" model="ir.model.fields">
-            <field name="model_id" ref="model_construction_subcontract"/>
-            <field name="name">guarantee_percentage</field>
-            <field name="groups" eval="[(4, ref('group_construction_manager'))]"/>
-        </record>
+        
 
         <!-- ============================================================ -->
         <!-- CONFIGURACIÓN DE AUDITORÍA -->

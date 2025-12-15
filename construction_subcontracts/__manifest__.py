@@ -52,7 +52,9 @@ Roles y Permisos:
         'project',            # Gestión de proyectos
         'purchase',           # Órdenes de compra
         'hr',                 # Recursos humanos (opcional)
-        'l10n_do',            # Localización Dominicana (NCF, DGII)
+        'l10n_do',
+        'uom',
+        # Localización Dominicana (NCF, DGII)
     ],
 
     # Archivos de datos (SE CARGAN EN ESTE ORDEN)
