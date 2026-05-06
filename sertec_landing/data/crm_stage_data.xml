@@ -5,35 +5,30 @@
         <record id="stage_landing_nuevo" model="crm.stage">
             <field name="name">Nuevo — Landing</field>
             <field name="sequence">1</field>
-            <field name="probability">10</field>
             <field name="is_won">False</field>
         </record>
 
         <record id="stage_landing_contactado" model="crm.stage">
             <field name="name">Contactado</field>
             <field name="sequence">5</field>
-            <field name="probability">30</field>
             <field name="is_won">False</field>
         </record>
 
         <record id="stage_landing_analisis" model="crm.stage">
             <field name="name">Análisis de Viabilidad</field>
             <field name="sequence">10</field>
-            <field name="probability">60</field>
             <field name="is_won">False</field>
         </record>
 
         <record id="stage_landing_propuesta" model="crm.stage">
             <field name="name">Propuesta Enviada</field>
             <field name="sequence">15</field>
-            <field name="probability">80</field>
             <field name="is_won">False</field>
         </record>
 
         <record id="stage_landing_ganado" model="crm.stage">
             <field name="name">Ganado — Cliente</field>
             <field name="sequence">20</field>
-            <field name="probability">100</field>
             <field name="is_won">True</field>
         </record>
 
