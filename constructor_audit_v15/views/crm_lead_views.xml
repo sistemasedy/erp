@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_crm_lead_audit_form" model="ir.ui.view">
+        <field name="name">crm.lead.audit.form.inherit</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_all_leads"/>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page string="Constructor Audit" name="audit_tab"
+                      attrs="{'invisible': [('x_audit_score', '=', False)]}">
+                    <group>
+                        <group string="Inspección de Resistencia Operativa">
+                            <field name="x_audit_score"          readonly="1"/>
+                            <field name="x_audit_nivel"          readonly="1"/>
+                            <field name="x_audit_priority"       readonly="1"/>
+                            <field name="x_audit_date"           readonly="1"/>
+                            <field name="x_audit_top_oportunidad" readonly="1"/>
+                        </group>
+                        <group string="ROI Calculado">
+                            <field name="x_audit_roi_total"    readonly="1" widget="monetary"/>
+                            <field name="x_audit_monthly_loss" readonly="1" widget="monetary"/>
+                            <field name="x_audit_payback_meses" readonly="1"/>
+                            <field name="x_audit_facturacion"  readonly="1" widget="monetary"/>
+                        </group>
+                    </group>
+                    <group string="Recomendación Principal">
+                        <field name="x_audit_recommendation" readonly="1" nolabel="1"/>
+                    </group>
+                    <group string="Diagnóstico">
+                        <field name="x_audit_survey_url" readonly="1" widget="url"/>
+                    </group>
+                </page>
+            </notebook>
+        </field>
+    </record>
+
+    <record id="view_crm_lead_audit_list" model="ir.ui.view">
+        <field name="name">crm.lead.audit.list.inherit</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_all_leads_tree"/>
+        <field name="arch" type="xml">
+            <field name="expected_revenue" position="after">
+                <field name="x_audit_score"     string="Score"          optional="show"/>
+                <field name="x_audit_nivel"     string="Nivel"          optional="show"/>
+                <field name="x_audit_priority"  string="Prioridad"      optional="show"/>
+                <field name="x_audit_roi_total" string="ROI Est. (USD)" optional="show"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_crm_lead_audit_search" model="ir.ui.view">
+        <field name="name">crm.lead.audit.search.inherit</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.view_crm_lead_filter"/>
+        <field name="arch" type="xml">
+            <filter name="my_leads" position="after">
+                <separator/>
+                <filter name="audit_principiante" string="Audit: Principiante"
+                        domain="[('x_audit_nivel','=','principiante')]"/>
+                <filter name="audit_intermedio"   string="Audit: Intermedio"
+                        domain="[('x_audit_nivel','=','intermedio')]"/>
+                <filter name="audit_avanzado"     string="Audit: Avanzado"
+                        domain="[('x_audit_nivel','=','avanzado')]"/>
+                <separator/>
+                <filter name="audit_critico"      string="Prioridad Crítica"
+                        domain="[('x_audit_priority','=','critical')]"/>
+                <filter name="audit_alto_roi"     string="ROI &gt; $50,000"
+                        domain="[('x_audit_roi_total','&gt;',50000)]"/>
+                <filter name="audit_con_diagnostico" string="Con Diagnóstico"
+                        domain="[('x_audit_score','!=',False)]"/>
+            </filter>
+            <group string="Agrupar por" position="inside">
+                <filter name="group_audit_nivel"
+                        string="Nivel de Madurez"
+                        context="{'group_by': 'x_audit_nivel'}"/>
+                <filter name="group_audit_priority"
+                        string="Prioridad de Intervención"
+                        context="{'group_by': 'x_audit_priority'}"/>
+            </group>
+        </field>
+    </record>
+
+</odoo>

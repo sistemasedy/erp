@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_audit_config_form" model="ir.ui.view">
+        <field name="name">audit.config.form</field>
+        <field name="model">audit.config</field>
+        <field name="arch" type="xml">
+            <form string="Configuración de Benchmarks ROI">
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <div class="alert alert-info" role="alert">
+                        Ajusta estos benchmarks según tu mercado (RD/LatAm).
+                        Los cambios aplican a los próximos diagnósticos procesados.
+                    </div>
+                    <group>
+                        <group string="Desperdicio Evitable en Compras (%)">
+                            <field name="desperdicio_principiante" string="Principiante"/>
+                            <field name="desperdicio_intermedio"   string="Intermedio"/>
+                            <field name="desperdicio_avanzado"     string="Avanzado"/>
+                        </group>
+                        <group string="Sobrepago a Subcontratistas (%)">
+                            <field name="sobrepago_principiante" string="Principiante"/>
+                            <field name="sobrepago_intermedio"   string="Intermedio"/>
+                            <field name="sobrepago_avanzado"     string="Avanzado"/>
+                        </group>
+                        <group string="Retraso Promedio por Obra (meses)">
+                            <field name="retraso_principiante" string="Principiante"/>
+                            <field name="retraso_intermedio"   string="Intermedio"/>
+                            <field name="retraso_avanzado"     string="Avanzado"/>
+                        </group>
+                        <group string="Horas Administrativas Perdidas / Semana">
+                            <field name="horas_perd_principiante" string="Principiante"/>
+                            <field name="horas_perd_intermedio"   string="Intermedio"/>
+                            <field name="horas_perd_avanzado"     string="Avanzado"/>
+                        </group>
+                        <group string="Costo de Implementación Odoo (USD)">
+                            <field name="costo_odoo_principiante" string="Principiante"/>
+                            <field name="costo_odoo_intermedio"   string="Intermedio"/>
+                            <field name="costo_odoo_avanzado"     string="Avanzado"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_audit_config" model="ir.actions.act_window">
+        <field name="name">Benchmarks Constructor Audit</field>
+        <field name="res_model">audit.config</field>
+        <field name="view_mode">form</field>
+        <field name="target">current</field>
+    </record>
+
+    <menuitem id="menu_audit_root"
+              name="Constructor Audit"
+              parent="base.menu_administration"
+              sequence="99"/>
+
+    <menuitem id="menu_audit_config"
+              name="Benchmarks ROI"
+              parent="menu_audit_root"
+              action="action_audit_config"
+              sequence="10"/>
+
+</odoo>

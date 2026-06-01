@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data noupdate="1">
+
+<record id="email_tpl_principiante" model="mail.template">
+    <field name="name">[Constructor Audit] Inspección – Principiante</field>
+    <field name="model_id" ref="survey.model_survey_user_input"/>
+    <field name="subject">{{ object.partner_id.name }}, tu constructora pierde ${{ '{:,.0f}'.format(object.x_audit_roi_calculado or 0) }} USD al año</field>
+    <field name="email_to">{{ object.partner_id.email }}</field>
+    <field name="email_from">{{ (user.email_formatted or user.company_id.email) }}</field>
+    <field name="lang">{{ object.partner_id.lang }}</field>
+    <field name="auto_delete" eval="False"/>
+    <field name="body_html"><![CDATA[
+<div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;">
+  <div style="background:#0F6E56;padding:28px 32px;border-radius:10px 10px 0 0;">
+    <p style="margin:0;color:#9FE1CB;font-size:11px;text-transform:uppercase;">Inspección de Resistencia Operativa</p>
+    <h1 style="margin:8px 0 0;color:#fff;font-size:20px;">Tu Dictamen Técnico</h1>
+  </div>
+  <div style="background:#FCEBEB;padding:22px 32px;border-left:4px solid #D85A30;">
+    <p style="margin:0;font-size:36px;font-weight:700;color:#712B13;">
+      <t t-out="'{:.0f}'.format(object.scoring_percentage or 0)"/><span style="font-size:18px;">/100</span>
+    </p>
+    <p style="margin:6px 0 0;color:#993C1D;font-weight:500;">Nivel: Principiante — Riesgo Estructural Alto</p>
+  </div>
+  <div style="padding:26px 32px;background:#fff;">
+    <p>Hola <strong><t t-out="object.partner_id.name"/></strong>,</p>
+    <p>La inspección detectó una fuga estructural de
+      <strong style="color:#712B13;">$<t t-out="'{:,.0f}'.format(object.x_audit_roi_calculado or 0)"/> USD/año</strong>
+      — equivalente a <strong>${<t t-out="'{:,.0f}'.format((object.x_audit_roi_calculado or 0)/12)"/>} USD/mes</strong>.
+    </p>
+    <p>El 60% de las constructoras en este nivel tienen desviaciones de presupuesto superiores al 20% por obra.
+       Con un sistema integrado, ese margen se recupera en los primeros meses de operación.</p>
+    <div style="text-align:center;margin:26px 0;">
+      <a href="https://calendly.com/TU-LINK-AQUI"
+         style="background:#1D9E75;color:#fff;padding:13px 34px;text-decoration:none;border-radius:8px;font-size:14px;font-weight:600;display:inline-block;">
+        Interpretar mi dictamen (15 min gratis) →
+      </a>
+    </div>
+  </div>
+  <div style="background:#F5F5F5;padding:16px 32px;border-radius:0 0 10px 10px;">
+    <p style="margin:0;font-size:11px;color:#999;text-align:center;">Constructor Audit · Inspección de Resistencia Operativa</p>
+  </div>
+</div>
+    ]]></field>
+</record>
+
+<record id="email_tpl_intermedio" model="mail.template">
+    <field name="name">[Constructor Audit] Inspección – Intermedio</field>
+    <field name="model_id" ref="survey.model_survey_user_input"/>
+    <field name="subject">Score {{ '{:.0f}'.format(object.scoring_percentage or 0) }}/100: sistemas desconectados — ${{ '{:,.0f}'.format(object.x_audit_roi_calculado or 0) }} en juego</field>
+    <field name="email_to">{{ object.partner_id.email }}</field>
+    <field name="email_from">{{ (user.email_formatted or user.company_id.email) }}</field>
+    <field name="lang">{{ object.partner_id.lang }}</field>
+    <field name="auto_delete" eval="False"/>
+    <field name="body_html"><![CDATA[
+<div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;">
+  <div style="background:#633806;padding:28px 32px;border-radius:10px 10px 0 0;">
+    <p style="margin:0;color:#F5D59A;font-size:11px;text-transform:uppercase;">Inspección de Resistencia Operativa</p>
+    <h1 style="margin:8px 0 0;color:#fff;font-size:20px;">Tu Dictamen Técnico</h1>
+  </div>
+  <div style="background:#FAEEDA;padding:22px 32px;border-left:4px solid #EF9F27;">
+    <p style="margin:0;font-size:36px;font-weight:700;color:#633806;">
+      <t t-out="'{:.0f}'.format(object.scoring_percentage or 0)"/><span style="font-size:18px;">/100</span>
+    </p>
+    <p style="margin:6px 0 0;color:#854F0B;font-weight:500;">Nivel: Intermedio — Sistemas Desconectados</p>
+  </div>
+  <div style="padding:26px 32px;background:#fff;">
+    <p>Hola <strong><t t-out="object.partner_id.name"/></strong>,</p>
+    <p>Tienes herramientas activas, pero la falta de integración te cuesta
+      <strong style="color:#633806;">$<t t-out="'{:,.0f}'.format(object.x_audit_roi_calculado or 0)"/> USD/año</strong>
+      en doble captura, errores y decisiones tardías.
+    </p>
+    <table width="100%" cellpadding="0" cellspacing="0" style="margin:18px 0;">
+      <tr>
+        <td width="48%" style="background:#E1F5EE;border-radius:8px;padding:14px;text-align:center;">
+          <p style="margin:0 0 4px;font-size:11px;color:#0F6E56;">Ahorro anual estimado</p>
+          <p style="margin:0;font-size:22px;font-weight:700;color:#085041;">$<t t-out="'{:,.0f}'.format(object.x_audit_roi_calculado or 0)"/></p>
+        </td>
+        <td width="4%"></td>
+        <td width="48%" style="background:#F5F5F5;border-radius:8px;padding:14px;text-align:center;">
+          <p style="margin:0 0 4px;font-size:11px;color:#555;">Pérdida mensual actual</p>
+          <p style="margin:0;font-size:22px;font-weight:700;color:#333;">$<t t-out="'{:,.0f}'.format((object.x_audit_roi_calculado or 0)/12)"/></p>
+        </td>
+      </tr>
+    </table>
+    <div style="text-align:center;margin:26px 0;">
+      <a href="https://calendly.com/TU-LINK-AQUI"
+         style="background:#EF9F27;color:#fff;padding:13px 34px;text-decoration:none;border-radius:8px;font-size:14px;font-weight:600;display:inline-block;">
+        Ver roadmap de integración Odoo →
+      </a>
+    </div>
+  </div>
+  <div style="background:#F5F5F5;padding:16px 32px;border-radius:0 0 10px 10px;">
+    <p style="margin:0;font-size:11px;color:#999;text-align:center;">Constructor Audit · Inspección de Resistencia Operativa</p>
+  </div>
+</div>
+    ]]></field>
+</record>
+
+<record id="email_tpl_avanzado" model="mail.template">
+    <field name="name">[Constructor Audit] Inspección – Avanzado</field>
+    <field name="model_id" ref="survey.model_survey_user_input"/>
+    <field name="subject">Listo para escalar: plan de refuerzo estructural — Score {{ '{:.0f}'.format(object.scoring_percentage or 0) }}/100</field>
+    <field name="email_to">{{ object.partner_id.email }}</field>
+    <field name="email_from">{{ (user.email_formatted or user.company_id.email) }}</field>
+    <field name="lang">{{ object.partner_id.lang }}</field>
+    <field name="auto_delete" eval="False"/>
+    <field name="body_html"><![CDATA[
+<div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;">
+  <div style="background:#085041;padding:28px 32px;border-radius:10px 10px 0 0;">
+    <p style="margin:0;color:#9FE1CB;font-size:11px;text-transform:uppercase;">Inspección de Resistencia Operativa</p>
+    <h1 style="margin:8px 0 0;color:#fff;font-size:20px;">Tu Dictamen Técnico</h1>
+  </div>
+  <div style="background:#E1F5EE;padding:22px 32px;border-left:4px solid #1D9E75;">
+    <p style="margin:0;font-size:36px;font-weight:700;color:#085041;">
+      <t t-out="'{:.0f}'.format(object.scoring_percentage or 0)"/><span style="font-size:18px;">/100</span>
+    </p>
+    <p style="margin:6px 0 0;color:#0F6E56;font-weight:500;">Nivel: Avanzado — Listo para Escalar</p>
+  </div>
+  <div style="padding:26px 32px;background:#fff;">
+    <p>Hola <strong><t t-out="object.partner_id.name"/></strong>,</p>
+    <p>Estás en el percentil superior del sector. La oportunidad restante —
+      <strong style="color:#085041;">$<t t-out="'{:,.0f}'.format(object.x_audit_roi_calculado or 0)"/> USD/año</strong> —
+      está en inteligencia de datos y automatización avanzada.
+    </p>
+    <div style="border:1px solid #9FE1CB;border-radius:8px;overflow:hidden;margin:18px 0;">
+      <div style="background:#E1F5EE;padding:9px 14px;">
+        <p style="margin:0;font-size:11px;font-weight:600;color:#085041;text-transform:uppercase;">Plan de refuerzo: 3 pasos</p>
+      </div>
+      <div style="padding:12px 14px;border-top:1px solid #9FE1CB;">
+        <p style="margin:0;font-size:13px;"><strong>1.</strong> BI: dashboards de margen por obra en tiempo real.</p>
+      </div>
+      <div style="padding:12px 14px;border-top:1px solid #9FE1CB;background:#FAFAFA;">
+        <p style="margin:0;font-size:13px;"><strong>2.</strong> Aprobaciones automáticas: compras, subcontratas, facturación.</p>
+      </div>
+      <div style="padding:12px 14px;border-top:1px solid #9FE1CB;">
+        <p style="margin:0;font-size:13px;"><strong>3.</strong> Proyección flujo de caja 30/60/90 días vinculada al avance real.</p>
+      </div>
+    </div>
+    <div style="text-align:center;margin:26px 0;">
+      <a href="https://calendly.com/TU-LINK-AQUI"
+         style="background:#1D9E75;color:#fff;padding:13px 34px;text-decoration:none;border-radius:8px;font-size:14px;font-weight:600;display:inline-block;">
+        Cotizar implementación Enterprise →
+      </a>
+    </div>
+  </div>
+  <div style="background:#F5F5F5;padding:16px 32px;border-radius:0 0 10px 10px;">
+    <p style="margin:0;font-size:11px;color:#999;text-align:center;">Constructor Audit · Inspección de Resistencia Operativa</p>
+  </div>
+</div>
+    ]]></field>
+</record>
+
+</data>
+</odoo>
