@@ -156,9 +156,9 @@ class SurveyUserInputAudit(models.Model):
     def _assign_crm_tags(self, lead, nivel):
         """Asigna la etiqueta de nivel al lead."""
         tag_xmlids = {
-            'principiante': 'constructor_audit_automation.tag_audit_principiante',
-            'intermedio':   'constructor_audit_automation.tag_audit_intermedio',
-            'avanzado':     'constructor_audit_automation.tag_audit_avanzado',
+            'principiante': 'constructor_audit_v15.tag_audit_principiante',
+            'intermedio':   'constructor_audit_v15.tag_audit_intermedio',
+            'avanzado':     'constructor_audit_v15.tag_audit_avanzado',
         }
         tag = self.env.ref(tag_xmlids[nivel], raise_if_not_found=False)
         if tag:
@@ -190,9 +190,9 @@ class SurveyUserInputAudit(models.Model):
     def _send_level_email(self, record, nivel):
         """Envía la plantilla de email correspondiente al nivel."""
         template_xmlids = {
-            'principiante': 'constructor_audit_automation.email_tpl_principiante',
-            'intermedio':   'constructor_audit_automation.email_tpl_intermedio',
-            'avanzado':     'constructor_audit_automation.email_tpl_avanzado',
+            'principiante': 'constructor_audit_v15.email_tpl_principiante',
+            'intermedio':   'constructor_audit_v15.email_tpl_intermedio',
+            'avanzado':     'constructor_audit_v15.email_tpl_avanzado',
         }
         template = self.env.ref(template_xmlids[nivel], raise_if_not_found=False)
         if template and record.partner_id.email:
