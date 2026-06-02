@@ -43,8 +43,8 @@ class SurveyUserInputAudit(models.Model):
             for line in record.user_input_line_ids:
                 code = line.question_id.question_code
                 field = self.FINANCIAL_QUESTION_CODES.get(code)
-                if field and line.value_number is not None:
-                    vals[field] = line.value_number
+                if field and line.value_numerical_box is not None:
+                    vals[field] = line.value_numerical_box
             if vals:
                 record.write(vals)
 
@@ -126,6 +126,7 @@ class SurveyUserInputAudit(models.Model):
             'email_from':            partner.email or '',
             'phone':                 partner.phone or '',
             'stage_id':              stage.id if stage else False,
+            'x_audit_date':          fields.Datetime.now(),
             'x_audit_score':         int(score),
             'x_audit_nivel':         nivel,
             'x_audit_roi_total':     roi['total'],
