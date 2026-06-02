@@ -6,8 +6,7 @@
     <field name="title">Inspección de Resistencia Operativa</field>
     <field name="access_mode">public</field>
     <field name="users_login_required" eval="False"/>
-    <field name="scoring_type">scoring</field>
-    <field name="state">open</field>
+    <field name="scoring_type">scoring_without_answers</field>
     <field name="questions_layout">page_per_question</field>
     <field name="x_is_audit_survey" eval="True"/>
     <field name="description">&lt;p&gt;Inspección técnica de eficiencia operativa para constructoras. 10 preguntas, 5 minutos, resultados inmediatos.&lt;/p&gt;</field>
