@@ -6,10 +6,10 @@
     'author': 'Constructor Audit',
     'license': 'LGPL-3',
     'depends': [
+        'base',
         'survey',
         'crm',
         'mail',
-        'website',
         'base_automation',
     ],
     'data': [
@@ -21,12 +21,6 @@
         'data/email_templates.xml',
         'data/automated_actions.xml',
     ],
-    'assets': {
-        'web.assets_frontend': [
-            'constructor_audit_v15/static/src/css/audit_styles.css',
-            'constructor_audit_v15/static/src/js/roi_calculator.js',
-        ],
-    },
     'post_init_hook': 'post_init_hook',
     'installable': True,
     'application': True,
